@@ -44,8 +44,13 @@ export class TradeLogComponent {
   calendar = inject(NgbCalendar);
 
   hoveredDate: NgbDate | null = null;
-  fromDate: NgbDate | null = this.calendar.getPrev(this.calendar.getToday(), 'd', 6);
-  toDate: NgbDate | null = this.calendar.getToday();
+  fromDate: NgbDate | null = TradeLogComponent.istDate(-6);
+  toDate: NgbDate | null = TradeLogComponent.istDate(0);
+
+  static istDate(offsetDays: number): NgbDate {
+    const d = DateTime.now().setZone('Asia/Kolkata').plus({ days: offsetDays });
+    return new NgbDate(d.year, d.month, d.day);
+  }
   dateFromTo: string = '';
   asOnDate: any;
 

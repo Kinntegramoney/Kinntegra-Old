@@ -238,3 +238,16 @@ Verified live: kinntegra.co.in serves new main, IST fix present in served JS, AP
 ROLLBACK (instant): restore old index.html from /app/deploy/kinntegrawebapp-live-backup/wwwroot-backup.zip
   (old main-R6JJOGPT.js + polyfills-BJX5WH5B.js still present in wwwroot).
 NOTE: users may need a hard refresh (Ctrl+F5) to drop cached old index.html.
+
+## 2026-09-18 (later) — Trade-log DEFAULT "last 7 days" range now IST (frontend fix, DEPLOYED)
+Root cause: trade-log.component.ts fields used this.calendar.getToday() (BROWSER timezone) for the
+default range: fromDate=getPrev(today,'d',6), toDate=today. For a user west of IST, today=Sep18 so
+range=Sep12-18 EXCLUDED the IST-Sep19 trade. (onRefresh already used Asia/Kolkata for asOnDate.)
+Fix: added static istDate(offset){ DateTime.now().setZone('Asia/Kolkata').plus({days:offset}) -> NgbDate }
+  fromDate=istDate(-6), toDate=istDate(0). Now default range = IST last 7 days (includes IST today).
+Rebuilt production (main-LKMNZ5M3.js) with env URLs api./rcomm.kinntegra.co.in; verified API url,
+IST display fix (+0530), 7x Asia/Kolkata, no localhost. Deployed index.html+main via Kudu VFS PUT to
+kinntegrawebapp wwwroot (polyfills-RT5I6R6G already live). Live serves new main, HTTP 200, login renders.
+Combined with earlier display fix, trade-log now fully IST (both filter range AND date column).
+Backup/rollback unchanged: /app/deploy/kinntegrawebapp-live-backup/wwwroot-backup.zip (old index.html+bundles still in wwwroot).
+Users may need hard refresh (Ctrl+F5).
