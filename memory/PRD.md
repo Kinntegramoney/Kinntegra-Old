@@ -189,3 +189,13 @@ FIX (applied LIVE, reversible):
 RESULT (warm): 1mo 16.9->2.5s, 6mo 69.6->11.5s, 1yr 130->13s. App co-located in Azure => faster.
 REVERT if ever needed: re-run /app/deploy/GetClientTransactionList.sql (original body) + DROP the 3 indexes.
 BACKLOG: page is unpaginated (returns up to 82k rows/yr) - add server-side paging for further gains.
+
+## 2026-09-18 (later) — BSE 443 REVISED diagnosis: BSE-side BLOCK of our Azure IP, not whitelist
+User: issue started ~2 days ago; BSE says no whitelisting change. DIFFERENTIAL TEST settled it:
+- From Azure app (IP 20.219.168.55): BSE:443 TIMEOUT (even raw IP 43.228.176.243:443), BSE:80 OK 78ms, Google:443 OK 7ms.
+- From an unrelated non-whitelisted host (this pod): BSE:443 OK 0.25s, BSE:80 OK.
+=> BSE:443 is PUBLIC (not whitelist-gated). Our Azure outbound IPs are UNCHANGED; no VNet/network change our side.
+CONCLUSION: BSE's edge/GSLB/WAF (www.gslb.bsestarmf.in) selectively DROPS our Azure IP on port 443
+(a block/blacklist/geo-or-ASN rule), started ~2 days ago. This is a BLOCK, not a missing whitelist -
+consistent with BSE saying "whitelisting is fine". ACTION: BSE must remove the port-443 block on our
+IP / Azure range. Updated /app/deploy/BSE_WHITELIST_EMAIL.md with this precise proof (remove-block ask).
