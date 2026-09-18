@@ -89,3 +89,9 @@ kinntegra-api/.cache/puppeteer/chrome-headless-shell/win64-121.0.6167.85/chrome-
 kinntegra-api/public/downloads/cams/wbr2/16022026091902_204845469R2.dbf
 kinntegra-api/public/downloads/karvy/mfsd307/W1T685.dbf
 kinntegra-api/public/downloads/karvy/mfsd307/W2T585.dbf
+.env
+.env.*
+*.env
+credentials.json
+*.key
+.credentials
