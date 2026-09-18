@@ -290,3 +290,15 @@ AppGlobalService.CurrentAssociate). Changed to behave like leads/tradelog (clean
 Rebuilt prod main-SRZMXFS2.js, deployed main+index.html to kinntegrawebapp wwwroot. Live HTTP 200,
 login page renders. NOTE: could not log in to visually verify the transactions page itself; change is
 behavior-preserving (same default value, associate from session). Sub-routes transaction/:transactionid still intact.
+
+## 2026-09-18 (later) — Transaction clean URL COMPLETE (menu + all redirects)
+414E2B5048745659672B513D = app's encrypted EMPTY/ZERO sentinel (used ~500x app-wide as "new/no id"
+default), NOT the associate id (earlier note corrected). Transaction landing used it as clientTransactionId.
+Fixed ALL transaction navigation to clean /transaction:
+ - menu href (app-layout) -> transaction  (done earlier)
+ - 10x this.router.navigate(['transaction/414E2B...']) across transaction sub-components -> ['transaction']
+ - transaction.component.ts defaults clientTransactionId to sentinel when no param (behavior identical)
+ - app.routes.ts has both 'transaction' and 'transaction/:transactionid'
+Live bundle main-BTKCXEUW.js: 0 occurrences of transaction/414E2B (verified). Deployed, HTTP 200.
+No forced cache headers + no CDN detected -> if user still sees old param URL it's BROWSER cache of
+index.html; hard refresh / incognito loads new hashed bundle. Backup: /app/deploy/kinntegrawebapp-live-backup/.

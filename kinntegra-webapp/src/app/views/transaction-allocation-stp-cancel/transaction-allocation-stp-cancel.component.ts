@@ -145,7 +145,7 @@ export class TransactionAllocationStpCancelComponent implements OnInit, OnChange
 
           modalRef.result.then(result => {
             if (result == true) {
-              this.router.navigate(['transaction/414E2B5048745659672B513D']);
+              this.router.navigate(['transaction']);
             }
             else {
               this.router.navigate(['tradelog']);

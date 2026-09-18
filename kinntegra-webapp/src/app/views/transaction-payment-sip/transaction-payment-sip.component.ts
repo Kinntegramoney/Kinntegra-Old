@@ -411,7 +411,7 @@ export class TransactionPaymentSipComponent {
             if (result == true) {
               this.router.routeReuseStrategy.shouldReuseRoute = () => false;
               this.router.onSameUrlNavigation = 'reload';
-              this.router.navigate(['transaction/414E2B5048745659672B513D']);
+              this.router.navigate(['transaction']);
             }
             else {
               this.router.routeReuseStrategy.shouldReuseRoute = () => false;
