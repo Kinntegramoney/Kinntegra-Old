@@ -251,3 +251,11 @@ kinntegrawebapp wwwroot (polyfills-RT5I6R6G already live). Live serves new main,
 Combined with earlier display fix, trade-log now fully IST (both filter range AND date column).
 Backup/rollback unchanged: /app/deploy/kinntegrawebapp-live-backup/wwwroot-backup.zip (old index.html+bundles still in wwwroot).
 Users may need hard refresh (Ctrl+F5).
+
+## 2026-09-18 (later) — Browser tab title + favicon (live kinntegrawebapp)
+- Title: index.html <title>Kinntegrawebapp</title> -> "Kinntegra Wealth" (source + live).
+- Favicon was generic. Rendered proper favicon.ico (multi-size 16/32/48/64) + favicon-256.png from
+  src/assets/images/logo.svg (teal circle + cream K) via cairosvg+Pillow.
+- index.html favicon links: svg (assets/images/logo.svg) + favicon.ico?v=2 + apple-touch-icon favicon-256.png.
+- Deployed via Kudu VFS PUT to kinntegrawebapp wwwroot: favicon.ico(204), assets/images/favicon-256.png(201), index.html(204).
+- Verified live: title=Kinntegra Wealth, favicon.ico size 9489, logo.svg 200. Users need hard refresh (favicons cache hard).
