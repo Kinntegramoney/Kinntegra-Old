@@ -137,3 +137,13 @@ NAT Gateway / VNet integration for a single static outbound IP.
 Ready-to-send request written to /app/deploy/BSE_WHITELIST_REQUEST.md.
 Note: vnetRouteAllEnabled=True but virtualNetworkSubnetId=None (leftover config, harmless).
 DO NOT retry Gokul Bisani's real ₹1000 order programmatically (non-idempotent).
+
+## 2026-09-18 — Azure cost/perf optimization (safe changes APPLIED)
+Plan: ASP-DefaultResourceGroupnull-8391 (hosts 4 apps).
+- Enabled HTTP/2 (http20Enabled=true) on all 4 apps: kinntegraapi, kinntegrarcomm,
+  kinntegrawebsite, kinntegrawebapp. Verified curl --http2 negotiates h2 on api + webapp.
+- Downsized App Service plan P2v3 -> P1V3 (PremiumV3, capacity 1). Verified all apps
+  Running; kinntegraapi GET / -> 200 in ~1s. Est. saving ~US$140-150/mo.
+DEFERRED (do carefully): SQL S2->S1 or vCore Serverless; index tuning for the 100% DTU
+spikes (the real page-speed fix); optionally delete Stopped app kinntegrawebsite (no
+compute saving since plan shared). Reversible: bump plan back to P2v3 if peaks grow.
