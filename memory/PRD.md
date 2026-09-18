@@ -53,9 +53,23 @@ backend (uvicorn) and frontend (yarn start) are READONLY.
     34.170.12.145). If the DB starts rejecting again, re-add the new IP to the Azure SQL
     firewall. At deployment the production egress IP will also need whitelisting.
 
-## Deferred (not yet wired)
-- Realcomm socket.io realtime in the browser (service runs on :3001; proxy path wiring pending).
-- Node-served static asset routes (/images, /doc/report, /download/doc) via the proxy.
+## Session 2 (2026-06) — Live-app enhancements COMPLETE & VERIFIED
+- Realtime Alerts: socket.io relay folded into the frontend server (/app/frontend/server.js)
+  on :3000 same-origin (/socket.io). Node API connects as client via REAL_COMM_LINK
+  (http://localhost:3000). Standalone kinntegra-realcomm supervisor program removed.
+  Verified in browser: socket connects through ingress + deterministic echo
+  (emit reportorderprogress -> receive receiveorderprogress ~1s).
+- Document Downloads: frontend server reverse-proxies /images, /doc, /download to the
+  Node API (:8080). Verified: /images/bse-logo.png (png 48KB) and /doc/report/*.tiff
+  (2.8MB) return real files through the public URL.
+- Testing agent: iteration_2.json = 4/4 (100%).
+- socket.io@4.8.1 added to /app/frontend (yarn).
+
+## Deferred / Next
+- Phase 2: React + FastAPI rewrite (Login + dashboard first), matching current Kinntegra
+  branding; new FastAPI reads the same live Azure SQL. (User chose to do this AFTER the
+  live-app enhancements, which are now done.)
+- GitHub handover: user triggers via "Save to Github" button (self-serve).
 
 ## Next action items
 - Unblock Azure SQL firewall for the current egress IP (needs Azure access that passes MFA,

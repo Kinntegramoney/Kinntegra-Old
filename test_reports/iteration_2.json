@@ -1,0 +1,38 @@
+{
+  "summary": "Frontend browser-level verification of the two new Kinntegra enhancements (Realtime Alerts + Document Downloads) plus login regression. ALL 4 scenarios PASSED end-to-end via the public preview URL.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results": {
+    "login_regression": "PASS - SUPERADMIN/Password@123 -> PIN 123456 -> navigated to /leads",
+    "realtime_socketio_connectivity": "PASS - 4x GET /socket.io/?EIO=4&transport=polling returned 200 with a valid sid (vV9IUEImTPhxwad2AAAC). No socket/websocket/CORS/mixed-content console errors.",
+    "realtime_echo": "PASS - In-page socket.io-client (loaded from /socket.io/socket.io.js) connected (sid aUnUTAcLhdvmVHEXAAAC), emitted 'reportorderprogress'='ECHO_TEST_42', and received the same payload back on 'receiveorderprogress' within ~1s. Relay broadcast confirmed.",
+    "document_downloads": "PASS - GET /images/bse-logo.png -> 200, content-type image/png, 48163 bytes. GET /doc/report/19941KWPL00024001062026.tiff -> 200, content-type image/tiff, 2,833,000 bytes. Direct browser navigation to the PNG rendered the image (not Angular index.html; response body length 455, no ng-version)."
+  },
+  "network_evidence": {
+    "socket_io_polls": [
+      "200 /socket.io/?EIO=4&transport=polling&t=... (handshake)",
+      "200 /socket.io/?EIO=4&transport=polling&t=...&sid=vV9IUEImTPhxwad2AAAC (x3)"
+    ],
+    "failed_requests_unrelated": [
+      "/api/client/getclientaccountlistbyassociateid/... ERR_ABORTED (Angular route change aborted an in-flight XHR - unrelated to new features)",
+      "/cdn-cgi/rum? ERR_ABORTED (Cloudflare RUM beacon - benign)"
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Legacy Angular still has no data-testid; not blocking for lift-and-shift. Same-origin socket.io relay + /images,/doc,/download reverse proxy in /app/frontend/server.js work as designed."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped per request)", "frontend": "100% (4/4 scenarios)"},
+  "test_credentials": "SUPERADMIN / Password@123 / PIN 123456 (valid against live Azure SQL)",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Realtime path browser<->/socket.io (same origin) is verified with a deterministic echo. Document downloads via /images and /doc/report reverse-proxy through frontend server to Node API on 8080 work at the browser level. Login flow unchanged from iteration_1.",
+  "rca of the issue": "N/A - no bugs found."
+}
