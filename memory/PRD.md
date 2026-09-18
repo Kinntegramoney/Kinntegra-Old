@@ -168,3 +168,24 @@ Scripts: /app/backend/_sql_perf_scan.py, _sql_apply_indexes.py, _sql_verify.py (
 DEFERRED - SQL right-sizing: OBSERVE DTU for 1-2 days first; then S2->S1 (~US$45/mo saved).
 DO NOT use vCore Serverless auto-pause: app has constant traffic (NAV insert 14133 execs) so it
 won't pause and may cost more. S1 downgrade is the right move once spikes confirmed gone.
+
+## 2026-09-18 — Transaction/Trade-Log page SLOWNESS fixed (proc rewrite + indexes)
+Endpoint GetTradeLog (applog.controller.js line 23) calls proc GetClientTransactionList.
+Baseline: 1mo=16.9s, 6mo=69.6s, 1yr=130s (unpaginated).
+Root cause: predicate `convert(date,DATEADD(MINUTE,330,TransactionDate)) between @FromDate and @ToDate`
+was NON-SARGable, repeated ~21x -> 12 full scans of ClientTransaction + repeated aggregations.
+FIX (applied LIVE, reversible):
+- Rewrote all 21 predicates to SARGable equivalent:
+    TransactionDate >= DATEADD(MINUTE,-330,CONVERT(datetime,@FromDate))
+    AND TransactionDate < DATEADD(MINUTE,-330,DATEADD(DAY,1,CONVERT(datetime,@ToDate)))
+  (preserved the 1 hardcoded '2026-05-15' branch verbatim). VALIDATED byte-for-byte identical
+  output (rowcount+md5) vs original across 3 ranges incl the literal-date branch = ALL_MATCH.
+  Swapped via CREATE OR ALTER; original body saved at /app/deploy/GetClientTransactionList.sql,
+  optimized at /app/deploy/GetClientTransactionList_v2.sql.
+- Added indexes ONLINE: IX_ClientTransaction_TxnDate (TransactionDate INCLUDE TransactionTypeId,
+  TransactionPlanId,TradeStatus); IX_FeedCamsWbr2a_traddate (traddate);
+  IX_CTP_ClientTransactionId_cover (ClientTransactionPortfolio: ClientTransactionId INCLUDE
+  SubTransactionType,Amount,SIPAmount,SWPAmount) PAGE-compressed.
+RESULT (warm): 1mo 16.9->2.5s, 6mo 69.6->11.5s, 1yr 130->13s. App co-located in Azure => faster.
+REVERT if ever needed: re-run /app/deploy/GetClientTransactionList.sql (original body) + DROP the 3 indexes.
+BACKLOG: page is unpaginated (returns up to 82k rows/yr) - add server-side paging for further gains.
