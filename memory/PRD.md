@@ -120,3 +120,20 @@ backend (uvicorn) and frontend (yarn start) are READONLY.
     message ("Request timeout after 60000ms for <host><path>").
   - site/wwwroot/index.js: added process.on unhandledRejection/uncaughtException handlers.
 - Restarted kinntegraapi (ARM restart 200). Live verified: GET / -> 200 "Welcome to Kinntegra!".
+
+## 2026-09-18 — BSE StarMF timeout ROOT CAUSE FOUND (network, not code)
+Ran read-only diagnostics from INSIDE live Azure App Service `kinntegraapi` (Kudu command API).
+- Egress IP consistently 20.219.168.55 (in outboundIpAddresses set); reached api.ipify.org OK.
+- DNS: www.bsestarmf.in -> 43.228.176.243 (resolves fine).
+- Google:443 connects in 11ms; general HTTPS/443 outbound healthy.
+- BSE:80 connects in 40ms (307 redirect to https).
+- BSE:443 TCP connect SILENTLY DROPPED (SYN, no SYN-ACK) — TIMEOUT 3/3 (~12s each).
+CONCLUSION: BSE drops our port-443 SYNs while port-80 works from same IP => our Azure
+outbound IP is NOT on BSE's Secure-API (443) firewall allowlist (belief that it is whitelisted
+is stale/incorrect, likely old IP after Azure outbound-IP change).
+REMEDIATION (BSE-side, cannot fix in code): BSE must whitelist current outbound IPs (7) —
+ideally full possibleOutboundIpAddresses (31) to survive Azure IP rotation. Long-term:
+NAT Gateway / VNet integration for a single static outbound IP.
+Ready-to-send request written to /app/deploy/BSE_WHITELIST_REQUEST.md.
+Note: vnetRouteAllEnabled=True but virtualNetworkSubnetId=None (leftover config, harmless).
+DO NOT retry Gokul Bisani's real ₹1000 order programmatically (non-idempotent).
