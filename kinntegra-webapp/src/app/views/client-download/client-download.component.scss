@@ -1,0 +1,68 @@
+// .mandate-list .row:first-child .delete-mandate {
+//     display: block;
+// }
+
+//     input[type="checkbox"][readonly],div[readonly] {
+//   pointer-events: none;
+// }
+//     .account_type {
+//         display: none;
+//     }
+//     .edit-now {
+//         font-size: 12px;
+//         font-weight: 600;
+//         font-style: italic;
+//     }
+//     .edit-now:hover {
+//         cursor: pointer;
+//         color: #1a2b2a;
+//         text-decoration: underline;
+//     }
+//     .normal-table tbody tr td{
+//         padding: 0.75rem;
+//     }
+//     .aprofile.invalid td:nth-child(1) {
+//     color:#dc3a3a;}
+
+//     .aprofile.invalid td.select.invalid .select2-selection--single {
+//     border: 1px solid #c44d4d !important;
+//     }
+// td label.error {
+//     font-size: 80%;
+//     font-weight: 400;
+//     color: #dc3a3a;
+//     position: absolute;
+//     /* top: 100%;
+//     left: 0;
+//     width: 100%; */
+//     text-transform: capitalize;
+// }
+
+// /*Select2 ReadOnly Start*/
+//         select[readonly].select2-hidden-accessible+.select2-container {
+//            touch-action: none;pointer-events: none;
+//         }
+
+//         select[readonly].select2-hidden-accessible+.select2-container .select2-selection {
+//             background: #eee;
+//             box-shadow: none;
+//         }
+
+//         select[readonly].select2-hidden-accessible+.select2-container .select2-selection__arrow,
+//         select[readonly].select2-hidden-accessible+.select2-container .select2-selection__clear {
+//             display: none;
+//         }
+
+//         .select2-container--default .select2-results__option[aria-disabled=true] {
+//             display: none;
+//         }
+
+//         .readonly {
+//             pointer-events: none;
+//         }
+//         .bb-0{
+//             border-bottom : 0 !important;
+//         }
+//     /* #company_detail .remove-company .icon-close{
+//         color: #ffffff;
+//     } */

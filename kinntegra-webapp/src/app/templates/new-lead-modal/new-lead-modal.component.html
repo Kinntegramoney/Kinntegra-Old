@@ -1,0 +1,227 @@
+<!-- <div class="modal-dialog"> -->
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticLeadLabel">New Lead</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="activeModal.dismiss('Cross click')">
+            <!-- <span aria-hidden="true">&times;</span> -->
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row form-sections mb-0">
+            <div class="col-12">
+                <h4 class="form-section-title text-primary text-uppercase">Other Details</h4>
+            </div>
+            <!-- @if(Auth::user()->in_house == 1) -->
+
+            <div class="col-md-4 col-sm-6 associate_id">
+                <div class="form-group">
+                    <!--List of Employee for Selected Associate-->
+                    <label for="associate_id">Associate Name <span class="required-sign">*</span></label>
+
+                    <div class="form-control ng-select-form-control">
+                        <ng-select [(ngModel)]="lead.AssociateId" name="associate" (change)="getEmployee()" [disabled]="!isSuperUser && !isPrimaryAssociate" [dropdownPosition]="'bottom'">
+                            <ng-option *ngFor="let associate of associates"
+                                [value]="associate.Id">{{associate.Name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 employee_id">
+                <div class="form-group">
+
+                    <label for="employee_id">Employee Name</label>
+                    <div class="form-control ng-select-form-control">
+                        <ng-select [(ngModel)]="lead.EmployeeId" name="employee" [dropdownPosition]="'bottom'">
+                            <ng-option *ngFor="let employee of employees"
+                                [value]="employee.Id">{{employee.Name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- @else -->
+
+            <!-- @if(isset($employees) && !empty($employees)) -->
+
+            <!-- <div class="col-md-4 col-sm-6 employee_id">
+                <div class="form-group">
+                    <label for="employee_id">Employee Name <span class="required-sign">*</span></label>
+                    <div class="select-wrapper exclude">
+                        <select class="form-control" id="employee_id" name="employee_id">
+                            <option value="" disabled selected>Select Employee</option>
+                            <option value="">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div> -->
+            <!-- @endif -->
+            <!-- <div class="col-md-4 col-sm-6 account_type">
+                <div class="form-group">
+                    <label for="account_type">Account Type <span class="required-sign">*</span></label>
+                    <div class="select-wrapper exclude">
+                        <select class="form-control" id="account_type" name="account_type">
+                            <option value="" disabled selected>Select Account Type</option>
+                            <option value="1">Individual</option>
+                            <option value="2">Non Individual</option>
+                        </select>
+                    </div>
+                </div>
+            </div> -->
+            <!-- @endif -->
+
+        </div>
+        <div class="row form-sections">
+            <div class="col-12">
+                <h4 class="form-section-title text-primary text-uppercase">Personal Information</h4>
+            </div>
+            <div class="col-md-4 col-sm-6 first_name individual">
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" class="form-control" id="first_name" name="FirstName"
+                        autocomplete="first_name"  [(ngModel)]="lead.FirstName"/>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 last_name individual">
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="lead.LastName" id="last_name" name="LastName" autocomplete="last_name" />
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 gender individual">
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <div class="form-control ng-select-form-control">
+                        <ng-select name="gender" [(ngModel)]="lead.GenderId" [dropdownPosition]="'bottom'">
+                            <ng-option *ngFor="let gender of genders" [value]="gender.Id">{{gender.Name}}</ng-option>
+                        </ng-select>
+
+                        <!-- <select class="form-control" id="gender" name="gender">
+                            <option value="" disabled selected>Select Gender</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="OTHER">Other</option>
+                        </select> -->
+                    </div>
+
+                </div>
+            </div>
+            <!-- <div class="col-md-4 col-sm-6 cname nonindividual">
+                <div class="form-group">
+                    <label for="cname">COMPANY NAME</label>
+                    <input type="text" class="form-control" id="cname" name="cname" autocomplete="cname" />
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 cauthname1 nonindividual">
+                <div class="form-group">
+                    <label for="cauthname1">AUTHORIZED SIGNITORY NAME</label>
+                    <input type="text" class="form-control" id="cauthname1" name="cauthname1"
+                        autocomplete="cauthname1" />
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 cauthdesignation1 nonindividual">
+                <div class="form-group">
+                    <label for="cauthdesignation1">DESIGNATION</label>
+                    <input type="text" class="form-control" id="cauthdesignation1" name="cauthdesignation1"
+                        autocomplete="cauthdesignation1" />
+                </div>
+            </div> -->
+            <div class="col-md-4 col-sm-6 mobile">
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <input type="text" class="form-control" [(ngModel)]="lead.MobileNumber" id="mobile" name="MobileNumber"  maxlength="10" appInputRestriction="integer" />
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 email">
+                <div class="form-group">
+                    <label for="email">Email ID</label>
+                    <input type="text" class="form-control" id="email" [(ngModel)]="lead.Email" name="Email" />
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 country">
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <div class="form-control ng-select-form-control">
+                        <ng-select [(ngModel)]="lead.CountryId" name="country" (change)="getState()" [dropdownPosition]="'bottom'">
+                            <ng-option *ngFor="let country of countries"
+                                [value]="country.Id">{{country.Name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row form-sections mb-0">
+            <div class="col-12">
+                <h4 class="form-section-title text-primary text-uppercase">Address Details</h4>
+            </div>
+            <input type="hidden" name="addresstype_id" value="2" id="addresstype_id">
+            <input type="hidden" name="subtype_id" value="1" id="subtype_id">
+            <div class="col-md-4 col-sm-6 address1">
+                <div class="form-group">
+                    <label for="address1">Address Line 1</label>
+                    <input type="text" class="form-control" id="address1" [(ngModel)]="lead.Address1" name="Address1" />
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 address2">
+                <div class="form-group">
+                    <label for="address2">Address Line 2</label>
+                    <input type="text" class="form-control" id="address2" [(ngModel)]="lead.Address2" name="Address2"  />
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 address3">
+                <div class="form-group">
+                    <label for="address3">Address Line 3</label>
+                    <input type="text" class="form-control" id="address3" [(ngModel)]="lead.Address3" name="Address3" />
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 city">
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" id="city" name="City" [(ngModel)]="lead.City"   />
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 state">
+                <div class="form-group">
+                    <label for="validity">State</label>
+                    <div class="form-control ng-select-form-control">
+                        <ng-select [(ngModel)]="lead.StateId" name="state" [dropdownPosition]="'bottom'">
+                            <ng-option *ngFor="let state of states" [value]="state.Id">{{state.Name}}</ng-option>
+                        </ng-select>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 pincode">
+                <div class="form-group">
+                    <label for="pincode">Pincode</label>
+                    <input type="text" class="form-control" id="pincode" name="PinCode" [(ngModel)]="lead.PinCode" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="d-flex justify-content-end w-100">
+            <!-- <button type="button" class="btn btn-outline-primary col-sm-2 col-5" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary col-sm-3 col-6 ms-3 save_change" (click)="onSave()">Save
+                Changes</button> -->
+
+                <ng-container>
+                    <button type="button" class="btn btn-outline-primary col-sm-2 col-5" data-bs-dismiss="modal" aria-label="Close" (click)="activeModal.dismiss('Cross click')">Cancel</button>
+                    <button type="button" class="btn btn-primary col-sm-3 col-6 ms-3"
+                        (click)="onSave()" [disabled]="isBusy">
+                        <div *ngIf="isBusy">
+                            <span class="spinner-border text-light"
+                                style="margin-right: 10px; vertical-align: middle;"
+                                role="status"></span>
+                            <span>Proceed</span>
+                        </div>
+                        <span *ngIf="!isBusy">Proceed</span>
+                    </button>
+                </ng-container>
+        </div>
+
+   
+    </div>
+</div>
+<!-- </div> -->

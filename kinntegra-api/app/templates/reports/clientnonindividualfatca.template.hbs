@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Kinntegra - FATCA</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <link rel="icon" href="favicon.ico" type="image/ico" sizes="16x16">
+</head>
+
+<body>
+    <section style="font-size: 11px;">
+
+        <div class="card-body p-3">
+
+            <div class="page-border">
+
+                <table class="table table-sm table-bordered" style="border: 0; width:100%" cellspacing="0">
+                    <tr>
+                        <td width="20%">
+                            <img src="{{BSELogoImagePath}}" alt="BSE Logo" style="height: 80px;" />
+                        </td>
+                        <td width="70%" style="text-align: center; font-size: 12px; margin:0px">
+                            <p style="font-weight:bold"> FATCA-CRS Declaration & Supplementary KYC Information</p>
+                            <p style="text-decoration: underline; font-weight:bold">Declaration Form for Entities</p>
+                            <p style="opacity: 0.5; font-style:italic;">Please seek appropriate advice from your tax
+                                professional on your tax residency and related FATCA &
+                                CRS guidance</p>
+                        </td>
+                    </tr>
+                </table>
+                <table class="table" style="border-spacing: 0;width:100%;">
+                    <tr style="text-align: center;">
+                        <td colspan="4" style="border: none; background-color:gray" class="head-title">Part-A</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <table class="table table-bordered table-sm table-box"
+                                style="border-spacing: 0; width:100%">
+                                <tr>
+                                    <td style="padding-right:10px; padding-left: 5px;">PAN</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[0].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[1].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[2].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[3].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[4].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[5].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[6].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[7].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[8].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[9].data}}</td>
+                                    <td style="padding: 2px;">Date of Incorporation
+                                    </td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[10].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[11].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">/</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[12].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[13].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[14].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">/</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[15].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[16].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[17].data}}</td>
+                                    <td style="font-size: 18px; text-align:center; vertical-align:middle;">{{Param.[18].data}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr style="height:40px;border-spacing: 0;" class="table table-sm table-bordered table-box">
+                        <td colspan="1" style="padding:2px">Name
+                        </td>
+                        <td colspan="3" style="padding:2px; font-size: 18px; vertical-align:middle;">
+                            {{Param.[19].data}}
+                        </td>
+                    </tr>
+                    <tr style="height:20px;border-spacing: 0;" class="table table-sm table-bordered table-box">
+                        <td colspan="1" style="padding:2px">Address Type [for KYC address]
+                        </td>
+                        <td colspan="3" style="padding:2px; vertical-align:middle;">
+                            <img src="{{Param.[20].data}}"
+                                style="height: 16px; margin-right: 3px;" /><span>Residental</span>
+                            <img src="{{Param.[21].data}}" style="height: 16px; margin-right: 3px;" /><span>Residential
+                                / Business </span>
+                            <img src="{{Param.[22].data}}"
+                                style="height: 16px; margin-right: 3px;" /><span>Bussiness</span>
+                            <img src="{{Param.[23].data}}" style="height: 16px; margin-right: 3px;" /><span>Registered
+                                Office</span>
+                        </td>
+                    </tr>
+                    <tr style="border-spacing: 0;" class="table table-sm table-bordered table-box">
+                        <td style="padding:2px; width:20%;">Place of Incorporation </td>
+                        <td style="padding:2px; width:30%;">{{Param.[24].data}}</td>
+                        <td style="padding:2px; width:20%;">Country of Incorporation </td>
+                        <td style="padding:2px; width:30%;">{{Param.[25].data}}</td>
+                    </tr>
+                    <tr style="border-spacing: 0;" class="table table-sm table-bordered table-box">
+                        <td style="padding:2px">Gross Annual<br> Income Details in INR</td>
+                        <td style="text-align: start; padding 2px;">
+                            <table style="width: 100%; border:none; border-collapse: collapse; font-size:11px;"
+                                cellspacing="0" cellpadding="0">
+                                <tr style="border: none;">
+                                    <td style="border: none;padding:2px; vertical-align:middle;">
+                                        <img src="{{Param.[26].data}}"
+                                            style="height: 16px; margin-right: 2px;" /><span>1 Lakh</span>
+                                    </td>
+                                    <td style="border: none;padding:2px; vertical-align:middle;">
+                                        <img src="{{Param.[27].data}}"
+                                            style="height: 16px; margin-right: 2px;" /><span>1-5 Lacs</span>
+                                    </td>
+                                </tr>
+                                <tr style="border: none;">
+                                    <td style="border: none;padding:2px; vertical-align:middle;">
+                                        <img src="{{Param.[28].data}}"
+                                            style="height: 16px; margin-right: 2px;" /><span>5-10 Lacs</span>
+                                    </td>
+                                    <td style="border: none;padding:2px; vertical-align:middle;">
+                                        <img src="{{Param.[29].data}}"
+                                            style="height: 16px; margin-right: 2px;" /><span>10-25 Lacs</span>
+                                    </td>
+                                </tr>
+                                <tr style="border: none;">
+                                    <td style="border: none;padding:2px; vertical-align:middle;">
+                                        <img src="{{Param.[30].data}}"
+                                            style="height: 16px; margin-right: 2px;" /><span>25 Lacs-1 Cr</span>
+                                    </td>
+                                    <td style="border: none;padding:2px; vertical-align:middle;">
+                                        <img src="{{Param.[31].data}}" style="height: 16px; margin-right: 2px;" /><span>
+                                            > 1 Cr</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="text-align: start; padding:2px">Net Worth in INR in
+                            Lacs<br><br><br>Net worth as of</td>
+                        <td style="text-align: start; padding:2px"><span
+                                style="text-decoration: underline; font-size:18px;">{{Param.[32].data}}</span><br><br><br><span
+                                style="font-size:16px;">{{Param.[33].data}}</span>
+                        </td>
+                    </tr>
+                    <tr style="border-spacing: 0;text-align: start; padding:2px"
+                        class="table table-sm table-bordered table-box">
+                        <td style="padding:2px">Is the entity involved in / providing any of the following services :
+                        </td>
+                        <td style="text-align: start; padding:2px">
+                            <table style="width: 100%; border:none; border-collapse: collapse; font-size:11px;"
+                                cellspacing="0" cellpadding="0">
+                                <tr style="border: none;">
+                                    <td style="border: none;padding:2px; vertical-align:middle;">
+                                        <img src="{{EmptyCheckboxImagePath}}"
+                                            style="height: 16px; margin-right: 2px;" /><span>Foreign Exchange / Money
+                                            Changer Services</span>
+                                    </td>
+                                </tr>
+                                <tr style="border: none;">
+                                    <td style="border: none;padding:2px; vertical-align:middle;">
+                                        <img src="{{EmptyCheckboxImagePath}}"
+                                            style="height: 16px; margin-right: 2px;" /><span>Gaming / Gambling / Lottery
+                                            Services [e.g. casinos, betting syndicates]</span>
+                                    </td>
+                                </tr>
+                                <tr style="border: none;">
+                                    <td style="border: none;padding:2px; vertical-align:middle;">
+                                        <img src="{{EmptyCheckboxImagePath}}"
+                                            style="height: 16px; margin-right: 2px;" /><span>Money Laundering /
+                                            Pawning</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="padding:2px">Any other Information <span style="opacity: 0.5;">[if
+                                applicable]</span></td>
+                        <td style="padding:2px; opacity: 0.5;">[Please specify]</td>
+                    </tr>
+                </table>
+                <p>Is “Entity” a tax resident of any country other than India - <img src="{{EmptyCheckboxImagePath}}"
+                        style="height: 16px; margin-right: 2px; margin-left: 20px;" /><span>Yes</span>
+                    <img src="{{PartialCheckboxImagePath}}"
+                        style="height: 16px; margin-right: 2px; margin-left: 20px;" /><span>No</span>
+                </p>
+                <p>(If ‘Yes’, please provide country/ies in which the entity is a resident for tax purpose and the
+                    associated TIN)
+                </p>
+
+                <table class="table table-sm table-bordered table-box-new" style="border-spacing: 0; width:100%;">
+                    <tr style="font-weight:bold; font-size:11px; padding:2px">
+                        <td>
+                            <p>S No.</p>
+                        </td>
+                        <td>
+                            <p>Countdy of Tax Residency</p>
+                        </td>
+                        <td>
+                            <p>Tax Payer Identification Number/ Functional
+                                Equivalent / Company Identification Number
+                                or Global Entity Identification Number</p>
+                        </td>
+                        <td>
+                            <p>Identification Type
+                                <span style="opacity: 0.5;">[TIN or other, please
+                                    specify]</span>
+                            </p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <p style="padding: 30px;">In case the Entity’s country of incorporation / Tax Residence is US but
+                    Entity is not a Specified US person,
+                    mention Entity’s exemption code here _______<span
+                        style="text-decoration: underline; font-size: 18px;">N</span>___________ (Refer instructions o)
+                </p>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <footer class="engagement-footer">
+                    <div class="row justify-content-center pt-3">
+                        <div class="card">
+                            <div class="d-flex justify-content-between header-section px-3 pt-3 align-items-center ">
+                                <h3>Page 1 of 3</h3>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+
+
+            <div style="page-break-before:always;"></div>
+
+
+            <div class="page-border">
+                <table style="border-spacing: 0; width:100% ;" class="table table-sm table-bordered">
+                    <tr style="text-align: center;height:30px; width:30px;">
+                        <td colspan="3"
+                            style="vertical-align:bottom; border: none; background-color:gray;text-decoration:underline;"
+                            class="head-title">
+                            Part B [to be filled by Financial Institutions or Direct Reporting NFFEs]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px; vertical-align:top;">We are a<br><br>
+                            <img src="{{EmptyCheckboxImagePath}}"
+                                style="height: 16px; margin-right: 2px;" /><span>Financial
+                                Institution / FFI [refer instructions a.]</span>
+                            <br><br>
+                            <img src="{{EmptyCheckboxImagePath}}"
+                                style="height: 16px; margin-right: 2px;" /><span>Direct Reporting
+                                NFFE
+                                [refer instructions b.]</span>
+                        </td>
+                        <td colspan="2"
+                            style="padding-left:10px; padding-right:10px; padding-top:10px; padding-bottom: 10px;">
+                            <div style="text-align: start;" style="padding:2px">
+                                <p><strong>GIIN</strong> (Global Intermediary Identification Number):</p>
+                                <table class="table table-bordered table-sm table-box"
+                                    style="border-spacing: 0; width: 100%">
+                                    <tr>
+                                        <td style="font-size:20px; text-align:center; vertical-align:middle;">N</td>
+                                        <td style="font-size:20px; text-align:center; vertical-align:middle;">A</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                <br>
+                                <p><strong>Note:- </strong>if you do not have a GIIN but you are sponsored by another
+                                    entity,
+                                    please provide your sponsor’s GIIN
+                                    above and indicate your sponsor’s name below</p>
+                                <p></p>Name of the sponsoring entity</p>
+                                <table class="table table-bordered table-sm table-box"
+                                    style="border-spacing: 0; width: 100%">
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                <p><strong>GIIN not available </strong>[tick any one]:</p>
+                                <br>
+                                <img src="{{EmptyCheckboxImagePath}}"
+                                    style="height: 16px; margin-right: 2px;" /><span>Applied For</span>
+                                <br>
+                                <br>
+                                <img src="{{EmptyCheckboxImagePath}}"
+                                    style="height: 16px; margin-right: 2px;" /><span>Not required to apply for – specify
+                                    sub-category
+                                    code</span><img src="{{EmptyCheckboxImagePath}}"
+                                    style="height: 16px; margin-left: 20px;" /><img src="{{EmptyCheckboxImagePath}}"
+                                    style="height: 16px; margin-right: 10px;" /><span style="opacity: 0.5;">[refer
+                                    instructions c.]</span>
+                                <br>
+                                <br>
+                                <img src="{{EmptyCheckboxImagePath}}"
+                                    style="height: 16px; margin-right: 2px;" /><span>Not obtained – Non-participating
+                                    FFI</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="text-align: center; height:30px; width:30px;">
+                        <td colspan="3"
+                            style="vertical-align:bottom; border: none; background-color:gray;text-decoration:underline;">
+                            Part C [Fill any one as applicable – to be filled by NFEs other than Direct
+                            Reporting NFFEs]
+                        </td>
+                    </tr>
+                    <tr style="text-align: start;">
+                        <td style="width: 10%;">1</td>
+                        <td style="width: 20%;padding:5px;">Is the entity is a listed
+                            company [whose
+                            shares are regularly
+                            traded on a recognized
+                            stock exchange]<span style="opacity: 0.5;">[refer
+                                instructions d.]</span> </td>
+                        <td style="width: 70%;padding:5px;">
+                            <div style="text-align: start;">
+                                <img src="{{PartialCheckboxImagePath}}"
+                                    style="height: 16px; margin-right: 2px;" /><span>No</span>
+                                <br><br>
+                                <img src="{{EmptyCheckboxImagePath}}"
+                                    style="height: 16px; margin-right: 2px;" /><span>Yes (If Yes, Please specify any one
+                                    Stock
+                                    Exchange on
+                                    which the stock is
+                                    traded regularly)</span>
+                                <br><br>
+                                <p style="padding-bottom: 5px;">Name of the Stock Exchange __________________________
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="text-align: start;">
+                        <td>2</td>
+                        <td style="padding:5px;">Is the entity a ‘Related
+                            Entity’ of a listed
+                            company [whose
+                            shares are regularly
+                            traded on a recognized
+                            stock exchange]<span style="opacity: 0.5;">[refer
+                                instructions e.]</span> </td>
+                        <td style="padding:5px;">
+                            <div style="text-align: start;">
+                                <img src="{{PartialCheckboxImagePath}}"
+                                    style="height: 16px; margin-right: 2px;" /><span>No</span>
+                                <br><br>
+                                <img src="{{EmptyCheckboxImagePath}}"
+                                    style="height: 16px; margin-right: 2px;" /><span>Yes (Please specify the name of the
+                                    listed company
+                                    and one stock exchange
+                                    on which stock is traded regularly)</span>
+                                <br><br>
+                                <p>Name of the listed company __________________________</p>
+                                <br>
+                                <p>Nature of Relation: <img src="{{EmptyCheckboxImagePath}}"
+                                        style="height: 16px; margin-right: 2px; margin-left:20px;" /><span>Subsidiary</span>
+                                    <img src="{{EmptyCheckboxImagePath}}"
+                                        style="height: 16px; margin-right: 2px; margin-left:20px;" /><span>Controlled</span>
+                                </p>
+                                <br>
+                                <p style="padding-bottom:5px;">Name of the Stock Exchange:__________________________</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="text-align: start;">
+                        <td>3</td>
+                        <td style="padding:5px;">Is the entity an Active NFE? </td>
+                        <td style="padding:5px;">
+                            <div style="text-align: start;">
+                                <img src="{{PartialCheckboxImagePath}}"
+                                    style="height: 16px; margin-right: 2px;" /><span>No</span>
+                                <br><br>
+                                <img src="{{EmptyCheckboxImagePath}}"
+                                    style="height: 16px; margin-right: 2px;" /><span>Yes – Nature of
+                                    Business______________________________________</span>
+                                <br><br>
+                                <p style="padding-bottom: 5px;">Please specify sub – category of Active NFE <img
+                                        src="{{EmptyCheckboxImagePath}}" style="height: 16px; margin-left:20px;" /><img
+                                        src="{{EmptyCheckboxImagePath}}" style="height: 16px;" /> <span
+                                        style="opacity: 0.5;">[refer
+                                        instructions g.]</span></p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="text-align: start;">
+                        <td>4</td>
+                        <td style="padding:5px;">If the entity a Passive NFE: </td>
+                        <td style="padding:5px;">
+                            <div style="text-align: start;">
+                                <img src="{{EmptyCheckboxImagePath}}"
+                                    style="height: 16px; margin-right: 2px;" /><span>No</span>
+                                <br><br>
+                                <img src="{{PartialCheckboxImagePath}}"
+                                    style="height: 16px; margin-right: 2px;" /><span>Yes – Nature of
+                                    Business <span style="text-decoration: underline; font-size:18px;">{{Param.[34].data}}</span>
+                                </span>
+                                <br><br>
+
+                                <p style="padding-bottom: 5px;">If Yes, fill UBO declaration in the next section</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <p style="padding:20px;"># if Passive NFE, please provide the below additional details for each of
+                    the Controlling person.<span style="opacity: 0.5;">(Please attach
+                        additional sheets if necessary)</span> </p>
+
+                <table class="table table-bordered table-sm table-box-new" style="border-spacing: 0; width:100%;">
+                    <tr>
+                        <td>S No.</td>
+                        <td>Name of UBO</td>
+                        <td>Taxpayer Identification Number / PAN / Equivalent ID Number</td>
+                        <td>Place & Country of Birth</td>
+                        <td>Country of Tax Residency</td>
+                        <td>Occupation Type [Service, Business, Others]</td>
+                        <td>Nationality</td>
+                        <td>Father’s Name</td>
+                        <td>Date of Birth (dd/mm/yyyy)</td>
+                        <td>Gender [Male, Female, Others]</td>
+                    </tr>
+                    <tr style="font-size: 12px; text-align:start;">
+                        <td>1</td>
+                        <td>{{Param.[35].data}}</td>
+                        <td>{{Param.[36].data}}</td>
+                        <td>{{Param.[37].data}}</td>
+                        <td>{{Param.[38].data}}</td>
+                        <td>{{Param.[39].data}}</td>
+                        <td>{{Param.[40].data}}</td>
+                        <td>{{Param.[41].data}}</td>
+                        <td>{{Param.[42].data}}</td>
+                        <td>{{Param.[43].data}}</td>
+                    </tr>
+                </table>
+                <footer class="engagement-footer">
+                    <div class="row justify-content-center pt-3">
+                        <div class="card">
+                            <div class="d-flex justify-content-between header-section px-3 pt-3 align-items-center">
+                                <h3>Page 2 of 3</h3>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+
+            <div style="page-break-before:always;"></div>
+
+            <div class="page-border">
+                <table class="table table-bordered table-sm table-box-new" style="border-spacing: 0; width:100%;">
+                    <tr style="font-size: 12px; text-align:start;">
+                        <td>2</td>
+                        <td>{{Param.[44].data}}</td>
+                        <td>{{Param.[45].data}}</td>
+                        <td>{{Param.[46].data}}</td>
+                        <td>{{Param.[47].data}}</td>
+                        <td>{{Param.[48].data}}</td>
+                        <td>{{Param.[49].data}}</td>
+                        <td>{{Param.[50].data}}</td>
+                        <td>{{Param.[51].data}}</td>
+                        <td>{{Param.[52].data}}</td>
+                    </tr>
+                    <tr style="font-size: 12px; text-align:start;">
+                        <td>3</td>
+                        <td>{{Param.[53].data}}</td>
+                        <td>{{Param.[54].data}}</td>
+                        <td>{{Param.[55].data}}</td>
+                        <td>{{Param.[56].data}}</td>
+                        <td>{{Param.[57].data}}</td>
+                        <td>{{Param.[58].data}}</td>
+                        <td>{{Param.[59].data}}</td>
+                        <td>{{Param.[60].data}}</td>
+                        <td>{{Param.[61].data}}</td>
+                    </tr>
+                    <tr style="font-size: 12px; text-align:start;">
+                        <td>4</td>
+                        <td>{{Param.[62].data}}</td>
+                        <td>{{Param.[63].data}}</td>
+                        <td>{{Param.[64].data}}</td>
+                        <td>{{Param.[65].data}}</td>
+                        <td>{{Param.[66].data}}</td>
+                        <td>{{Param.[67].data}}</td>
+                        <td>{{Param.[68].data}}</td>
+                        <td>{{Param.[69].data}}</td>
+                        <td>{{Param.[70].data}}</td>
+                    </tr>
+                </table>
+                <div class="">
+
+                    <p style="opacity : 0.5;"># Additional details to be filled by controlling persons with tax
+                        residency / permanent residency / citizenship /
+                        Green Card in any country other than India <br>
+                        ~ In case TIN is not available, kindly provided functional equivalent <br>
+                        * If UBO has more than one tax residency outside India, details to be provided in separate rows
+                        for each of the tax residency
+                        countries</p>
+                    <p style="font-size:12px;"> <strong>Declaration: </strong><br><br>
+                        I/We acknowledge and confirm that the information provided above is true and correct to the best
+                        of my/our
+                        knowledge and belief. In case any of the above specified information is found to be false or
+                        untrue or misleading
+                        or misrepresenting. I/We am/are aware that I/We may liable for it. I/We hereby authorize you
+                        [CAMS/Fund/AMC/Other participating entities] to disclose, share, rely, remit in any form, mode
+                        or manner, all
+                        / any of the information provided by me, including all changes, updates to such information as
+                        and when
+                        provided by me to / any of the Mutual Fund, its sponsor, Asset Management Company, trustees,
+                        their employees
+                        / RTAs (the Authorized Parties) or any Indian or foreign governmental or statutory or judicial
+                        authorities /
+                        agencies including but not limited to the Financial Intelligence Unit – India (FIU – IND), the
+                        tax / revenue
+                        authorities in India or outside India wherever it is legally required and other investigation
+                        agencies without any
+                        obligation of advising me/us of the same. Further, I/We authorize to share the given information
+                        to other SEBI
+                        Registered Intermediaries/ or any regulated intermediariesregistered with SEBI / RBI / IRDA /
+                        PFRDA to facilitate
+                        single submission / update & for other relevant purposes. I/We also undertake to keep you
+                        informed in writing
+                        about any changes / modification to the above information in future and also undertake to
+                        provide any other
+                        additional information as may be required at your / Fund’s end or by domestic or overseas
+                        regulators / tax
+                        authorities. I/We authorize Fund/AMC/RTA to provide relevant information to upstream payors to
+                        enable
+                        withholding to occur and pay out any sums from my account or close or suspend my account(s)
+                        without any obligation of advising me of the same.
+                    </p>
+                    <p>Signature with relevant seal:</p>
+                    <div class="signature-section">
+                        <div class="signature-box">
+
+                            <br>
+                            <br>
+                            Authorized Signatory 1
+                        </div>
+                        <div class="signature-box">
+
+                            <br>
+                            <br>
+                            Authorized Signatory 2
+                        </div>
+                        <div class="signature-box">
+
+                            <br>
+                            <br>
+                            Authorized Signatory 3
+                        </div>
+                    </div>
+                    <p>Date: {{Param.[71].data}}</p>
+                    <p>Place: {{Param.[72].data}}</p>
+                </div>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <footer class="engagement-footer">
+                    <div class="row justify-content-center pt-3">
+                        <div class="card">
+                            <div class="d-flex justify-content-between header-section px-3 pt-3 align-items-center">
+                                <h3>Page 3 of 3</h3>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+
+
+        </div>
+
+    </section>
+</body>
+
+</html>

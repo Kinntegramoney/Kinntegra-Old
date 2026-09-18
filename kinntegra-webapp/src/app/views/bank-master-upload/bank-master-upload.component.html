@@ -1,0 +1,124 @@
+<!-- @extends('layouts.master')
+
+@section('style')
+
+@endsection
+
+@section('content') -->
+<div class="table-top-section">
+    <div class="section-header mb-4">
+        <!-- @include('partials.top') -->
+        <app-header-right-template class="section-header"></app-header-right-template>
+    </div>
+</div>
+<div class="card w-100">
+    <div class="card-body">
+        <div class="row">
+            <!-- @include('admin.adminmenu') -->
+            <!-- <div class="col-xl-3 col-lg-4 col-md-4">
+                <app-admin-master-leftbar-template></app-admin-master-leftbar-template>
+            </div> -->
+            <div class="container-fluid col-lg-8 col-xl-12">
+                <!-- {{-- <h3 class="section-title mb-4 d-flex justify-content-between">Introduction
+            <button class="btn btn-link d-md-none" id="toggleMenu">Admin Menu</button>
+        </h3> --}} -->
+                <!-- <div class="card mb-4">
+            {{-- <div class="card-header">
+                <h5 class="card-title mb-0">Add</h5>
+            </div> --}} -->
+                <!-- <div class="card-body"> -->
+                    <!-- @if(session()->has('success')) -->
+                    <!-- <div class="alert alert-success fade show tr-position" role="alert">
+                        <div class="alert-icon"><i class="flaticon-warning"></i></div> -->
+                    <!-- @foreach(session()->get('success') as $message) -->
+                    <!-- <div class="alert-text">$messages</div> -->
+                    <!-- @endforeach -->
+                    <!-- <div class="alert-close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"><i class="la la-close"></i></span>
+                            </button>
+                        </div> -->
+                <!-- </div> -->
+                <!-- @endif -->
+                <h3 class="card-title d-inline"><i class="icon-left-arrow back-btn" (click)="onBack()"></i>Bank Master
+                </h3>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 ">
+                        <div class="card-body">
+                            <!-- <ul class="nav nav-tabs mb-4" id="master_uploads_tabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" data-toggle="tab" href="#bank-master" role="tab"
+                                        aria-selected="true">Bank Master</a>
+                                </li>
+                            </ul> -->
+                            <div class="tab-content" id="master_uploads">
+                                <div class="tab-pane fade active show" id="bank-master" role="tabpanel">
+                                    <div class="card small-card option-2 option-2 mb-4">
+                                        <div class="card-header">
+                                            <h5 class="card-title mb-0">UPLOAD NEW - BANK MASTER</h5>
+                                            <!-- @if(isset($date)) -->
+                                            <div class="float-right mb-0">
+                                                <label>Last Updated date : {{LastModifiedDate}} </label>
+                                            </div>
+                                            <!-- @endif -->
+                                        </div>
+                                        <div class="card-body pt-4 pb-4">
+                                            <form enctype="multipart/form-data" id="upload-bank" method="POST"
+                                                action="">
+                                                <!-- @csrf -->
+                                                <input type="hidden" name="master_upload_type" value="bank">
+                                                <div class="row">
+                                                    <div class="col-xl-4 col-sm-12">
+                                                        <div class="form-group mb-3 mb-sm-0">
+                                                            <label for="bank_upload">Upload</label>
+                                                            <label for="bank_upload" class="btn input-btn w-100">
+
+                                                                <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                    <use xlink:href="#upload"></use>
+                                                                </svg>
+                                                                <input id="bank_upload" type="file" name="bank_upload" accept=".xlsx, .xls" (change)="fileBrowseHandler($event , true)">
+                                                                <div class="value-wrap">
+                                                                    <span *ngIf="!documentFileExcel" class="default-text">Upload</span>
+                                                                    <h6 class="default-text" *ngIf="documentFileExcel">{{documentFileExcel.name}}</h6>
+                                                                    <span class="value"></span>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-success mt-4" (click)="onSaveExcel()" [disabled]="isBusyExcel">
+                                                    <div *ngIf="isBusyExcel == true" class="spinner-border text-light" appDnd (fileDropped)="onFileDropped($event , true)"
+                                                        role="status">
+                                                    </div>
+                                                    <span *ngIf="!isBusyExcel">Upload</span>
+                                                       
+                                                </button>
+                                              
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- {{-- <div class="card-footer text-right">
+                <button class="btn btn-primary btn-lg">Save Changes</button>
+            </div> --}} -->
+        </div>
+    </div>
+</div>
+
+<!-- @endsection
+
+@section('modal')
+
+@endsection
+
+@section('script')
+
+@endsection -->
+
+

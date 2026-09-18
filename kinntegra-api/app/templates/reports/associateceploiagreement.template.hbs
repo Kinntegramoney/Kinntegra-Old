@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{!-- <title>Kinntegra</title> --}}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <link rel="icon" href="favicon.ico" type="image/ico" sizes="16x16">
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+             font-family: "Cabin", sans-serif;
+            font-style: normal;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0px;
+            padding: 0px;
+            
+        }
+
+        section {
+            margin: 0 20px;
+        }
+
+        .no-margin {
+            margin: 0px;
+        }
+
+        /* html { margin: 0px} */
+        /* body{
+            margin: 0;
+            padding: 0;
+        } */
+     
+
+        /*.page-break {
+            page-break-after: always;
+        }*/
+
+        .table {
+            table-layout: fixed;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .table-sm th,
+        .table-sm td {
+            /* padding: 0.3rem; */
+            padding: 0.2rem 0.3rem
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0 2px;
+        }
+
+        table.table th {
+             /*font-size: .72rem;
+            font-weight: 400;
+            color: #9b9b9b;*/
+            /* padding-top: .75rem;
+            padding-bottom: .75rem;
+            padding-left: .5rem;
+            padding-right: .5rem; */
+        }
+
+        table.table td {
+             font-size:  0.9167rem;
+            /* padding-top: .75rem;
+            padding-bottom: .20rem;
+            padding-left: .5rem;
+            padding-right: .5rem; */
+        }
+
+        .client {
+            border-right: 1px solid #DEE2E6;
+        }
+
+        .table-bordered {
+            border: none;
+            border-collapse: separate;
+        }
+
+        .table-bordered td,
+        .table-bordered th {
+            border: 1px solid #cccccc;
+        }
+
+        .brand-image {
+            display: block;
+            align-items: center;
+            background-color: #fff;
+            outline: none;
+        }
+
+        .brand-image img {
+            /* width: 60px; */
+            height: 60px;
+        }
+
+        .brand-image span {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary, #365b58);
+            margin-left: 0.5rem;
+        }
+
+        address {
+            font-size: 0.7rem;
+            margin-bottom: 0;
+        }
+
+        .highlight {
+            background: #efefef;
+            color: #000000;
+        }
+
+        .head-title {
+            background-color: #548989;
+            color: #ffffff;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .sub-title {
+            background-color: #5d9898;
+            color: #ffffff;
+            text-align: center;
+            font-weight: bold;
+           
+        }
+
+        .v-align {
+            vertical-align: middle !important;
+        }
+    </style>
+</head>
+
+<body>
+     <header class="engagement-heading">
+        <div class="row justify-content-center pt-3">
+            <div class="card">
+                <div class="d-flex justify-content-between header-section px-3 pt-3 align-items-center">
+                    <address class="engagement-address">
+                        <h2 class="mb-1 d-block" style="margin:0px">Kinntegra Wealth Private Limited(AMFI Registered Mutual Fund Distributor)</h2>
+                        <strong>Registered Address</strong>: 6302, Island City Center Two, G D Ambekar Marg, Dadar (East), Mumbai 400014<br>
+                        <strong>Contact Details:</strong> +91-9136051689<br>
+                        <strong>Website:</strong> www.kinntegra.co.in | <strong>Email:</strong>
+                        info@kinntegra.co.in<br>
+                        <strong>CIN:</strong> U74999MH2018PTC306145<br>
+                    </address>
+                    <a class="engagement-image" href="http://127.0.0.1:8000/testcase?type=2#">
+                        <img class="img-fluid" src="{{LogoImagePath}}">
+                        <!-- <span>Kinntegra</span> -->
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+    {{!-- <footer class="engagement-footer">
+        <div class="row justify-content-center pt-3">
+            <div class="card">
+                <div class="d-flex justify-content-between header-section px-3 pt-3 align-items-center">
+                    <a class="engagement-image footer" href="http://127.0.0.1:8000/testcase?type=2#">
+                        <img class="img-fluid" src="{{LogoImagePath}}">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer> --}}
+
+    <table class="table table-sm">
+        <tr>
+            <td colspan="12" style="text-align: center; font-weight: bold;">LETTER-OF-INTENT
+            </td>
+        </tr>
+        <br>
+        <tr> 
+            <td colspan="12">
+                <br>
+                <div style="width: 75%;display:flex;justify-content: flex-end;">
+                    <p>Date :</p>
+                </div>
+                <br>
+                <div style="width: 100%">
+                    Dear {{EmployeeName}},
+                </div>
+                <br>
+                <div style="width: 100%">
+                    KWPL is the first to offer a simple and single charge across all mutual fund investments
+                    irrespective of your AUM on our platform, with no extra fees for any of our services. All charges
+                    are inclusive of any applicable taxes.
+                </div>
+                <br>
+                <div style="width: 100%">
+                    We propose to retain / share the below brokerage sharing ratio:
+                </div>
+                <br>
+                <div style="width: 100%">
+                    <table border="1" style="border-collapse: collapse; margin-left:auto; margin-right:auto;">
+                        <thead>
+                            <tr>
+                                <th>Particular</th>
+                                <th>Retain / Share</th>
+                                <th>% or bps</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>On Arbitrage and Cash Investments</td>
+                                <td>Retain</td>
+                                <td>{{SHORTTERMMF}}</td>
+                            </tr>
+                            <tr style="background-color: rgba(230, 229, 229, 0.596);">
+                                <td>On Equity, Debt and Tax Investments</td>
+                                <td>Retain</td>
+                                <td>{{EQUITYMF}}</td>
+                            </tr>
+                            <tr>
+                                <td>On P2P Investments</td>
+                                <td>Share</td>
+                                <td>{{P2P}}</td>
+                            </tr>
+                            <tr style="background-color: rgba(230, 229, 229, 0.596);">
+                                <td>Minimum charge</td>
+                                <td>-</td>
+                                <td>Nil</td>
+                            </tr>
+                            <tr style="background-color: rgba(230, 229, 229, 0.596);">
+                                <td>Brokerage Payout</td>
+                                <td>-</td>
+                                <td>Monthly</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <br>
+                <div style="width: 100%">This Letter shall form an integral part of our CEP Agreement and any
+                    modifications to the above terms shall be on mutually agreeable basis.</div>
+                <br>
+                <div style="width: 100%">Please sign at the designated place indicating your acceptance to the above
+                    proposal and return us the duplicate copy for our records.</div>
+                <br>
+                <div style="width: 100%">We look forward a mutually beneficial relationship. </div>
+                <br>
+                <div style="width: 100%">Yours truly,</div>
+                <br>
+                <div style="width: 100%">For Kinntegra Wealth Private Limited</div>
+                <br>
+                <br>
+                <br>
+                <div style="width: 100%;">Authorized Signatory</div>
+                <br>
+                <br>
+                <br>
+                <div style="width: 75%; display:flex;  justify-content: space-between;"><p>CEP Name:	{{EmployeeName}}</p> <p>CEP Signature:</p></div>
+                <div style="width: 100%;">Acceptance Date:</div>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

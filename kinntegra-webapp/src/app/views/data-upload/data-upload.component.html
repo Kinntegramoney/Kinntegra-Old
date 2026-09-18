@@ -1,0 +1,319 @@
+<div class="row">
+    <div class="tab-content col-md-6" id="master_uploads">
+        <div class="tab-pane fade active show" id="bank-master" role="tabpanel">
+            <div class="card small-card option-2 option-2 mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">UPLOAD NEW - COMMERCIAL</h5>
+                    <!-- @if(isset($date)) -->
+                    <div class="float-right mb-0">
+                        <label>Last Updated date : {{LastModifiedDate}} </label>
+                    </div>
+                    <!-- @endif -->
+                </div>
+                <div class="card-body pt-4 pb-4">
+                    <form enctype="multipart/form-data" id="upload-bank" method="POST" action="">
+                        <!-- @csrf -->
+                        <input type="hidden" name="master_upload_type" value="bank">
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-12">
+                                <div class="form-group mb-3 mb-sm-0">
+                                    <label for="bank_upload">Upload</label>
+                                    <label for="bank_upload" class="btn input-btn w-100">
+
+                                        <svg width="24" height="24" viewBox="0 0 24 24">
+                                            <use xlink:href="#upload"></use>
+                                        </svg>
+                                        <input id="bank_upload" type="file" name="bank_upload" accept=".xlsx, .xls"
+                                            (change)="fileBrowseHandler($event , true)">
+                                        <div class="value-wrap">
+                                            <span *ngIf="!documentFileExcel" class="default-text">Upload</span>
+                                            <h6 class="default-text" *ngIf="documentFileExcel">
+                                                {{documentFileExcel.name}}</h6>
+                                            <span class="value"></span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-success mt-4" (click)="onSaveCommercial()" [disabled]="isBusyExcel">
+                            <div *ngIf="isBusyExcel == true" class="spinner-border text-light" appDnd
+                                (fileDropped)="onFileDropped($event , true)" role="status">
+                            </div>
+                            <span *ngIf="!isBusyExcel">Upload</span>
+
+                        </button>
+                        
+                        <!-- <button class="btn btn-success mt-4" (click)="Test()" [disabled]="isBusyExcel">
+                            <div *ngIf="isBusyExcel == true" class="spinner-border text-light" appDnd
+                                (fileDropped)="onFileDropped($event , true)" role="status">
+                            </div>
+                            <span *ngIf="!isBusyExcel">Test</span>
+
+                        </button> -->
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content col-md-6" id="master_uploads">
+        <div class="tab-pane fade active show" id="bank-master" role="tabpanel">
+            <div class="card small-card option-2 option-2 mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">UPLOAD NEW - AMCs</h5>
+                    <!-- @if(isset($date)) -->
+                    <div class="float-right mb-0">
+                        <label>Last Updated date : {{LastModifiedDate}} </label>
+                    </div>
+                    <!-- @endif -->
+                </div>
+                <div class="card-body pt-4 pb-4">
+                    <form enctype="multipart/form-data" id="upload-bank" method="POST" action="">
+                        <!-- @csrf -->
+                        <input type="hidden" name="master_upload_type" value="bank">
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-12">
+                                <div class="form-group mb-3 mb-sm-0">
+                                    <label for="bank_upload">Upload</label>
+                                    <label for="bank_upload" class="btn input-btn w-100">
+
+                                        <svg width="24" height="24" viewBox="0 0 24 24">
+                                            <use xlink:href="#upload"></use>
+                                        </svg>
+                                        <input id="bank_upload" type="file" name="bank_upload" accept=".xlsx, .xls"
+                                            (change)="fileBrowseHandler($event , true)">
+                                        <div class="value-wrap">
+                                            <span *ngIf="!documentFileExcel" class="default-text">Upload</span>
+                                            <h6 class="default-text" *ngIf="documentFileExcel">
+                                                {{documentFileExcel.name}}</h6>
+                                            <span class="value"></span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-success mt-4" (click)="onSaveAMCs()" [disabled]="isBusyExcel">
+                            <div *ngIf="isBusyExcel == true" class="spinner-border text-light" appDnd
+                                (fileDropped)="onFileDropped($event , true)" role="status">
+                            </div>
+                            <span *ngIf="!isBusyExcel">Upload</span>
+
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content col-md-6" id="master_uploads">
+        <div class="tab-pane fade active show" id="bank-master" role="tabpanel">
+            <div class="card small-card option-2 option-2 mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">UPLOAD NEW - COST INFLATION INDICES</h5>
+                    <!-- @if(isset($date)) -->
+                    <div class="float-right mb-0">
+                        <label>Last Updated date : {{LastModifiedDate}} </label>
+                    </div>
+                    <!-- @endif -->
+                </div>
+                <div class="card-body pt-4 pb-4">
+                    <form enctype="multipart/form-data" id="upload-bank" method="POST" action="">
+                        <!-- @csrf -->
+                        <input type="hidden" name="master_upload_type" value="bank">
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-12">
+                                <div class="form-group mb-3 mb-sm-0">
+                                    <label for="bank_upload">Upload</label>
+                                    <label for="bank_upload" class="btn input-btn w-100">
+
+                                        <svg width="24" height="24" viewBox="0 0 24 24">
+                                            <use xlink:href="#upload"></use>
+                                        </svg>
+                                        <input id="bank_upload" type="file" name="bank_upload" accept=".xlsx, .xls"
+                                            (change)="fileBrowseHandler($event , true)">
+                                        <div class="value-wrap">
+                                            <span *ngIf="!documentFileExcel" class="default-text">Upload</span>
+                                            <h6 class="default-text" *ngIf="documentFileExcel">
+                                                {{documentFileExcel.name}}</h6>
+                                            <span class="value"></span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-success mt-4" (click)="onSaveCostInflationIndex()"
+                            [disabled]="isBusyExcel">
+                            <div *ngIf="isBusyExcel == true" class="spinner-border text-light" appDnd
+                                (fileDropped)="onFileDropped($event , true)" role="status">
+                            </div>
+                            <span *ngIf="!isBusyExcel">Upload</span>
+
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content col-md-6" id="master_uploads">
+        <div class="tab-pane fade active show" id="bank-master" role="tabpanel">
+            <div class="card small-card option-2 option-2 mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">UPLOAD NEW - OTHER INCOME CATEGORY </h5>
+                    <!-- @if(isset($date)) -->
+                    <div class="float-right mb-0">
+                        <label>Last Updated date : {{LastModifiedDate}} </label>
+                    </div>
+                    <!-- @endif -->
+                </div>
+                <div class="card-body pt-4 pb-4">
+                    <form enctype="multipart/form-data" id="upload-bank" method="POST" action="">
+                        <!-- @csrf -->
+                        <input type="hidden" name="master_upload_type" value="bank">
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-12">
+                                <div class="form-group mb-3 mb-sm-0">
+                                    <label for="bank_upload">Upload</label>
+                                    <label for="bank_upload" class="btn input-btn w-100">
+
+                                        <svg width="24" height="24" viewBox="0 0 24 24">
+                                            <use xlink:href="#upload"></use>
+                                        </svg>
+                                        <input id="bank_upload" type="file" name="bank_upload" accept=".xlsx, .xls"
+                                            (change)="fileBrowseHandler($event , true)">
+                                        <div class="value-wrap">
+                                            <span *ngIf="!documentFileExcel" class="default-text">Upload</span>
+                                            <h6 class="default-text" *ngIf="documentFileExcel">
+                                                {{documentFileExcel.name}}</h6>
+                                            <span class="value"></span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-success mt-4" (click)="onSaveIncomeCategory()" [disabled]="isBusyExcel">
+                            <div *ngIf="isBusyExcel == true" class="spinner-border text-light" appDnd
+                                (fileDropped)="onFileDropped($event , true)" role="status">
+                            </div>
+                            <span *ngIf="!isBusyExcel">Upload</span>
+
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content col-md-6" id="master_uploads">
+        <div class="tab-pane fade active show" id="bank-master" role="tabpanel">
+            <div class="card small-card option-2 option-2 mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">UPLOAD NEW - GROSS ANNUAL INCOME</h5>
+                    <!-- @if(isset($date)) -->
+                    <div class="float-right mb-0">
+                        <label>Last Updated date : {{LastModifiedDate}} </label>
+                    </div>
+                    <!-- @endif -->
+                </div>
+                <div class="card-body pt-4 pb-4">
+                    <form enctype="multipart/form-data" id="upload-bank" method="POST" action="">
+                        <!-- @csrf -->
+                        <input type="hidden" name="master_upload_type" value="bank">
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-12">
+                                <div class="form-group mb-3 mb-sm-0">
+                                    <label for="bank_upload">Upload</label>
+                                    <label for="bank_upload" class="btn input-btn w-100">
+
+                                        <svg width="24" height="24" viewBox="0 0 24 24">
+                                            <use xlink:href="#upload"></use>
+                                        </svg>
+                                        <input id="bank_upload" type="file" name="bank_upload" accept=".xlsx, .xls"
+                                            (change)="fileBrowseHandler($event , true)">
+                                        <div class="value-wrap">
+                                            <span *ngIf="!documentFileExcel" class="default-text">Upload</span>
+                                            <h6 class="default-text" *ngIf="documentFileExcel">
+                                                {{documentFileExcel.name}}</h6>
+                                            <span class="value"></span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-success mt-4" (click)="onSaveIncomeCategory()" [disabled]="isBusyExcel">
+                            <div *ngIf="isBusyExcel == true" class="spinner-border text-light" appDnd
+                                (fileDropped)="onFileDropped($event , true)" role="status">
+                            </div>
+                            <span *ngIf="!isBusyExcel">Upload</span>
+
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content col-md-6" id="master_uploads">
+        <div class="tab-pane fade active show" id="bank-master" role="tabpanel">
+            <div class="card small-card option-2 option-2 mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">UPLOAD NEW - COUNTRY</h5>
+                    <!-- @if(isset($date)) -->
+                    <div class="float-right mb-0">
+                        <label>Last Updated date : {{LastModifiedDate}} </label>
+                    </div>
+                    <!-- @endif -->
+                </div>
+                <div class="card-body pt-4 pb-4">
+                    <form enctype="multipart/form-data" id="upload-bank" method="POST" action="">
+                        <!-- @csrf -->
+                        <input type="hidden" name="master_upload_type" value="bank">
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-12">
+                                <div class="form-group mb-3 mb-sm-0">
+                                    <label for="bank_upload">Upload</label>
+                                    <label for="bank_upload" class="btn input-btn w-100">
+
+                                        <svg width="24" height="24" viewBox="0 0 24 24">
+                                            <use xlink:href="#upload"></use>
+                                        </svg>
+                                        <input id="bank_upload" type="file" name="bank_upload" accept=".xlsx, .xls"
+                                            (change)="fileBrowseHandler($event , true)">
+                                        <div class="value-wrap">
+                                            <span *ngIf="!documentFileExcel" class="default-text">Upload</span>
+                                            <h6 class="default-text" *ngIf="documentFileExcel">
+                                                {{documentFileExcel.name}}</h6>
+                                            <span class="value"></span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-success mt-4" (click)="onSaveCountryIncome()" [disabled]="isBusyExcel">
+                            <div *ngIf="isBusyExcel == true" class="spinner-border text-light" appDnd
+                                (fileDropped)="onFileDropped($event , true)" role="status">
+                            </div>
+                            <span *ngIf="!isBusyExcel">Upload</span>
+
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content col-md-6">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Generate Empanel Form</h5>
+        </div>
+        <button class="btn btn-success mt-4" (click)="generatePdf()">
+            <span *ngIf="!isBusyExcel">Generate PDF</span>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,2096 @@
+<div class="main">
+    <div class="client-wrapper">
+        <div class="client-lists">
+            <div class="searchinput-wrapper mt-4 mb-3 mb-sm-0">
+                <div class="input-group ">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="table-search">
+                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                <use xlink:href="#search" />
+                            </svg>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Search" aria-label="table-search"
+                        aria-describedby="table-search" [(ngModel)]="objClientAccountSearch"
+                        (input)="searchClientRecord()">
+                </div>
+                <button class="btn btn-transparent border-0 w-100 mt-2 mb-2" (click)="onAddClient()"> <span>+</span> Add
+                    Client</button>
+            </div>
+            <ul class="client-listing">
+                <li *ngFor="let item of objClientAccounts;">
+                    <div class="client">
+                        <div class="name" (click)="getClientDetails(item)">
+                            {{item.FirstAccountHolderName}}
+                            <small>{{item.UCC}}</small>
+                        </div>
+                        <svg width="30" height="30" viewBox="0 0 22 22">
+                            <use xlink:href="#new-chat"></use>
+                        </svg>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="container-fluid">
+            <div class="table-top-section d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex">
+                    <h3 class="section-title">{{clientName}}</h3>
+                    <span *ngIf="UCC!=''" class="mt-1 ms-2"><small>{{UCC}}</small></span>
+                </div>
+                <div class="section-header">
+                    <app-header-right-template class="section-header"></app-header-right-template>
+                </div>
+            </div>
+            <div *ngIf="clientName!=''">
+                <nav ngbNav #nav="ngbNav" class="nav-tabs" [(activeId)]="activeTab">
+                    <ng-container [ngbNavItem]="0">
+                        <a ngbNavLink>Holdings</a>
+                        <ng-template ngbNavContent>
+                            <div class="mt-4">
+                                <div class="card card-sm mb-4">
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-3">
+                                                <div class="form-group mb-md-0">
+                                                    <label>Portfolio</label>
+                                                    <div class="form-control ng-select-form-control">
+                                                        <ng-select [(ngModel)]="selectedPortfolioTypeCode"
+                                                            name="PortfolioCode" [dropdownPosition]="'bottom'">
+                                                            <ng-option *ngFor="let item of portfolioTypes"
+                                                                [value]="item.Code">{{item.Name}}</ng-option>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group mb-md-0">
+                                                    <label>Type</label>
+                                                    <div class="form-control ng-select-form-control">
+                                                        <ng-select [(ngModel)]="selectedPlanCode" name="PlanCode"
+                                                            [dropdownPosition]="'bottom'">
+                                                            <ng-option *ngFor="let item of plans"
+                                                                [value]="item.Code">{{item.Name}}</ng-option>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 border-right">
+                                                <div class="form-group mb-md-0">
+                                                    <label>As on date</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" readonly placeholder="dd-mm-yyyy"
+                                                            name="dp" [(ngModel)]="asOnDate" ngbDatepicker
+                                                            #d="ngbDatepicker" />
+                                                        <button class="btn btn-transparent" (click)="d.toggle()"
+                                                            type="button"><svg width="24" height="24"
+                                                                viewBox="0 0 24 24">
+                                                                <use xlink:href="#month"></use>
+                                                            </svg></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button type="button" class="btn btn-primary w-100"
+                                                    (click)="onHoldingProceed()" [disabled]="isBusyHolding">
+                                                    <div *ngIf="isBusyHolding">
+                                                        <span class="spinner-border text-light"
+                                                            style="margin-right: 10px; vertical-align: middle; width: 1.5rem; height: 1.5rem;"
+                                                            role="status"></span>
+                                                        <span>Proceed</span>
+                                                    </div>
+                                                    <span *ngIf="!isBusyHolding">Proceed</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="card allocation-card card-sm">
+                                            <div class="allocation-wrap">
+                                                <div class="card-body pt-2">
+                                                    <div
+                                                        class="card-title pb-1 border-bottom d-flex align-items-center">
+                                                        <svg width="40" height="40" viewBox="5 5 45 45">
+                                                            <use xlink:href="#overview"></use>
+                                                        </svg>
+                                                        <h5 class="mb-0"> Overview</h5>
+                                                    </div>
+                                                    <span class="badge badge-warning badge-pill">Alpha/Benchmark:
+                                                        24%</span>
+                                                    <div class="table-wrap mt-3">
+                                                        <table class="simple-table">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>Parameters</th>
+                                                                    <th>Kinntegra</th>
+                                                                    <th>Benchmark</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Investment</td>
+                                                                    <td>₹{{holdingOverview.TotalInvestment|shortCurrencyNumber}}
+                                                                    </td>
+                                                                    <td>₹{{holdingOverview.BenchmarkInvestment|shortCurrencyNumber}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Market Value</td>
+                                                                    <td>₹{{holdingOverview.TotalWealth|shortCurrencyNumber}}
+                                                                    </td>
+                                                                    <td>₹{{holdingOverview.BenchmarkWealth|shortCurrencyNumber}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Profit</td>
+                                                                    <td>₹{{holdingOverview.TotalReturns|shortCurrencyNumber}}
+                                                                    </td>
+                                                                    <td>₹{{holdingOverview.BenchmarkReturns|shortCurrencyNumber}}
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="allocation-chart">
+                                                    <div class="card small-card option-2 option-2">
+                                                        <div class="card-header">
+                                                            <h6 class="card-title">Allocation</h6>
+                                                        </div>
+                                                        <table class="transaction-table mt-2">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td
+                                                                        class="form-percentage primary-circle pt-3 pb-3">
+                                                                        <svg viewBox="0 0 36 36" width="60">
+                                                                            <path class="circle-bg" d="M18 2.0845
+                                                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                                                            a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                                                            <path class="circle"
+                                                                                [attr.stroke-dasharray]="holdingOverview.CurrentStrokeDasharray"
+                                                                                d="M18 2.0845
+                                                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                                                            a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                                                        </svg>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group mb-3 mb-sm-0 ps-2">
+                                                                            <label>Current</label>
+                                                                            <span
+                                                                                class="form-control-plaintext font-bold">{{holdingOverview.CurrentEquityRatio}}:{{this.holdingOverview.CurrentDebtRatio}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr *ngIf="selectedPlanCode != 'SIP'">
+                                                                    <td
+                                                                        class="form-percentage primary-circle pt-3 pb-3">
+                                                                        <svg viewBox="0 0 36 36" width="60">
+                                                                            <path class="circle-bg" d="M18 2.0845
+                                                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                                                            a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                                                            <path class="circle"
+                                                                                [attr.stroke-dasharray]="holdingOverview.DesiredLumpsumStrokeDasharray"
+                                                                                d="M18 2.0845
+                                                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                                                            a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                                                        </svg>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group mb-3 mb-sm-0 ps-2">
+                                                                            <label>Desired</label>
+                                                                            <span
+                                                                                class="form-control-plaintext font-bold">{{holdingOverview.DesiredLumpsumEquityRatio}}:{{this.holdingOverview.DesiredLumpsumDebtRatio}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr *ngIf="selectedPlanCode == 'SIP'">
+                                                                    <td
+                                                                        class="form-percentage primary-circle pt-3 pb-3">
+                                                                        <svg viewBox="0 0 36 36" width="60">
+                                                                            <path class="circle-bg" d="M18 2.0845
+                                                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                                                            a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                                                            <path class="circle"
+                                                                                [attr.stroke-dasharray]="holdingOverview.DesiredSipStrokeDasharray"
+                                                                                d="M18 2.0845
+                                                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                                                            a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                                                        </svg>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group mb-3 mb-sm-0 ps-2">
+                                                                            <label>Desired</label>
+                                                                            <span
+                                                                                class="form-control-plaintext font-bold">{{holdingOverview.DesiredSipEquityRatio}}:{{this.holdingOverview.DesiredSipDebtRatio}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="card allocation-card card-sm">
+                                            <div class="card-body pt-2">
+                                                <div class="card-title pb-1 border-bottom d-flex align-items-center">
+                                                    <svg width="40" height="40" viewBox="5 5 45 45">
+                                                        <use xlink:href="#portfolio"></use>
+                                                    </svg>
+                                                    <h5 class="mb-0"> Portfolio Benchmark</h5>
+                                                </div>
+                                                <canvas id="portfolio-chart"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="card allocation-card card-sm">
+                                            <div class="card-body pt-2">
+                                                <div class="mb-2 d-md-flex justify-content-between align-items-center">
+                                                    <div class="card-title mb-0  pb-1 d-flex align-items-center">
+                                                        <svg width="40" height="40" viewBox="5 5 45 45">
+                                                            <use xlink:href="#reports"></use>
+                                                        </svg>
+                                                        <h5 class="mb-0">Holding Report</h5>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <button class="btn btn-icon"
+                                                            (click)="onHoldingReportDownload()" [disabled]="isBusyDownloadHolding">
+                                                            <svg width="40" viewBox="0 0 26 26">
+                                                                <use xlink:href="#download" />
+                                                            </svg>
+                                                            <span class="spinner-border text-light"
+                                                                style="position: absolute; top:0; left:0; width:40px; height:40px;"
+                                                                role="status" *ngIf="isBusyDownloadHolding"></span>
+                                                        </button>
+                                                        <button class="btn btn-icon"
+                                                            (click)="onHoldingReportEmail()" [disabled]="isBusyEmailHolding">
+                                                            <svg width="40" viewBox="0 0 26 26">
+                                                                <use xlink:href="#mail" />
+                                                            </svg>
+                                                            <span class="spinner-border text-light"
+                                                                style="position: absolute; top:0; left:0; width:40px; height:40px;"
+                                                                role="status" *ngIf="isBusyEmailHolding"></span>
+                                                        </button>
+                                                        <!-- <button class="btn btn-link" (click)="onHoldingReportDownload()"
+                                                            [disabled]="isBusy"><svg width="30" height="30"
+                                                                viewBox="0 0 24 24">
+                                                                <use xlink:href="#download"></use>
+                                                            </svg>
+                                                            <span class="spinner-border text-light"
+                                                                style="position: absolute; top:0; left:0; width:40px; height:40px;"
+                                                                role="status" *ngIf="isBusy"></span>
+                                                            Download</button> -->
+                                                        <!-- <a class="btn btn-link"><svg width="30" height="30"
+                                                                viewBox="0 0 24 24">
+                                                                <use xlink:href="#mail"></use>
+                                                            </svg>Email</a> -->
+                                                    </div>
+                                                </div>
+
+                                                <div class="table-wrap">
+                                                    <ngx-datatable class="material" [rows]="holdings"
+                                                        [columnMode]="ColumnMode.force" rowHeight="auto"
+                                                        [headerHeight]="50">
+                                                        <ngx-datatable-column name="SchemeName" [width]="200"
+                                                            [sortable]="true" prop="SchemeName">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">Scheme Name</ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                <ng-template #htmlHoldingSchemeContent>
+                                                                    <div innerHTML="{{row.SchemeName}}</br>Folio Number: {{row.FolioNumber}}</br>WGT: {{row.WeightagePercentage|number:'1.2-2'}}%</br>Desired: {{row.DesiredPercentage|number:'1.2-2'}}%"
+                                                                        style="text-align: left;">
+                                                                    </div>
+                                                                </ng-template>
+                                                                <div class="d-flex">
+                                                                    <span
+                                                                        style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; display: block;cursor: pointer;"
+                                                                        [ngbTooltip]="htmlHoldingSchemeContent"
+                                                                        tooltipClass="custom-tooltip" placement="right"
+                                                                        triggers="hover" container="body"
+                                                                        [ngClass]="{'text-green': (row.WeightagePercentage!= 0 && row.DesiredPercentage != 0 && row.WeightagePercentage <= row.DesiredPercentage), 'text-red': (row.WeightagePercentage > row.DesiredPercentage)}"
+                                                                        (click)="onHoldingItemClick(row)">
+                                                                        {{ row.SchemeName }}
+                                                                    </span>
+                                                                </div>
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+                                                        <ngx-datatable-column name="Units" [width]="60"
+                                                            [sortable]="true" prop="Units">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">Units</ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                <ng-template #htmlHoldingAvgBuyContent>
+                                                                    <div innerHTML="Avg Buy: {{row.BuyAvg}}"
+                                                                        style="text-align: left;">
+                                                                    </div>
+                                                                </ng-template>
+                                                                <span [ngbTooltip]="htmlHoldingAvgBuyContent"
+                                                                    tooltipClass="custom-tooltip" placement="right"
+                                                                    triggers="hover" container="body">{{
+                                                                    row.Units|number:'1.3-3'}}</span>
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+                                                        <ngx-datatable-column name="InvestmentAmount" [width]="60"
+                                                            [sortable]="true" prop="InvestmentAmount">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">
+                                                                Inv Amount</ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                ₹{{ row.InvestmentAmount | shortCurrencyNumber }}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+                                                        <ngx-datatable-column name="CurrentNAV" [width]="60"
+                                                            [sortable]="true" prop="CurrentNAV">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">Curr NAV
+                                                            </ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                {{ row.CurrentNAV | number : '1.2-2' }}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+                                                        <ngx-datatable-column name="CurrentAmount" [width]="60"
+                                                            [sortable]="true" prop="CurrentAmount">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">Mkt Value
+                                                            </ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                ₹{{ row.CurrentAmount|shortCurrencyNumber }}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+                                                        <ngx-datatable-column name="InvestmentReturns" [width]="60"
+                                                            [sortable]="true" prop="InvestmentReturns">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">Profit
+                                                            </ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                ₹{{ row.InvestmentReturns|shortCurrencyNumber }}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+                                                        <ngx-datatable-column name="XIRR" [width]="65" [sortable]="true"
+                                                            prop="XIRR">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">XIRR
+                                                            </ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                {{row.XIRR | number : '1.2-2'}}%
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+                                                        <!-- <ngx-datatable-column name="WeightagePercentage" [width]="60"
+                                                            [sortable]="true" prop="WeightagePercentage">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">WGT%
+                                                            </ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                <ng-template #htmlHoldingDesiredContent>
+                                                                    <div innerHTML="Desired: {{row.DesiredPercentage | number : '1.2-2'}}%"
+                                                                        style="text-align: left;">
+                                                                    </div>
+                                                                </ng-template>
+                                                                <span
+                                                                    [ngClass]="{'text-green': (row.WeightagePercentage <= row.DesiredPercentage), 'text-red': (row.WeightagePercentage > row.DesiredPercentage)}"
+                                                                    [ngbTooltip]="htmlHoldingDesiredContent"
+                                                                    tooltipClass="custom-tooltip" placement="left"
+                                                                    triggers="hover"
+                                                                    container="body">{{row.WeightagePercentage|number:'1.2-2'}}%</span>
+                                                            </ng-template>
+                                                        </ngx-datatable-column> -->
+                                                    </ngx-datatable>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                    <ng-container [ngbNavItem]="1">
+                        <a ngbNavLink>Activity</a>
+                        <ng-template ngbNavContent>
+                            <div class="mt-4">
+                                <div class="card card-sm">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-4 mb-3 mb-xl-0">
+                                                <nav ngbNav #nav="ngbNav" class="nav-tabs"
+                                                    [(activeId)]="activeActivityTab">
+                                                    <ng-container [ngbNavItem]="0">
+                                                        <a ngbNavLink>Trade Logs</a>
+                                                        <ng-template ngbNavContent>
+                                                            <div class="col-md-12" *ngIf="!isLoading">
+                                                                <ngx-datatable class="material" [rows]="objTradeLogs"
+                                                                    [columnMode]="ColumnMode.force" rowHeight="auto"
+                                                                    [footerHeight]="50" [headerHeight]="50" [limit]="10"
+                                                                    [scrollbarH]="true" [loadingIndicator]="isLoading">
+                                                                    <!-- <ngx-datatable-column name="ClientName"
+                                                                        [width]="200" [sortable]="true"
+                                                                        prop="ClientName">
+                                                                        <ng-template ngx-datatable-header-template
+                                                                            let-column="column">CLIENT
+                                                                            NAME
+                                                                        </ng-template>
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{ row.ClientName }}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column> -->
+                                                                    <!-- <ngx-datatable-column name="UCC" [width]="60"
+                                                                        [sortable]="true" prop="UCC">
+                                                                        <ng-template ngx-datatable-header-template
+                                                                            let-column="column">UCC</ng-template>
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{ row.UCC }}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column> -->
+                                                                    <ngx-datatable-column name="TransactionDate"
+                                                                        [width]="60" [sortable]="true"
+                                                                        prop="TransactionDate">
+                                                                        <ng-template ngx-datatable-header-template
+                                                                            let-column="column">DATE</ng-template>
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{ row.TransactionDate | date: 'dd-MMM-yyyy'
+                                                                            }}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="TradeType" [width]="80"
+                                                                        [sortable]="true" prop="TradeType">
+                                                                        <ng-template ngx-datatable-header-template
+                                                                            let-column="column">
+                                                                            TYPE</ng-template>
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{row.TradeType}}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="Amount" [width]="80"
+                                                                        [sortable]="true" prop="Amount">
+                                                                        <ng-template ngx-datatable-header-template
+                                                                            let-column="column">AMOUNT
+                                                                        </ng-template>
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">₹
+                                                                            {{ row.Amount|indianCurrencyNumber }}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="PaymentType"
+                                                                        [width]="80" [sortable]="true"
+                                                                        prop="PaymentType">
+                                                                        <ng-template ngx-datatable-header-template
+                                                                            let-column="column">PAYMENT MODE
+                                                                        </ng-template>
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{ row.PaymentType }}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="AssociateName"
+                                                                        [width]="190" [sortable]="true"
+                                                                        prop="AssociateName">
+                                                                        <ng-template ngx-datatable-header-template
+                                                                            let-column="column">ADVISOR
+                                                                        </ng-template>
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{ row.AssociateName }}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="TradeStatus"
+                                                                        [width]="50" [sortable]="true"
+                                                                        prop="TradeStatus">
+                                                                        <ng-template ngx-datatable-header-template
+                                                                            let-column="column">STATUS
+                                                                        </ng-template>
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            <span class="badge"
+                                                                                [ngClass]="{'badge-success': (row.TradeStatus == 'Completed'), 'badge-warning': (row.TradeStatus == 'Processing' || row.TradeStatus == 'InProcess'), 'badge-info': (row.TradeStatus == 'Pending'), 'badge-danger': (row.TradeStatus == 'Rejected' || row.TradeStatus == 'Failed'), 'badge-default': (row.TradeStatus == 'Cancelled' || row.TradeStatus == 'Auto Cancelled')}">{{row.TradeStatus}}</span>
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column [sortable]="false"
+                                                                        [width]="25" [frozenRight]="true">
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            <div class="d-inline-block ms-3" ngbDropdown
+                                                                                container="body" #myDrop="ngbDropdown"
+                                                                                *ngIf="row.RecordType == 'S'">
+                                                                                <button type="button"
+                                                                                    class="btn btn-view bg-gray me-2"
+                                                                                    id="dropdownManual"
+                                                                                    ngbDropdownToggle>
+                                                                                    <i class="icon-dots"></i>
+                                                                                </button>
+                                                                                <div ngbDropdownMenu
+                                                                                    aria-labelledby="dropdownManual"
+                                                                                    placement="bottom-left">
+                                                                                    <ng-container>
+                                                                                        <a ngbDropdownItem
+                                                                                            (click)="onViewTrade(row)">View
+                                                                                            Details</a>
+                                                                                        <a ngbDropdownItem
+                                                                                            *ngIf="row.TradeStatus == 'Pending'"
+                                                                                            (click)="onResendEmail(row)">Resend
+                                                                                            Email</a>
+                                                                                        <a ngbDropdownItem
+                                                                                            *ngIf="row.TransactionTypeCode == 'B' && row.TradeStatus != 'Cancelled' && row.TradeStatus != 'Pending' && row.TradeStatus != 'Completed'"
+                                                                                            (click)="onResendPaymentLink(row)">Resend
+                                                                                            Payment</a>
+                                                                                        <!-- <a ngbDropdownItem>Raise a query </a> -->
+                                                                                    </ng-container>
+                                                                                </div>
+                                                                            </div>
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                </ngx-datatable>
+                                                            </div>
+                                                            <div class="col-md-12" *ngIf="isLoading">
+                                                                <span class="spinner-border text-light"
+                                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                                    role="status"></span>
+                                                                <span>Loading data... Please wait...</span>
+                                                            </div>
+                                                        </ng-template>
+                                                    </ng-container>
+                                                    <ng-container [ngbNavItem]="1">
+                                                        <a ngbNavLink>Challan Download</a>
+                                                        <ng-template ngbNavContent>
+                                                            <div class="col-md-12">
+                                                                <ngx-datatable class="material" [rows]="objChallanLogs"
+                                                                    [columnMode]="ColumnMode.force" rowHeight="auto"
+                                                                    [footerHeight]="50" [headerHeight]="50" [limit]="10"
+                                                                    [scrollbarH]="true">
+                                                                    <ngx-datatable-column name="FirstAccountHolderName"
+                                                                        [width]="110" [sortable]="true"
+                                                                        prop="FirstAccountHolderName">
+                                                                        <ng-template ngx-datatable-header-template
+                                                                            let-column="column">CLIENT
+                                                                            NAME
+                                                                        </ng-template>
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{row.FirstAccountHolderName}}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="BankName" [width]="110"
+                                                                        [sortable]="true" prop="BankName">
+                                                                        <ng-template ngx-datatable-header-template
+                                                                            let-column="column">BANK</ng-template>
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{row.BankName}}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="ChequeNumber"
+                                                                        [width]="55" [sortable]="true"
+                                                                        prop="ChequeNumber">
+                                                                        <ng-template ngx-datatable-header-template
+                                                                            let-column="column">CHEQUE NO.
+                                                                        </ng-template>
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{ row.ChequeNumber }}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="ChequeDate" [width]="70"
+                                                                        [sortable]="true" prop="ChequeDate">
+                                                                        <ng-template ngx-datatable-header-template
+                                                                            let-column="column">CHEQUE DATE
+                                                                        </ng-template>
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{ row.ChequeDate|date:'dd-MM-yyyy' }}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="GroupId" [width]="55"
+                                                                        [sortable]="true" prop="GroupId">
+                                                                        <ng-template ngx-datatable-header-template
+                                                                            let-column="column">GROUP ID
+                                                                        </ng-template>
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{ row.GroupId }}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="DepositChallanNumber"
+                                                                        [width]="75" [sortable]="true"
+                                                                        prop="DepositChallanNumber">
+                                                                        <ng-template ngx-datatable-header-template
+                                                                            let-column="column">Challan No.
+                                                                        </ng-template>
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{ row.DepositChallanNumber }}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="Amount" [width]="45"
+                                                                        [sortable]="true" prop="Amount">
+                                                                        <ng-template ngx-datatable-header-template
+                                                                            let-column="column">AMOUNT
+                                                                        </ng-template>
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{ row.Amount }}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <!-- <ngx-datatable-column name="Recall" [width]="50" [sortable]="true"
+                                                                    prop="Recall">
+                                                                    <ng-template ngx-datatable-header-template let-column="column"> RECALL
+                                                                    </ng-template>
+                                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                                                        let-row="row">
+                                                                        {{ row.Recall  }}
+                                                                    </ng-template>
+                                                                </ngx-datatable-column>
+                                                                <ngx-datatable-column name="Status" [minWidth]="30" [width]="200" [sortable]="true"
+                                                                    prop="Status">
+                                                                    <ng-template ngx-datatable-header-template let-column="column">STATUS
+                                                                    </ng-template>
+                                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                                                        let-row="row">
+                                                                        <span class="badge badge-success">{{row.LogMessage}}</span>
+                                                                    </ng-template>
+                                                                </ngx-datatable-column>-->
+                                                                    <ngx-datatable-column [sortable]="false"
+                                                                        [width]="15" [frozenRight]="true">
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            <div class="d-inline-block ms-3" ngbDropdown
+                                                                                container="body" #myDrop="ngbDropdown">
+                                                                                <button type="button"
+                                                                                    class="btn btn-view bg-gray me-2"
+                                                                                    id="dropdownManual"
+                                                                                    ngbDropdownToggle>
+                                                                                    <i class="icon-dots"></i>
+                                                                                </button>
+                                                                                <div ngbDropdownMenu
+                                                                                    aria-labelledby="dropdownManual"
+                                                                                    placement="bottom-left">
+                                                                                    <ng-container>
+                                                                                        <a ngbDropdownItem
+                                                                                            (click)="onDownloadChallanClicked(row)"
+                                                                                            *ngIf="row.DepositChallanNumber!=''">Download
+                                                                                            Challan</a>
+                                                                                        <!-- <a ngbDropdownItem>Raise a query </a>
+                                                                                    <a ngbDropdownItem>Resend Email</a> -->
+                                                                                    </ng-container>
+                                                                                </div>
+                                                                            </div>
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                </ngx-datatable>
+                                                            </div>
+                                                        </ng-template>
+                                                    </ng-container>
+                                                </nav>
+                                            </div>
+                                            <div class="col-xl-8 pl-xl-0 " *ngIf="activeActivityTab == 0">
+                                                <div class="table-options d-flex gap-2 align-items-center mb-3">
+                                                    <div class="dp-hidden position-absolute">
+                                                        <div class="input-group" style="border: none;">
+                                                            <input name="datepicker" class="form-control" ngbDatepicker
+                                                                #datepicker="ngbDatepicker" [autoClose]="'outside'"
+                                                                (dateSelect)="onDateSelection($event)"
+                                                                [displayMonths]="2" [dayTemplate]="t"
+                                                                outsideDays="hidden" [startDate]="fromDate!"
+                                                                tabindex="-1" />
+                                                            <ng-template #t let-date let-focused="focused">
+                                                                <span class="custom-day" [class.focused]="focused"
+                                                                    [class.range]="isRange(date)"
+                                                                    [class.faded]="isHovered(date) || isInside(date)"
+                                                                    (mouseenter)="hoveredDate = date"
+                                                                    (mouseleave)="hoveredDate = null">
+                                                                    {{ date.day }}
+                                                                </span>
+                                                            </ng-template>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group" style="width:455px;">
+                                                        <button class="btn btn-transparent"
+                                                            (click)="datepicker.toggle()" type="button"><svg width="24"
+                                                                height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#month"></use>
+                                                            </svg></button>
+                                                        <input class="form-control" readonly
+                                                            placeholder="dd/mm/yyyy - dd/mm/yyyy" name="dp"
+                                                            [value]="dateFromTo" />
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="table-search">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                    <use xlink:href="#search" />
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                        <input type="text" class="form-control custom-search-input"
+                                                            placeholder="Search" aria-label="table-search"
+                                                            id="tableSearch" aria-describedby="table-search"
+                                                            [(ngModel)]="objSearchKeyword" (input)="searchRecord()">
+                                                    </div>
+
+                                                    <button class="btn btn-icon" (click)="onTradeLogFilterClick()">
+                                                        <svg width="40" viewBox="0 0 36 36">
+                                                            <use xlink:href="#filter" />
+                                                        </svg>
+                                                    </button>
+                                                    <!-- <div class="table-nav d-flex">
+                                                        <button class="btn btn-transparent btn-sm" id="previous" disabled>
+                                                            <i class="icon-left-arrow"></i>
+                                                        </button>
+                                                        <button class="btn btn-transparent btn-sm" id="next">
+                                                            <i class="icon-right-arrow"></i>
+                                                        </button>
+                                                    </div> -->
+                                                    <!-- <button class="btn btn-primary col-sm-3 col-6 ml-3"
+                                                        *ngIf="!isLoading" (click)="onTradeLogDownload()"
+                                                        [disabled]="isBusy">
+                                                        <div *ngIf="isBusy">
+                                                            <span class="spinner-border text-light"
+                                                                style="margin-right: 10px; vertical-align: middle;"
+                                                                role="status"></span>
+                                                            <span>Download</span>
+                                                        </div>
+                                                        <span *ngIf="!isBusy">Download</span>
+                                                    </button> -->
+                                                    <button class="btn btn-icon" *ngIf="!isLoading"
+                                                        (click)="onTradeLogDownload()" [disabled]="isBusy">
+                                                        <svg width="40" viewBox="0 0 26 26">
+                                                            <use xlink:href="#download" />
+                                                        </svg>
+                                                        <span class="spinner-border text-light"
+                                                            style="position: absolute; top:0; left:0; width:40px; height:40px;"
+                                                            role="status" *ngIf="isBusy"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-8 pl-xl-0 " *ngIf="activeActivityTab == 1">
+                                                <div class="table-options d-flex gap-2 align-items-center mb-3">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="table-search">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                    <use xlink:href="#search" />
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                        <input type="text" class="form-control custom-search-input"
+                                                            placeholder="Search" aria-label="table-search"
+                                                            id="tableSearch" aria-describedby="table-search"
+                                                            [(ngModel)]="objSearchKeyword" (input)="searchRecord()">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                    <ng-container [ngbNavItem]="2">
+                        <a ngbNavLink>Reports</a>
+                        <ng-template ngbNavContent>
+                            <div class="mt-4">
+                                <div class="card small-card option-2 mb-4">
+                                    <div class="card-header mb-2 d-flex">
+                                        <div class="form-group custom-checkbox mb-0">
+                                            <input #holdingReport type="checkbox" id="holdings-report"
+                                                [(ngModel)]="isAllHoldingReport"
+                                                (change)="onHoldingReportChange(holdingReport.checked)">
+                                            <label for="holdings-report">Holding Report</label>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="big-checkbox bg-white" *ngFor="let item of reportHoldings">
+                                            <input type="checkbox" id="portfolio_{{item.Id}}"
+                                                [(ngModel)]="item.IsSelected">
+                                            <label for="portfolio_{{item.Id}}">
+                                                <span class="check-mark"></span>
+                                                <svg width="60" height="60" viewBox="10 10 60 60"
+                                                    *ngIf="item.Code == 'W'">
+                                                    <use xlink:href="#wealth"></use>
+                                                </svg>
+                                                <svg width="60" height="60" viewBox="10 10 60 60"
+                                                    *ngIf="item.Code == 'T'">
+                                                    <use xlink:href="#tax"></use>
+                                                </svg>
+                                                <svg width="60" height="60" viewBox="10 10 60 60"
+                                                    *ngIf="item.Code == 'ST'">
+                                                    <use xlink:href="#short-term"></use>
+                                                </svg>
+                                                <svg width="60" height="60" viewBox="10 10 60 60"
+                                                    *ngIf="item.Code == 'G'">
+                                                    <use xlink:href="#short-term"></use>
+                                                </svg>
+                                                <h4 class="text-uppercase">{{item.Name}}:
+                                                    ₹{{item.MarketValue|shortCurrencyNumber}}</h4>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card small-card option-2 mb-4">
+                                    <div class="card-header mb-2 d-flex justify-content-between align-items-center">
+                                        <div class="form-group custom-checkbox mb-0">
+                                            <input type="checkbox" id="tax-report">
+                                            <label for="tax-report">Tax Report</label>
+                                        </div>
+                                        <div class="table-nav">
+                                            <button class="btn btn-transparent-round btn-sm" id="sliderPrevious"
+                                                (click)="goTo('prev')">
+                                                <i class="icon-left-arrow"></i>
+                                            </button>
+                                            <button class="btn btn-transparent-round btn-sm" id="sliderNext"
+                                                (click)="goTo('next')">
+                                                <i class="icon-right-arrow"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <ngx-wrapper-tiny-slider #taxSlider [config]="tinySliderConfig">
+                                            <div class="item">
+                                                <div class="card small-card option-2 option-2">
+                                                    <div class="card-header">
+                                                        <div class="form-group mb-0 custom-checkbox">
+                                                            <input type="checkbox" id="2020">
+                                                            <label for="2020">2020</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body pt-0">
+                                                        <table class="card-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Parameters</th>
+                                                                    <th>Long Term</th>
+                                                                    <th>Short Term</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Equity</td>
+                                                                    <td>₹1.22L</td>
+                                                                    <td>₹1.22L</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Debt</td>
+                                                                    <td>₹1.22L</td>
+                                                                    <td>₹1.22L</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="card small-card option-2 option-2">
+                                                    <div class="card-header">
+                                                        <div class="form-group mb-0 custom-checkbox">
+                                                            <input type="checkbox" id="2019">
+                                                            <label for="2019">2019</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body pt-0">
+                                                        <table class="card-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Parameters</th>
+                                                                    <th>Long Term</th>
+                                                                    <th>Short Term</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Equity</td>
+                                                                    <td>₹1.22L</td>
+                                                                    <td>₹1.22L</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Debt</td>
+                                                                    <td>₹1.22L</td>
+                                                                    <td>₹1.22L</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="card small-card option-2 option-2">
+                                                    <div class="card-header">
+                                                        <div class="form-group mb-0 custom-checkbox">
+                                                            <input type="checkbox" id="2018">
+                                                            <label for="2018">2018</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body pt-0">
+                                                        <table class="card-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Parameters</th>
+                                                                    <th>Long Term</th>
+                                                                    <th>Short Term</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Equity</td>
+                                                                    <td>₹1.22L</td>
+                                                                    <td>₹1.22L</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Debt</td>
+                                                                    <td>₹1.22L</td>
+                                                                    <td>₹1.22L</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="card small-card option-2 option-2">
+                                                    <div class="card-header">
+                                                        <div class="form-group mb-0 custom-checkbox">
+                                                            <input type="checkbox" id="2017">
+                                                            <label for="2017">2017</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body pt-0">
+                                                        <table class="card-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Parameters</th>
+                                                                    <th>Long Term</th>
+                                                                    <th>Short Term</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Equity</td>
+                                                                    <td>₹1.22L</td>
+                                                                    <td>₹1.22L</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Debt</td>
+                                                                    <td>₹1.22L</td>
+                                                                    <td>₹1.22L</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ngx-wrapper-tiny-slider>
+                                    </div>
+                                </div>
+                                <div class="card small-card option-2 mb-4">
+                                    <div class="card-header mb-2 d-block d-md-flex">
+                                        <div class="form-group custom-checkbox mb-0">
+                                            <input type="checkbox" id="point-report">
+                                            <label for="point-report">Point to Point Report</label>
+                                        </div>
+                                        <div class="form-group custom-radio-btn mt-3 mt-md-0 mb-0">
+                                            <div class="form-check form-check-inline m-0">
+                                                <input class="form-check-input" type="radio" name="allocation"
+                                                    id="Monthly" value="Monthly" checked>
+                                                <label class="form-check-label" for="Monthly">
+                                                    <span class="label mb-0">Monthly </span>
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline m-0 ms-3">
+                                                <input class="form-check-input" type="radio" name="allocation"
+                                                    id="Quarterly" value="Quarterly">
+                                                <label class="form-check-label" for="Quarterly">
+                                                    <span class="label mb-0">Quarterly </span>
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline m-0 ms-3">
+                                                <input class="form-check-input" type="radio" name="allocation" id="half"
+                                                    value="half" checked>
+                                                <label class="form-check-label" for="half">
+                                                    <span class="label mb-0">Half Yearly </span>
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline m-0 ms-3">
+                                                <input class="form-check-input" type="radio" name="allocation"
+                                                    id="Yearly" value="Yearly">
+                                                <label class="form-check-label" for="Yearly">
+                                                    <span class="label mb-0">Yearly </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-md-flex justify-content-between align-items-start">
+                                            <div class="tabs">
+                                                <ul class="nav nav-tabs mb-0 income-tab" id="plan-tab" role="tablist">
+                                                    <li class="nav-item" role="presentation">
+                                                        <a class="nav-link active pe-4" data-toggle="tab"
+                                                            href="#report-2020" role="tab" aria-selected="true">2020</a>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <a class="nav-link pe-4" data-toggle="tab" href="#report-2019"
+                                                            role="tab" aria-selected="true">2019</a>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <a class="nav-link pe-4" data-toggle="tab" href="#report-2018"
+                                                            role="tab" aria-selected="true">2018</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="view-details mt-3 mt-sm-0">
+                                                <div class="selected-cards">
+                                                    2 Cards Selected
+                                                </div>
+                                                <a class="view-all" data-toggle="modal"
+                                                    data-target="#selected-cards">View
+                                                    Details <i class="icon-right-arrow"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="tab-content mt-3 mb-2">
+                                            <div class="tab-pane fade show active" id="report-2020" role="tabpanel">
+                                                <div class="row">
+                                                    <div class="col-xl-3 col-md-6 col-sm-12 mb-3 mb-xl-0">
+                                                        <div class="card small-card option-2">
+                                                            <div class="card-header">
+                                                                <div class="form-group mb-0 custom-checkbox">
+                                                                    <input type="checkbox" id="quater1">
+                                                                    <label for="quater1"><span class="light-text">Quater
+                                                                            1</span> <br><span class="d-block mt-2">10
+                                                                            Apr
+                                                                            2020 - 10 Jun 2020</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <ul class="transaction-details ps-0">
+                                                                    <li>
+                                                                        <label>Opening Balance</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Inflows</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Outflows</label>
+                                                                        <span class="value">₹2.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Current PF value</label>
+                                                                        <span class="value">₹25L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Benchmark value</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Alpha/Benchmark</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-6 col-sm-12 mb-3 mb-xl-0">
+                                                        <div class="card small-card option-2">
+                                                            <div class="card-header">
+                                                                <div class="form-group mb-0 custom-checkbox">
+                                                                    <input type="checkbox" id="quater1">
+                                                                    <label for="quater1"><span class="light-text">Quater
+                                                                            1</span> <br><span class="d-block mt-2">10
+                                                                            Apr
+                                                                            2020 - 10 Jun 2020</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <ul class="transaction-details ps-0">
+                                                                    <li>
+                                                                        <label>Opening Balance</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Inflows</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Outflows</label>
+                                                                        <span class="value">₹2.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Current PF value</label>
+                                                                        <span class="value">₹25L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Benchmark value</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Alpha/Benchmark</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-6 col-sm-12 mb-3 mb-xl-0">
+                                                        <div class="card small-card option-2">
+                                                            <div class="card-header">
+                                                                <div class="form-group mb-0 custom-checkbox">
+                                                                    <input type="checkbox" id="quater1">
+                                                                    <label for="quater1"><span class="light-text">Quater
+                                                                            1</span> <br><span class="d-block mt-2">10
+                                                                            Apr
+                                                                            2020 - 10 Jun 2020</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <ul class="transaction-details ps-0">
+                                                                    <li>
+                                                                        <label>Opening Balance</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Inflows</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Outflows</label>
+                                                                        <span class="value">₹2.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Current PF value</label>
+                                                                        <span class="value">₹25L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Benchmark value</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Alpha/Benchmark</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-6 col-sm-12 mb-3 mb-xl-0">
+                                                        <div class="card small-card option-2">
+                                                            <div class="card-header">
+                                                                <div class="form-group mb-0 custom-checkbox">
+                                                                    <input type="checkbox" id="quater1">
+                                                                    <label for="quater1"><span class="light-text">Quater
+                                                                            1</span> <br><span class="d-block mt-2">10
+                                                                            Apr
+                                                                            2020 - 10 Jun 2020</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <ul class="transaction-details ps-0">
+                                                                    <li>
+                                                                        <label>Opening Balance</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Inflows</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Outflows</label>
+                                                                        <span class="value">₹2.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Current PF value</label>
+                                                                        <span class="value">₹25L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Benchmark value</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Alpha/Benchmark</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="report-2019" role="tabpanel">
+                                                <div class="row">
+                                                    <div class="col-xl-3 col-md-6 col-sm-12 mb-3 mb-xl-0">
+                                                        <div class="card small-card option-2">
+                                                            <div class="card-header">
+                                                                <div class="form-group mb-0 custom-checkbox">
+                                                                    <input type="checkbox" id="quater1">
+                                                                    <label for="quater1"><span class="light-text">Quater
+                                                                            1</span> <br><span class="d-block mt-2">10
+                                                                            Apr
+                                                                            2020 - 10 Jun 2020</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <ul class="transaction-details ps-0">
+                                                                    <li>
+                                                                        <label>Opening Balance</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Inflows</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Outflows</label>
+                                                                        <span class="value">₹2.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Current PF value</label>
+                                                                        <span class="value">₹25L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Benchmark value</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Alpha/Benchmark</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-6 col-sm-12 mb-3 mb-xl-0">
+                                                        <div class="card small-card option-2">
+                                                            <div class="card-header">
+                                                                <div class="form-group mb-0 custom-checkbox">
+                                                                    <input type="checkbox" id="quater1">
+                                                                    <label for="quater1"><span class="light-text">Quater
+                                                                            1</span> <br><span class="d-block mt-2">10
+                                                                            Apr
+                                                                            2020 - 10 Jun 2020</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <ul class="transaction-details ps-0">
+                                                                    <li>
+                                                                        <label>Opening Balance</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Inflows</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Outflows</label>
+                                                                        <span class="value">₹2.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Current PF value</label>
+                                                                        <span class="value">₹25L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Benchmark value</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Alpha/Benchmark</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-6 col-sm-12 mb-3 mb-xl-0">
+                                                        <div class="card small-card option-2">
+                                                            <div class="card-header">
+                                                                <div class="form-group mb-0 custom-checkbox">
+                                                                    <input type="checkbox" id="quater1">
+                                                                    <label for="quater1"><span class="light-text">Quater
+                                                                            1</span> <br><span class="d-block mt-2">10
+                                                                            Apr
+                                                                            2020 - 10 Jun 2020</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <ul class="transaction-details ps-0">
+                                                                    <li>
+                                                                        <label>Opening Balance</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Inflows</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Outflows</label>
+                                                                        <span class="value">₹2.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Current PF value</label>
+                                                                        <span class="value">₹25L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Benchmark value</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Alpha/Benchmark</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-6 col-sm-12 mb-3 mb-xl-0">
+                                                        <div class="card small-card option-2">
+                                                            <div class="card-header">
+                                                                <div class="form-group mb-0 custom-checkbox">
+                                                                    <input type="checkbox" id="quater1">
+                                                                    <label for="quater1"><span class="light-text">Quater
+                                                                            1</span> <br><span class="d-block mt-2">10
+                                                                            Apr
+                                                                            2020 - 10 Jun 2020</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <ul class="transaction-details ps-0">
+                                                                    <li>
+                                                                        <label>Opening Balance</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Inflows</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Outflows</label>
+                                                                        <span class="value">₹2.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Current PF value</label>
+                                                                        <span class="value">₹25L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Benchmark value</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Alpha/Benchmark</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="report-2018" role="tabpanel">
+                                                <div class="row">
+                                                    <div class="col-xl-3 col-md-6 col-sm-12 mb-3 mb-xl-0">
+                                                        <div class="card small-card option-2">
+                                                            <div class="card-header">
+                                                                <div class="form-group mb-0 custom-checkbox">
+                                                                    <input type="checkbox" id="quater1">
+                                                                    <label for="quater1"><span class="light-text">Quater
+                                                                            1</span> <br><span class="d-block mt-2">10
+                                                                            Apr
+                                                                            2020 - 10 Jun 2020</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <ul class="transaction-details ps-0">
+                                                                    <li>
+                                                                        <label>Opening Balance</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Inflows</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Outflows</label>
+                                                                        <span class="value">₹2.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Current PF value</label>
+                                                                        <span class="value">₹25L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Benchmark value</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Alpha/Benchmark</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-6 col-sm-12 mb-3 mb-xl-0">
+                                                        <div class="card small-card option-2">
+                                                            <div class="card-header">
+                                                                <div class="form-group mb-0 custom-checkbox">
+                                                                    <input type="checkbox" id="quater1">
+                                                                    <label for="quater1"><span class="light-text">Quater
+                                                                            1</span> <br><span class="d-block mt-2">10
+                                                                            Apr
+                                                                            2020 - 10 Jun 2020</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <ul class="transaction-details ps-0">
+                                                                    <li>
+                                                                        <label>Opening Balance</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Inflows</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Outflows</label>
+                                                                        <span class="value">₹2.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Current PF value</label>
+                                                                        <span class="value">₹25L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Benchmark value</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Alpha/Benchmark</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-6 col-sm-12 mb-3 mb-xl-0">
+                                                        <div class="card small-card option-2">
+                                                            <div class="card-header">
+                                                                <div class="form-group mb-0 custom-checkbox">
+                                                                    <input type="checkbox" id="quater1">
+                                                                    <label for="quater1"><span class="light-text">Quater
+                                                                            1</span> <br><span class="d-block mt-2">10
+                                                                            Apr
+                                                                            2020 - 10 Jun 2020</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <ul class="transaction-details ps-0">
+                                                                    <li>
+                                                                        <label>Opening Balance</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Inflows</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Outflows</label>
+                                                                        <span class="value">₹2.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Current PF value</label>
+                                                                        <span class="value">₹25L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Benchmark value</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Alpha/Benchmark</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-6 col-sm-12 mb-3 mb-xl-0">
+                                                        <div class="card small-card option-2">
+                                                            <div class="card-header">
+                                                                <div class="form-group mb-0 custom-checkbox">
+                                                                    <input type="checkbox" id="quater1">
+                                                                    <label for="quater1"><span class="light-text">Quater
+                                                                            1</span> <br><span class="d-block mt-2">10
+                                                                            Apr
+                                                                            2020 - 10 Jun 2020</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <ul class="transaction-details ps-0">
+                                                                    <li>
+                                                                        <label>Opening Balance</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Inflows</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Outflows</label>
+                                                                        <span class="value">₹2.30L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Current PF value</label>
+                                                                        <span class="value">₹25L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Benchmark value</label>
+                                                                        <span class="value">₹12.4L</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>Alpha/Benchmark</label>
+                                                                        <span class="value">₹22.30L</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card small-card option-2 mb-4">
+                                    <div class="card-header mb-2 d-flex">
+                                        <div class="form-group custom-checkbox mb-0">
+                                            <input type="checkbox" id="commission-report">
+                                            <label for="commission-report">Commission Report</label>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="card small-card option-2">
+                                                    <div class="card-body">
+                                                        <div class="text-right">
+                                                            <a class="btn btn-link">View Details</a>
+                                                        </div>
+                                                        <canvas id="commission-chart" style="height:200px;"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 mb-2">
+                                                <div class="card small-card option-2">
+                                                    <div class="card-body">
+                                                        <div class="table-wrap">
+                                                            <table class="simple-table scrolling">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Month</th>
+                                                                        <th>Brokerage</th>
+                                                                        <th>Growth Rate</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="jan-2020">
+                                                                                <label for="jan-2020">Jan
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator success">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="feb-2020">
+                                                                                <label for="feb-2020">Feb
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator danger">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="mar-2020">
+                                                                                <label for="mar-2020">Mar
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator success">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="jan-2020">
+                                                                                <label for="jan-2020">Jan
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator success">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="feb-2020">
+                                                                                <label for="feb-2020">Feb
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator danger">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="mar-2020">
+                                                                                <label for="mar-2020">Mar
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator success">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="jan-2020">
+                                                                                <label for="jan-2020">Jan
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator success">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="feb-2020">
+                                                                                <label for="feb-2020">Feb
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator danger">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="mar-2020">
+                                                                                <label for="mar-2020">Mar
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator success">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="jan-2020">
+                                                                                <label for="jan-2020">Jan
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator success">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="feb-2020">
+                                                                                <label for="feb-2020">Feb
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator danger">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="mar-2020">
+                                                                                <label for="mar-2020">Mar
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator success">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="jan-2020">
+                                                                                <label for="jan-2020">Jan
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator success">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="feb-2020">
+                                                                                <label for="feb-2020">Feb
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator danger">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="mar-2020">
+                                                                                <label for="mar-2020">Mar
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator success">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="jan-2020">
+                                                                                <label for="jan-2020">Jan
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator success">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="feb-2020">
+                                                                                <label for="feb-2020">Feb
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator danger">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div
+                                                                                class="form-group custom-checkbox mb-0">
+                                                                                <input type="checkbox" id="mar-2020">
+                                                                                <label for="mar-2020">Mar
+                                                                                    2020</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>₹25L</td>
+                                                                        <td>₹25L
+                                                                            <span class="growth-indicator success">
+                                                                                <i class="arrow"></i> 25%
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12" style="margin-bottom: 5.75rem;">
+                                <button class="btn btn-primary btn-lg float-right ms-4">Email</button>
+                                <button class="btn btn-primary btn-lg float-right" data-toggle="modal"
+                                    data-target="#commission" (click)="onReportDownload()">Download</button>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                    <ng-container [ngbNavItem]="3">
+                        <a ngbNavLink>Profile</a>
+                        <ng-template ngbNavContent>
+                            <div class="mt-4">
+                                <div class="profile-section mb-4">
+                                    <div class="d-md-flex">
+                                        <div class="col-md-6 bg-primary"
+                                            style="padding-left: 1.75rem; padding-right:1.75rem;">
+                                            <div class="client-name big ">
+                                                <span class="initials warning">{{profile.Initials}}</span>
+                                                <div class="name">
+                                                    {{profile.FirstHolderName}}<br>
+                                                    <small>{{profile.UCC}}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 bg-secondary"
+                                            style="padding-left: 1.75rem; padding-right:1.75rem;">
+                                            <div class="profile-info">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <div class="client-name mb">
+                                                            <span class="initials warning">
+                                                                <svg width="35" height="35" viewBox="15 15 50 50">
+                                                                    <use xlink:href="#wealth"></use>
+                                                                </svg>
+                                                            </span>
+                                                            <div class="form-group mb-0 ps-2">
+                                                                <label>Total Wealth</label>
+                                                                <span
+                                                                    class="form-control-plaintext font-bold">₹{{profile.TotalWealth
+                                                                    | shortCurrencyNumber}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="client-name mb">
+                                                            <span class="initials warning">
+                                                                <svg width="35" height="35" viewBox="24 29 32 29">
+                                                                    <use xlink:href="#revenue"></use>
+                                                                </svg>
+                                                            </span>
+                                                            <div class="form-group mb-0 ps-2">
+                                                                <label>Investment</label>
+                                                                <span
+                                                                    class="form-control-plaintext font-bold">₹{{profile.TotalInvestment
+                                                                    | shortCurrencyNumber}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="client-name mb">
+                                                            <span class="initials warning">
+                                                                <svg width="35" height="35" viewBox="24 30 30 29">
+                                                                    <use xlink:href="#return"></use>
+                                                                </svg>
+                                                            </span>
+                                                            <div class="form-group mb-0 ps-2">
+                                                                <label>Returns</label>
+                                                                <span
+                                                                    class="form-control-plaintext font-bold">₹{{profile.TotalReturns
+                                                                    | shortCurrencyNumber}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card allocation-card card-sm">
+                                    <div class="card-body pt-2">
+
+                                        <div class="card-title pb-1 border-bottom d-flex align-items-center">
+                                            <div class="d-flex w-100 align-items-start justify-content-between">
+                                                <div class="d-flex align-items-center">
+                                                    <svg width="40" height="40" viewBox="5 5 45 45">
+                                                        <use xlink:href="#overview"></use>
+                                                    </svg>
+                                                    <h5 class="mb-0"> Details</h5>
+                                                </div>
+                                                <a class="btn btn-link" (click)="onEditClient()"><svg width="30"
+                                                        height="30" viewBox="0 0 24 24">
+                                                        <use xlink:href="#edit"></use>
+                                                    </svg>Edit Details</a>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-sections">
+                                            <h4 class="form-section-title text-uppercase">Personal Details</h4>
+
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label>Name</label>
+                                                        <input type="text" class="form-control"
+                                                            [(ngModel)]="profile.FirstHolderName" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label>Date of Birth</label>
+                                                        <input type="text" class="form-control"
+                                                            [(ngModel)]="profile.DateOfBirth" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label>Gender</label>
+                                                        <input type="text" class="form-control"
+                                                            [(ngModel)]="profile.Gender" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label>Country of Birth</label>
+                                                        <input type="text" class="form-control"
+                                                            [(ngModel)]="profile.CountryOfBirth" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Address 1</label>
+                                                        <textarea class="form-control" readonly
+                                                            [(ngModel)]="profile.LocalAddress"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Address 2</label>
+                                                        <textarea class="form-control" readonly
+                                                            [(ngModel)]="profile.ForeignAddress"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-sections">
+                                            <h4 class="form-section-title text-uppercase">Bank Details</h4>
+
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label>Primary Bank</label>
+                                                        <span
+                                                            class="form-control-plaintext">{{profile.PrimaryBankName}}</span>
+                                                        <span
+                                                            class="form-control-plaintext"><small>{{profile.PrimaryBankAccountNumber}}</small></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label>Secondary Bank</label>
+                                                        <span
+                                                            class="form-control-plaintext">{{profile.SecondaryBankName}}</span>
+                                                        <span
+                                                            class="form-control-plaintext"><small>{{profile.SecondaryBankAccountNumber}}</small></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </nav>
+                <div [ngbNavOutlet]="nav"></div>
+            </div>
+            <div *ngIf="clientName==''">Select client from list to view details</div>
+        </div>
+    </div>
+</div>

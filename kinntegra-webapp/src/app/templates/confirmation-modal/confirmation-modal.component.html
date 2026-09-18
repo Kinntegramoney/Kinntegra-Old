@@ -1,0 +1,17 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticLeadLabel">Confirmation</h5>
+    </div>
+    <div class="modal-body">
+        <div class="error-lists">
+            {{Message}}
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="d-flex justify-content-end w-100">
+            <button class="btn btn-secondary col-sm-3 mb-2" (click)="CloseModel(false)">No</button>
+            <button class="btn btn-primary col-sm-3 ms-3 mb-2" (click)="CloseModel(true)"
+                data-dismiss="modal">Yes</button>
+        </div>
+    </div>
+</div>

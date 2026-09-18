@@ -1,0 +1,126 @@
+<div class="custom-wrapper-left">
+    <div class="inner-section">
+        <h3 class="card-title">
+            <ng-container *ngIf="mode == 'create'">
+                Create New Associate
+            </ng-container>
+            <ng-container *ngIf="mode == 'edit'">
+                Update Associate
+            </ng-container>
+            <ng-container *ngIf="mode == 'verify'">
+                Verify Associate
+            </ng-container>
+            <ng-container *ngIf="mode == 'externalverify'">
+                Verify Associate
+            </ng-container>
+            <ng-container *ngIf="mode == 'viewdetails'">
+                View Associate
+            </ng-container>
+        </h3>
+        <div class="form-percentage">
+            <svg viewBox="0 0 36 36" class="circular-chart orange">
+                <path class="circle-bg" d="M18 2.0845
+                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="circle" [attr.stroke-dasharray]="strokeDasharray" d="M18 2.0845
+                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <text x="18" y="20.35" class="percentage">{{progressPercentage}}%</text>
+            </svg>
+        </div>
+        <ul class="form-lists">
+            <li data-form="general-information"
+                [ngClass]="(activeComp === 'general-information') ? 'active':(objProgress.IsGeneralInfoCompleted)?'completed':''"
+                (click)="onAssociateGeneralinfoClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                General Information
+            </li>
+            <li data-form="entity-detail"
+                [ngClass]="(activeComp === 'entity-detail') ? 'active':(objProgress.IsPhotoDetailsCompleted && objProgress.IsCommunicationCompleted && objProgress.IsBankCompleted && objProgress.IsOtherCompleted)?'completed':''"
+                (click)="onAssociateEntitydetailClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Entity Details
+                <ul>
+                    <li class="isChild"
+                        [ngClass]="(activeSubComp === 'photo') ? 'sub-active':(objProgress.IsPhotoDetailsCompleted)?'sub-completed':''"
+                        data-form="photo-detail" (click)="onAssociatePhotoIdDetailClicked()">Photo ID
+                        Details
+                    </li>
+                    <li class="isChild"
+                        [ngClass]="(activeSubComp === 'communication') ? 'sub-active':(objProgress.IsCommunicationCompleted)?'sub-completed':''"
+                        data-form="address-detail" (click)="onAssociateCommunicationDetailClicked()">
+                        Communication
+                        Details
+                    </li>
+                    <li class="isChild"
+                        [ngClass]="(activeSubComp === 'bank') ? 'sub-active':(objProgress.IsBankCompleted)?'sub-completed':''"
+                        data-form="bank-detail" (click)="onAssociateBankDetailClicked()">Bank Details
+                    </li>
+                    <li class="isChild"
+                        [ngClass]="(activeSubComp === 'other') ? 'sub-active':(objProgress.IsOtherCompleted)?'sub-completed':''"
+                        data-form="other-detail" (click)="onAssociateOtherDetailClicked()">Other Details
+                    </li>
+                </ul>
+            </li>
+            <li data-form="license-detail"
+                [ngClass]="(activeComp === 'license-detail') ? 'active':(objProgress.IsLicenseCompleted)?'completed':''"
+                (click)="onAssociateLicenseDetailClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                License Details
+            </li>
+            <li data-form="euin-detail"
+                [ngClass]="(activeComp === 'certification') ? 'active':(objProgress.IsCertificateCompleted)?'completed':''"
+                *ngIf="showCertificate" (click)="onAssociateCertificationClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Certification
+            </li>
+            <li data-form="nominee-detail"
+                [ngClass]="(activeComp === 'nominee-detail') ? 'active':(objProgress.IsNomineeCompleted)?'completed':''"
+                *ngIf="showNominee" (click)="onAssociateNomineeClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Nominee
+                <ul>
+                    <li class="isChild"
+                        [ngClass]="(activeSubComp === 'guardian') ? 'sub-active':(objProgress.IsGuardianCompleted)?'sub-completed':''"
+                        data-form="guardian-detail" *ngIf="showGaurdian" (click)="onAssociateGuardianDetailClicked()">
+                        Guardian
+                    </li>
+                </ul>
+            </li>
+            <li data-form="commercial-detail"
+                [ngClass]="(activeComp === 'commercial-detail') ? 'active':(objProgress.IsCommerialsCompleted)?'completed':''"
+                (click)="onAssociateCommercialsClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Commercials
+            </li>
+            <li data-form="bse-detail"
+                [ngClass]="(activeComp === 'right') ? 'active':(objProgress.IsRightsCompleted)?'completed':''"
+                *ngIf="showRights" (click)="onAssociateRightsClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Rights
+            </li>
+            <li data-form="bse-detail"
+                [ngClass]="(activeComp === 'download') ? 'active':(objProgress.IsDownloadCompleted)?'completed':''"
+                *ngIf="showDownload" (click)="onAssociateDownloadClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Download
+            </li>
+        </ul>
+    </div>
+</div>

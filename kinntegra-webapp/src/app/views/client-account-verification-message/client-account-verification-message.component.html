@@ -1,0 +1,28 @@
+<div class="container-fluid mt-4">
+    <div class="col d-flex justify-content-center align-item-center">
+        <div class="card col-8">
+
+            <div class="card-body text-center">
+                <!-- <div class="row"> -->
+                <!-- <div class="row" style="text-align: center;">
+                    <img class="card-img-top" style="width: 150px; height: 150px;" src="assets/images/logo.svg" alt="Card image">
+                </div> -->
+
+                <div class="row justify-content-center">
+                    <div class="col-2">
+                        <ng-lottie width="100px" height="100px" [options]="lottieOptions"
+                            (animationCreated)="animationCreated($event)"></ng-lottie>
+                        <!-- <img class="card-img-top" style="width:80px; height: 80px;" src="assets/images/logo.svg" alt="Card image"> -->
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <h3 class="card-text">Kinntegra Wealth Private Limited</h3>
+                    <p class="card-text" *ngIf="mtype=='Approved'">Your credentials will be shared soon with your email
+                        address.</p>
+                    <p class="card-text" *ngIf="mtype=='Rejected'">Thank you. Your associate will get in touch with you for further assistance.</p>
+                </div>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+</div>

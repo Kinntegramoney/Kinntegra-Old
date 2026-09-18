@@ -1,0 +1,38 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Employee Logs: {{EmployeeName}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="activeModal.dismiss('Cross click')">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row form-sections">
+            <div class="col-12">
+                <div class="card small-card option-2 mb-4">
+                    <div class="card-header">
+                        <h6 class="card-title">View Logs</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="transaction-wrapper trade-status" id="status_log">
+                            <div *ngFor="let verification of verificationArray" class="transaction-steps">
+                                <div class="trade-title mb-2">
+                                  <h4 class="mb-0">{{verification.LogMessage}}</h4>
+                                   <div class="info">
+                                    <span>{{ verification.LogDate | date:'hh:mm:ss a':"IST" }}</span>
+                                    <span>{{ verification.LogDate | date:'EEEE, d MMMM yyyy':"IST" }}</span>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary col-sm-3" data-dismiss="modal" aria-label="Close"
+            (click)="activeModal.dismiss('Cross click')">Close</button>
+    </div>
+</div>

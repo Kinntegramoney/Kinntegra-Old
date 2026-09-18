@@ -1,0 +1,43 @@
+// .members-tab .nav-item .nav-link, .income-tab .nav-item .nav-link, .accounts-tab .nav-item .nav-link, .companys-tab .nav-item .nav-link{
+//     padding-right: 1rem;
+// }
+// .w-40 {
+//     width: 40% !important;
+// }
+// /*Select2 ReadOnly Start*/
+// select[readonly].select2-hidden-accessible+.select2-container {
+//     pointer-events: none;
+//     touch-action: none;
+// }
+
+// select[readonly].select2-hidden-accessible+.select2-container .select2-selection {
+//     background: #eee;
+//     box-shadow: none;
+// }
+
+// select[readonly].select2-hidden-accessible+.select2-container .select2-selection__arrow,
+// select[readonly].select2-hidden-accessible+.select2-container .select2-selection__clear {
+//     display: none;
+// }
+
+// .select2-container--default .select2-results__option[aria-disabled=true] {
+//     display: none;
+// }
+
+.slick-prev {
+    left: -10px;
+}
+.slick-prev, .slick-next{
+    top: 60%;
+}
+.slick-prev:before, .slick-next:before{
+    color: #365b58;
+}
+ .items {
+     width: 94%;
+     margin: 0px auto;
+ }
+
+ .slick-slide {
+     margin: 10px
+ }

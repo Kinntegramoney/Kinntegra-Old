@@ -1,0 +1,93 @@
+<div class="custom-wrapper-left">
+    <div class="inner-section">
+        <h3 class="card-title">
+            <ng-container *ngIf="mode == 'create'">
+                Create New Employee
+            </ng-container>
+            <ng-container *ngIf="mode == 'edit'">
+                Update Employee
+            </ng-container>
+            <ng-container *ngIf="mode == 'verify'">
+                Verify Employee
+            </ng-container>
+            <ng-container *ngIf="mode == 'externalverify'">
+                Verify Employee
+            </ng-container>
+            <ng-container *ngIf="mode == 'viewdetails'">
+                View Employee
+            </ng-container>
+        </h3>
+
+        <div class="form-percentage">
+            <svg viewBox="0 0 36 36" class="circular-chart orange">
+                <path class="circle-bg" d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="circle" [attr.stroke-dasharray]="strokeDasharray" d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <text x="18" y="20.35" class="percentage">{{progressPercentage}}%</text>
+            </svg>
+        </div>
+
+        <ul class="form-lists">
+            <li data-form="general-information"
+                [ngClass]="(activeComp === 'general-information') ? 'active':(objProgress.IsGeneralInfoCompleted)?'completed':''"
+                (click)="onEmployeeGeneralInformationClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                General Information
+            </li>
+            <li data-form="employee-detail"
+                [ngClass]="(activeComp === 'employee-detail') ? 'active':(objProgress.IsPhotoIdCompleted && objProgress.IsAddressCompleted && objProgress.IsBankCompleted)?'completed':''"
+                (click)="onEmployeeDetailsClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Employee Details
+                <ul>
+                    <li class=" isChild"
+                        [ngClass]="(activeSubComp === 'photo') ? 'sub-active':(objProgress.IsPhotoIdCompleted)?'sub-completed':''"
+                        data-form="photo-detail" (click)="onEmployeePhotoIdDetailsClicked()">Photo ID
+                        Details</li>
+                    <li class="isChild"
+                        [ngClass]="(activeSubComp === 'address') ? 'sub-active':(objProgress.IsAddressCompleted)?'sub-completed':''"
+                        data-form="address-detail" (click)="onEmployeeAddressDetailsClicked()">Address
+                        Details</li>
+                    <li class="isChild"
+                        [ngClass]="(activeSubComp === 'bank') ? 'sub-active':(objProgress.IsBankCompleted)?'sub-completed':''"
+                        data-form="bank-detail" (click)="onEmployeeBankDetailsClicked()">Bank Details</li>
+                </ul>
+            </li>
+            <li data-form="certification-detail"
+                [ngClass]="(activeComp === 'certification-detail') ? 'active':(objProgress.IsCertificationCompleted)?'completed':''"
+                (click)="onEmployeeCertificationClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Certification
+            </li>
+
+            <li data-form="rights"
+                [ngClass]="(activeComp === 'rights') ? 'active':(objProgress.IsRightsCompleted)?'completed':''"
+                *ngIf="showRights" (click)="onEmployeeRightsClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Rights
+            </li>
+
+            <li data-form="download"
+                [ngClass]="(activeComp === 'upload') ? 'active':(objProgress.IsDownloadCompleted)?'completed':''"
+                *ngIf="showUpload" (click)="onEmployeeDownloadClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Upload
+            </li>
+
+
+        </ul>
+    </div>
+</div>

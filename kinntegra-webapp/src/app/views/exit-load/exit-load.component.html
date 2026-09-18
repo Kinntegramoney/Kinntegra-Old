@@ -1,0 +1,109 @@
+
+<div class="table-top-section">
+    <div class="section-header mb-4">
+        <app-header-right-template class="section-header"></app-header-right-template>
+    </div>
+</div>
+<div class="card w-100">
+    <div class="card-body">
+        <div class="row">
+            <!-- <div class="col-xl-3 col-lg-4 col-md-4">
+                <app-admin-master-leftbar-template></app-admin-master-leftbar-template>
+            </div> -->
+            <div class="container-fluid col-lg-8 col-xl-12">
+                <h3 class="card-title d-inline"><i class="icon-left-arrow back-btn"
+                    (click)="onBack()"></i>Exit Load</h3>
+                <div class="form-inner-section">
+
+                    <div class="card-body">
+
+                        <!-- @php
+                        $search_date = '';
+                        $search_date = Carbon\Carbon::parse($selected_date)->format('d-m-Y');
+                    @endphp -->
+
+                        <div class="row flex-row-reverse">
+
+                            <div class="col-lg-12">
+                                <div class="admin-body">
+                                    <div class="row">
+                                        <div class="col-xl-7 mb-3 mb-xl-0">
+                                            <!-- <ul class="nav nav-tabs mb-4" id="lead-generation" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <a class="nav-link add-equity active" data-toggle="tab"
+                                                        data-type="equity" href="#admin-equity" role="tab"
+                                                        aria-selected="true">Exit Load</a>
+                                                </li>
+                                            </ul> -->
+                                        </div>
+                                        <div class="col-xl-5 pl-xl-0">
+                                            <div class="form-control ng-select-form-control">
+                                                    <ng-select [dropdownPosition]="'bottom'">
+                                                        <ng-option value="" selected disabled>Select Date</ng-option>
+
+                                                        <!-- @foreach ($scheme_dates as $date)
+                                                        @php
+                                                        $new_date =
+                                                        Carbon\Carbon::parse($date->new_date)->format('d-m-Y');
+                                                        @endphp -->
+                                                        <ng-option value=""></ng-option>
+                                                    </ng-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-content" id="leadsContent">
+                                        <div class="tab-pane fade show active" id="admin-tax" role="tabpanel">
+                                            <div class="col-md-12">
+                                                <div class="card small-card option-2 mb-4">
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table normal-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th width="50%">ISIN</th>
+                                                                        <th>Min Days</th>
+                                                                        <th>Max Days</th>
+                                                                        <th>Exit Load</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <!-- @foreach ($exitloads as $load) -->
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <!-- {{ $load->kinntegra_schemes->name }} - {{
+                                                                            $load->isin }} -->
+                                                                        </td>
+                                                                        <td>
+                                                                            <!-- {{ $load->min_days }} -->
+                                                                        </td>
+                                                                        <td>
+                                                                            <!-- {{ $load->max_days }} -->
+                                                                        </td>
+                                                                        <td>
+                                                                            <!-- {{ $load->exit_load }} -->
+                                                                        </td>
+                                                                    </tr>
+                                                                    <!-- @endforeach -->
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

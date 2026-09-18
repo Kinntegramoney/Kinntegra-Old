@@ -1,0 +1,178 @@
+
+
+
+<div class="main">
+    <div class="container-fluid">
+        <div class="table-top-section d-flex justify-content-between align-items-center mb-4">
+            <a class="back-btn" href="#">
+                <i class="icon-left-arrow"></i>
+                Go Back
+            </a>
+            <div class="section-header">
+                <app-header-right-template class="section-header"></app-header-right-template>
+            </div>
+        </div>
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        
+                            <!-- @include('client.leftbar', ['is_verify' => $is_verify]) -->
+                            <app-client-leftbar-template [activeComp]="'comprehensive-plan'" [activeSubComp]="'allocation-details'" [clientId]="clientId"
+                            [leadId]="leadId" [mode]="mode" [progressPercentage]="22"></app-client-leftbar-template>
+                        
+                    </div>
+                    <div class="trial col-lg-8 col-xl-9 col-md-8 step-forms ps-0" id="allocation" autocomplete="off">
+                        <div class="form-inner-section">
+                            <div class="form-header">
+                                <h3 class="card-title">Allocation</h3>
+                            </div>
+                            <div class="form-content">
+                                <div class="table-responsive mb-4">
+                                    <table class="table normal-table">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2">Name</th>
+                                                <th colspan="2" class="top-title">Asset Allocation</th>
+                                                <th colspan="2" class="top-title">Expected Returns</th>
+                                                <th rowspan="2"></th>
+                                            </tr>
+                                            <tr>
+                                                <th>Equity</th>
+                                                <th>Debt</th>
+                                                <th>Equity</th>
+                                                <th>Debt</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    Ashish Malhotra <br> <small>(kbs20325066)</small>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control">
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control">
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" value="₹10.56K" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input type="text" value="₹10.56K" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-link"> <svg width="24" height="24"
+                                                            viewBox="0 0 24 24">
+                                                            <use xlink:href="#month"></use>
+                                                        </svg>Calculate</a>
+                                                </td>
+                                            </tr>
+                                            <tr class="info">
+                                                <td colspan="6">
+                                                    The money will last till year 2026. <span
+                                                        class="text-danger">Your
+                                                        money
+                                                        will exhaust 30 years before
+                                                        your living expectancy. </span>
+                                                    <a class="btn btn-link" data-toggle="modal"
+                                                        data-target="#assetsModal">Restructure Assets <i
+                                                            class="icon-right-arrow"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Neha Jaiswal <br><small>(kbs20325066)</small>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control">
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control">
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" value="₹10.56K" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input type="text" value="₹10.56K" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-link"> <svg width="24" height="24"
+                                                            viewBox="0 0 24 24">
+                                                            <use xlink:href="#month"></use>
+                                                        </svg>Calculate</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Ashish & Family <br><small>(kbs20325066)</small>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control">
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control">
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                        <option>₹10.56K</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" value="₹10.56K" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input type="text" value="₹10.56K" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-link"> <svg width="24" height="24"
+                                                            viewBox="0 0 24 24">
+                                                            <use xlink:href="#month"></use>
+                                                        </svg>Calculate</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-primary btn-lg" (click)="onNext()">Proceed</button>
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#assetsModal"
+                                    class="btn btn-outline-primary btn-lg ml-3">Restructure
+                                    Assets</a>
+                            </div>
+                        </div>
+                    
+                    
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

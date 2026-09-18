@@ -1,0 +1,180 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"
+                *ngIf="mode != 'externalverify'"></app-header-right-template>
+        </div>
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        <app-associate-leftbar-template [activeComp]="'commercial-detail'" [activeSubComp]="''"
+                            [associateId]="associateid" [progressPercentage]="77" [mode]="mode"
+                            [ts]="ts"></app-associate-leftbar-template>
+                    </div>
+                    <form class="col-lg-8 col-xl-9 step-forms col-md-8 ps-0">
+                        <section class="trial step11 active" id="commercial-detail" data-step="11" autocomplete="off">
+                            <div class="form-inner-section">
+                                <div class="form-header">
+                                    <h3 class="card-title d-inline"><i class="icon-left-arrow back-btn"
+                                            (click)="onBack()"></i>Commercials
+                                    </h3>
+                                    <span class="edit-now float-end mt-1" *ngIf="showEdit"
+                                        (click)="onEditClicked()">Edit</span>
+                                </div>
+                                <div class="form-content">
+                                    <div class="row">
+                                        <div class="col-xl-8 col-lg-9">
+                                            <div class="row" id="commercials">
+                                                <div class="col-sm-12 commercial"
+                                                    *ngFor="let commercial of commercials; let i = index">
+                                                    <div class="form-group">
+                                                        <label for="commercials">{{commercial.Name}}<span
+                                                                class="required-sign">*</span></label>
+                                                        <div class="multi-input">
+                                                            <div class="name">
+                                                                <div class="input-group">
+                                                                    <ng-container *ngIf="!isEdit">
+                                                                        <input type="text" name="bps{{i}}"
+                                                                            class="form-control share_in" id="bps{{i}}"
+                                                                            [(ngModel)]="commercial.BPS"
+                                                                            [disabled]="true">
+                                                                    </ng-container>
+                                                                    <ng-container *ngIf="isEdit">
+                                                                        <input type="text" name="bps{{i}}"
+                                                                            class="form-control share_in" id="bps{{i}}"
+                                                                            [(ngModel)]="commercial.BPS"
+                                                                            [disabled]="commercial.Percentage !== null && commercial.Percentage !== undefined && commercial.Percentage !== '' && commercial.Percentage !== 0">
+                                                                    </ng-container>
+                                                                    <div class="input-group-append">
+                                                                        <span class="input-group-text">bps</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <span class="or">OR</span>
+                                                            </div>
+                                                            <div class="name">
+                                                                <div class="input-group">
+                                                                    <ng-container *ngIf="!isEdit">
+                                                                        <input type="text" name="percentage{{i}}"
+                                                                            class="form-control share_in"
+                                                                            id="percentage{{i}}"
+                                                                            [(ngModel)]="commercial.Percentage"
+                                                                            [disabled]="true">
+                                                                    </ng-container>
+                                                                    <ng-container *ngIf="isEdit">
+                                                                        <input type="text" name="percentage{{i}}"
+                                                                            class="form-control share_in"
+                                                                            id="percentage{{i}}"
+                                                                            [(ngModel)]="commercial.Percentage"
+                                                                            [disabled]="commercial.BPS !== null && commercial.BPS !== undefined && commercial.BPS !== '' && commercial.BPS !== 0">
+                                                                    </ng-container>
+                                                                    <div class="input-group-append">
+                                                                        <span class="input-group-text">%</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12" *ngIf="this.mode == 'externalverify'">
+                                                    <label for="cs_no" style="font-size: 20px;color: black;">Terms &
+                                                        Conditions</label>
+                                                    <div class="terms-panel"
+                                                        [innerHTML]="objAssociateTermsCondition.TermsContent">
+                                                    </div>
+                                                    <div class="col-sm-10 mt-3">
+                                                        <div class="form-group custom-checkbox">
+                                                            <input #chkpermanent type="checkbox" id="terms_conditions"
+                                                                name="terms_conditions"
+                                                                (change)="onTermsConditionsChange(chkpermanent.checked)"
+                                                                [(ngModel)]="objAssociateCertificateDetails.terms">
+                                                            <label for="terms_conditions">I accept the Terms &
+                                                                Conditions</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-3 d-none d-lg-flex">
+                                            <ng-lottie style="height: 300px;" [options]="lottieOptions"
+                                                (animationCreated)="animationCreated($event)"></ng-lottie>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-footer ">
+                                    <ng-container *ngIf="mode == 'create'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Confirm</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Confirm</span>
+                                        </button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'edit'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                                            (click)="onNextEdit()">Proceed</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'verify'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                                            (click)="onNextVerify()">Proceed</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'externalverify'">
+                                        <!-- <button type="button" class="reject-now btn btn-primary btn-lg"
+                                            [disabled]="!objAssociateCertificateDetails.terms" (click)="onAcceptClicked()">Accept</button> -->
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            [disabled]="!objAssociateCertificateDetails.terms || isBusy"
+                                            (click)="onAcceptClicked()">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Accept</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Accept</span>
+                                        </button>
+                                        <button type="button" class="reject-now btn btn-danger btn-lg ms-3"
+                                            [disabled]="rejectButtonClicked||!objAssociateCertificateDetails.terms"
+                                            (click)="onRejectClicked()">Reject</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'viewdetails'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onNextEdit()">Proceed</button>
+                                    </ng-container>
+
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

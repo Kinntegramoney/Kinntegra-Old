@@ -1,0 +1,30 @@
+<div class="client-lists">
+    <div class="mt-4 mb-3 mb-sm-0 pe-4 ps-4 pb-3" style="border-bottom: 1px solid gray;">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="table-search">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <use xlink:href="#search" />
+                    </svg>
+                </span>
+            </div>
+            <input type="text" class="form-control custom-search-input"  placeholder="Search" aria-label="table-search" aria-describedby="table-search"  [(ngModel)]="objName" (input)="searchClientRecord()">
+        </div>
+        <button class="btn btn-transparent border-0 w-100 mt-2" (click)="onAddClient()"> <span>+</span> Add
+            Client</button>
+    </div>
+    <ul class="client-listing"  style="max-height: 80vh; overflow-y: auto;">
+        <li *ngFor="let client of objClientAccounts;">
+            <div class="client">
+                <div class="name">
+                    <span (click)="getClientDetails(client)">{{client.FirstAccountHolderName}}</span>
+                    <small (click)="getClientDetails(client)"><span >(</span>{{client.UCC}}<span>)</span></small>
+                </div>
+                <svg width="30" height="30" viewBox="0 0 22 22">
+                    <use xlink:href="#new-chat"></use>
+                </svg>
+            </div>
+        </li>
+
+    </ul>
+</div>

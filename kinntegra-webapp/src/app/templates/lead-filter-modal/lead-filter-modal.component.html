@@ -1,0 +1,297 @@
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Filters</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="activeModal.dismiss('Cross click')">
+            <!-- <span aria-hidden="true">&times;</span> -->
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row form-sections">
+            <!-- @if(Auth::user()->hasRole('superadmin') || (Auth::user()->hasPermission('view-all-associate') && Auth::user()->in_house == 1)) -->
+            <div class="col-sm-6 filter_associate">
+                <div class="form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By Associate</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [multiple]="true"  [dropdownPosition]="'bottom'">
+                            <ng-option disabled selected>Select Associate</ng-option>
+                            <ng-option [value]=""> </ng-option>
+                        </ng-select>    
+                        <div id="filter_associates" class="dropdown-menu dropdown-menu-left select-dropdown-list filter_associate_dd">
+                            <input type="text" placeholder="Search" class="form-control search-input">
+                            <div class="data-list" id="add_associate_list">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+   
+            <div class="col-sm-6 filter_family">
+                <div class="form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By Family</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <!-- <a class="dropdown-toggle select-dropdown" type="button"
+                            data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false"><span class="text-grey">Select Family</span>
+                        </a> -->
+                        <ng-select [multiple]="true"  [dropdownPosition]="'bottom'">
+                            <ng-option disabled selected>Select Family</ng-option>
+                            <ng-option [value]=""> </ng-option>
+                        </ng-select> 
+                        <div id="filter_familys" class="dropdown-menu dropdown-menu-left select-dropdown-list filter_family_dd">
+                            <input type="text" placeholder="Search" class="form-control search-input">
+                            <div class="data-list" id="add_family_list">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 filter_taxstatus">
+                <div class="form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By Tax Status</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <!-- <a class="dropdown-toggle select-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false"><span class="text-grey">Select Status</span>
+                        </a> -->
+                        <ng-select [multiple]="true"  [dropdownPosition]="'bottom'">
+                            <ng-option disabled selected>Select Status</ng-option>
+                            <ng-option [value]=""> </ng-option>
+                        </ng-select> 
+                        <div id="filter_taxstatuses" class="dropdown-menu dropdown-menu-left select-dropdown-list filter_taxstatus_dd">
+                            <input type="text" placeholder="Search" class="form-control search-input">
+                            <div class="data-list" id="add_taxstatus_list">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 filter_leadstate">
+                <div class="form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By State</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <!-- <a class="dropdown-toggle select-dropdown" type="button"
+                            data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false"><span class="text-grey">Select
+                                States</span>
+                        </a> -->
+                        <ng-select [multiple]="true"  [dropdownPosition]="'bottom'">
+                            <ng-option disabled selected>Select State</ng-option>
+                            <ng-option [value]=""> </ng-option>
+                        </ng-select> 
+                        <div id="filter_leadstates" class="dropdown-menu dropdown-menu-left select-dropdown-list filter_leadstate_dd">
+                            <input type="text" placeholder="Search" class="form-control search-input">
+                            <div class="data-list"  id="add_leadstate_list">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 filter_leadcity">
+                <div class="form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By City</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <!-- <a class="dropdown-toggle select-dropdown" type="button"
+                            data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false"><span class="text-grey">Select City</span>
+                        </a> -->
+                        <ng-select [multiple]="true"  [dropdownPosition]="'bottom'">
+                            <ng-option disabled selected>Select City</ng-option>
+                            <ng-option [value]=""> </ng-option>
+                        </ng-select> 
+                        <div id="filter_leadcities" class="dropdown-menu dropdown-menu-left select-dropdown-list filter_leadcity_dd">
+                            <input type="text" placeholder="Search" class="form-control search-input">
+                            <div class="data-list" id="add_leadcity_list">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-sm-6 filter_clientstate">
+                <div class="form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By State</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [multiple]="true"  [dropdownPosition]="'bottom'">
+                            <ng-option disabled selected>Select State</ng-option>
+                            <ng-option [value]=""> </ng-option>
+                        </ng-select> 
+                        <div id="filter_clientstates" class="dropdown-menu dropdown-menu-left select-dropdown-list filter_clientstate_dd">
+                            <input type="text" placeholder="Search" class="form-control search-input">
+                            <div class="data-list"  id="add_clientstate_list">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div class="col-sm-6 filter_clientcity">
+                <div class="form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By City</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                    
+                        <ng-select [multiple]="true"  [dropdownPosition]="'bottom'">
+                            <ng-option disabled selected>Select City</ng-option>
+                            <ng-option [value]=""> </ng-option>
+                        </ng-select> 
+                        <div id="filter_clientcities" class="dropdown-menu dropdown-menu-left select-dropdown-list filter_clientcity_dd">
+                            <input type="text" placeholder="Search" class="form-control search-input">
+                            <div class="data-list" id="add_clientcity_list">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- {{-- Filter For Data Gathering --}} -->
+            <div class="col-sm-6 filter_data_gathering_color">
+                <div class="form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By Data Gathering Color</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [multiple]="true"  [dropdownPosition]="'bottom'">
+                            <ng-option disabled selected>Select Color</ng-option>
+                            <ng-option [value]=""> </ng-option>
+                        </ng-select> 
+                        <div id="filter_data_gather_color" class="dropdown-menu dropdown-menu-left select-dropdown-list filter_data_gathering_color_dd">
+                            <input type="text" placeholder="Search" class="form-control search-input">
+                            <div class="data-list" id="add_data_gathering_color_list">
+                                <ng-select class="dropdown-item" [dropdownPosition]="'bottom'">
+                                    <div class="form-group custom-checkbox m-0">
+                                        <input type="checkbox" id="data_gathering_green" name="filter_data_gathering['green']" value="Green" title="green_color">
+                                        <label for="data_gathering_green" title="green_color">
+                                            <span class="badge badge-success badge-pill">Green Color</span>
+                                        </label>
+                                    </div>
+                                </ng-select>
+                                <ng-select class="dropdown-item" [dropdownPosition]="'bottom'">
+                                    <div class="form-group custom-checkbox m-0">
+                                        <input type="checkbox" id="data_gathering_yellow" name="filter_data_gathering['yellow']" value="Yellow" title="yellow_color">
+                                        <label for="data_gathering_yellow" title="yellow_color">
+                                            <span class="badge badge-warning badge-pill">Yellow Color</span>
+                                        </label>
+                                    </div>
+                                </ng-select>
+                                <ng-select class="dropdown-item" [dropdownPosition]="'bottom'">
+                                    <div class="form-group custom-checkbox m-0">
+                                        <input type="checkbox" id="data_gathering_red" name="filter_data_gathering['red']" value="Red" title="red_color">
+                                        <label for="data_gathering_red" title="red_color"><span class="dot"></span>
+                                            <span class="badge badge-danger badge-pill">Red Color</span>
+                                        </label>
+                                    </div>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- {{-- Filter For Account Opening (NG-SELECT NOT ADDED BELOW THIS) --}} -->
+            <div class="col-sm-6 filter_account_opening_color">
+                <div class="form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By Account Opening Color</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [multiple]="true"  [dropdownPosition]="'bottom'">
+                            <ng-option disabled selected>Select Color</ng-option>
+                            <!-- <ng-option [value]=""> </ng-option> -->
+                            <ng-option  id="filter_transaction" class="dropdown-menu dropdown-menu-left select-dropdown-list filter_transaction_color_dd">
+                                <input type="text" placeholder="Search" class="form-control search-input">
+                                <div class="data-list" id="add_transaction_color_list">
+                                    <ng-option class="dropdown-item">
+                                        <div class="form-group custom-checkbox m-0">
+                                            <input type="checkbox" id="transaction_green" name="filter_transaction['green']" value="Green" title="green_color">
+                                            <label for="transaction_green" title="green_color">
+                                                <span class="badge badge-success badge-pill">Green Color</span>
+                                            </label>
+                                        </div>
+                                    </ng-option>
+                                    <ng-option class="dropdown-item">
+                                        <div class="form-group custom-checkbox m-0">
+                                            <input type="checkbox" id="transaction_yellow" name="filter_transaction['yellow']" value="Yellow" title="yellow_color">
+                                            <label for="transaction_yellow" title="yellow_color">
+                                                <span class="badge badge-warning badge-pill">Yellow Color</span>
+                                            </label>
+                                        </div>
+                                    </ng-option>
+                                    <ng-option class="dropdown-item">
+                                        <div class="form-group custom-checkbox m-0">
+                                            <input type="checkbox" id="transaction_red" name="filter_transaction['red']" value="Red" title="red_color">
+                                            <label for="transaction_red" title="red_color"><span class="dot"></span>
+                                                <span class="badge badge-danger badge-pill">Red Color</span>
+                                            </label>
+                                        </div>
+                                    </ng-option>
+                                </div>
+                            </ng-option >
+                        </ng-select> 
+                    </div>
+                </div>
+            </div>
+            <!-- {{-- Filter For Transactions Color --}} -->
+            <div class="col-sm-6 filter_transaction_color">
+                <div class="form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By Account Opening Color</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [multiple]="true"  [dropdownPosition]="'bottom'">
+                            <ng-option disabled selected>Select Color</ng-option>
+                            <!-- <ng-option [value]=""> </ng-option> -->
+                            <ng-option  id="filter_transaction" class="dropdown-menu dropdown-menu-left select-dropdown-list filter_transaction_color_dd">
+                                <input type="text" placeholder="Search" class="form-control search-input">
+                                <div class="data-list" id="add_transaction_color_list">
+                                    <ng-option class="dropdown-item">
+                                        <div class="form-group custom-checkbox m-0">
+                                            <input type="checkbox" id="transaction_green" name="filter_transaction['green']" value="Green" title="green_color">
+                                            <label for="transaction_green" title="green_color">
+                                                <span class="badge badge-success badge-pill">Green Color</span>
+                                            </label>
+                                        </div>
+                                    </ng-option>
+                                    <ng-option class="dropdown-item">
+                                        <div class="form-group custom-checkbox m-0">
+                                            <input type="checkbox" id="transaction_yellow" name="filter_transaction['yellow']" value="Yellow" title="yellow_color">
+                                            <label for="transaction_yellow" title="yellow_color">
+                                                <span class="badge badge-warning badge-pill">Yellow Color</span>
+                                            </label>
+                                        </div>
+                                    </ng-option>
+                                    <ng-option class="dropdown-item">
+                                        <div class="form-group custom-checkbox m-0">
+                                            <input type="checkbox" id="transaction_red" name="filter_transaction['red']" value="Red" title="red_color">
+                                            <label for="transaction_red" title="red_color"><span class="dot"></span>
+                                                <span class="badge badge-danger badge-pill">Red Color</span>
+                                            </label>
+                                        </div>
+                                    </ng-option>
+                                </div>
+                            </ng-option >
+                        </ng-select> 
+                    
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 filter_updation">
+                <h4 class="form-section-title text-uppercase text-grey">Filter By Date(Updation)</h4>
+                <!-- <div class="input-group mb-3 mb-sm-0">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="month">
+                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                <use xlink:href="#month" />
+                            </svg>
+                        </span>
+                    </div>
+                    <input type="text" name="filter_updation" id="filter_updation" class="form-control daterange text-truncate" />
+                </div> -->
+                <div class="input-group mb-3 mb-sm-0">
+                    <input class="form-control" readonly placeholder="yyyy-mm-dd"
+                        name="dp" [(ngModel)]="dateModel" ngbDatepicker
+                        #d="ngbDatepicker" />
+                    <button class="btn btn-transparent" (click)="d.toggle()"
+                        type="button"><svg width="24" height="24" viewBox="0 0 24 24">
+                            <use xlink:href="#month"></use>
+                        </svg></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary col-sm-3" id="reset_lead_filter">Reset</button>
+        <button type="submit" class="btn btn-primary col-sm-3">Apply</button>
+    </div> 
+</div>

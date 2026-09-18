@@ -1,0 +1,244 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="table-top-section d-flex justify-content-between align-items-center mb-4">
+            <a class="back-btn" href="#">
+                <i class="icon-left-arrow"></i>
+                Go Back
+            </a>
+            <div class="section-header">
+                <app-header-right-template class="section-header"></app-header-right-template>
+            </div>
+        </div>
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+
+                        <!-- @include('client.leftbar', ['is_verify' => $is_verify]) -->
+                        <app-client-leftbar-template [activeComp]="'comprehensive-plan'" [mode]="mode"
+                            [activeSubComp]="'asset-details'" [clientId]="clientId" [leadId]="leadId"
+                            [progressPercentage]="22"></app-client-leftbar-template>
+
+                    </div>
+
+                    <div class="trial col-lg-8 col-xl-9 col-md-8 step-forms ps-0" id="income-details"
+                        autocomplete="off">
+
+                        <div class="form-inner-section">
+                            <div class="form-header">
+                                <h3 class="card-title">Fixed Asset Income </h3>
+                            </div>
+
+                            <div class="form-content">
+                                <div class="row">
+                                    <div>
+                                        <nav ngbNav #nav="ngbNav" class="nav-tabs">
+                                            <ng-container ngbNavItem
+                                                *ngFor="let incomeItem of objFixedAssetIncomes; index as i">
+                                                <a ngbNavLink>{{incomeItem.Member.Name}}</a>
+                                                <ng-template ngbNavContent>
+                                                    <div class="tab-pane fade show active mt-5">
+                                                        <div class="form-sections mb-0">
+                                                            <ul ngbNav #navchild="ngbNav"
+                                                                class="nav nav-tabs members-tab no-wrap" role="tablist">
+                                                                <li ngbNavItem class="nav-item mb-3"
+                                                                    *ngFor="let selectedCategoryItem of incomeItem.SelectedCategories; index as j">
+                                                                    <button ngbNavLink
+                                                                        class="nav-link member_tab">{{selectedCategoryItem.CategoryName}}
+                                                                        <span
+                                                                            class="delete-member btn-close ms-3 fw-light"
+                                                                            (click)="onRemoveCategoryClick($event,incomeItem,selectedCategoryItem,j)"></span>
+                                                                    </button>
+                                                                    <ng-template ngbNavContent>
+                                                                        <div class="tab-pane fade show"
+                                                                            id="business-income" role="tabpanel">
+                                                                            <div
+                                                                                *ngFor="let incomeDataItem of selectedCategoryItem.IncomeData;index as l">
+                                                                                <div class="row">
+                                                                                    <div class="col-xl-3 ">
+                                                                                        <div class="form-group">
+                                                                                            <label>Investment
+                                                                                                Value</label>
+                                                                                            <input type="number"
+                                                                                                class="form-control"
+                                                                                                name="InvestmentValue_{{j}}"
+                                                                                                [(ngModel)]="incomeDataItem.InvestmentValue">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-xl-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>Est Market
+                                                                                                Value</label>
+                                                                                            <input type="number"
+                                                                                                class="form-control"
+                                                                                                name="EstMarketValue_{{j}}"
+                                                                                                [(ngModel)]="incomeDataItem.EstimatedMarketValue">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-xl-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>Rental Income</label>
+                                                                                            <input type="number"
+                                                                                                class="form-control"
+                                                                                                name="RentalIncome_{{j}}"
+                                                                                                [(ngModel)]="incomeDataItem.RentalIncome">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-xl-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>Property
+                                                                                                Expense</label>
+                                                                                            <input type="number"
+                                                                                                class="form-control"
+                                                                                                name="PropertyExpense_{{j}}"
+                                                                                                [(ngModel)]="incomeDataItem.PropertyExpense">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="row ">
+
+                                                                                    <div class="col-xl-6">
+                                                                                        <div class="form-group">
+                                                                                            <label>Description</label>
+                                                                                            <input type="text"
+                                                                                                class="form-control"
+                                                                                                name="Description_{{j}}"
+                                                                                                [(ngModel)]="incomeDataItem.Description">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-xl-3">
+                                                                                        <div class="form-group ">
+                                                                                            <label>UpTo Date<span
+                                                                                                    class="required-sign">*</span></label>
+                                                                                            <div class="input-group">
+                                                                                                <input
+                                                                                                    class="form-control"
+                                                                                                    placeholder="dd-mm-yyyy"
+                                                                                                    name="upToDate_{{j}}"
+                                                                                                    ngbDatepicker
+                                                                                                    #d="ngbDatepicker"
+                                                                                                    [(ngModel)]="incomeDataItem.UptoDate" />
+                                                                                                <button
+                                                                                                    class="btn btn-transparent"
+                                                                                                    (click)="d.toggle()"
+                                                                                                    type="button"><svg
+                                                                                                        width="24"
+                                                                                                        height="24"
+                                                                                                        viewBox="0 0 24 24">
+                                                                                                        <use
+                                                                                                            xlink:href="#month">
+                                                                                                        </use>
+                                                                                                    </svg></button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+
+
+                                                                                    <div class="col-xl-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>Purchase Year</label>
+                                                                                            <input type="number"
+                                                                                                class="form-control"
+                                                                                                name="PurchaseYear_{{j}}"
+                                                                                                [(ngModel)]="incomeDataItem.PurchaseYear">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+
+                                                                                <div class="row border-bottom">
+
+                                                                                    <div class="col-xl-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>ROI</label>
+                                                                                            <input type="number"
+                                                                                                class="form-control"
+                                                                                                name="ROI_{{j}}"
+                                                                                                [(ngModel)]="incomeDataItem.ROI">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-xl-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>Growth</label>
+                                                                                            <input type="number"
+                                                                                                class="form-control"
+                                                                                                name="Growth_{{j}}"
+                                                                                                [(ngModel)]="incomeDataItem.GrowthPercentage">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-xl-3">
+                                                                                        <div class="form-group">
+                                                                                            <label>Yield</label>
+                                                                                            <input type="number"
+                                                                                                class="form-control"
+                                                                                                name="Yield_{{j}}"
+                                                                                                [(ngModel)]="incomeDataItem.Yield">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-xl-3">
+                                                                                        <a class="btn btn-link mt-4"
+                                                                                            (click)="onBusinessIncomeDeleteClicked(incomeDataItem, selectedCategoryItem, l)"><svg
+                                                                                                width="30" height="30"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <use
+                                                                                                    xlink:href="#delete-icon">
+                                                                                                </use>
+                                                                                            </svg></a>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                            <a class="btn btn-link d-block m-auto mt-3 add-more-btn"
+                                                                            (click)="onBusinessIncomeAddClicked(selectedCategoryItem)">
+                                                                            <svg width="30" height="30"
+                                                                                viewBox="-2 -2 28 28"
+                                                                                class="mr-0">
+                                                                                <use xlink:href="#add-btn">
+                                                                                </use>
+                                                                            </svg>
+                                                                            Add More
+                                                                        </a>
+
+                                                                        </div>
+                                                                    </ng-template>
+                                                                </li>
+                                                                <div
+                                                                    style="height: 30px; border-left: 2px solid #a3a3a3; margin-right: 15px;">
+                                                                </div>
+                                                                <li ngbNavItem class="nav-item mb-3"
+                                                                    *ngFor="let categoryItem of incomeItem.IncomeCategories;index as k">
+                                                                    <a ngbNavLink class="nav-link add-bank bank_added"
+                                                                        (click)="onAddCategoryClick(incomeItem,categoryItem,k)">{{categoryItem.CategoryName}}</a>
+                                                                </li>
+                                                            </ul>
+                                                            <div [ngbNavOutlet]="navchild"></div>
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                            </ng-container>
+                                        </nav>
+                                        <div [ngbNavOutlet]="nav"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-footer">
+                                <button class="btn btn-primary btn-lg" (click)="onSave()">Proceed</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

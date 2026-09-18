@@ -1,0 +1,308 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Filters</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="activeModal.dismiss('Cross click')">
+            <!-- <span aria-hidden="true">&times;</span> -->
+        </button>
+    </div>
+    <div class="modal-body">
+        <nav ngbNav #nav="ngbNav" class="nav nav-tabs mb-3">
+            <ng-container [ngbNavItem]="1">
+                <a ngbNavLink>Recent</a>
+                <ng-template ngbNavContent>
+                    <div>
+                        <div class="row form-sections">
+                            <div class="col-12">
+                                <h4 class="form-section-title text-uppercase text-light">Filter By Location</h4>
+                            </div>
+                            <div class="col-12">
+                                <div id="slider"></div>
+                            </div>
+
+                        </div>
+                        <div class="row form-sections">
+                            <div class="col-12">
+                                <h4 class="form-section-title text-uppercase text-light">Filter By Portfolio</h4>
+                            </div>
+                            <div class="col-12 d-flex flex-wrap">
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Wealth">
+                                    <label for="Wealth">Wealth</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Tax">
+                                    <label for="Tax">Tax</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="ShortTerm">
+                                    <label for="ShortTerm">Short Term</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row form-sections">
+                            <div class="col-12">
+                                <h4 class="form-section-title text-uppercase text-light">Filter By Status</h4>
+                            </div>
+                            <div class="col-12 d-flex flex-wrap">
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="byClient">
+                                    <label for="byClient">Approved By Client</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="byBSE">
+                                    <label for="byBSE">Approved by BSE</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+            <ng-container [ngbNavItem]="2">
+                <a ngbNavLink>Recommended</a>
+                <ng-template ngbNavContent>
+                    <div>
+                        <div class="row form-sections">
+                            <div class="col-12">
+                                <h4 class="form-section-title text-uppercase text-grey">Filter By Location</h4>
+                            </div>
+                            <div class="col-12">
+                                <div id="slider"></div>
+                            </div>
+
+                        </div>
+                        <div class="row form-sections">
+                            <div class="col-12">
+                                <h4 class="form-section-title text-uppercase text-grey">Filter By Location</h4>
+                            </div>
+                            <div class="col-12 d-flex flex-wrap">
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai1">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai2">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai3">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai4">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai5">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai6">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row form-sections">
+                            <div class="col-12">
+                                <h4 class="form-section-title text-uppercase text-grey">Filter By Location</h4>
+                            </div>
+                            <div class="col-12 d-flex flex-wrap">
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai7">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai8">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai9">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai10">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai11">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai12">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+            <ng-container [ngbNavItem]="3">
+                <a ngbNavLink>Pending</a>
+                <ng-template ngbNavContent>
+                    <div>
+                        <div class="row form-sections">
+                            <div class="col-12">
+                                <h4 class="form-section-title text-uppercase text-grey">Filter By Location</h4>
+                            </div>
+                            <div class="col-12">
+                                <div id="slider"></div>
+                            </div>
+
+                        </div>
+                        <div class="row form-sections">
+                            <div class="col-12">
+                                <h4 class="form-section-title text-uppercase text-grey">Filter By Location</h4>
+                            </div>
+                            <div class="col-12 d-flex flex-wrap">
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai13">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai14">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai15">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai16">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai17">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai18">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row form-sections">
+                            <div class="col-12">
+                                <h4 class="form-section-title text-uppercase text-grey">Filter By Location</h4>
+                            </div>
+                            <div class="col-12 d-flex flex-wrap">
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai19">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai20">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai21">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai22">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai23">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai24">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+            <ng-container [ngbNavItem]="4">
+                <a ngbNavLink>Paused</a>
+                <ng-template ngbNavContent>
+                    <div>
+                        <div class="row form-sections">
+                            <div class="col-12">
+                                <h4 class="form-section-title text-uppercase text-grey">Filter By Location</h4>
+                            </div>
+                            <div class="col-12">
+                                <div id="slider"></div>
+                            </div>
+
+                        </div>
+                        <div class="row form-sections">
+                            <div class="col-12">
+                                <h4 class="form-section-title text-uppercase text-grey">Filter By Location</h4>
+                            </div>
+                            <div class="col-12 d-flex flex-wrap">
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai25">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai26">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai27">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai28">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai29">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai30">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row form-sections">
+                            <div class="col-12">
+                                <h4 class="form-section-title text-uppercase text-grey">Filter By Location</h4>
+                            </div>
+                            <div class="col-12 d-flex flex-wrap">
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai31">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai32">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai33">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai34">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai35">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                                <div class="form-group custom-checkbox mr-3">
+                                    <input type="checkbox" id="Mumbai36">
+                                    <label for="Mumbai">Mumbai</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+        </nav>
+        <div [ngbNavOutlet]="nav"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary col-sm-3">Apply</button>
+    </div>
+</div>

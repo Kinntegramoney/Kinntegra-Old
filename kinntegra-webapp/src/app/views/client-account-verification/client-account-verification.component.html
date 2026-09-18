@@ -1,0 +1,1022 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="card w-100 mt-4">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        <app-client-account-leftbar-template [activeComp]="index" [clientId]="clientId"
+                            [clientProfileId]="clientProfileId" [accountId]="accountId" [mode]="mode"
+                            [ts]="ts"></app-client-account-leftbar-template>
+                    </div>
+                    <form class="col-lg-8 col-xl-9 step-forms col-md-8 ps-0">
+                        <section class="trial step1 active" id="general-information" data-step="1" autocomplete="off">
+                            <div class="form-inner-section">
+                                <div class="form-header">
+                                    <h3 class="card-title d-inline"><i *ngIf="index != 0"
+                                            class="icon-left-arrow back-btn" (click)="onBack()"></i>
+                                        {{objAccount.AccountHolderName}}</h3>
+                                </div>
+                                <div class="form-content">
+                                    <div class="row">
+                                        <div class="col-sm-12 mt-1">
+                                            <h4 class="form-section-title text-uppercase">
+                                                Create Account For</h4>
+                                            <div class="form-inline" id="accountprofile">
+                                                <div class="form-group custom-checkbox checkbox-2 d-inline-block ms-2">
+                                                    <input type="checkbox" id="CreateBSEAccount" name="CreateBSEAccount"
+                                                        [(ngModel)]="objAccount.CreateBSEAccount" [disabled]="true">
+                                                    <label for="CreateBSEAccount">BSE</label>
+                                                </div>
+                                                <!-- <div class="form-group custom-checkbox checkbox-2 d-inline-block ms-2">
+                                                    <input type="checkbox" id="CreateMFUAccount" name="CreateMFUAccount"
+                                                        [(ngModel)]="objAccount.CreateMFUAccount" [disabled]="true">
+                                                    <label for="CreateMFUAccount">MFU</label>
+                                                </div>
+                                                <div class="form-group custom-checkbox checkbox-2 d-inline-block ms-2">
+                                                    <input type="checkbox" id="CreateP2PAccount" name="CreateP2PAccount"
+                                                        [(ngModel)]="objAccount.CreateP2PAccount" [disabled]="true">
+                                                    <label for="CreateP2PAccount">P2P</label>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-12 mt-4">
+                                            <h4 class="form-section-title text-uppercase">Account
+                                                Details</h4>
+                                            <div class="addAccountTab row">
+                                                <div class="col-sm-4 first_holder"
+                                                    *ngFor="let holder of objAccount.AccountHolders">
+                                                    <div class="form-group">
+                                                        <label for="first_holder" *ngIf="holder.SerialNumber == 1">First
+                                                            Holder</label>
+                                                        <label for="second_holder"
+                                                            *ngIf="holder.SerialNumber == 2">Second
+                                                            Holder</label>
+                                                        <label for="third_holder" *ngIf="holder.SerialNumber == 3">Third
+                                                            holder</label>
+                                                        <div class="form-control-plaintext font-bold">
+                                                            {{holder.ProfileDetails.Name}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 client_account_type">
+                                                    <div class="form-group">
+                                                        <label for="client_account_type"> Account
+                                                            type</label>
+                                                        <div class="form-control-plaintext font-bold">
+                                                            {{objAccount.AccountTypeName}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div *ngFor="let holder of objAccount.AccountHolders">
+                                        <div class="row">
+                                            <div class="col-sm-12 mt-4">
+                                                <h4 class="form-section-title text-uppercase"
+                                                    *ngIf="holder.SerialNumber == 1">First
+                                                    Holder :: {{holder.ProfileDetails.Name}}</h4>
+                                                <h4 class="form-section-title text-uppercase"
+                                                    *ngIf="holder.SerialNumber == 2">Second
+                                                    Holder :: {{holder.ProfileDetails.Name}}</h4>
+                                                <h4 class="form-section-title text-uppercase"
+                                                    *ngIf="holder.SerialNumber == 3">Third
+                                                    Holder :: {{holder.ProfileDetails.Name}}</h4>
+                                                <div class="form-section-title text-uppercase mt-4 mb-4">Profile
+                                                    Details</div>
+                                                <div class="addAccountTab row">
+                                                    <div class="row" *ngIf="holder.ProfileType == 'F'">
+                                                        <div class="col-sm-4 client_guardian_id_pid"
+                                                            *ngIf="holder.IsMinorProfile">
+                                                            <div class="form-group">
+                                                                <label>Guardian <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.GuardianName}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3 birth_upload_pid"
+                                                            *ngIf="holder.IsMinorProfile">
+                                                            <div class="form-group">
+                                                                <label for="birth_upload_pid">Birth Certificate
+                                                                    <span class="required-sign">*</span></label>
+                                                                <label for="birth_upload_pid"
+                                                                    class="btn input-btn w-100"
+                                                                    [ngClass]="{'input-btn-primary': (( mode=='externalverify') && holder.ProfileDetails.BirthCertificateFileName != ''), 'input-btn-danger': (( mode=='externalverify') && holder.ProfileDetails.BirthCertificateFileName == '')}"
+                                                                    [ngbTooltip]="holder.ProfileDetails.BirthCertificateFileName"
+                                                                    tooltipClass="custom-tooltip" placement="bottom">
+                                                                    <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                        <use xlink:href="#upload" />
+                                                                    </svg>
+                                                                    <div class="value-wrap">
+                                                                        <span class="default-text"
+                                                                            *ngIf="holder.ProfileDetails.BirthCertificateFileName == ''">Not
+                                                                            Uploaded</span>
+                                                                        <span
+                                                                            *ngIf="holder.ProfileDetails.BirthCertificateFileName != ''"
+                                                                            class="value">{{holder.ProfileDetails.BirthCertificateFileName
+                                                                            | fileDisplayName}}</span>
+                                                                    </div>
+                                                                </label>
+
+                                                                <label class="w-100 format"
+                                                                    *ngIf="holder.ProfileDetails.BirthCertificateFileName == ''">
+                                                                    <span class="text-lowercase text-danger">FORMAT-
+                                                                        PNG, JPG,
+                                                                        PDF</span>
+                                                                </label>
+
+                                                                <label class="w-100 preview"
+                                                                    *ngIf="holder.ProfileDetails.BirthCertificateFileName != ''">
+                                                                    <span
+                                                                        class="text-lowercase font-italic text-primary"><a
+                                                                            (click)="onBirthCertificatePreview(holder)">Preview</a></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-5" *ngIf="holder.IsMinorProfile"></div>
+                                                        <div class="col-sm-4 pan_pid">
+                                                            <div class="form-group">
+                                                                <label>PAN Number <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.PANCardNumber}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3 pan_upload_pid">
+                                                            <div class="form-group">
+                                                                <label for="pan_upload_pid">PAN <span
+                                                                        class="required-sign">*</span></label>
+                                                                <label for="pan_upload_pid" class="btn input-btn w-100"
+                                                                    [ngClass]="{'input-btn-primary': (( mode=='externalverify') && holder.ProfileDetails.MemberPANCardFileName != ''), 'input-btn-danger': (( mode=='externalverify') && holder.ProfileDetails.MemberPANCardFileName == '')}"
+                                                                    [ngbTooltip]="holder.ProfileDetails.MemberPANCardFileName"
+                                                                    tooltipClass="custom-tooltip" placement="bottom">
+                                                                    <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                        <use xlink:href="#upload" />
+                                                                    </svg>
+                                                                    <div class="value-wrap">
+                                                                        <span class="default-text"
+                                                                            *ngIf="holder.ProfileDetails.MemberPANCardFileName == ''">Not
+                                                                            Uploaded</span>
+                                                                        <span
+                                                                            *ngIf="holder.ProfileDetails.MemberPANCardFileName != ''"
+                                                                            class="value">{{holder.ProfileDetails.MemberPANCardFileName
+                                                                            | fileDisplayName}}</span>
+                                                                    </div>
+                                                                </label>
+
+                                                                <label class="w-100 format"
+                                                                    *ngIf="holder.ProfileDetails.MemberPANCardFileName  == ''">
+                                                                    <span class="text-lowercase text-danger">FORMAT-
+                                                                        PNG, JPG,
+                                                                        PDF</span>
+                                                                </label>
+
+                                                                <label class="w-100 preview"
+                                                                    *ngIf="holder.ProfileDetails.MemberPANCardFileName  != ''">
+                                                                    <span
+                                                                        class="text-lowercase font-italic text-primary"><a
+                                                                            (click)="onMemberPANCardPreview(holder)">Preview</a></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-5"></div>
+                                                        <div class="col-sm-4 kyc_status_pid">
+                                                            <div class="form-group">
+                                                                <label>KYC Verified Status <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.KycStatusName}}
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-sm-3 kyc_upload_pid">
+                                                            <div class="form-group">
+                                                                <label for="kyc_upload_pid">KYC <span
+                                                                        class="required-sign">*</span></label>
+                                                                <label for="kyc_upload_pid" class="btn input-btn w-100"
+                                                                    [ngClass]="{'input-btn-primary': (( mode=='externalverify') && holder.ProfileDetails.MemberKYCFileName != ''), 'input-btn-danger': (( mode=='externalverify') && holder.ProfileDetails.MemberKYCFileName == '')}"
+                                                                    [ngbTooltip]="holder.ProfileDetails.MemberKYCFileName"
+                                                                    tooltipClass="custom-tooltip" placement="bottom">
+                                                                    <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                        <use xlink:href="#upload" />
+                                                                    </svg>
+                                                                    <div class="value-wrap">
+                                                                        <span class="default-text"
+                                                                            *ngIf="holder.ProfileDetails.MemberKYCFileName == ''">Not
+                                                                            Uploaded</span>
+                                                                        <span
+                                                                            *ngIf="holder.ProfileDetails.MemberKYCFileName != ''"
+                                                                            class="value">{{holder.ProfileDetails.MemberKYCFileName
+                                                                            | fileDisplayName}}</span>
+                                                                    </div>
+                                                                </label>
+
+                                                                <label class="w-100 format"
+                                                                    *ngIf="holder.ProfileDetails.MemberKYCFileName == ''">
+                                                                    <span class="text-lowercase text-danger">FORMAT-
+                                                                        PNG, JPG,
+                                                                        PDF</span>
+                                                                </label>
+
+                                                                <label class="w-100 preview"
+                                                                    *ngIf="holder.ProfileDetails.MemberKYCFileName != ''">
+                                                                    <span
+                                                                        class="text-lowercase font-italic text-primary"><a
+                                                                            (click)="onMemberKYCPreview(holder)">Preview</a></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-5"></div>
+                                                        <div class="col-sm-4 ckyc_no_pid">
+                                                            <div class="form-group">
+                                                                <label>CKyc No</label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.CKYCNumber}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 gender_pid">
+                                                            <div class="form-group">
+                                                                <label>Gender <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.GenderName}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 aadhar_pid">
+                                                            <div class="form-group">
+                                                                <label>Aadhar No</label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.AadharCardNumber}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 country_code_pid">
+                                                            <div class="form-group">
+                                                                <label>Country Code <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.CountryCode}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 mobile_pid">
+                                                            <div class="form-group">
+                                                                <label>Mobile Number <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.MobileNumber}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 mobile_self_declaration_pid">
+                                                            <div class="form-group">
+                                                                <label>Mobile Self Declaration <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.MobileSelfDeclarationName}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 email_pid">
+                                                            <div class="form-group">
+                                                                <label>Email <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.Email}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 email_self_declaration_pid">
+                                                            <div class="form-group">
+                                                                <label>Email Self Seclaration <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.EmailSelfDeclarationName}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                        </div>
+                                                        <div class="col-sm-4 birth_incorp_place_pid">
+                                                            <div class="form-group">
+                                                                <label>Place of Birth <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.PlaceOfBirth}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 birth_incorp_country_pid">
+                                                            <div class="form-group">
+                                                                <label>Country of Birth <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.CountryOfBirth}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 tax_status_pid">
+                                                            <div class="form-group">
+                                                                <label>Tax Status <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.TaxStatusName}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 occupation_pid">
+                                                            <div class="form-group">
+                                                                <label>Occupation <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.OccupationName}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 employer_name_pid">
+                                                            <div class="form-group">
+                                                                <label>Employer Name</label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.EmployerName}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 gross_annual_income_pid">
+                                                            <div class="form-group">
+                                                                <label>Gross Annual Income <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.GrossAnnualIncomeName}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 net_worth_pid">
+                                                            <div class="form-group">
+                                                                <label>Net Worth <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.NetWorth}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 net_worth_date_pid">
+                                                            <div class="form-group">
+                                                                <label>Net Worth Date <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.NetWorthDate |
+                                                                    date:'dd-MM-yyyy'}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 wealth_source_pid">
+                                                            <div class="form-group">
+                                                                <label>Source of Wealth <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.WealthSourceName}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" *ngIf="holder.ProfileType == 'C'">
+                                                        <div class="col-sm-4 pan_pid">
+                                                            <div class="form-group">
+                                                                <label>PAN Number <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.PANCardNumber}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3 pan_upload_pid">
+                                                            <div class="form-group">
+                                                                <label for="pan_upload_pid">PAN <span
+                                                                        class="required-sign">*</span></label>
+                                                                <label for="pan_upload_pid" class="btn input-btn w-100"
+                                                                    [ngClass]="{'input-btn-primary': (( mode=='externalverify') && holder.ProfileDetails.MemberPANCardFileName != ''), 'input-btn-danger': (( mode=='externalverify') && holder.ProfileDetails.MemberPANCardFileName == '')}"
+                                                                    [ngbTooltip]="holder.ProfileDetails.MemberPANCardFileName"
+                                                                    tooltipClass="custom-tooltip" placement="bottom">
+                                                                    <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                        <use xlink:href="#upload" />
+                                                                    </svg>
+                                                                    <div class="value-wrap">
+                                                                        <span class="default-text"
+                                                                            *ngIf="holder.ProfileDetails.MemberPANCardFileName == ''">Not
+                                                                            Uploaded</span>
+                                                                        <span
+                                                                            *ngIf="holder.ProfileDetails.MemberPANCardFileName != ''"
+                                                                            class="value">{{holder.ProfileDetails.MemberPANCardFileName
+                                                                            | fileDisplayName}}</span>
+                                                                    </div>
+                                                                </label>
+
+                                                                <label class="w-100 format"
+                                                                    *ngIf="holder.ProfileDetails.MemberPANCardFileName == ''">
+                                                                    <span class="text-lowercase text-danger">FORMAT-
+                                                                        PNG, JPG,
+                                                                        PDF</span>
+                                                                </label>
+
+                                                                <label class="w-100 preview"
+                                                                    *ngIf="holder.ProfileDetails.MemberPANCardFileName != ''">
+                                                                    <span
+                                                                        class="text-lowercase font-italic text-primary"><a
+                                                                            (click)="onCompanyPANCardPreview(holder)">Preview</a></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-5"></div>
+                                                        <div class="col-sm-4 kyc_status_pid">
+                                                            <div class="form-group">
+                                                                <label>KYC Verified Status <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.KycStatusName}}</div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-sm-3 kyc_upload_pid">
+                                                            <div class="form-group">
+                                                                <label for="kyc_upload_pid">KYC <span
+                                                                        class="required-sign">*</span></label>
+                                                                <label for="kyc_upload_pid" class="btn input-btn w-100"
+                                                                    [ngClass]="{'input-btn-primary': (( mode=='externalverify') && holder.ProfileDetails.MemberKYCFileName != ''), 'input-btn-danger': (( mode=='externalverify') && holder.ProfileDetails.MemberKYCFileName == '')}"
+                                                                    [ngbTooltip]="holder.ProfileDetails.MemberKYCFileName"
+                                                                    tooltipClass="custom-tooltip" placement="bottom">
+
+                                                                    <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                        <use xlink:href="#upload" />
+                                                                    </svg>
+                                                                    <div class="value-wrap">
+                                                                        <span class="default-text"
+                                                                            *ngIf="holder.ProfileDetails.MemberKYCFileName == ''">Not
+                                                                            Uploaded</span>
+                                                                        <span
+                                                                            *ngIf="holder.ProfileDetails.MemberKYCFileName != ''"
+                                                                            class="value">{{holder.ProfileDetails.MemberKYCFileName
+                                                                            | fileDisplayName}}</span>
+                                                                    </div>
+                                                                </label>
+
+                                                                <label class="w-100 format"
+                                                                    *ngIf="holder.ProfileDetails.MemberKYCFileName == ''">
+                                                                    <span class="text-lowercase text-danger">FORMAT-
+                                                                        PNG, JPG,
+                                                                        PDF</span>
+                                                                </label>
+
+                                                                <label class="w-100 preview"
+                                                                    *ngIf="holder.ProfileDetails.MemberKYCFileName != ''">
+                                                                    <span
+                                                                        class="text-lowercase font-italic text-primary"><a
+                                                                            (click)="onCompanyKYCPreview(holder)">Preview</a></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-5"></div>
+                                                        <div class="col-sm-4 occupation_pid">
+                                                            <div class="form-group">
+                                                                <label>Occupation <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.OccupationName}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 mobile_pid">
+                                                            <div class="form-group">
+                                                                <label>Mobile Number <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.MobileNumber}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 email_pid">
+                                                            <div class="form-group">
+                                                                <label>Email <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.Email}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 tax_status_pid">
+                                                            <div class="form-group">
+                                                                <label>Tax Status <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.TaxStatusName}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 birth_incorp_place_pid">
+                                                            <div class="form-group">
+                                                                <label>Place of Incorporation <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.PlaceOfIncorporation}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 birth_incorp_country_pid">
+                                                            <div class="form-group">
+                                                                <label>Country of Incorporation <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.CountryOfIncorporation}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 gross_annual_income_pid">
+                                                            <div class="form-group">
+                                                                <label>Gross Annual Income <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.GrossAnnualIncomeName}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 net_worth_pid">
+                                                            <div class="form-group">
+                                                                <label>Net Worth <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.NetWorth}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 net_worth_date_pid">
+                                                            <div class="form-group">
+                                                                <label>Net Worth Date <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.NetWorthDate | date:
+                                                                    'dd-MM-yyyy'}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 business_nature_pid">
+                                                            <div class="form-group">
+                                                                <label>Nature of Business <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.NatureOfBusiness}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 wealth_source_pid">
+                                                            <div class="form-group">
+                                                                <label>Source of Wealth <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.WealthSourceName}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 ubo_name_pid"><!--row flex-column -->
+                                                            <div class="form-group">
+                                                                <label for="ubo_name_pid">UBO Name <span
+                                                                        class="required-sign">*</span></label>
+                                                                <div class="form-control-plaintext font-bold">
+                                                                    {{holder.ProfileDetails.UBONames}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-sm-12"
+                                                    style="border-bottom: 1px solid #d7d7d7;margin-bottom: 1rem;">
+                                                </div> -->
+                                                <div class="form-section-title text-uppercase mt-4 mb-4">Communication
+                                                    Details</div>
+                                                <div class="row">
+                                                    <div class="col-sm-4 address_type_pid">
+                                                        <div class="form-group">
+                                                            <label>Address Type <span
+                                                                    class="required-sign">*</span></label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.LocalAddressTypeName}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 address1_pid">
+                                                        <div class="form-group">
+                                                            <label>Address Line 1 <span
+                                                                    class="required-sign">*</span></label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.LocalAddress1}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 address_upload_pid">
+                                                        <div class="form-group">
+                                                            <label for="address_upload_pid">Proof <span
+                                                                    class="required-sign">*</span></label>
+                                                            <label for="address_upload_pid" class="btn input-btn w-100"
+                                                                [ngClass]="{'input-btn-primary': (( mode=='externalverify') && holder.CommincationDetails.LocalAddressFileName  != ''), 'input-btn-danger': (( mode=='externalverify') && holder.CommincationDetails.LocalAddressFileName  == '')}"
+                                                                [ngbTooltip]="holder.CommincationDetails.LocalAddressFileName"
+                                                                tooltipClass="custom-tooltip" placement="bottom">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                    <use xlink:href="#upload" />
+                                                                </svg>
+                                                                <div class="value-wrap">
+                                                                    <span class="default-text"
+                                                                        *ngIf="holder.CommincationDetails.LocalAddressFileName == ''">Not
+                                                                        Uploaded</span>
+                                                                    <span
+                                                                        *ngIf="holder.CommincationDetails.LocalAddressFileName != ''"
+                                                                        class="value">{{holder.CommincationDetails.LocalAddressFileName
+                                                                        | fileDisplayName}}</span>
+                                                                </div>
+                                                            </label>
+
+                                                            <label class="w-100 format"
+                                                                *ngIf="holder.CommincationDetails.LocalAddressFileName == ''">
+                                                                <span class="text-lowercase text-danger">FORMAT- PNG,
+                                                                    JPG,
+                                                                    PDF</span>
+                                                            </label>
+
+                                                            <label class="w-100 preview"
+                                                                *ngIf="holder.CommincationDetails.LocalAddressFileName != ''">
+                                                                <span class="text-lowercase font-italic text-primary"><a
+                                                                        (click)="onLocalAddressPreview(holder)">Preview</a></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 address2_pid">
+                                                        <div class="form-group">
+                                                            <label>Address Line 2 <span
+                                                                    class="required-sign">*</span></label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.LocalAddress2}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 address3_pid">
+                                                        <div class="form-group">
+                                                            <label>Address Line 3</label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.LocalAddress3}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4 city_pid">
+                                                        <div class="form-group">
+                                                            <label>City <span class="required-sign">*</span></label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.LocalCity}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 state_pid">
+                                                        <div class="form-group">
+                                                            <label>State <span class="required-sign">*</span></label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.LocalStateName}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 country_pid">
+                                                        <div class="form-group">
+                                                            <label>Country <span class="required-sign">*</span></label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.LocalCountryName}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 pincode_pid">
+                                                        <div class="form-group">
+                                                            <label>Pincode <span class="required-sign">*</span></label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.LocalPinCode}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row" *ngIf="isNRI">
+                                                    <div class="col-sm-12">
+                                                        <h6 class="card-title">
+                                                            Foreign Address
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-sm-4 foreign_address_type_pid">
+                                                        <div class="form-group">
+                                                            <label>Address Type <span
+                                                                    class="required-sign">*</span></label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.ForeignAddressTypeName}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 foreign_address1_pid">
+                                                        <div class="form-group">
+                                                            <label>Address Line 1 <span
+                                                                    class="required-sign">*</span></label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.ForeignAddress1}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 foreign_address_upload_pid">
+                                                        <div class="form-group">
+                                                            <label for="foreign_address_upload_pid">Upload Proof <span
+                                                                    class="required-sign">*</span></label>
+                                                            <label for="foreign_address_upload_pid"
+                                                                class="btn input-btn w-100"
+                                                                [ngClass]="{'input-btn-primary': (( mode=='externalverify') && holder.CommincationDetails.ForeignAddressFileName != ''), 'input-btn-danger': (( mode=='externalverify') && holder.CommincationDetails.ForeignAddressFileName == '')}"
+                                                                [ngbTooltip]="holder.CommincationDetails.ForeignAddressFileName"
+                                                                tooltipClass="custom-tooltip" placement="bottom">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                    <use xlink:href="#upload" />
+                                                                </svg>
+                                                                <div class="value-wrap">
+                                                                    <span class="default-text"
+                                                                        *ngIf="holder.CommincationDetails.ForeignAddressFileName == ''">Not
+                                                                        Uploaded</span>
+                                                                    <span
+                                                                        *ngIf="holder.CommincationDetails.ForeignAddressFileName != ''"
+                                                                        class="value">{{holder.CommincationDetails.ForeignAddressFileName
+                                                                        | fileDisplayName}}</span>
+                                                                </div>
+                                                            </label>
+
+                                                            <label class="w-100 format"
+                                                                *ngIf="holder.CommincationDetails.ForeignAddressFileName == ''">
+                                                                <span class="text-lowercase text-danger">FORMAT- PNG,
+                                                                    JPG,
+                                                                    PDF</span>
+                                                            </label>
+
+                                                            <label class="w-100 preview"
+                                                                *ngIf="holder.CommincationDetails.ForeignAddressFileName != ''">
+                                                                <span class="text-lowercase font-italic text-primary"><a
+                                                                        (click)="onForeignAddressPreview(holder)">Preview</a></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 foreign_address2_pid">
+                                                        <div class="form-group">
+                                                            <label>Address Line 2 <span
+                                                                    class="required-sign">*</span></label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.ForeignAddress2}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 foreign_address3_pid">
+                                                        <div class="form-group">
+                                                            <label>Address Line 3</label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.ForeignAddress3}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4 foreign_city_pid">
+                                                        <div class="form-group">
+                                                            <label>City <span class="required-sign">*</span></label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.ForeignCity}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 foreign_state_pid">
+                                                        <div class="form-group">
+                                                            <label>State <span class="required-sign">*</span></label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.ForeignStateName}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 foreign_country_pid">
+                                                        <div class="form-group">
+                                                            <label>Country <span class="required-sign">*</span></label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.ForeignCountryName}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 foreign_pincode_pid">
+                                                        <div class="form-group">
+                                                            <label>Pincode <span class="required-sign">*</span></label>
+                                                            <div class="form-control-plaintext font-bold">
+                                                                {{holder.CommincationDetails.ForeignPinCode}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 mt-4">
+                                            <h4 class="form-section-title text-uppercase">
+                                                NOMINEE DETAILS</h4>
+                                            <div class="row nominee_1"
+                                                *ngFor="let nominee of objAccount.AccountNominees">
+                                                <div class="col-sm-3 nominee_id_1">
+                                                    <div class="form-group">
+                                                        <label for="firstNominee_1">Nominee
+                                                            Name</label>
+                                                        <div class="form-control-plaintext font-bold">
+                                                            {{nominee.NomineeName}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 nominee_guardian_1">
+                                                    <div class="form-group">
+                                                        <label for="firstGuardian_1">Guardian
+                                                            Name</label>
+                                                        <div class="form-control-plaintext font-bold">
+                                                            {{nominee.GuardianName}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 nominee_relationship_1">
+                                                    <div class="form-group">
+                                                        <label for="firstNomineeRelation_1">Relationship</label>
+                                                        <div class="form-control-plaintext font-bold">
+                                                            {{nominee.RelationName}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 nominee_applicable_1">
+                                                    <div class="form-group">
+                                                        <label for="firstNomineeShare_1">Applicable</label>
+                                                        <div class="form-control-plaintext font-bold">
+                                                            {{nominee.Shares}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-12 mt-4">
+                                            <h4 class="form-section-title text-uppercase">
+                                                Bank DETAILS</h4>
+                                            <div class="row nominee_1" *ngFor="let bank of objAccount.AccountBanks">
+                                                <div class="col-sm-3 nominee_id_1">
+                                                    <div class="form-group">
+                                                        <label for="firstNominee_1">Bank
+                                                            Name</label>
+                                                        <div class="form-control-plaintext font-bold">
+                                                            {{bank.BankName}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 nominee_guardian_1">
+                                                    <div class="form-group">
+                                                        <label for="firstGuardian_1">Account Type</label>
+                                                        <div class="form-control-plaintext font-bold">
+                                                            {{bank.BankAccountTypeName}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 nominee_relationship_1">
+                                                    <div class="form-group">
+                                                        <label for="firstNomineeRelation_1">Account Number</label>
+                                                        <div class="form-control-plaintext font-bold">
+                                                            {{bank.AccountNumber}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 nominee_applicable_1">
+                                                    <div class="form-group">
+                                                        <label for="firstNomineeShare_1">Cheque Copy</label>
+                                                        <label for="address_upload_pid" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (( mode=='externalverify') && bank.BankProofFileName  != ''), 'input-btn-danger': (( mode=='externalverify') && bank.BankProofFileName  == '')}"
+                                                            [ngbTooltip]="bank.BankProofFileName"
+                                                            tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="bank.BankProofFileName == ''">Not
+                                                                    Uploaded</span>
+                                                                <span class="value"
+                                                                    *ngIf="bank.BankProofFileName != ''">{{bank.BankProofFileName
+                                                                    | fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+
+                                                        <label class="w-100 format"
+                                                            *ngIf="bank.BankProofFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                                PDF</span>
+                                                        </label>
+
+                                                        <label class="w-100 preview"
+                                                            *ngIf="bank.BankProofFileName != ''">
+                                                            <span class="text-lowercase font-italic text-primary"><a
+                                                                    (click)="onBankProofPreview(bank)">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-12 mt-4">
+                                            <h4 class="form-section-title text-uppercase">
+                                                Mandate DETAILS</h4>
+                                            <div class="row nominee_1"
+                                                *ngFor="let mandate of objAccount.AccountMandates">
+                                                <div class="col-sm-3 nominee_id_1">
+                                                    <div class="form-group">
+                                                        <label for="firstNominee_1">Bank
+                                                            Name</label>
+                                                        <div class="form-control-plaintext font-bold">
+                                                            {{mandate.BankName}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 nominee_guardian_1">
+                                                    <div class="form-group">
+                                                        <label for="firstGuardian_1">Amount</label>
+                                                        <div class="form-control-plaintext font-bold">
+                                                            {{mandate.Amount}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 nominee_relationship_1">
+                                                    <div class="form-group">
+                                                        <label for="firstNomineeRelation_1">Type</label>
+                                                        <div class="form-control-plaintext font-bold">
+                                                            {{mandate.MandateTypeName}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 nominee_applicable_1">
+                                                    <div class="form-group">
+                                                        <label for="firstNomineeShare_1">Status</label>
+                                                        <div class="form-control-plaintext font-bold">
+                                                            <span class="badge badge-success badge-pill"
+                                                                *ngIf="mandate.Status=='APPROVED'">{{mandate.Status}}
+                                                            </span>
+                                                            <span class="badge badge-danger badge-pill"
+                                                                *ngIf="mandate.Status=='REJECTED'">{{mandate.Status}}
+                                                            </span>
+                                                            <span class="badge badge-warning badge-pill"
+                                                                *ngIf="(((mandate.Status!='APPROVED') && (mandate.Status!='REJECTED')) && (mandate.Status!=''))">{{mandate.Status}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr *ngIf="isLastAccount">
+                                    <div class="row" *ngIf="isLastAccount">
+                                        <div class="col-sm-12 mt-4">
+                                            <h4 class="form-section-title text-uppercase">
+                                                DECLARATION</h4>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group custom-checkbox">
+                                                        <input #chkpermanent type="checkbox" id="terms_conditions"
+                                                            name="terms_conditions"
+                                                            (change)="onDeclarationChanged(chkpermanent.checked)"
+                                                            [(ngModel)]="IsDeclarationChecked">
+                                                        <label for="terms_conditions">I/We confirm that details provided
+                                                            by me/us are true and correct. The ARN holder has disclosed
+                                                            to me/us all the commission (In the form of trail commission
+                                                            or any other mode), payable to him for the different
+                                                            competing Schemes of various Mutual Fund From amongst which
+                                                            the scheme is being recommended to me/us.</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-footer">
+                                    <ng-container *ngIf="!isLastAccount">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onNext()">Next</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="isLastAccount">
+                                        <button type="button" class="btn btn-primary btn-lg proceed me-3"
+                                            (click)="onApprovedClicked()" [disabled]="!IsDeclarationChecked || isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Approve</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Approve</span>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-lg" (click)="onRejectClicked()"
+                                            [disabled]="!IsDeclarationChecked || isBusy">Reject</button>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

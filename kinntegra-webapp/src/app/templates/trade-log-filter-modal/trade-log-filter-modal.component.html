@@ -1,0 +1,92 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title" id="staticBackdropLabel">Trade Log: Filters</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')">
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row form-sections">
+      <div class="col-12">
+        <h4 class="form-section-title text-uppercase text-grey">Client</h4>
+      </div>
+      <div class="col-12">
+        <div class="form-control ng-select-form-control">
+          <ng-select [(ngModel)]="selectedPANCardNumber" name="PANCardNumber" (change)="onClientProfileChanged()"
+            class="clb-select" [dropdownPosition]="'bottom'" [disabled]="FilterType=='CTL'">
+            <ng-option *ngFor="let item of profiles" [value]="item.PANCardNumber">
+              {{item.Name}} - {{item.PANCardNumber}}
+            </ng-option>
+          </ng-select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row form-sections">
+      <div class="col-12">
+        <h4 class="form-section-title text-uppercase text-grey">Transaction Type</h4>
+      </div>
+      <div class="col-12">
+        <div class="form-control ng-select-form-control">
+          <ng-select [(ngModel)]="selectedTransactionTypes" name="TransactionType" (change)="onTransactionTypeChanged()"
+            class="clb-select" [dropdownPosition]="'bottom'" [items]="transactionTypes" [multiple]="true"
+            [closeOnSelect]="false">
+            <ng-template ng-label-tmp let-item="item">
+              <span class="ng-value-label">{{item.TransactionTypeName}}</span>
+            </ng-template>
+            <ng-template ng-header-tmp>
+              <div class="form-group custom-checkbox form-group-ng-select-header" style="margin-bottom: 0.15rem;;">
+                <input type="checkbox" id="selectAllTransactionTypes" name="selectAllTransactionTypes"
+                  [(ngModel)]="IsSelectedAllTransactionTypes" (change)="onIsSelectedAllTransactionTypesChanged()">
+                <label for="selectAllTransactionTypes">All</label>
+              </div>
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index" let-search="searchTerm">
+              <div>
+                <div style="font-size: 12px;">
+                  <input id="item-{{ index }}" type="checkbox" [ngModel]="item$.selected"
+                    [ngModelOptions]="{standalone: true}" />
+                  {{item.TransactionTypeName}}
+                </div>
+              </div>
+            </ng-template>
+          </ng-select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row form-sections mb-0">
+      <div class="col-12">
+        <h4 class="form-section-title text-uppercase text-grey">From Date - To Date</h4>
+      </div>
+      <div class="col-4">
+        <div class="dp-hidden position-absolute">
+          <div class="input-group" style="border: none;">
+            <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker"
+              [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+              outsideDays="hidden" [startDate]="fromDate!" tabindex="-1" />
+            <ng-template #t let-date let-focused="focused">
+              <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                (mouseleave)="hoveredDate = null">
+                {{ date.day }}
+              </span>
+            </ng-template>
+          </div>
+        </div>
+        <div class="input-group">
+          <button class="btn btn-transparent" (click)="datepicker.toggle()" type="button"><svg width="24" height="24"
+              viewBox="0 0 24 24">
+              <use xlink:href="#month"></use>
+            </svg></button>
+          <input class="form-control" readonly placeholder="dd/mm/yyyy - dd/mm/yyyy" name="dp" [value]="dateFromTo" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary col-sm-3" (click)="onRemoveFilter()">Remove Filter</button>
+    <button type="button" class="btn btn-primary col-sm-3" (click)="onFilter()" [disabled]="(selectedPANCardNumber == null || selectedTransactionTypes.length == 0 || fromDate == null || toDate == null)">Apply Filter</button>
+  </div>
+</div>

@@ -1,0 +1,826 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="table-top-section d-flex justify-content-between align-items-center mb-4">
+            <a class="back-btn" href="#">
+                <i class="icon-left-arrow"></i>
+                Go Back
+            </a>
+            <div class="section-header">
+                <app-header-right-template class="section-header" ></app-header-right-template>
+            </div>
+        </div>
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        
+                            <!-- @include('client.leftbar', ['is_verify' => $is_verify]) -->
+                            <app-client-leftbar-template [activeComp]="'comprehensive-plan'" [activeSubComp]="'expense-details'" [clientId]="clientId"
+                            [leadId]="leadId" [mode]="mode" [progressPercentage]="22"></app-client-leftbar-template>
+                       
+                    </div>
+                    <div class="trial col-lg-8 col-xl-9 col-md-8 step-forms ps-0" id="expense" autocomplete="off">
+                        <div class="form-inner-section">
+                            <div class="form-header">
+                                <h3 class="card-title">Expense</h3>
+                            </div>
+                            <div class="form-content">
+                                <div class="form-sections">
+                                    <h4 class="form-section-title text-uppercase">Enter Details for
+                                        Categories</h4>
+                                    <ul ngbNav #navchild="ngbNav" class="nav nav-tabs banks-tab "
+                                        role="tablist">
+                                        <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added">Food & Grocery</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                        <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added">House
+                                                Rent/Maintenance/Repair</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                        <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added">Conveyance, Fuel and
+                                                Maintenance
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                         <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added" href="#household-expense4"
+                                                role="tab" aria-selected="true">Medicines / Doctor /
+                                                Healthcare</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                         <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added" href="#household-expense5"
+                                                role="tab" aria-selected="true">Electricity / Water / Labour
+                                                /
+                                                AMC</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                         <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added" href="#household-expense6"
+                                                role="tab" aria-selected="true">Mobile</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                         <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added" href="#household-expense7"
+                                                role="tab" aria-selected="true">GasLine/Telephone/Internet
+                                                /Cable</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                         <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added" href="#household-expense8"
+                                                role="tab" aria-selected="true">Cloths and Accessories</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                         <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added" href="#household-expense9"
+                                                role="tab" aria-selected="true">Shopping, Gifts, Whitegoods,
+                                                Gadgets</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                         <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added"
+                                                href="#household-expense10" role="tab"
+                                                aria-selected="true">Dining/Movies/Sports</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                         <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added"
+                                                href="#household-expense11" role="tab"
+                                                aria-selected="true">Personal Care/Others</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                         <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added"
+                                                href="#household-expense12" role="tab"
+                                                aria-selected="true">Mediclaim/PA/CI</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                         <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added"
+                                                href="#household-expense13" role="tab"
+                                                aria-selected="true">Children's Schooling/College
+                                                Expenses
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                         <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added"
+                                                href="#household-expense14" role="tab"
+                                                aria-selected="true">Contribution to Parents/Siblings</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                         <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added"
+                                                href="#household-expense15" role="tab"
+                                                aria-selected="true">Motor Insurance</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                         <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added"
+                                                href="#household-expense16" role="tab"
+                                                aria-selected="true">Life Insurance -Term Plan</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                         <li ngbNavItem class="nav-item mb-4 add-bank-item">
+                                            <a ngbNavLink class="nav-link add-bank bank_added"
+                                                href="#household-expense17" role="tab"
+                                                aria-selected="true">EMI</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="household-expense1"
+                                                role="tabpanel">
+                                                <div class="inline-form">
+                                                    <div class="form-group">
+                                                        <label>Annual Amount</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Upto -Year -Select</label>
+                                                        <div class="form-control ng-select-form-control">
+                                                            <ng-select [dropdownPosition]="'bottom'">
+                                                                <ng-option *ngFor="let year of years">{{year.year}}</ng-option>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Inflation</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">
+                                                            Consider Post Retirenment</label>
+                                                        <div class="d-flex ">
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="yes">
+                                                                <label for="yes">Self</label>
+                                                            </div>
+                                                            <div class="form-group custom-checkbox mb-0">
+                                                                <input type="checkbox" id="no">
+                                                                <label for="no">Spouse</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>% of Current Expense </label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </li>
+                                    </ul>
+                                    <div [ngbNavOutlet]="navchild"></div>
+                                </div>
+                            </div>
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-primary btn-lg" (click)="onNext()">Proceed</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

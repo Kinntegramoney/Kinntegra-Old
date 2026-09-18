@@ -1,0 +1,1146 @@
+<div class="main">
+    <div class="container-fluid">
+        <!-- <div class="table-top-section d-flex justify-content-between align-items-center mb-4"> -->
+        <!-- <a class="back-btn" href="#previous">
+                <i class="icon-left-arrow"></i>
+                Go Back
+            </a> -->
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"></app-header-right-template>
+        </div>
+        <!-- </div> -->
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        <app-client-leftbar-template [activeComp]="'account-creation'" [activeSubComp]="''"
+                            [clientId]="clientId" [leadId]="leadId" [mode]="mode"
+                            [progressPercentage]="55"></app-client-leftbar-template>
+                    </div>
+                    <form class="col-lg-8 col-xl-9 step-forms col-md-8 ps-0">
+                        <section class="trial active" id="account_creation" autocomplete="off">
+                            <div class="form-inner-section">
+                                <div class="form-header">
+                                    <h3 class="card-title d-inline"><i
+                                            class="icon-left-arrow back-btn back_to_allocation"
+                                            (click)="onBackClicked()"></i>Account Creation
+                                    </h3>
+                                    <span class="edit-now float-end mt-1" *ngIf="showEdit"
+                                        (click)="onEditClicked()">Edit</span>
+                                </div>
+                                <div class="form-content">
+                                    <div class="row flex-column">
+                                        <div class="col-12" id="account_detail">
+                                            <div class="form-sections">
+                                                <ul ngbNav #navAccount="ngbNav"
+                                                    class="nav nav-tabs accounts-tab no-wrap" [activeId]="activeTab">
+                                                    <li [ngbNavItem]="i" class="nav-item mb-4"
+                                                        *ngFor="let accountItem of objAccounts; index as i">
+                                                        <button ngbNavLink class="nav-link add-bank bank_added"
+                                                            (click)="onAccountItemClicked(accountItem)">{{i+1}} -
+                                                            {{accountItem.AccountHolderName}}</button>
+                                                        <ng-template ngbNavContent>
+                                                            <div class="form-sub-header-warning"
+                                                                *ngIf="mode=='verify' && accountItem.ModificationLog.length > 0">
+                                                                <div *ngFor="let item of accountItem.ModificationLog">
+                                                                    <div>
+                                                                        <span
+                                                                            class="badge badge-default badge-pill">{{item.ModificationDate
+                                                                            | date:
+                                                                            'dd-MM-yyyy'}}</span>
+                                                                    </div>
+                                                                    <div class="content">{{item.ModificationReason}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-sections">
+                                                                <div class="col-sm-12 mt-1 bank_detail">
+                                                                    <div class="form-sections">
+                                                                        <h4 class="form-section-title text-uppercase">
+                                                                            Create Account For</h4>
+                                                                        <div class="form-inline" id="accountprofile">
+                                                                            <div
+                                                                                class="form-group custom-checkbox checkbox-2 d-inline-block ms-2">
+                                                                                <input type="checkbox"
+                                                                                    id="CreateBSEAccount_{{i}}"
+                                                                                    name="CreateBSEAccount_{{i}}"
+                                                                                    [(ngModel)]="accountItem.CreateBSEAccount"
+                                                                                    [disabled]="(!isEdit || accountItem.IsAccountCreated)">
+                                                                                <label
+                                                                                    for="CreateBSEAccount_{{i}}">BSE</label>
+                                                                            </div>
+                                                                            <!-- <div
+                                                                                class="form-group custom-checkbox checkbox-2 d-inline-block ms-2">
+                                                                                <input type="checkbox"
+                                                                                    id="CreateMFUAccount_{{i}}"
+                                                                                    name="CreateMFUAccount_{{i}}"
+                                                                                    [(ngModel)]="accountItem.CreateMFUAccount"
+                                                                                    [disabled]="(!isEdit || accountItem.IsAccountCreated)">
+                                                                                <label
+                                                                                    for="CreateMFUAccount_{{i}}">MFU</label>
+                                                                            </div>
+                                                                            <div
+                                                                                class="form-group custom-checkbox checkbox-2 d-inline-block ms-2">
+                                                                                <input type="checkbox"
+                                                                                    id="CreateP2PAccount_{{i}}"
+                                                                                    name="CreateP2PAccount_{{i}}"
+                                                                                    [(ngModel)]="accountItem.CreateP2PAccount"
+                                                                                    [disabled]="(!isEdit || accountItem.IsAccountCreated)">
+                                                                                <label
+                                                                                    for="CreateP2PAccount_{{i}}">P2P</label>
+                                                                            </div> -->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <h4 class="form-section-title text-uppercase">Account
+                                                                    Details</h4>
+                                                                <div class="addAccountTab row">
+                                                                    <div class="col-sm-4 first_holder">
+                                                                        <div class="form-group">
+                                                                            <label for="first_holder">First
+                                                                                Holder</label>
+                                                                            <div
+                                                                                class="form-control ng-select-form-control">
+                                                                                <ng-select name="firstHolder_{{i}}"
+                                                                                    [(ngModel)]="accountItem.FirstHolderId"
+                                                                                    (change)="onAccountFirstHolderChanged(accountItem)"
+                                                                                    [disabled]="(!isEdit || accountItem.IsAccountCreated)"
+                                                                                    appendTo="body"
+                                                                                    [dropdownPosition]="'bottom'">
+                                                                                    <ng-option
+                                                                                        *ngFor="let firstHolder of firstHolders"
+                                                                                        [value]="firstHolder.Id">{{
+                                                                                        firstHolder.Name
+                                                                                        }}</ng-option>
+                                                                                </ng-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-sm-4 second_holder">
+                                                                        <div class="form-group">
+                                                                            <label for="second_holder">Second
+                                                                                Holder</label>
+                                                                            <div
+                                                                                class="form-control ng-select-form-control">
+                                                                                <ng-select name="secondHolder_{{i}}"
+                                                                                    [(ngModel)]="accountItem.SecondHolderId"
+                                                                                    (change)="onAccountSecondHolderChanged(accountItem)"
+                                                                                    [disabled]="(!isEdit || accountItem.IsAccountCreated)"
+                                                                                    appendTo="body"
+                                                                                    [dropdownPosition]="'bottom'">
+                                                                                    <ng-option
+                                                                                        *ngFor="let secondHolder of secondHolders"
+                                                                                        [value]="secondHolder.Id">{{
+                                                                                        secondHolder.Name
+                                                                                        }}</ng-option>
+                                                                                </ng-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-4 third_holder">
+                                                                        <div class="form-group">
+                                                                            <label for="third_holder">Third
+                                                                                holder</label>
+                                                                            <div
+                                                                                class="form-control ng-select-form-control">
+                                                                                <ng-select name="thirdHolder_{{i}}"
+                                                                                    [(ngModel)]="accountItem.ThirdHolderId"
+                                                                                    (change)="onAccountThirdHolderChanged(accountItem)"
+                                                                                    [disabled]="(!isEdit || accountItem.IsAccountCreated)"
+                                                                                    appendTo="body"
+                                                                                    [dropdownPosition]="'bottom'">
+                                                                                    <ng-option
+                                                                                        *ngFor="let thirdHolder of thirdHolders"
+                                                                                        [value]="thirdHolder.Id">{{
+                                                                                        thirdHolder.Name
+                                                                                        }}</ng-option>
+                                                                                </ng-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-4 client_account_type">
+                                                                        <div class="form-group">
+                                                                            <label for="client_account_type"> Account
+                                                                                type*</label>
+                                                                            <div
+                                                                                class="form-control ng-select-form-control">
+                                                                                <ng-select name="accountType_{{i}}"
+                                                                                    [(ngModel)]="accountItem.AccountTypeId"
+                                                                                    (change)="onAccountTypeChanged(accountItem)"
+                                                                                    [disabled]="(!isEdit || accountItem.IsAccountCreated)"
+                                                                                    appendTo="body"
+                                                                                    [dropdownPosition]="'bottom'">
+                                                                                    <ng-option
+                                                                                        *ngFor="let accountType of accountTypes"
+                                                                                        [value]="accountType.Id">{{
+                                                                                        accountType.Name
+                                                                                        }}</ng-option>
+                                                                                </ng-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 nominee_detail">
+                                                                        <div class="form-group custom-checkbox mb-0 ">
+                                                                            <input #chkhasnominee type="checkbox"
+                                                                                id="chkhasnominee_{{i}}"
+                                                                                name="chkhasnominee_{{i}}"
+                                                                                [checked]="accountItem.HasNominee"
+                                                                                (change)="onAccountHasNomineeChanged(chkhasnominee.checked,accountItem)"
+                                                                                [disabled]="(!isEdit)" />
+                                                                            <label
+                                                                                for="chkhasnominee_{{i}}">Nominee?</label>
+                                                                        </div>
+                                                                        <div class="form-sections mt-5 mb-0 nominee_set"
+                                                                            *ngIf="accountItem.HasNominee">
+                                                                            <h4
+                                                                                class="form-section-title text-uppercase">
+                                                                                NOMINEE DETAILS (Max 3)</h4>
+                                                                            <div class="row nominee_1">
+                                                                                <div class="col-sm-3 nominee_id_1">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="firstNominee_1_{{i}}">Nominee
+                                                                                            Name</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="firstNominee_1_{{i}}"
+                                                                                                [(ngModel)]="accountItem.FirstNomineeId"
+                                                                                                (change)="onAccountFirstNomineeChanged(accountItem)"
+                                                                                                [disabled]="(!isEdit)"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let firstNominee of firstNominees"
+                                                                                                    [value]="firstNominee.Id">{{
+                                                                                                    firstNominee.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_guardian_1">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="firstGuardian_1_{{i}}">Guardian
+                                                                                            Name</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="firstGuardian_1_{{i}}"
+                                                                                                [(ngModel)]="accountItem.FirstNomineeGuardianId"
+                                                                                                (change)="onAccountFirstGuardianChanged(accountItem)"
+                                                                                                [disabled]="(!isEdit)"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let firstGuardian of firstGuardians"
+                                                                                                    [value]="firstGuardian.Id">{{
+                                                                                                    firstGuardian.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_relationship_1">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="firstNomineeRelation_1_{{i}}">Relationship</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="firstNomineeRelation_1_{{i}}"
+                                                                                                [(ngModel)]="accountItem.FirstNomineeRelationId"
+                                                                                                (change)="onAccountFirstRelationChanged(accountItem)"
+                                                                                                [disabled]="(!isEdit)"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let relation of relations"
+                                                                                                    [value]="relation.Id">{{
+                                                                                                    relation.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_applicable_1">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="firstNomineeShare_1_{{i}}">Applicable</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="firstNomineeShare_1_{{i}}"
+                                                                                                [(ngModel)]="accountItem.FirstNomineeShare"
+                                                                                                (change)="onAccountFirstShareChanged(accountItem)"
+                                                                                                [disabled]="(!isEdit)"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let allocationRatio of allocationRatios"
+                                                                                                    [value]="allocationRatio.Id">{{
+                                                                                                    allocationRatio.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row nominee_2"
+                                                                                *ngIf="showSecondNominee">
+                                                                                <div class="col-sm-3 nominee_id_2">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="secondNominee_2_{{i}}">Nominee
+                                                                                            Name</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="secondNominee_2_{{i}}"
+                                                                                                [(ngModel)]="accountItem.SecondNomineeId"
+                                                                                                (change)="onAccountSecondNomineeChanged(accountItem)"
+                                                                                                [disabled]="(!isEdit)"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let secondNominee of secondNominees"
+                                                                                                    [value]="secondNominee.Id">{{
+                                                                                                    secondNominee.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_guardian_2">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="secondGuardian_2_{{i}}">Guardian
+                                                                                            Name</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="secondGuardian_2_{{i}}"
+                                                                                                [(ngModel)]="accountItem.SecondNomineeGuardianId"
+                                                                                                (change)="onAccountSecondGuardianChanged(accountItem)"
+                                                                                                [disabled]="(!isEdit)"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let secondGuardian of secondGuardians"
+                                                                                                    [value]="secondGuardian.Id">{{
+                                                                                                    secondGuardian.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_relationship_2">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="secondNomineeRelation_2_{{i}}">Relationship</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="secondNomineeRelation_2_{{i}}"
+                                                                                                [(ngModel)]="accountItem.SecondNomineeRelationId"
+                                                                                                (change)="onAccountSecondRelationChanged(accountItem)"
+                                                                                                [disabled]="(!isEdit)"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let relation of relations"
+                                                                                                    [value]="relation.Id">{{
+                                                                                                    relation.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_applicable_2">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="secondNomineeShare_2_{{i}}">Applicable</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="secondNomineeShare_2_{{i}}"
+                                                                                                [(ngModel)]="accountItem.SecondNomineeShare"
+                                                                                                (change)="onAccountSecondShareChanged(accountItem)"
+                                                                                                [disabled]="(!isEdit)"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let allocationRatio of allocationRatios"
+                                                                                                    [value]="allocationRatio.Id">{{
+                                                                                                    allocationRatio.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row nominee_3"
+                                                                                *ngIf="showThirdNominee">
+                                                                                <div class="col-sm-3 nominee_id_3">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="thirdNominee_3_{{i}}">Nominee
+                                                                                            Name</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="thirdNominee_3_{{i}}"
+                                                                                                [(ngModel)]="accountItem.ThirdNomineeId"
+                                                                                                (change)="onAccountThirdNomineeChanged(accountItem)"
+                                                                                                [disabled]="(!isEdit)"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let thirdNominee of thirdNominees"
+                                                                                                    [value]="thirdNominee.Id">{{
+                                                                                                    thirdNominee.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_guardian_3">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="thirdGuardian_3_{{i}}">Guardian
+                                                                                            Name</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="thirdGuardian_3_{{i}}"
+                                                                                                [(ngModel)]="accountItem.ThirdNomineeGuardianId"
+                                                                                                (change)="onAccountThirdGuardianChanged(accountItem)"
+                                                                                                [disabled]="(!isEdit)"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let thirdGuardian of thirdGuardians"
+                                                                                                    [value]="thirdGuardian.Id">{{
+                                                                                                    thirdGuardian.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_relationship_3">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="thirdNomineeRelation_3_{{i}}">Relationship</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="thirdNomineeRelation_3_{{i}}"
+                                                                                                [(ngModel)]="accountItem.ThridNomineeRelationId"
+                                                                                                (change)="onAccountThirdRelationChanged(accountItem)"
+                                                                                                [disabled]="(!isEdit)"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let relation of relations"
+                                                                                                    [value]="relation.Id">{{
+                                                                                                    relation.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_applicable_3">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="thirdNomineeShare_3_{{i}}">Applicable</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="thirdNomineeShare_3_{{i}}"
+                                                                                                [(ngModel)]="accountItem.ThirdNomineeShare"
+                                                                                                (change)="onAccountThirdShareChanged(accountItem)"
+                                                                                                [disabled]="(!isEdit)"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let allocationRatio of allocationRatios"
+                                                                                                    [value]="allocationRatio.Id">{{
+                                                                                                    allocationRatio.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 mt-5 bank_detail">
+                                                                        <div class="form-sections">
+                                                                            <h4
+                                                                                class="form-section-title text-uppercase">
+                                                                                Bank Details</h4>
+                                                                            <div class="row">
+                                                                                <div class="col-sm-6 default_bank">
+                                                                                    <div class="form-group">
+                                                                                        <label for="defaultBank_{{i}}">
+                                                                                            Default Bank</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="defaultBank_{{i}}"
+                                                                                                [(ngModel)]="accountItem.DefaultBankId"
+                                                                                                (change)="onAccountDefaultBankChanged(accountItem)"
+                                                                                                [disabled]="(!isEdit)"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let defaultBank of defaultBanks"
+                                                                                                    [value]="defaultBank.Id">{{
+                                                                                                    defaultBank.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6 other_bank"
+                                                                                    id="other_bank_detail">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="otherBank_{{i}}">Other
+                                                                                            Bank</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                [items]="otherBanks"
+                                                                                                [multiple]="true"
+                                                                                                bindLabel="Name"
+                                                                                                [closeOnSelect]="false"
+                                                                                                bindValue="Id"
+                                                                                                [(ngModel)]="accountItem.SelectedOtherBanks"
+                                                                                                name="otherBank_{{i}}"
+                                                                                                (close)="onAccountOtherBankClosed(accountItem)"
+                                                                                                [disabled]="(!isEdit)"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-template
+                                                                                                    ng-option-tmp
+                                                                                                    let-item="item"
+                                                                                                    let-item$="item$"
+                                                                                                    let-index="index">
+                                                                                                    <input
+                                                                                                        id="item-{{index}}"
+                                                                                                        type="checkbox"
+                                                                                                        [(ngModel)]="item$.selected"
+                                                                                                        [ngModelOptions]="{standalone: true}" />
+                                                                                                    {{item.Name}}
+                                                                                                </ng-template>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row"
+                                                                    *ngIf="mode == 'edit' && isEdit == true">
+                                                                    <div class="col-md-12">
+                                                                        <div class="card small-card option-2 mb-4"
+                                                                            style="height: 95%;">
+                                                                            <div class="card-header">
+                                                                                <h6 class="card-title">Reason For
+                                                                                    Modification</h6>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <div class="form-group">
+                                                                                    <textarea class="form-control mt-3"
+                                                                                        name="modificationReason"
+                                                                                        placeholder="Type your reason for modification here"
+                                                                                        [(ngModel)]="accountItem.ModificationReason"></textarea>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </li>
+                                                    <li *ngIf="isEdit" [ngbNavItem]="-1"
+                                                        class="nav-item add-account-item mb-4">
+                                                        <button ngbNavLink class="nav-link add-account"
+                                                            (click)="onAddAccountClicked()">Add Account</button>
+                                                        <ng-template ngbNavContent>
+                                                            <div class="form-sections">
+                                                                <div class="col-sm-12 mt-1 bank_detail">
+                                                                    <div class="form-sections">
+                                                                        <h4 class="form-section-title text-uppercase">
+                                                                            Create Account For</h4>
+                                                                        <div class="form-inline" id="accountprofile">
+                                                                            <div
+                                                                                class="form-group custom-checkbox checkbox-2 d-inline-block ms-2">
+                                                                                <input type="checkbox"
+                                                                                    id="CreateBSEAccount"
+                                                                                    name="CreateBSEAccount"
+                                                                                    [(ngModel)]="objNewAccount.CreateBSEAccount">
+                                                                                <label
+                                                                                    for="CreateBSEAccount">BSE</label>
+                                                                            </div>
+                                                                            <!-- <div
+                                                                                class="form-group custom-checkbox checkbox-2 d-inline-block ms-2">
+                                                                                <input type="checkbox"
+                                                                                    id="CreateMFUAccount"
+                                                                                    name="CreateMFUAccount"
+                                                                                    [(ngModel)]="objNewAccount.CreateMFUAccount">
+                                                                                <label
+                                                                                    for="CreateMFUAccount">MFU</label>
+                                                                            </div>
+                                                                            <div
+                                                                                class="form-group custom-checkbox checkbox-2 d-inline-block ms-2">
+                                                                                <input type="checkbox"
+                                                                                    id="CreateP2PAccount"
+                                                                                    name="CreateP2PAccount"
+                                                                                    [(ngModel)]="objNewAccount.CreateP2PAccount">
+                                                                                <label
+                                                                                    for="CreateP2PAccount">P2P</label>
+                                                                            </div> -->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <h4 class="form-section-title text-uppercase">Account
+                                                                    Details</h4>
+                                                                <div class="addAccountTab row">
+                                                                    <div class="col-sm-4 first_holder">
+                                                                        <div class="form-group">
+                                                                            <label for="first_holder">First
+                                                                                Holder</label>
+                                                                            <div
+                                                                                class="form-control ng-select-form-control">
+                                                                                <ng-select name="firstHolder"
+                                                                                    [(ngModel)]="objNewAccount.FirstHolderId"
+                                                                                    (change)="onNewAccountFirstHolderChanged()"
+                                                                                    appendTo="body"
+                                                                                    [dropdownPosition]="'bottom'">
+                                                                                    <ng-option
+                                                                                        *ngFor="let firstHolder of firstHolders"
+                                                                                        [value]="firstHolder.Id">{{
+                                                                                        firstHolder.Name
+                                                                                        }}</ng-option>
+                                                                                </ng-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-sm-4 second_holder">
+                                                                        <div class="form-group">
+                                                                            <label for="second_holder">Second
+                                                                                Holder</label>
+                                                                            <div
+                                                                                class="form-control ng-select-form-control">
+                                                                                <ng-select name="secondHolder"
+                                                                                    [(ngModel)]="objNewAccount.SecondHolderId"
+                                                                                    (change)="onNewAccountSecondHolderChanged()"
+                                                                                    appendTo="body"
+                                                                                    [dropdownPosition]="'bottom'">
+                                                                                    <ng-option
+                                                                                        *ngFor="let secondHolder of secondHolders"
+                                                                                        [value]="secondHolder.Id">{{
+                                                                                        secondHolder.Name
+                                                                                        }}</ng-option>
+                                                                                </ng-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-4 third_holder">
+                                                                        <div class="form-group">
+                                                                            <label for="third_holder">Third
+                                                                                holder</label>
+
+                                                                            <div
+                                                                                class="form-control ng-select-form-control">
+                                                                                <ng-select name="thirdHolder"
+                                                                                    [(ngModel)]="objNewAccount.ThirdHolderId"
+                                                                                    (change)="onNewAccountThirdHolderChanged()"
+                                                                                    appendTo="body"
+                                                                                    [dropdownPosition]="'bottom'">
+                                                                                    <ng-option
+                                                                                        *ngFor="let thirdHolder of thirdHolders"
+                                                                                        [value]="thirdHolder.Id">{{
+                                                                                        thirdHolder.Name
+                                                                                        }}</ng-option>
+                                                                                </ng-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-4 client_account_type">
+                                                                        <div class="form-group">
+                                                                            <label for="client_account_type"> Account
+                                                                                type*</label>
+                                                                            <div
+                                                                                class="form-control ng-select-form-control">
+                                                                                <ng-select name="accountType"
+                                                                                    [(ngModel)]="objNewAccount.AccountTypeId"
+                                                                                    (change)="onNewAccountTypeChanged()"
+                                                                                    appendTo="body"
+                                                                                    [dropdownPosition]="'bottom'">
+                                                                                    <ng-option
+                                                                                        *ngFor="let accountType of accountTypes"
+                                                                                        [value]="accountType.Id">{{
+                                                                                        accountType.Name
+                                                                                        }}</ng-option>
+                                                                                </ng-select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 nominee_detail">
+                                                                        <div class="form-group custom-checkbox mb-0 ">
+                                                                            <input #chkhasnominee type="checkbox"
+                                                                                id="chkhasnominee" name="chkhasnominee"
+                                                                                [checked]="objNewAccount.HasNominee"
+                                                                                (change)="onNewAccountHasNomineeChanged(chkhasnominee.checked)" />
+                                                                            <label for="chkhasnominee">Nominee?</label>
+                                                                        </div>
+                                                                        <div class="form-sections mt-5 mb-0 nominee_set"
+                                                                            *ngIf="objNewAccount.HasNominee">
+                                                                            <h4
+                                                                                class="form-section-title text-uppercase">
+                                                                                NOMINEE DETAILS (Max 3)</h4>
+                                                                            <div class="row nominee_1">
+                                                                                <div class="col-sm-3 nominee_id_1">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="nominee_id_1">Nominee
+                                                                                            Name</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="firstNominee"
+                                                                                                [(ngModel)]="objNewAccount.FirstNomineeId"
+                                                                                                (change)="onNewAccountFirstNomineeChanged()"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let firstNominee of firstNominees"
+                                                                                                    [value]="firstNominee.Id">{{
+                                                                                                    firstNominee.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_guardian_1">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="nominee_guardian_1">Guardian
+                                                                                            Name</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="firstGuardian"
+                                                                                                [(ngModel)]="objNewAccount.FirstNomineeGuardianId"
+                                                                                                (change)="onNewAccountFirstGuardianChanged()"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let firstGuardian of firstGuardians"
+                                                                                                    [value]="firstGuardian.Id">{{
+                                                                                                    firstGuardian.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_relationship_1">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="nominee_relationship_1">Relationship</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="firstNomineeRelation"
+                                                                                                [(ngModel)]="objNewAccount.FirstNomineeRelationId"
+                                                                                                (change)="onNewAccountFirstRelationChanged()"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let relation of relations"
+                                                                                                    [value]="relation.Id">{{
+                                                                                                    relation.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_applicable_1">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="nominee_applicable_1">Applicable</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="firstNomineeShare"
+                                                                                                [(ngModel)]="objNewAccount.FirstNomineeShare"
+                                                                                                (change)="onNewAccountFirstShareChanged()"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let allocationRatio of allocationRatios"
+                                                                                                    [value]="allocationRatio.Id">{{
+                                                                                                    allocationRatio.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row nominee_2"
+                                                                                *ngIf="showSecondNominee">
+                                                                                <div class="col-sm-3 nominee_id_2">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="nominee_id_2">Nominee
+                                                                                            Name</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="secondNominee"
+                                                                                                [(ngModel)]="objNewAccount.SecondNomineeId"
+                                                                                                (change)="onNewAccountSecondNomineeChanged()"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let secondNominee of secondNominees"
+                                                                                                    [value]="secondNominee.Id">{{
+                                                                                                    secondNominee.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_guardian_2">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="nominee_guardian_2">Guardian
+                                                                                            Name</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="secondGuardian"
+                                                                                                [(ngModel)]="objNewAccount.SecondNomineeGuardianId"
+                                                                                                (change)="onNewAccountSecondGuardianChanged()"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let secondGuardian of secondGuardians"
+                                                                                                    [value]="secondGuardian.Id">{{
+                                                                                                    secondGuardian.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_relationship_2">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="nominee_relationship_2">Relationship</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="secondNomineeRelation"
+                                                                                                [(ngModel)]="objNewAccount.SecondNomineeRelationId"
+                                                                                                (change)="onNewAccountSecondRelationChanged()"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let relation of relations"
+                                                                                                    [value]="relation.Id">{{
+                                                                                                    relation.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_applicable_2">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="nominee_applicable_2">Applicable</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="secondNomineeShare"
+                                                                                                [(ngModel)]="objNewAccount.SecondNomineeShare"
+                                                                                                (change)="onNewAccountSecondShareChanged()"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let allocationRatio of allocationRatios"
+                                                                                                    [value]="allocationRatio.Id">{{
+                                                                                                    allocationRatio.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row nominee_3"
+                                                                                *ngIf="showThirdNominee">
+                                                                                <div class="col-sm-3 nominee_id_3">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="nominee_id_3">Nominee
+                                                                                            Name</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="thirdNominee"
+                                                                                                [(ngModel)]="objNewAccount.ThirdNomineeId"
+                                                                                                (change)="onNewAccountThirdNomineeChanged()"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let thirdNominee of thirdNominees"
+                                                                                                    [value]="thirdNominee.Id">{{
+                                                                                                    thirdNominee.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_guardian_3">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="nominee_guardian_3">Guardian
+                                                                                            Name</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="thirdGuardian"
+                                                                                                [(ngModel)]="objNewAccount.ThirdNomineeGuardianId"
+                                                                                                (change)="onNewAccountThirdGuardianChanged()"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let thirdGuardian of thirdGuardians"
+                                                                                                    [value]="thirdGuardian.Id">{{
+                                                                                                    thirdGuardian.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_relationship_3">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="nominee_relationship_3">Relationship</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="thirdNomineeRelation"
+                                                                                                [(ngModel)]="objNewAccount.ThridNomineeRelationId"
+                                                                                                (change)="onNewAccountThirdRelationChanged()"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let relation of relations"
+                                                                                                    [value]="relation.Id">{{
+                                                                                                    relation.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-3 nominee_applicable_3">
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="nominee_applicable_3">Applicable</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="thirdNomineeShare"
+                                                                                                [(ngModel)]="objNewAccount.ThirdNomineeShare"
+                                                                                                (change)="onNewAccountThirdShareChanged()"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let allocationRatio of allocationRatios"
+                                                                                                    [value]="allocationRatio.Id">{{
+                                                                                                    allocationRatio.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 mt-5 bank_detail">
+                                                                        <div class="form-sections">
+                                                                            <h4
+                                                                                class="form-section-title text-uppercase">
+                                                                                Bank Details</h4>
+                                                                            <div class="row">
+                                                                                <div class="col-sm-6 default_bank">
+                                                                                    <div class="form-group">
+                                                                                        <label for="default_bank">
+                                                                                            Default Bank</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                name="defaultBank"
+                                                                                                [(ngModel)]="objNewAccount.DefaultBankId"
+                                                                                                (change)="onNewAccountDefaultBankChanged()"
+                                                                                                appendTo="body"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-option
+                                                                                                    *ngFor="let defaultBank of defaultBanks"
+                                                                                                    [value]="defaultBank.Id">{{
+                                                                                                    defaultBank.Name
+                                                                                                    }}</ng-option>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6 other_bank"
+                                                                                    id="other_bank_detail">
+                                                                                    <div class="form-group">
+                                                                                        <label for="other_bank">Other
+                                                                                            Bank</label>
+                                                                                        <div
+                                                                                            class="form-control ng-select-form-control">
+                                                                                            <ng-select
+                                                                                                [items]="otherBanks"
+                                                                                                [multiple]="true"
+                                                                                                bindLabel="Name"
+                                                                                                [closeOnSelect]="false"
+                                                                                                bindValue="Id"
+                                                                                                [(ngModel)]="objNewAccount.SelectedOtherBanks"
+                                                                                                name="otherBank"
+                                                                                                (close)="onNewAccountOtherBankClosed()"
+                                                                                                [dropdownPosition]="'bottom'">
+                                                                                                <ng-template
+                                                                                                    ng-option-tmp
+                                                                                                    let-item="item"
+                                                                                                    let-item$="item$"
+                                                                                                    let-index="index">
+                                                                                                    <input
+                                                                                                        id="item-{{index}}"
+                                                                                                        type="checkbox"
+                                                                                                        [(ngModel)]="item$.selected"
+                                                                                                        [ngModelOptions]="{standalone: true}" />
+                                                                                                    {{item.Name}}
+                                                                                                </ng-template>
+                                                                                            </ng-select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row"
+                                                                    *ngIf="mode == 'edit' && isEdit == true">
+                                                                    <div class="col-md-12">
+                                                                        <div class="card small-card option-2 mb-4"
+                                                                            style="height: 95%;">
+                                                                            <div class="card-header">
+                                                                                <h6 class="card-title">Reason For
+                                                                                    Modification</h6>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <div class="form-group">
+                                                                                    <textarea class="form-control mt-3"
+                                                                                        name="modificationReason"
+                                                                                        placeholder="Type your reason for modification here"
+                                                                                        [(ngModel)]="objNewAccount.ModificationReason"></textarea>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </li>
+                                                </ul>
+                                                <div [ngbNavOutlet]="navAccount"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-footer">
+                                    <ng-container *ngIf="mode == 'create'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'edit'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                                            (click)="onNext()">Proceed</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'verify'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                                            (click)="onNext()">Proceed</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'externalverify'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onNext()">Next</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'viewdetails'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onNext()">Proceed</button>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                        </section>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

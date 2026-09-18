@@ -1,0 +1,708 @@
+<div class="table-top-section">
+  <div class="section-header mb-4">
+    <!-- @include('partials.top') -->
+    <app-header-right-template class="section-header"></app-header-right-template>
+  </div>
+</div>
+<div class="card w-100">
+  <div class="card-body">
+    <div class="row">
+      <div class="container-fluid">
+        <h3 class="card-title d-inline">
+          <i class="icon-left-arrow back-btn" (click)="onBack()"></i>Set
+          PortFolio
+        </h3>
+
+        <div class="card mb-4" style="margin-top: 20px;">
+          <div class="card-body">
+            <div class="row flex-row-reverse">
+              <div class="col-lg-12">
+                <div class="admin-body">
+                  <div class="row">
+                    <div class="col-xl-7 mb-3 mb-xl-0">
+                      <nav ngbNav #nav="ngbNav" class="nav nav-tabs mb-3">
+                        <ng-container ngbNavItem>
+                          <a ngbNavLink (click)="onEquityClick('Wealth')">Wealth</a>
+                          <ng-template ngbNavContent>
+                            <div class="tab-pane fade show active" id="admin-equity" role="tabpanel">
+                              <h6>Equity</h6>
+
+                              <div class="wealth-container">
+                                <table class="wealth-table">
+                                  <thead>
+                                    <tr>
+                                      <th width="40%" rowspan="2"
+                                        style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">SCHEME NAME
+                                      </th>
+                                      <th width="20%" colspan="2"
+                                        style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">REGULAR
+                                        (WEALTH &
+                                        SIP)</th>
+                                      <th width="40%" colspan="4"
+                                        style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">SWP</th>
+                                    </tr>
+                                    <tr>
+                                      <th width="10%">RI %</th>
+                                      <th width="10%" style="border-right: 1px solid #ddd;">NRI %</th>
+                                      <th width="10%">PRIORITY</th>
+                                      <th width="10%">MONTHS</th>
+                                      <th width="10%">RI %</th>
+                                      <th width="10%">NRI %</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr style="border-bottom: 1px solid #ddd;" class="equity"
+                                      *ngFor="let transactionPortfolioWealthEquityDetailsItem of transactionPortfolioWealthEquityDetails; index as i">
+                                      <td class="select" style="border-right: 1px solid #ddd;">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select name="SchemeWealthEquity_{{i}}"
+                                              [(ngModel)]="transactionPortfolioWealthEquityDetailsItem.BSESchemeId"
+                                              (change)="addNewEquityRow(transactionPortfolioWealthEquityDetailsItem,'Equity')" [dropdownPosition]="'bottom'">
+                                              <ng-option *ngFor="let scheme of wealthEquitySchemes"
+                                                [value]="scheme.Id">{{scheme.SchemeName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select
+                                              [(ngModel)]="transactionPortfolioWealthEquityDetailsItem.ResidentPercentage"
+                                              name="riWealthEquity_{{i}}"
+                                              (change)="addNewEquityRow(transactionPortfolioWealthEquityDetailsItem,'Equity')"
+                                              [disabled]="!transactionPortfolioWealthEquityDetailsItem.IsEquitySchemeSelected">
+                                              <ng-option *ngFor="let regular of regularRi"
+                                                [value]="regular.ratio">{{regular.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+
+                                      <td class="select" style="border-right: 1px solid #ddd;">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select 
+                                              [(ngModel)]="transactionPortfolioWealthEquityDetailsItem.NRIPercentage"
+                                              name="nriWealthEquity_{{i}}"
+                                              (change)="addNewEquityRow(transactionPortfolioWealthEquityDetailsItem,'Equity')"
+                                              [disabled]="!transactionPortfolioWealthEquityDetailsItem.IsEquitySchemeSelected">
+                                              <ng-option *ngFor="let rnri of regularNri"
+                                                [value]="rnri.ratio">{{rnri.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select 
+                                              [(ngModel)]="transactionPortfolioWealthEquityDetailsItem.SWPPriority"
+                                              name="priorityWealthEquity_{{i}}"
+                                              (change)="addNewEquityRow(transactionPortfolioWealthEquityDetailsItem,'Equity')"
+                                              [disabled]="!transactionPortfolioWealthEquityDetailsItem.IsEquitySchemeSelected">
+                                              <ng-option *ngFor="let priority of swpPrioritys"
+                                                [value]="priority.ratio">{{priority.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select 
+                                              [(ngModel)]="transactionPortfolioWealthEquityDetailsItem.SWPMonths"
+                                              name="monthsWealthEquity_{{i}}"
+                                              (change)="addNewEquityRow(transactionPortfolioWealthEquityDetailsItem,'Equity')"
+                                              [disabled]="!transactionPortfolioWealthEquityDetailsItem.IsEquitySchemeSelected">
+                                              <ng-option *ngFor="let month of swpMonths"
+                                                [value]="month.ratio">{{month.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select 
+                                              [(ngModel)]="transactionPortfolioWealthEquityDetailsItem.SWPResidentPercentage"
+                                              name="swpRiWealthEquity_{{i}}"
+                                              (change)="addNewEquityRow(transactionPortfolioWealthEquityDetailsItem,'Equity')"
+                                              [disabled]="!transactionPortfolioWealthEquityDetailsItem.IsEquitySchemeSelected">
+                                              <ng-option *ngFor="let sri of swpRi"
+                                                [value]="sri.ratio">{{sri.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select 
+                                              [(ngModel)]="transactionPortfolioWealthEquityDetailsItem.SWPNRIPercentage"
+                                              name="swpNriWealthEquity_{{i}}"
+                                              (change)="addNewEquityRow(transactionPortfolioWealthEquityDetailsItem,'Equity')"
+                                              [disabled]="!transactionPortfolioWealthEquityDetailsItem.IsEquitySchemeSelected">
+                                              <ng-option *ngFor="let snir of swpNri"
+                                                [value]="snir.ratio">{{snir.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td style="font-weight: bold; font-size:20px;">Total</td>
+                                      <td>
+                                        <div class="form-group" class="total">
+
+                                          <input type="number" class="form-control input-total"
+                                            [(ngModel)]="regularRiTotalAmount" [disabled]="isTotalAmount">
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="form-group" class="total">
+
+                                          <input type="number" class="form-control input-total"
+                                            [(ngModel)]="regularNriTotalAmount" [disabled]="isTotalAmount">
+                                        </div>
+                                      </td>
+                                      <td colspan="2"></td>
+                                      <td>
+                                        <div class="form-group" class="total">
+
+                                          <input type="number" class="form-control input-total"
+                                            [(ngModel)]="swpRiTotalAmount" [disabled]="isTotalAmount">
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="form-group" class="total">
+
+                                          <input type="number" class=" form-control input-total"
+                                            [(ngModel)]="this.swpNriTotalAmount" [disabled]="isTotalAmount">
+                                        </div>
+                                      </td>
+
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <h6>Debt</h6>
+
+                              <div class="wealth-container">
+                                <table class="wealth-table">
+                                  <thead>
+                                    <tr>
+                                      <th width="40%" rowspan="2"
+                                        style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">SCHEME NAME
+                                      </th>
+                                      <th width="20%" colspan="2"
+                                        style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">REGULAR
+                                        (WEALTH &
+                                        SIP)</th>
+                                      <th width="40%" colspan="4"
+                                        style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">SWP</th>
+                                    </tr>
+                                    <tr>
+                                      <th width="10%">RI %</th>
+                                      <th width="10%" style="border-right: 1px solid #ddd;">NRI %</th>
+                                      <th width="10%">PRIORITY</th>
+                                      <th width="10%">MONTHS</th>
+                                      <th width="10%">RI %</th>
+                                      <th width="10%">NRI %</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr style="border-bottom: 1px solid #ddd;"
+                                      *ngFor="let transactionPortfolioWealthDebtDetailsItem of transactionPortfolioWealthDebtDetails; index as i">
+                                      <td class="select" style="border-right: 1px solid #ddd;">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select name="SchemeWealthDebt_{{i}}" 
+                                              [(ngModel)]="transactionPortfolioWealthDebtDetailsItem.BSESchemeId"
+                                              (change)="addNewDebtRow(transactionPortfolioWealthDebtDetailsItem,'Debt')">
+                                              <ng-option *ngFor="let scheme of wealthDebtSchemes"
+                                                [value]="scheme.Id">{{scheme.SchemeName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select 
+                                              [(ngModel)]="transactionPortfolioWealthDebtDetailsItem.ResidentPercentage"
+                                              name="riWealthDebt_{{i}}"
+                                              (change)="addNewDebtRow(transactionPortfolioWealthDebtDetailsItem,'Debt')"
+                                              [disabled]="!transactionPortfolioWealthDebtDetailsItem.IsDebtSchemeSelected">
+                                              <ng-option *ngFor="let regular of regularRi"
+                                                [value]="regular.ratio">{{regular.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+
+                                      <td class="select" style="border-right: 1px solid #ddd;">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select 
+                                              [(ngModel)]="transactionPortfolioWealthDebtDetailsItem.NRIPercentage"
+                                              name="nriWealthDebt_{{i}}"
+                                              (change)="addNewDebtRow(transactionPortfolioWealthDebtDetailsItem,'Debt')"
+                                              [disabled]="!transactionPortfolioWealthDebtDetailsItem.IsDebtSchemeSelected">
+                                              <ng-option *ngFor="let rnri of regularNri"
+                                                [value]="rnri.ratio">{{rnri.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select 
+                                              [(ngModel)]="transactionPortfolioWealthDebtDetailsItem.SWPPriority"
+                                              name="priorityWealthDebt_{{i}}"
+                                              (change)="addNewDebtRow(transactionPortfolioWealthDebtDetailsItem,'Debt')"
+                                              [disabled]="!transactionPortfolioWealthDebtDetailsItem.IsDebtSchemeSelected">
+                                              <ng-option *ngFor="let priority of swpPrioritys"
+                                                [value]="priority.ratio">{{priority.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select 
+                                              [(ngModel)]="transactionPortfolioWealthDebtDetailsItem.SWPMonths"
+                                              name="monthsWealthDebt_{{i}}"
+                                              (change)="addNewDebtRow(transactionPortfolioWealthDebtDetailsItem,'Debt')"
+                                              [disabled]="!transactionPortfolioWealthDebtDetailsItem.IsDebtSchemeSelected">
+                                              <ng-option *ngFor="let month of swpMonths"
+                                                [value]="month.ratio">{{month.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select 
+                                              [(ngModel)]="transactionPortfolioWealthDebtDetailsItem.SWPResidentPercentage"
+                                              name="swpRiWealthDebt_{{i}}"
+                                              (change)="addNewDebtRow(transactionPortfolioWealthDebtDetailsItem,'Debt')"
+                                              [disabled]="!transactionPortfolioWealthDebtDetailsItem.IsDebtSchemeSelected">
+                                              <ng-option *ngFor="let sri of swpRi"
+                                                [value]="sri.ratio">{{sri.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select 
+                                              [(ngModel)]="transactionPortfolioWealthDebtDetailsItem.SWPNRIPercentage"
+                                              name="swpNriWealthDebt_{{i}}"
+                                              (change)="addNewDebtRow(transactionPortfolioWealthDebtDetailsItem,'Debt')"
+                                              [disabled]="!transactionPortfolioWealthDebtDetailsItem.IsDebtSchemeSelected">
+                                              <ng-option *ngFor="let snir of swpNri"
+                                                [value]="snir.ratio">{{snir.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td style="font-weight: bold; font-size:20px;">Total</td>
+                                      <td>
+                                        <div class="form-group" class="total">
+
+                                          <input type="number" class="form-control input-total"
+                                            [(ngModel)]="debtRegularRiTotalAmount" [disabled]="isTotalAmount">
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="form-group" class="total">
+
+                                          <input type="number" class="form-control input-total"
+                                            [(ngModel)]="debtRegularNriTotalAmount" [disabled]="isTotalAmount">
+                                        </div>
+                                      </td>
+                                      <td colspan="2"></td>
+                                      <td>
+                                        <div class="form-group" class="total">
+
+                                          <input type="number" class="form-control input-total"
+                                            [(ngModel)]="debtSwpRiTotalAmount" [disabled]="isTotalAmount">
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="form-group" class="total">
+
+                                          <input type="number" class=" form-control input-total"
+                                            [(ngModel)]="debtSwpNriTotalAmount" [disabled]="isTotalAmount">
+                                        </div>
+                                      </td>
+
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div class="card small-card option-2 mb-4">
+                                <div class="card-header">
+                                  <h6 class="card-title">
+                                    RATIONAL FOR TRADE
+                                  </h6>
+                                </div>
+                                <div class="card-body">
+                                  <div class="form-group mb-3">
+                                    <textarea class="ng-select-form-control form-control" id="rational_trade_equity"
+                                      name="rational_trade_equity" placeholder="Add Rational for trade"
+                                      [(ngModel)]="transactionPortfolio.RationalForTrade"></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <button type="button" class="btn btn-primary btn-lg proceed float-end"
+                                  (click)="onSaveWealthEquityDebt()">SAVE
+                                  CHANGES</button>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </ng-container>
+                        <ng-container ngbNavItem>
+                          <a ngbNavLink (click)="onTaxClick('Tax')">Tax</a>
+                          <ng-template ngbNavContent>
+                            <div class="tab-pane fade show active" id="admin-equity" role="tabpanel">
+
+
+                              <div class="wealth-container">
+                                <table class="wealth-table">
+                                  <thead>
+                                    <tr>
+                                      <th width="50%" rowspan="2"
+                                        style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">SCHEME NAME
+                                      </th>
+                                      <th width="50%" colspan="2"
+                                        style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">REGULAR
+                                        (WEALTH &
+                                        SIP)</th>
+
+                                    </tr>
+                                    <tr>
+                                      <th width="25%">RECIDENCE %</th>
+                                      <th width="25%" style="border-right: 1px solid #ddd;">NRI %</th>
+
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr class="equity"
+                                      *ngFor="let transactionPortfolioTaxDetailsItem of transactionPortfolioTaxDetails; index as i">
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select name="SchemeTax_{{i}}" 
+                                              [(ngModel)]="transactionPortfolioTaxDetailsItem.BSESchemeId" 
+                                              (change)="addNewTaxRow(transactionPortfolioTaxDetailsItem)">
+                                              <ng-option *ngFor="let scheme of taxSchemes"
+                                                [value]="scheme.Id">{{scheme.SchemeName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select  [(ngModel)]="transactionPortfolioTaxDetailsItem.ResidentPercentage"
+                                              name="riTax_{{i}}" (change)="addNewTaxRow(transactionPortfolioTaxDetailsItem)"
+                                              >
+                                              <!-- <ng-option value="yes">Yes</ng-option>
+                                              <ng-option value="no">No</ng-option> -->
+                                              <ng-option *ngFor="let regular of regularRi"
+                                              [value]="regular.ratio">{{regular.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select  [(ngModel)]="transactionPortfolioTaxDetailsItem.NRIPercentage"
+                                              name="nriTax_{{i}}" (change)="addNewTaxRow(transactionPortfolioTaxDetailsItem)"
+                                              >
+                                              <!-- <ng-option value="yes">Yes</ng-option>
+                                              <ng-option value="no">No</ng-option> -->
+                                              <ng-option *ngFor="let rnri of regularNri"
+                                              [value]="rnri.ratio">{{rnri.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                          
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div class="card small-card option-2 mb-4">
+                                <div class="card-header">
+                                  <h6 class="card-title">
+                                    RATIONAL FOR TRADE
+                                  </h6>
+                                </div>
+                                <div class="card-body">
+                                  <div class="form-group mb-3">
+                                    <textarea class="ng-select-form-control form-control" id="rational_trade_equity"
+                                      name="rational_trade_equity" placeholder="Add Rational for trade"
+                                      [(ngModel)]="transactionPortfolio.RationalForTrade"></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <button type="button" class="btn btn-primary btn-lg proceed float-end"
+                                  (click)="onSaveTax()">SAVE
+                                  CHANGES</button>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </ng-container>
+                        <ng-container ngbNavItem>
+                          <a ngbNavLink (click)="onShortTermClick('Short Term')">Short Term</a>
+                          <ng-template ngbNavContent>
+                            <div class="tab-pane fade show active" id="admin-equity" role="tabpanel">
+
+
+                              <div class="wealth-container">
+                                <table class="wealth-table">
+                                  <thead>
+                                    <tr>
+                                      <th width="50%" rowspan="2"
+                                        style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">SCHEME NAME
+                                      </th>
+                                      <th width="50%" colspan="2"
+                                        style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">REGULAR
+                                        (WEALTH &
+                                        SIP)</th>
+
+                                    </tr>
+                                    <tr>
+                                      <th width="25%">RECIDENCE %</th>
+                                      <th width="25%" style="border-right: 1px solid #ddd;">NRI %</th>
+
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr class="equity"
+                                      *ngFor="let transactionPortfolioShortTermDetailsItem of transactionPortfolioShortTermDetails; index as i">
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select name="SchemeShortTerm_{{i}}" 
+                                              [(ngModel)]="transactionPortfolioShortTermDetailsItem.BSESchemeId" 
+                                              (change)="addNewShortTermRow(transactionPortfolioShortTermDetailsItem)">
+                                              <ng-option *ngFor="let scheme of shortTermSchemes"
+                                                [value]="scheme.Id">{{scheme.SchemeName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select  [(ngModel)]="transactionPortfolioShortTermDetailsItem.ResidentPercentage"
+                                              name="riShortTerm_{{i}}" (change)="addNewShortTermRow(transactionPortfolioShortTermDetailsItem)"
+                                              >
+                                              <ng-option *ngFor="let regular of regularRi"
+                                              [value]="regular.ratio">{{regular.ratioName}}</ng-option>
+                                              <!-- <ng-option value="yes">Yes</ng-option>
+                                              <ng-option value="no">No</ng-option> -->
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select  [(ngModel)]="transactionPortfolioShortTermDetailsItem.NRIPercentage"
+                                              name="nriShortTerm_{{i}}" (change)="addNewShortTermRow(transactionPortfolioShortTermDetailsItem)"
+                                              >
+                                              <!-- <ng-option value="yes">Yes</ng-option>
+                                              <ng-option value="no">No</ng-option> -->
+                                              <ng-option *ngFor="let rnri of regularNri"
+                                              [value]="rnri.ratio">{{rnri.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+
+
+                                    </tr>
+                                    <!-- <tr>
+                                      <td colspan="4">
+                                        <div class="add-more-container">
+                                          <a class="add" >
+                                            <svg width="35" height="35" viewBox="-2 -2 28 28">
+                                              <use xlink:href="#add-btn"></use>
+                                            </svg>
+                                            ADD MORE
+                                          </a>
+                                        </div>
+                                      </td>
+                                    </tr> -->
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div class="card small-card option-2 mb-4">
+                                <div class="card-header">
+                                  <h6 class="card-title">
+                                    RATIONAL FOR TRADE
+                                  </h6>
+                                </div>
+                                <div class="card-body">
+                                  <div class="form-group mb-3">
+                                    <textarea class="ng-select-form-control form-control" id="rational_trade_equity"
+                                      name="rational_trade_equity" placeholder="Add Rational for trade"
+                                      [(ngModel)]="transactionPortfolio.RationalForTrade"></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <button type="button" class="btn btn-primary btn-lg proceed float-end"
+                                  (click)="onSaveShortTerm()">SAVE
+                                  CHANGES</button>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </ng-container>
+                        <ng-container ngbNavItem>
+                          <a ngbNavLink (click)="onCommoditiesClick('Commodities')">Commodities</a>
+                          <ng-template ngbNavContent>
+                            <div class="tab-pane fade show active" id="admin-equity" role="tabpanel">
+
+
+                              <div class="wealth-container">
+                                <table class="wealth-table">
+                                  <thead>
+                                    <tr>
+                                      <th width="50%" rowspan="2"
+                                        style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">SCHEME NAME
+                                      </th>
+                                      <th width="50%" colspan="2"
+                                        style="border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">REGULAR
+                                        (WEALTH &
+                                        SIP)</th>
+
+                                    </tr>
+                                    <tr>
+                                      <th width="25%">RECIDENCE %</th>
+                                      <th width="25%" style="border-right: 1px solid #ddd;">NRI %</th>
+
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr class="equity"
+                                      *ngFor="let transactionPortfolioCommoditiesDetailsItem of transactionPortfolioCommoditiesDetails; index as i">
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select name="SchemeCommodities_{{i}}" 
+                                              [(ngModel)]="transactionPortfolioCommoditiesDetailsItem.BSESchemeId" 
+                                              (change)="addNewCommoditiesRow(transactionPortfolioCommoditiesDetailsItem)">
+                                              <ng-option *ngFor="let scheme of commoditiesSchemes"
+                                                [value]="scheme.Id">{{scheme.SchemeName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select  [(ngModel)]="transactionPortfolioCommoditiesDetailsItem.ResidentPercentage"
+                                              name="riCommodities_{{i}}" (change)="addNewCommoditiesRow(transactionPortfolioCommoditiesDetailsItem)"
+                                              >
+                                              <!-- <ng-option value="yes">Yes</ng-option>
+                                              <ng-option value="no">No</ng-option> -->
+                                              <ng-option *ngFor="let regular of regularRi"
+                                              [value]="regular.ratio">{{regular.ratioName}}</ng-option>
+                                              
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+
+                                      <td class="select">
+                                        <div class="form-group">
+                                          <div class="form-control ng-select-form-control">
+                                            <ng-select  [(ngModel)]="transactionPortfolioCommoditiesDetailsItem.NRIPercentage"
+                                              name="nriCommodities_{{i}}" (change)="addNewCommoditiesRow(transactionPortfolioCommoditiesDetailsItem)"
+                                              >
+                                              <!-- <ng-option value="yes">Yes</ng-option>
+                                              <ng-option value="no">No</ng-option> -->
+                                              <ng-option *ngFor="let rnri of regularNri"
+                                              [value]="rnri.ratio">{{rnri.ratioName}}</ng-option>
+                                            </ng-select>
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                          
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div class="card small-card option-2 mb-4">
+                                <div class="card-header">
+                                  <h6 class="card-title">
+                                    RATIONAL FOR TRADE
+                                  </h6>
+                                </div>
+                                <div class="card-body">
+                                  <div class="form-group mb-3">
+                                    <textarea class="ng-select-form-control form-control" id="rational_trade_equity"
+                                      name="rational_trade_equity" placeholder="Add Rational for trade"
+                                      [(ngModel)]="transactionPortfolio.RationalForTrade"></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <button type="button" class="btn btn-primary btn-lg proceed float-end"
+                                  (click)="onSaveCommodities()">SAVE
+                                  CHANGES</button>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </ng-container>
+                      </nav>
+                    </div>
+                    <div class="col-xl-5 pl-xl-0">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <input class="form-control" readonly placeholder="dd-mm-yyyy" name="TransactionPortfolioDate"
+                            ngbDatepicker #d1="ngbDatepicker" [(ngModel)]="transactionPortfolioDate" (dateSelect)="OnPortfolioDateSelect($event)"/>
+                          <button class="btn btn-transparent" (click)="d1.toggle()" type="button"><svg width="24"
+                              height="24" viewBox="0 0 24 24">
+                              <use xlink:href="#month"></use>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

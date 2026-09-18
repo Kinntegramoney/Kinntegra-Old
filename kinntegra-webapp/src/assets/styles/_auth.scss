@@ -1,0 +1,61 @@
+.auth-page {
+    background-color: var(--primary, $primary);
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    padding: 0;
+    &:before {
+        content: "";
+        width: 1366px;
+        height: 1366px;
+        border: 200px solid #ffffff;
+        opacity: 0.05;
+        border-radius: 100%;
+        position: absolute;
+        left: calc(70% - 1366px);
+        bottom: calc(70% - 1366px);
+    }
+    &:after {
+        content: "";
+        height: 574px;
+        width: 574px;
+        border: 100px solid #ffffff;
+        opacity: 0.05;
+        position: absolute;
+        top: calc(30% - 574px);
+        right: calc(30% - 574px);
+        border-radius: 100%;
+    }
+    .auth-wrapper {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        overflow-y: auto;
+        @media (max-width: $sm) {
+            display: block;
+        }
+    }
+    .auth-card {
+        width: 90%;
+        max-width: 29.69rem;
+        border-radius: 10px;
+        @media (max-width: $sm) {
+            margin: 6rem auto 2rem;
+        }
+    }
+}
+
+.company-info {
+    color: $primary-extra-light;
+    font-size: 12px;
+    font-weight: 500;
+    margin: 1.5rem 0 0;
+    padding: 0px 1rem;
+    @media(max-width: $sm){
+        margin-bottom: 2rem;
+    }
+}

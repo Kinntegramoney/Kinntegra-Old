@@ -1,0 +1,28 @@
+<div class="container-fluid">
+    <div class="col d-flex justify-content-center align-item-center">
+        <div class="card col-8">
+            <div class="card-body text-center">
+                <div class="row justify-content-center">
+                    <div class="col-2">
+                        <ng-lottie width="100px" height="100px" [options]="lottieOptions"
+                            (animationCreated)="animationCreated($event)"></ng-lottie>
+                    </div>
+                </div>
+                <div class="row mt-4" *ngIf="showSupervisor">
+                    <h3 class="card-title">{{objClient.FamilyName | uppercase}} - {{modeName}} successfully.
+                    </h3>
+                    <p class="card-text">Client data sent for supervisior verification</p>
+                </div>
+                <div class="row mt-4" *ngIf="showSelf">
+                    <h3 class="card-title">Verfication process for {{objClient.FamilyName | uppercase}} is
+                        completed.</h3>
+                    <p class="card-text" *ngIf="mtype=='Approved'">Client data sent for self verification.</p>
+                    <p class="card-text" *ngIf="mtype=='Rejected'">Approval Request has been rejected successfully.</p>
+                </div>
+                <div class="row justify-content-center mt-4">
+                    <a class="btn btn-primary col-sm-2" href="leads">Ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,267 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticLeadLabel">View the logic for allocation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="activeModal.dismiss('Cross click')">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row" *ngFor="let item of logicData; index as i">
+            <div class="col-md-12">
+                <div class="card small-card option-2 option-2 mb-4">
+                    <div class="card-header">
+                        <h6 class="card-title">Step {{item.StepNumber}}: {{item.Title}}</h6>
+                    </div>
+                    <div class="card-body" *ngIf="item.StepNumber == 1">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card small-card option-2 mb-4">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <ngx-datatable class="material" [rows]="item.Data"
+                                                [columnMode]="ColumnMode.force" rowHeight="auto" [headerHeight]="50"
+                                                [scrollbarH]="true">
+                                                <ngx-datatable-column name="Current Asset" [width]="10"
+                                                    [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.CurrentAsset | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Provisional Buy" [width]="10"
+                                                    [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.ProvisionalBuy | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Provisional Sell" [width]="10"
+                                                    [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.ProvisionalSell | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="New Investment" [width]="10"
+                                                    [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.NewInvestment | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Total" [width]="10" [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Total | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                            </ngx-datatable>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" *ngIf="item.StepNumber == 2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card small-card option-2 mb-4">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <ngx-datatable class="material" [rows]="item.Data"
+                                                [columnMode]="ColumnMode.force" rowHeight="auto" [headerHeight]="50"
+                                                [scrollbarH]="true">
+                                                <ngx-datatable-column name="Scheme Name" [width]="375"
+                                                    [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.SchemeName}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Rational" [width]="150" [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Rational}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Amount Calculation" [width]="75"
+                                                    [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.AmountCalculation}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Amount" [width]="20" [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Amount | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                            </ngx-datatable>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" *ngIf="item.StepNumber == 3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card small-card option-2 mb-4">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <ngx-datatable class="material" #step3DataTable [rows]="item.Data"
+                                                [columnMode]="ColumnMode.force" rowHeight="auto" [headerHeight]="50"
+                                                [scrollbarH]="true" [groupRowsBy]="'SchemeType'"
+                                                [groupExpansionDefault]="true">
+                                                <ngx-datatable-group-header [rowHeight]="75" #myGroupHeader
+                                                    (toggle)="onDetailToggle($event)">
+                                                    <ng-template let-group="group" let-expanded="expanded"
+                                                        ngx-datatable-group-header-template>
+                                                        <div
+                                                            style="padding-left:5px; padding-top:10px; padding-bottom:10px;height: 100%; display:flex;align-items: center; font-size: 14px;">
+                                                            <a [class.datatable-icon-right]="!expanded"
+                                                                [class.datatable-icon-down]="expanded"
+                                                                title="Expand/Collapse Group"
+                                                                (click)="toggleExpandGroup(group)" style="font-size: 14px;"><b>{{ group ? ' ' + group.value[0].SchemeType : '' }}</b>
+                                                            </a>
+                                                        </div>
+                                                    </ng-template>
+                                                </ngx-datatable-group-header>
+
+                                                <ngx-datatable-column name="Scheme Name" [width]="445"
+                                                    [sortable]="false" [frozenLeft]="true">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.SchemeName}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Suggested Investment" [width]="170"
+                                                    [sortable]="false" [frozenLeft]="true">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.SuggestedInvestment | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Current Portfolio" [width]="150"
+                                                    [sortable]="false" [frozenLeft]="true">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.CurrentPortfolio | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Difference 1" [width]="175"
+                                                    [sortable]="false" *ngIf="currentColumn==1">
+                                                    <ng-template ngx-datatable-header-template let-column="column">Difference 1 <a (click)="onShowColumn(2)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-right-arrow"></i></a></ng-template>
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Difference1 | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Difference 2" [width]="175"
+                                                    [sortable]="false" *ngIf="currentColumn==2">
+                                                    <ng-template ngx-datatable-header-template let-column="column"><a (click)="onShowColumn(1)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-left-arrow"></i></a> Difference 2 <a (click)="onShowColumn(3)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-right-arrow"></i></a></ng-template>
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Difference2 | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Difference 3" [width]="175"
+                                                    [sortable]="false" *ngIf="currentColumn==3">
+                                                    <ng-template ngx-datatable-header-template let-column="column"><a (click)="onShowColumn(2)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-left-arrow"></i></a> Difference 3 <a (click)="onShowColumn(4)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-right-arrow"></i></a></ng-template>
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Difference3 | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Difference 4" [width]="175"
+                                                    [sortable]="false" *ngIf="currentColumn==4">
+                                                    <ng-template ngx-datatable-header-template let-column="column"><a (click)="onShowColumn(3)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-left-arrow"></i></a> Difference 4 <a (click)="onShowColumn(5)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-right-arrow"></i></a></ng-template>
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Difference4 | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Difference 5" [width]="175"
+                                                    [sortable]="false" *ngIf="currentColumn==5">
+                                                    <ng-template ngx-datatable-header-template let-column="column"><a (click)="onShowColumn(4)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-left-arrow"></i></a> Difference 5 <a (click)="onShowColumn(6)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-right-arrow"></i></a></ng-template>
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Difference5 | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Difference 6" [width]="175"
+                                                    [sortable]="false" *ngIf="currentColumn==6">
+                                                    <ng-template ngx-datatable-header-template let-column="column"><a (click)="onShowColumn(5)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-left-arrow"></i></a> Difference 6 <a (click)="onShowColumn(7)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-right-arrow"></i></a></ng-template>
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Difference6 | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Difference 7" [width]="175"
+                                                    [sortable]="false" *ngIf="currentColumn==7">
+                                                    <ng-template ngx-datatable-header-template let-column="column"><a (click)="onShowColumn(6)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-left-arrow"></i></a> Difference 7 <a (click)="onShowColumn(8)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-right-arrow"></i></a></ng-template>
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Difference7 | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Difference 8" [width]="175"
+                                                    [sortable]="false" *ngIf="currentColumn==8">
+                                                    <ng-template ngx-datatable-header-template let-column="column"><a (click)="onShowColumn(7)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-left-arrow"></i></a> Difference 8 <a (click)="onShowColumn(9)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-right-arrow"></i></a></ng-template>
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Difference8 | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Difference 9" [width]="175"
+                                                    [sortable]="false" *ngIf="currentColumn==9">
+                                                    <ng-template ngx-datatable-header-template let-column="column"><a (click)="onShowColumn(8)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-left-arrow"></i></a> Difference 9 <a (click)="onShowColumn(10)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-right-arrow"></i></a></ng-template>
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Difference9 | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Difference 10" [width]="175"
+                                                    [sortable]="false" *ngIf="currentColumn==10">
+                                                    <ng-template ngx-datatable-header-template let-column="column"><a (click)="onShowColumn(9)" class="btn btn-icon" style="width: 30px; padding: 5px"><i class="icon-left-arrow"></i></a> Difference 10</ng-template>
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Difference10 | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Amount" [width]="110" [sortable]="false" [frozenRight]="true">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.FinalAmount | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                            </ngx-datatable>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="d-flex justify-content-end w-100">
+            <ng-container>
+                <button type="button" class="btn btn-outline-primary col-sm-2 col-5" data-bs-dismiss="modal"
+                    aria-label="Close" (click)="activeModal.dismiss('Cross click')">Cancel</button>
+                <button type="button" class="btn btn-primary col-sm-3 col-6 ms-3" (click)="onDownload()"
+                    [disabled]="isBusy">
+                    <div *ngIf="isBusy">
+                        <span class="spinner-border text-light" style="margin-right: 10px; vertical-align: middle;"
+                            role="status"></span>
+                        <span>Download</span>
+                    </div>
+                    <span *ngIf="!isBusy">Download</span>
+                </button>
+            </ng-container>
+        </div>
+    </div>
+</div>

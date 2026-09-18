@@ -1,0 +1,27 @@
+// .custom-tooltip .tooltip-inner {
+//     background: #59ADFF !important;
+//     padding: 10px;
+//     font-size: 14px !important;
+//     position: absolute;
+//     right: 5px;
+//     width: 300px;
+//   }
+
+
+
+  .mandates-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .form-inline {
+    margin-right: 20px; /* Add some spacing between mandates */
+  }
+  
+  .custom-radio-btn label {
+    margin-right: 10px; /* Adjust spacing as needed */
+  }
+  
+  .form-check-inline {
+    display: inline-block; /* Ensure elements are inline */
+  }

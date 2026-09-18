@@ -1,0 +1,185 @@
+<div class="custom-wrapper-left">
+    <div class="inner-section">
+        <h3 class="card-title">
+            <ng-container *ngIf="mode == 'create'">
+                Create New Client
+            </ng-container>
+            <ng-container *ngIf="mode == 'edit'">
+                Update Client
+            </ng-container>
+            <ng-container *ngIf="mode == 'verify'">
+                Verify Client
+            </ng-container>
+            <ng-container *ngIf="mode == 'externalverify'">
+                Verify Client
+            </ng-container>
+            <ng-container *ngIf="mode == 'viewdetails'">
+                View Client
+            </ng-container>
+        </h3>
+        <div class="form-percentage">
+            <svg viewBox="0 0 36 36" class="circular-chart orange">
+                <path class="circle-bg" d="M18 2.0845
+            a 15.9155 15.9155 0 0 1 0 31.831
+            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="circle" [attr.stroke-dasharray]="strokeDasharray" d="M18 2.0845
+            a 15.9155 15.9155 0 0 1 0 31.831
+            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <text x="18" y="20.35" class="percentage">{{progressPercentage}}%</text>
+            </svg>
+        </div>
+        <ul class="form-lists">
+            <li data-form="introduction"
+                [ngClass]="(activeComp === 'introduction') ? 'active':(objProgress.IsIntroductionCompleted)?'completed':''"
+                (click)="onIntroductionClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Introduction
+            </li>
+            <li *ngIf="isSuperUser" data-form="comprehensive-plan"
+                [ngClass]="(activeComp === 'comprehensive-plan') ? 'active':(objProgress.IsIncomeDetailsCompleted && objProgress.IsGoalCompleted && objProgress.IsExpenseCompleted && objProgress.IsInsuranceCompleted && objProgress.IsLiabilityCompleted && objProgress.IsSurplusCompleted && objProgress.IsAllocationCompleted && objProgress.IsCashFlowCompleted && objProgress.IsRecommendationCompleted)?'completed':''">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                <span (click)="onComprehensivePlanClicked()">Comprehensive plan</span>
+                <ul>
+                    <h6 class="comprehensive-plan">INCOME & INVESTMENT RETURNS</h6>
+                    <li class="isChild" data-form="income-details"
+                        [ngClass]="(activeSubComp === 'income-details') ? 'sub-active':(objProgress.IsIncomeDetailsCompleted)?'sub-completed':''"
+                        (click)="onComprehensivePlanIncomeClicked()">Salary & Business income</li>
+                    <li class="isChild" data-form="other-income-details"
+                        [ngClass]="(activeSubComp === 'other-income-details') ? 'sub-active':(objProgress.IsGoalCompleted)?'sub-completed':''"
+                        (click)="onComprehensivePlanOtherIncomeClicked()">Other income</li>
+                    <li class="isChild" data-form="asset-details"
+                        [ngClass]="(activeSubComp === 'asset-details') ? 'sub-active':(objProgress.IsExpenseCompleted)?'sub-completed':''"
+                        (click)="onComprehensivePlanFixedAssetClicked()">Fixed asset income</li>
+                    <li class="isChild" data-form="wealth-sustainability-details"
+                        [ngClass]="(activeSubComp === 'wealth-sustainability-details') ? 'sub-active':(objProgress.IsInsuranceCompleted)?'sub-completed':''"
+                        (click)="onComprehensivePlanWealthSustainabilityAssetsClicked()">Wealth sustainability assets</li>
+                    <li class="isChild" data-form="wealth-creation-details"
+                        [ngClass]="(activeSubComp === 'wealth-creation-details') ? 'sub-active':(objProgress.IsLiabilityCompleted)?'sub-completed':''"
+                        (click)=" onComprehensivePlanWealthCreationAssetsClicked()">Wealth creation assets</li>
+                    <h6 class="comprehensive-plan">EXPENSE & LIABILITIES</h6>
+                    <li class="isChild" data-form="household-details"
+                        [ngClass]="(activeSubComp === 'household-details') ? 'sub-active':(objProgress.IsSurplusCompleted)?'sub-completed':''"
+                        (click)="onComprehensivePlanHouseholdClicked()">Household</li>
+                    <li class="isChild" data-form="lifestyle-details"
+                        [ngClass]="(activeSubComp === 'lifestyle-details') ? 'sub-active':(objProgress.IsAllocationCompleted)?'sub-completed':''"
+                        (click)="onComprehensivePlanLifestyleClicked()">Lifestyle</li>
+                    <li class="isChild" data-form="dependent-details"
+                        [ngClass]="(activeSubComp === 'dependent-details') ? 'sub-active':(objProgress.IsCashFlowCompleted)?'sub-completed':''"
+                        (click)="onComprehensivePlanDependentClicked()">Depedent</li>
+                    <li class="isChild" data-form="insurance-details"
+                        [ngClass]="(activeSubComp === 'insurance-premimum-details') ? 'sub-active':(objProgress.IsRecommendationCompleted)?'sub-completed':''"
+                        (click)=" onComprehensivePlanInsurancePremimumClicked()">
+                        Insurance premimum</li>
+                    <li class="isChild" data-form="liability-details"
+                        [ngClass]="(activeSubComp === 'liability-details') ? 'sub-active':(objProgress.IsRecommendationCompleted)?'sub-completed':''"
+                        (click)="onComprehensivePlanLiabilityClicked()">
+                        Liability</li>
+                    <li class="comprehensive-plan" data-form="goal-details"
+                        [ngClass]="(activeSubComp === 'goal-details') ? 'sub-active':(objProgress.IsGoalCompleted)?'sub-completed':''"
+                        (click)="onComprehensivePlanGoalClicked()">
+                        Goals</li>
+                    <li class="comprehensive-plan" data-form="insurance-details"
+                        [ngClass]="(activeSubComp === 'insurance-details') ? 'sub-active':(objProgress.IsRecommendationCompleted)?'sub-completed':''"
+                        (click)="onComprehensivePlanInsuranceClicked()">
+                        Insurance</li>
+                    <h6 class="comprehensive-plan">CASH FLOW</h6>
+                    <li class="isChild" data-form="surplus-details"
+                        [ngClass]="(activeSubComp === 'surplus-details') ? 'sub-active':(objProgress.IsSurplusCompleted)?'sub-completed':''"
+                        (click)="onComprehensivePlanSurplusClicked()">Surplus</li>
+                    <li class="isChild" data-form="allocation-details"
+                        [ngClass]="(activeSubComp === 'allocation-details') ? 'sub-active':(objProgress.IsAllocationCompleted)?'sub-completed':''"
+                        (click)="onComprehensivePlanAllocationClicked()">Allocation</li>
+                    <li class="isChild" data-form="cash-flow-details"
+                        [ngClass]="(activeSubComp === 'cash-flow-details') ? 'sub-active':(objProgress.IsCashFlowCompleted)?'sub-completed':''"
+                        (click)="onComprehensivePlanCashFlowClicked()">Projected cash flow</li>
+                    <li class="isChild" data-form="recommendation-details"
+                        [ngClass]="(activeSubComp === 'recommendation-details') ? 'sub-active':(objProgress.IsRecommendationCompleted)?'sub-completed':''"
+                        (click)="onComprehensivePlanRecommendationClicked()">
+                        Recommendations</li>
+                </ul>
+            </li>
+            <li data-form="kyc-information"
+                [ngClass]="(activeComp === 'kyc-info') ? 'active':(objProgress.IsKycCompleted)?'completed':''">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                <span (click)="onClientKycDetailsClicked()">KYC Information</span>
+                <ul *ngFor="let member of members">
+                    <h6 class="sameLevel">{{member.Name}}</h6>
+                    <li class="isChild same-sub-Level"
+                        [ngClass]="(activeSubComp === member.ClientFamilyId+'-kyc-profile') ? 'sub-active':(member.IsProfileCompleted)?'sub-completed':''"
+                        (click)="onClientKycInfoProfileClicked(member.ClientFamilyId, member.ClientCompanyId, member.ProfileId)">
+                        Profile</li>
+                    <li class="isChild same-sub-Level"
+                        [ngClass]="(activeSubComp === member.ClientFamilyId+'kyc-communication') ? 'sub-active':(member.IsCommunicationCompleted)?'sub-completed':''"
+                        (click)="onClientKycInfoCommunicationClicked(member.ClientFamilyId, member.ClientCompanyId, member.CommunicationId)">
+                        Communication</li>
+                    <li class="isChild same-sub-Level"
+                        [ngClass]="(activeSubComp === member.ClientFamilyId+'kyc-bank') ? 'sub-active':(member.IsBankCompleted)?'sub-completed':''"
+                        (click)="onClientKycInfoBankDetailsClicked(member.ClientFamilyId, member.ClientCompanyId, member.BankId)">
+                        Bank Details
+                    </li>
+                </ul>
+            </li>
+            <li data-form="asset-allocation"
+                [ngClass]="(activeComp === 'asset-allocation') ? 'active':(objProgress.IsAssetAllocationCompleted)?'completed':''"
+                (click)="onClientAssetAllocationClicked()">
+
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Asset Allocation
+            </li>
+            <li data-form="account-creation"
+                [ngClass]="(activeComp === 'account-creation') ? 'active':(objProgress.IsAccountCompleted)?'completed':''"
+                (click)="onClientAccountCreationClicked()">
+
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Account Creation
+            </li>
+            <li data-form="mandate"
+                [ngClass]="(activeComp === 'mandate') ? 'active':(objProgress.IsMandateCompleted)?'completed':''"
+                (click)="onClientMandateClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Mandate
+            </li>
+            <li data-form="download" *ngIf="showDownload"
+                [ngClass]="(activeComp === 'download') ? 'active':(objProgress.IsDownloadCompleted)?'completed':''"
+                (click)="onClientDownloadClicked()">
+
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Download
+            </li>
+            <li data-form="upload" *ngIf="showUpload"
+                [ngClass]="(activeComp === 'upload') ? 'active':(objProgress.IsUploadCompleted)?'completed':''">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                <span>Upload</span>
+                <ul *ngFor="let accountItem of accounts">
+                    <li [ngClass]="(activeSubComp === accountItem.Id) ? 'sub-active':''"
+                    (click)="onAccountUploadClicked(accountItem)">{{accountItem.AccountHolderName}}</li>
+                </ul>
+
+            </li>
+            <li data-form="preference" *ngIf="showRights"
+                [ngClass]="(activeComp === 'preference') ? 'active':(objProgress.IsRightsCompleted)?'completed':''"
+                (click)="onClientPreferencesClicked()">
+                <div class="indicator">
+                    <div class="check"></div>
+                </div>
+                Preferences
+            </li>
+        </ul>
+    </div>
+</div>

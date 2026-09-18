@@ -1,0 +1,139 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="table-top-section d-flex justify-content-between align-items-center mb-4">
+            <a class="back-btn" href="#">
+                <i class="icon-left-arrow"></i>
+                Go Back
+            </a>
+            <div class="section-header">
+                <app-header-right-template class="section-header"></app-header-right-template>
+            </div>
+        </div>
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        
+                            <!-- @include('client.leftbar', ['is_verify' => $is_verify]) -->
+                            <app-client-leftbar-template [activeComp]="'comprehensive-plan'" [activeSubComp]="'recommendation-details'" [clientId]="clientId"
+                            [leadId]="leadId" [mode]="mode" [progressPercentage]="22"></app-client-leftbar-template>
+                        
+                    </div>
+                    <div class="trial col-lg-8 col-xl-9 col-md-8 step-forms ps-0" id="recommendation" autocomplete="off">
+                        <div class="form-inner-section">
+                            <div class="form-header">
+                                <h3 class="card-title">Recommendations</h3>
+                            </div>
+                            <div class="form-content">
+                                <nav ngbNav #nav="ngbNav" class="nav-tabs">
+                                    <ng-container ngbNavItem>
+                                        <a ngbNavLink>Buy</a>
+                                        <ng-template ngbNavContent>
+                                            <div class="tab-pane fade show active mt-5" id="surplus-member1"
+                                                role="tabpanel">
+                                                <div class="">
+                                                    <ngx-datatable class="material" [rows]="financialData"
+                                                        [columnMode]="ColumnMode.force" rowHeight="auto"
+                                                        [footerHeight]="50" [headerHeight]="50" [limit]="10"
+                                                        [scrollbarH]="true">
+                                                        <ngx-datatable-column name="Parameter" [minWidth]="100"
+                                                            [sortable]="true" prop="parameter">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">PARAMETER</ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value"
+                                                                let-row="row">
+                                                                {{ row.parameter }}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+
+                                                        <ngx-datatable-column name="Ashish Jaiswal" [minWidth]="100"
+                                                            [sortable]="true" prop="ashish">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">ASHISH JAISWAL</ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value"
+                                                                let-row="row">
+                                                                {{ row.ashish }}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+
+                                                        <ngx-datatable-column name="Neha Jaiswal" [minWidth]="100"
+                                                            [sortable]="true" prop="neha">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">NEHA JAISWAL</ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value"
+                                                                let-row="row">
+                                                                {{ row.neha }}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+                                                    </ngx-datatable>
+
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ng-container>
+                                    <ng-container ngbNavItem>
+                                        <a ngbNavLink>Sell</a>
+                                        <ng-template ngbNavContent>
+                                            <div class="tab-pane fade show mt-5" id="surplus-member2"
+                                                role="tabpanel">
+                                              
+                                                    <ngx-datatable class="material" [rows]="financialData"
+                                                        [columnMode]="ColumnMode.force" rowHeight="auto"
+                                                        [footerHeight]="50" [headerHeight]="50" [limit]="10"
+                                                        [scrollbarH]="true">
+                                                        <ngx-datatable-column name="Parameter" [minWidth]="100"
+                                                            [sortable]="true" prop="parameter">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">PARAMETER</ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value"
+                                                                let-row="row">
+                                                                {{ row.parameter }}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+
+                                                        <ngx-datatable-column name="Ashish Jaiswal" [minWidth]="100"
+                                                            [sortable]="true" prop="ashish">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">ASHISH JAISWAL</ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value"
+                                                                let-row="row">
+                                                                {{ row.ashish }}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+
+                                                        <ngx-datatable-column name="Neha Jaiswal" [minWidth]="100"
+                                                            [sortable]="true" prop="neha">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">NEHA JAISWAL</ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value"
+                                                                let-row="row">
+                                                                {{ row.neha }}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+                                                    </ngx-datatable>
+                                                
+                                            </div>
+                                        </ng-template>
+                                    </ng-container>
+                                </nav>
+                                <div [ngbNavOutlet]="nav"></div>
+                            </div>
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-primary btn-lg" (click)="onNext()">Proceed</button>
+                                <a href="javascript:void(0)" class="btn btn-outline-primary btn-lg ml-3">Download</a>
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#emailModal"
+                                    class="btn  btn-outline-primary btn-lg ml-3">Email</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

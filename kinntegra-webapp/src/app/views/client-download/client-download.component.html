@@ -1,0 +1,179 @@
+<div class="main">
+    <div class="container-fluid">
+        <!-- <div class="table-top-section d-flex justify-content-between align-items-center mb-4"> -->
+            <!-- <a class="back-btn" href="#previous">
+                <i class="icon-left-arrow"></i>
+                Go Back
+            </a> -->
+            <div class="section-header mb-4">
+                <app-header-right-template class="section-header"></app-header-right-template>
+            </div>
+        <!-- </div> -->
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        <app-client-leftbar-template [activeComp]="'download'" [activeSubComp]="''"
+                            [clientId]="clientId" [leadId]="leadId" [mode]="mode"
+                            [progressPercentage]="77"></app-client-leftbar-template>
+                    </div>
+
+                    <form class="col-lg-8 col-xl-9 step-forms col-md-8 ps-0">
+
+                        <section class="trial active" id="download" autocomplete="off">
+                            <div class="form-inner-section">
+                                <div class="form-header">
+                                    <h3 class="card-title"><i
+                                            class="icon-left-arrow back-btn back_to_mandate" (click)="onBackClicked()"></i>Download</h3>
+                                </div>
+                                <div class="form-content">
+                                    <div class="row flex-column">
+                                        <div class="col-12" id="account_detail">
+                                            <div class="form-sections">
+                                                <ul ngbNav #navAccount="ngbNav"
+                                                    class="nav nav-tabs accounts-tab no-wrap" [activeId]="activeTab">
+                                                    <li [ngbNavItem]="i" class="nav-item mb-4"
+                                                        *ngFor="let accountItem of objAccounts; index as i">
+                                                        <button ngbNavLink class="nav-link add-bank bank_added"
+                                                            (click)="onAccountItemClicked(accountItem)">{{i+1}} -
+                                                            {{accountItem.AccountHolderName}}</button>
+                                                        <ng-template ngbNavContent>
+                                                            <div class="form-sections">
+                                                                <div class="row flex-column">
+                                                                    <div class="col-xl-3 col-lg-6 col-sm-6"
+                                                                        *ngIf="accountItem.AOFDocument!=null">
+                                                                        <div class="form-group">
+                                                                            <label for="download-aof-j">Download
+                                                                                AOF</label>
+                                                                            <a
+                                                                                (click)="onAOFDownloadClicked(accountItem,accountItem.AOFDocument)">
+                                                                                <label for="download-aof-j"
+                                                                                    class="btn download-btn w-100">
+
+                                                                                    <div class="left-side">
+                                                                                        <svg width="40" height="40"
+                                                                                            viewBox="0 0 38 38">
+                                                                                            <use xlink:href="#xls" />
+                                                                                        </svg>
+
+                                                                                        <span
+                                                                                            class="value">{{accountItem.AOFDocument.FileName}}</span>
+
+                                                                                    </div>
+                                                                                    <svg class="upload-icon" width="30"
+                                                                                        height="30" viewBox="0 0 24 24">
+                                                                                        <use xlink:href="#download" />
+                                                                                    </svg>
+
+                                                                                </label>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12"
+                                                                        *ngIf="accountItem.MandateDocuments.length > 0">
+                                                                        <div class="form-group">
+                                                                            <label for="download-mandate-j">Download
+                                                                                Mandate</label>
+                                                                            <div class="row">
+                                                                                <div *ngFor="let mandateItem of accountItem.MandateDocuments"
+                                                                                    class="col-xl-3 col-lg-6 col-sm-6 mb-3">
+                                                                                    <a
+                                                                                        (click)="onMandateDownloadClicked(accountItem,mandateItem)">
+                                                                                        <label for="download-mandate-j"
+                                                                                            class="btn download-btn w-100">
+                                                                                            <div class="left-side">
+                                                                                                <svg width="40"
+                                                                                                    height="40"
+                                                                                                    viewBox="0 0 38 38">
+                                                                                                    <use
+                                                                                                        xlink:href="#xls" />
+                                                                                                </svg>
+                                                                                                <span
+                                                                                                    class="value">{{mandateItem.FileName}}</span>
+                                                                                            </div>
+                                                                                            <svg class="upload-icon"
+                                                                                                width="30" height="30"
+                                                                                                viewBox="0 0 24 24">
+                                                                                                <use
+                                                                                                    xlink:href="#download" />
+                                                                                            </svg>
+                                                                                        </label>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-3 col-lg-6 col-sm-6"
+                                                                        *ngIf="accountItem.NIFATCADocument!=null">
+                                                                        <div class="form-group">
+                                                                            <label for="download-letter-j">Download
+                                                                                FATCA</label>
+                                                                            <a
+                                                                                (click)="onNIFATCADownloadClicked(accountItem,accountItem.NIFATCADocument)">
+                                                                                <label for="download-letter-j"
+                                                                                    class="btn download-btn w-100">
+                                                                                    <div class="left-side">
+                                                                                        <svg width="40" height="40"
+                                                                                            viewBox="0 0 38 38">
+                                                                                            <use xlink:href="#xls" />
+                                                                                        </svg>
+                                                                                        <span
+                                                                                            class="value">{{accountItem.NIFATCADocument.FileName}}</span>
+                                                                                    </div>
+                                                                                    <svg class="upload-icon" width="30"
+                                                                                        height="30" viewBox="0 0 24 24">
+                                                                                        <use xlink:href="#download" />
+                                                                                    </svg>
+                                                                                </label>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-3 col-lg-6 col-sm-6"
+                                                                        *ngIf="accountItem.LOEDocument!=null">
+                                                                        <div class="form-group">
+                                                                            <label for="download-letter-j">Download
+                                                                                Letter of
+                                                                                Engagement</label>
+                                                                            <a
+                                                                                (click)="onLOEDownloadClicked(accountItem,accountItem.LOEDocument)">
+                                                                                <label for="download-letter-j"
+                                                                                    class="btn download-btn w-100">
+                                                                                    <div class="left-side">
+                                                                                        <svg width="40" height="40"
+                                                                                            viewBox="0 0 38 38">
+                                                                                            <use xlink:href="#xls" />
+                                                                                        </svg>
+                                                                                        <span
+                                                                                            class="value">{{accountItem.LOEDocument.FileName}}</span>
+                                                                                    </div>
+                                                                                    <svg class="upload-icon" width="30"
+                                                                                        height="30" viewBox="0 0 24 24">
+                                                                                        <use xlink:href="#download" />
+                                                                                    </svg>
+                                                                                </label>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </li>
+                                                </ul>
+                                                <div [ngbNavOutlet]="navAccount"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-footer">
+                                    <button type="button" class="btn btn-primary btn-lg proceed"
+                                        (click)="onProceed()">Proceed</button>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

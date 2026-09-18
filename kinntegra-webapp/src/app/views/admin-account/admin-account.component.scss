@@ -1,0 +1,12 @@
+.input-group {
+    position: relative;
+}
+
+
+.dropdown-toggle::after {
+    content: initial;
+  }
+
+.custom-search-input {
+    width: 350px; /* Adjust the width as needed */
+}

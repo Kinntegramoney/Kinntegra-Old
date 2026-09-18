@@ -1,0 +1,154 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticLeadLabel">View the logic for allocation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="activeModal.dismiss('Cross click')">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row" *ngFor="let item of logicData; index as i">
+            <div class="col-md-12">
+                <div class="card small-card option-2 option-2 mb-4">
+                    <div class="card-header">
+                        <h6 class="card-title">Step {{item.StepNumber}}: {{item.Title}}</h6>
+                    </div>
+                    <div class="card-body" *ngIf="item.StepNumber == 1">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card small-card option-2 mb-4">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <ngx-datatable class="material" [rows]="item.Data"
+                                                [columnMode]="ColumnMode.force" rowHeight="auto" [headerHeight]="50"
+                                                [scrollbarH]="true">
+                                                <ngx-datatable-column name="" [width]="10" [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Name}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Equity" [width]="10" [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.EquityAmount | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Debt" [width]="10" [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.DebtAmount | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                            </ngx-datatable>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" *ngIf="item.StepNumber == 2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card small-card option-2 mb-4">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <ngx-datatable class="material" [rows]="item.Data"
+                                                [columnMode]="ColumnMode.force" rowHeight="auto" [headerHeight]="50"
+                                                [scrollbarH]="true">
+                                                <ngx-datatable-column name="" [width]="10" [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Name}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Ranking" [width]="20" [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.Rank}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                            </ngx-datatable>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" *ngIf="item.StepNumber == 3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card small-card option-2 mb-4">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <ngx-datatable class="material" [rows]="item.Data"
+                                                [columnMode]="ColumnMode.force" rowHeight="auto" [headerHeight]="50"
+                                                [scrollbarH]="true">
+                                                <ngx-datatable-column name="Fund Name" [width]="190" [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.SchemeName}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Folio" [width]="5" [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.FolioNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Available Units" [width]="10"
+                                                    [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.AvailableUnits | number:'1.3-3'}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Redemption Units" [width]="10"
+                                                    [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.SellUnits | number:'1.3-3'}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="CurrentAmount" [width]="10"
+                                                    [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.CurrentAmount | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                                <ngx-datatable-column name="Redemption Amount" [width]="10"
+                                                    [sortable]="false">
+                                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                        let-value="value" let-row="row">
+                                                        {{row.SellAmount | indianCurrencyNumber}}
+                                                    </ng-template>
+                                                </ngx-datatable-column>
+                                            </ngx-datatable>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="d-flex justify-content-end w-100">
+            <ng-container>
+                <button type="button" class="btn btn-outline-primary col-sm-2 col-5" data-bs-dismiss="modal"
+                    aria-label="Close" (click)="activeModal.dismiss('Cross click')">Cancel</button>
+                <button type="button" class="btn btn-primary col-sm-3 col-6 ms-3" (click)="onDownload()"
+                    [disabled]="isBusy">
+                    <div *ngIf="isBusy">
+                        <span class="spinner-border text-light" style="margin-right: 10px; vertical-align: middle;"
+                            role="status"></span>
+                        <span>Download</span>
+                    </div>
+                    <span *ngIf="!isBusy">Download</span>
+                </button>
+            </ng-container>
+        </div>
+    </div>
+</div>

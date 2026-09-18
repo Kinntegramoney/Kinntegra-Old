@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Beau+Rivage&display=swap');
+
+html {
+    -webkit-print-color-adjust: exact;
+  }
+  
+body {
+    font-family: 'Poppins', sans-serif;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+@page{
+    margin-top: 1.0in;
+    margin-right: 0.5in;
+    margin-left: 0.5in;
+    margin-bottom: 1.0in;
+}

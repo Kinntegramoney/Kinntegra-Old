@@ -1,0 +1,455 @@
+<div class="main" *ngIf="clientAllocations.length > 0">
+    <div class="container-fluid">
+        <div class="table-top-section d-flex justify-content-between align-items-center mb-4 mt-4">
+            <div class="back-btn" style="cursor: auto">
+                {{clientName}} - Trade Details
+                <span class="badge badge-primary badge-pill ms-2"
+                    *ngIf="clientTransactionDetails.TradeStatus != 'Cancelled'">{{clientTransactionDetails.TradeStatus}}</span>
+                <span class="badge badge-danger badge-pill ms-2"
+                    *ngIf="clientTransactionDetails.TradeStatus == 'Cancelled'">{{clientTransactionDetails.TradeStatus}}</span>
+            </div>
+        </div>
+        <div class="mb-4">
+            <nav ngbNav #nav="ngbNav" class="nav-tabs" [(activeId)]="activeTab">
+                <ng-container [ngbNavItem]="j" *ngFor="let accountItem of clientAllocations; index as j">
+                    <a ngbNavLink *ngIf="accountItem.UCC!=''" (click)="onAccountTabChanged()">{{accountItem.UCC}}</a>
+                    <a ngbNavLink *ngIf="accountItem.UCC==''" (click)="onAccountTabChanged()">No
+                        UCC</a>
+                    <ng-template ngbNavContent>
+                        <div class="mt-4">
+                            <div class="row">
+                                <div class="col-md-12 mb-2">
+                                    <span>{{accountItem.FirstHolderName}}
+                                        ({{accountItem.FirstHolderPan}})</span>
+                                    <span *ngIf="accountItem.SecondHolderName!=''">
+                                        | {{accountItem.SecondHolderName}}
+                                        ({{accountItem.SecondHolderPan}})</span>
+                                    <span *ngIf="accountItem.ThirdHolderName!=''">
+                                        | {{accountItem.ThirdHolderName}}
+                                        ({{accountItem.ThirdHolderPan}})</span>
+                                </div>
+                                <div class="col-md-12 mb-2" *ngIf="accountItem.GuardianName!=''">
+                                    <span style="font-size:11px;">Guardian:
+                                        {{accountItem.GuardianName}}
+                                        ({{accountItem.GuardianPan}})</span>
+                                </div>
+                                <div class="col-md-12 mb-2" *ngIf="accountItem.FirstNomineeName!=''">
+                                    <span style="font-size:11px;">Nominee:
+                                        {{accountItem.FirstNomineeName}}</span>
+                                    <span style="font-size:11px;" *ngIf="accountItem.SecondNomineeName!=''">
+                                        |
+                                        {{accountItem.SecondNomineeName}}</span>
+                                    <span style="font-size:11px;" *ngIf="accountItem.ThirdNomineeName!=''">
+                                        |
+                                        {{accountItem.ThirdNomineeName}}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" *ngIf="accountItem.AmountAllocations.length > 0">
+                                    <div class="card small-card option-2 mb-4">
+                                        <div class="card-header">By Amount</div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <ngx-datatable class="material" #intraSwitchDataTable
+                                                    [rows]="accountItem.AmountAllocations"
+                                                    [columnMode]="ColumnMode.force" rowHeight="auto" [headerHeight]="50"
+                                                    [scrollbarH]="true">
+                                                    <ngx-datatable-column name="Folio Number" [width]="10"
+                                                        [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{row.FolioNumber}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="Switch From" [width]="150"
+                                                        [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            <ng-template #htmlWealthContent>
+                                                                <div style="text-align: left; width: 100%;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <th style="width: 200px;">
+                                                                            </th>
+                                                                            <th style="width: 200px;">
+                                                                                Units</th>
+                                                                            <th style="width: 200px;">
+                                                                                Amount
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Available</td>
+                                                                            <td>{{row.AvailableUnits | number:'1.3-3'}}
+                                                                            </td>
+                                                                            <td>{{row.AvailableAmount
+                                                                                |
+                                                                                indianCurrencyNumber}}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr *ngIf="switchBy == 'A' || switchBy == 'EF'">
+                                                                            <td>Exit Free</td>
+                                                                            <td>{{row.ExitFreeUnits}}
+                                                                            </td>
+                                                                            <td>{{row.ExitFreeAmount
+                                                                                |
+                                                                                indianCurrencyNumber}}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr *ngIf="switchBy == 'A'">
+                                                                            <td>Exit Load</td>
+                                                                            <td>{{row.ExitLoadUnits}}
+                                                                            </td>
+                                                                            <td>{{row.ExitLoadCurrentAmount
+                                                                                |
+                                                                                indianCurrencyNumber}}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr *ngIf="switchBy == 'A' || switchBy == 'TF'">
+                                                                            <td>Tax Free</td>
+                                                                            <td>{{row.TaxFreeUnits}}
+                                                                            </td>
+                                                                            <td>{{row.TaxFreeAmount
+                                                                                |
+                                                                                indianCurrencyNumber}}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Profit</td>
+                                                                            <td></td>
+                                                                            <td>{{row.CapitalGain |
+                                                                                indianCurrencyNumber}}
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </ng-template>
+                                                            <span [ngbTooltip]="htmlWealthContent"
+                                                                tooltipClass="custom-tooltip" placement="right"
+                                                                triggers="hover"
+                                                                container="body">{{row.ProductCodeSwitchFromSchemeName}}</span>
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="Switch To" [width]="150"
+                                                        [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{row.ProductCodeSwitchToSchemeName}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="Frequency" [width]="10"
+                                                        [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{row.Frequency}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="Amount" [width]="5" [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{row.Amount | indianCurrencyNumber}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="Inst." [width]="5" [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{row.Installments}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="Start Date" [width]="10"
+                                                        [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{row.StartDate|date:'dd-MM-yyyy'}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="End Date" [width]="10"
+                                                        [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{row.EndDate|date:'dd-MM-yyyy'}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                </ngx-datatable>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" *ngIf="accountItem.UnitsAllocations.length > 0">
+                                    <div class="card small-card option-2 mb-4">
+                                        <div class="card-header">By Units</div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <ngx-datatable class="material" #intraSwitchDataTable
+                                                    [rows]="accountItem.UnitsAllocations"
+                                                    [columnMode]="ColumnMode.force" rowHeight="auto" [headerHeight]="50"
+                                                    [scrollbarH]="true">
+                                                    <ngx-datatable-column name="Folio Number" [width]="10"
+                                                        [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{row.FolioNumber}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="Switch From" [width]="150"
+                                                        [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            <ng-template #htmlWealthContent>
+                                                                <div style="text-align: left; width: 100%;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <th style="width: 200px;">
+                                                                            </th>
+                                                                            <th style="width: 200px;">
+                                                                                Units</th>
+                                                                            <th style="width: 200px;">
+                                                                                Amount
+                                                                            </th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Available</td>
+                                                                            <td>{{row.AvailableUnits | number:'1.3-3'}}
+                                                                            </td>
+                                                                            <td>{{row.AvailableAmount
+                                                                                |
+                                                                                indianCurrencyNumber}}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr *ngIf="switchBy == 'A' || switchBy == 'EF'">
+                                                                            <td>Exit Free</td>
+                                                                            <td>{{row.ExitFreeUnits}}
+                                                                            </td>
+                                                                            <td>{{row.ExitFreeAmount
+                                                                                |
+                                                                                indianCurrencyNumber}}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr *ngIf="switchBy == 'A'">
+                                                                            <td>Exit Load</td>
+                                                                            <td>{{row.ExitLoadUnits}}
+                                                                            </td>
+                                                                            <td>{{row.ExitLoadCurrentAmount
+                                                                                |
+                                                                                indianCurrencyNumber}}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr *ngIf="switchBy == 'A' || switchBy == 'TF'">
+                                                                            <td>Tax Free</td>
+                                                                            <td>{{row.TaxFreeUnits}}
+                                                                            </td>
+                                                                            <td>{{row.TaxFreeAmount
+                                                                                |
+                                                                                indianCurrencyNumber}}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Profit</td>
+                                                                            <td></td>
+                                                                            <td>{{row.CapitalGain |
+                                                                                indianCurrencyNumber}}
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </ng-template>
+                                                            <span [ngbTooltip]="htmlWealthContent"
+                                                                tooltipClass="custom-tooltip" placement="right"
+                                                                triggers="hover"
+                                                                container="body">{{row.ProductCodeSwitchFromSchemeName}}</span>
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="Switch To" [width]="150"
+                                                        [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{row.ProductCodeSwitchToSchemeName}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="Frequency" [width]="10"
+                                                        [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{row.Frequency}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="Units" [width]="5" [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{row.Units}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="Inst." [width]="5" [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{row.Installments}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="Start Date" [width]="10"
+                                                        [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{row.StartDate|date:'dd-MM-yyyy'}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="End Date" [width]="10"
+                                                        [sortable]="false">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{row.EndDate|date:'dd-MM-yyyy'}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                </ngx-datatable>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <button type="button" (click)="onNextClick(accountItem)"
+                                        class="btn btn-primary btn-lg float-right">
+                                        Next
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+                <ng-container [ngbNavItem]="clientAllocations.length" *ngIf="clientAllocations.length > 0">
+                    <a ngbNavLink>Authetication</a>
+                    <ng-template ngbNavContent>
+                        <div class="mt-4">
+                            <div class="card small-card mb-4">
+                                <div class="card-header">
+                                    <h6 class="card-title">STP Cancel</h6>
+                                    <div>
+                                        <a class="btn btn-link" (click)="onPortfolioViewClicked(0)"><svg width="30"
+                                                height="30" viewBox="0 0 24 24">
+                                                <use xlink:href="#allocation"></use>
+                                            </svg>View</a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group mb-3 mb-sm-0">
+                                                <label>Total Units</label>
+                                                <input type="text" readonly class="form-control-plaintext font-bold"
+                                                    value="{{totalUnits}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group mb-3 mb-sm-0">
+                                                <label>Total Amount</label>
+                                                <input type="text" readonly class="form-control-plaintext font-bold"
+                                                    value="₹ {{totalAmount|indianCurrencyNumber}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="!isPasswordSet">
+                                <div class="col-md-12">
+                                    <div class="card small-card option-2 mb-4">
+                                        <div class="card-header">
+                                            <h6 class="card-title">Reset Password</h6>
+                                            <div>
+                                                <a class="btn btn-link" (click)="onSavePasswordClicked()">Save</a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="transaction-wrapper trade-status">
+                                                <div class="addTab row">
+                                                    <div class="col-sm-3 set_password">
+                                                        <div class="form-group">
+                                                            <label for="set_password">Password</label>
+                                                            <input type="text" class="form-control" name="set_password"
+                                                                id="set_password" placeholder="Password"
+                                                                [(ngModel)]="NewPassword">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 set_password">
+                                                        <div class="form-group">
+                                                            <label for="confirm_set_password">Confirm Password</label>
+                                                            <input type="text" class="form-control"
+                                                                name="confirm_set_password" id="confirm_set_password"
+                                                                placeholder="Password" [(ngModel)]="ConfirmNewPassword">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 set_pin">
+                                                        <div class="form-group">
+                                                            <label for="set_pin">Pin</label>
+                                                            <input type="text" class="form-control" name="set_pin"
+                                                                id="set_pin" placeholder="Pin" [(ngModel)]="NewPin"
+                                                                [appInputRestriction]="inputType">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 set_pin">
+                                                        <div class="form-group">
+                                                            <label for="confirm_set_pin">Confirm Pin</label>
+                                                            <input type="text" class="form-control"
+                                                                name="confirm_set_pin" id="confirm_set_pin"
+                                                                placeholder="Pin" [(ngModel)]="ConfirmNewPin"
+                                                                [appInputRestriction]="inputType">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="isPasswordSet">
+                                <div class="col-md-12">
+                                    <div class="card small-card option-2 mb-4">
+                                        <div class="card-header">
+                                            <h6 class="card-title">Authenticate Transaction</h6>
+                                            <div>
+                                                <a class="btn btn-link" (click)="onForgotPasswordClicked()">Reset
+                                                    Password</a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="transaction-wrapper trade-status">
+                                                <div class="addTab row">
+                                                    <div class="col-sm-6 set_password">
+                                                        <div class="form-group">
+                                                            <label for="set_password">Password</label>
+                                                            <input type="text" class="form-control" name="set_password"
+                                                                id="set_password" placeholder="Password"
+                                                                [(ngModel)]="AuthenticationPassword">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 set_pin">
+                                                        <div class="form-group">
+                                                            <label for="set_pin">Pin</label>
+                                                            <input type="text" class="form-control" name="set_pin"
+                                                                id="set_pin" placeholder="Pin"
+                                                                [(ngModel)]="AuthenticationPin"
+                                                                [appInputRestriction]="inputType">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-primary btn-lg float-right accept_btn"
+                                        (click)="onAcceptClick()"
+                                        [disabled]="(AuthenticationPassword == '' || AuthenticationPin == '')">
+                                        Accept
+                                    </button>
+                                    <button type="button" class="btn btn-danger float-right btn-lg me-3 reject_btn"
+                                        (click)="onRejectClick()"
+                                        [disabled]="(AuthenticationPassword == '' || AuthenticationPin == '')">Reject</button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+            </nav>
+            <div [ngbNavOutlet]="nav"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,350 @@
+<div class="main" *ngIf="clientTransactionDetails.ClientTransactionPortfolios.length > 0">
+    <div class="container-fluid">
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"></app-header-right-template>
+        </div>
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        <app-transaction-leftbar-template [transactionId]="clientTransactionId"
+                            [progressPercentage]="progressPercentage"></app-transaction-leftbar-template>
+                    </div>
+                    <form class="col-lg-8 col-xl-9 step-forms col-md-8 ps-0">
+                        <div class="form-inner-section">
+                            <div class="form-header">
+                                <h3 class="card-title d-inline"><i class="icon-left-arrow back-btn"
+                                        (click)="onBackClicked()"></i> Make
+                                    Payment</h3>
+                            </div>
+                            <div class="form-content">
+                                <div class="card small-card mb-4"
+                                    *ngFor="let portfolioItem of clientTransactionDetails.ClientTransactionPortfolios; index as i">
+                                    <div class="card-header">
+                                        <h6 class="card-title">Portfolio {{i+1}}: <span
+                                                class="text-capitalize">{{portfolioItem.TransactionPortfolioTypeName}}</span>
+                                        </h6>
+                                        <div>
+                                            <a class="btn btn-link" (click)="onPortfolioEditClicked(portfolioItem)"><svg
+                                                    width="30" height="30" viewBox="0 0 24 24">
+                                                    <use xlink:href="#edit"></use>
+                                                </svg>Edit </a>
+                                            <a class="btn btn-link"
+                                                (click)="onPortfolioDeleteClicked(portfolioItem)"><svg width="30"
+                                                    height="30" viewBox="0 0 24 24">
+                                                    <use xlink:href="#delete-icon"></use>
+                                                </svg>Delete </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="form-group mb-3 mb-sm-0">
+                                                    <label>Amount</label>
+                                                    <input type="text" readonly class="form-control-plaintext font-bold"
+                                                        value="₹ {{portfolioItem.Amount|indianCurrencyNumber}}({{portfolioItem.LumpsumEquity}}-{{portfolioItem.LumpsumDebt}})"
+                                                        *ngIf="portfolioItem.TransactionPortfolioTypeCode=='W'">
+                                                    <input type="text" readonly class="form-control-plaintext font-bold"
+                                                        value="₹ {{portfolioItem.Amount|indianCurrencyNumber}}"
+                                                        *ngIf="portfolioItem.TransactionPortfolioTypeCode!='W'">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3" *ngIf="portfolioItem.SubTransactionType == 'SIP'">
+                                                <div class="form-group mb-3 mb-sm-0">
+                                                    <label>Added SIP</label>
+                                                    <input type="text" readonly class="form-control-plaintext font-bold"
+                                                        value="₹ {{portfolioItem.SIPAmount|indianCurrencyNumber}}({{portfolioItem.SIPEquity}}-{{portfolioItem.SIPDebt}})"
+                                                        *ngIf="portfolioItem.TransactionPortfolioTypeCode=='W'">
+                                                        <input type="text" readonly class="form-control-plaintext font-bold"
+                                                        value="₹ {{portfolioItem.SIPAmount|indianCurrencyNumber}}"
+                                                        *ngIf="portfolioItem.TransactionPortfolioTypeCode!='W'">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3" *ngIf="portfolioItem.SubTransactionType == 'SIP'">
+                                                <div class="form-group mb-3 mb-sm-0">
+                                                    <label>SIP Start Date</label>
+                                                    <input type="text" readonly class="form-control-plaintext font-bold"
+                                                        value="{{portfolioItem.SIPStartDate|date:'dd-MM-yyyy':'IST'}}">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="radio-collapse">
+                                    <div class="mb-2">
+                                        <div class="form-group custom-radio-btn mb-0"
+                                            *ngIf="totalChequePaymentAmount <= 200000">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="payment" id="upi"
+                                                    value="Upi" (change)="OptionSelected('Upi')">
+                                                <label class="form-check-label" for="upi">UPI <span
+                                                        class="badge badge-success badge-pill ml-2">Recommended</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="ms-5" *ngIf="isUpi">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-6 mb-3">
+                                                    <div class="form-group mb-0">
+                                                        <label>BANK</label>
+                                                        <ng-select class="ng-select-form-control form-control"
+                                                            name="upi" id="upi_bank"
+                                                            [(ngModel)]="objSinglePayment.SelectedBank"
+                                                            (change)="onSingleUpiBankChanged()" [dropdownPosition]="'bottom'">
+                                                            <ng-option *ngFor="let bankItem of banks"
+                                                                [value]="bankItem">{{bankItem.Name}}</ng-option>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-6 mb-3">
+                                                    <div class="form-group mb-0">
+                                                        <label>UPI ID</label>
+                                                        <input type="text" class="form-control" name="upi_id"
+                                                            id="upi_id" placeholder="Enter UPI ID"
+                                                            [(ngModel)]="objSinglePayment.UPIId">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row warning-text" *ngIf="totalChequePaymentAmount > 100000">
+                                                <div class="col mb-3">
+                                                    UPI payment not recommended if done through any third party app like
+                                                    google pay, paytm, etc.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" mb-2">
+                                        <div class="form-group custom-radio-btn mb-0">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="payment"
+                                                    id="Net Banking" value="Net Banking"
+                                                    (change)="OptionSelected('NETBANKING')">
+                                                <label class="form-check-label" for="Net Banking">Net
+                                                    Banking <span *ngIf="totalChequePaymentAmount > 200000"
+                                                        class="badge badge-success badge-pill ml-2">Recommended</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="ms-5" *ngIf="isNetBanking">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-6">
+                                                    <div class="form-group mb-0">
+                                                        <label>Bank</label>
+                                                        <ng-select class="ng-select-form-control form-control"
+                                                            name="net_bank_id" id="net_bank_id"
+                                                            [(ngModel)]="objSinglePayment.SelectedBank"
+                                                            (change)="onSingleNetBankChanged()" [dropdownPosition]="'bottom'">
+                                                            <ng-option *ngFor="let bankItem of banks"
+                                                                [value]="bankItem">{{bankItem.Name}}</ng-option>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <div class="form-group custom-radio-btn mb-0">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="payment"
+                                                    id="NEFT/RTGS" value="NEFT/RTGS" (change)="OptionSelected('NEFT')">
+                                                <label class="form-check-label" for="NEFT/RTGS">NEFT & RTGS</label>
+                                            </div>
+                                        </div>
+                                        <div class="ms-5" *ngIf="isNEFT">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-6">
+                                                    <div class="form-group mb-0">
+                                                        <label>Bank</label>
+                                                        <ng-select class="ng-select-form-control form-control"
+                                                            name="neft_bank_id" id="neft_bank_id"
+                                                            [(ngModel)]="objSinglePayment.SelectedBank"
+                                                            (change)="onSingleNeftBankChanged()" [dropdownPosition]="'bottom'">
+                                                            <ng-option *ngFor="let bankItem of banks"
+                                                                [value]="bankItem">{{bankItem.Name}}</ng-option>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-6 mb-3">
+                                                    <div class="form-group mb-0">
+                                                        <label>UTR NO</label>
+                                                        <input type="text" class="form-control" name="utr_number"
+                                                            id="utr_number" placeholder="Enter UTR Number"
+                                                            [(ngModel)]="objSinglePayment.UTRNo">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class=" mb-2">
+                                        <div class="form-group custom-radio-btn mb-0" *ngIf="mandates.length > 0">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="payment" id="otm"
+                                                    value="OTM" (change)="OptionSelected('OTM')">
+                                                <label class="form-check-label" for="otm">OTM </label>
+                                            </div>
+                                        </div>
+                                        <div class="ms-5" *ngIf="isOTM">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-6 mb-3">
+                                                    <div class="form-group mb-0">
+                                                        <label>Mandate</label>
+                                                        <ng-select class="ng-select-form-control form-control"
+                                                            name="otm_mandate" id="otm_mandate"
+                                                            [(ngModel)]="objSinglePayment.SelectedMandate"
+                                                            (change)="onSingleMandateChanged()" [dropdownPosition]="'bottom'">
+                                                            <ng-option *ngFor="let mandateItem of mandates"
+                                                                [value]="mandateItem">{{mandateItem.DisplayName}}</ng-option>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" mb-2">
+                                        <div class="form-group custom-radio-btn mb-0">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="payment" id="Cheque"
+                                                    value="Cheque" (change)="OptionSelected('CHEQUE')">
+                                                <label class="form-check-label" for="Cheque">Cheque</label>
+                                            </div>
+                                        </div>
+                                        <div class="ms-5" *ngIf="isCheque">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-6">
+                                                    <div class="form-group mb-3">
+                                                        <label>Amount</label>
+                                                        <input type="number" class="form-control amount"
+                                                            name="cheque_amount" id="cheque_amount"
+                                                            placeholder="Enter Amount"
+                                                            [(ngModel)]="objSinglePayment.Amount" readonly>
+                                                        <small class="text-muted inwords"></small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-6">
+                                                    <div class="form-group mb-3">
+                                                        <label>Cheque Number</label>
+                                                        <input type="text" class="form-control" name="cheque_number"
+                                                            id="cheque_number" placeholder="Enter Cheque Number"
+                                                            maxlength="6" [(ngModel)]="objSinglePayment.ChequeNumber">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-6">
+                                                    <div class="form-group mb-3">
+                                                        <label>Cheque Date</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" readonly
+                                                                placeholder="dd-mm-yyyy" name="dp"
+                                                                [(ngModel)]="objSinglePayment.ChequeDate" ngbDatepicker
+                                                                #d="ngbDatepicker" [minDate]="minDate"
+                                                                [maxDate]="maxDate" />
+                                                            <button class="btn btn-transparent" (click)="d.toggle()"
+                                                                type="button"><svg width="24" height="24"
+                                                                    viewBox="0 0 24 24">
+                                                                    <use xlink:href="#month"></use>
+                                                                </svg></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-6">
+                                                    <div class="form-group mb-0">
+                                                        <label>Bank</label>
+                                                        <ng-select class="ng-select-form-control form-control"
+                                                            name="cheque_bank_id" id="cheque_bank_id"
+                                                            [(ngModel)]="objSinglePayment.SelectedBank"
+                                                            (change)="onSingleChequeBankChanged()" [dropdownPosition]="'bottom'">
+                                                            <ng-option *ngFor="let bankItem of banks"
+                                                                [value]="bankItem">{{bankItem.Name}}</ng-option>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-6">
+                                                    <div class="form-group mb-3">
+                                                        <label>Pickup Point</label>
+                                                        <input type="text" class="form-control" name="Pickup_Point"
+                                                            id="Pickup_Point" placeholder="Enter Pickup Point"
+                                                            maxlength="250" [(ngModel)]="objSinglePayment.PickupPoint">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-6">
+                                                    <div class="form-group mb-3">
+                                                        <label>City</label>
+                                                        <input type="text" class="form-control" name="cheque_city"
+                                                            id="cheque_city" placeholder="Enter City"
+                                                            maxlength="6" [(ngModel)]="objSinglePayment.City">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-md-6">
+                                                    <div class="form-group mb-0">
+                                                        <label for="cheque_upload">Investment Cheque</label>
+                                                        <label for="cheque_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (objSinglePayment.InvestmentChequeFileName != ''), 'input-btn-danger': (objSinglePayment.InvestmentChequeFileName == '')}"
+                                                            [ngbTooltip]="objSinglePayment.InvestmentChequeFileName"
+                                                            tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input name="cheque_upload" id="cheque_upload" type="file"
+                                                                (change)="onSingleInvestmentChequeFileChanged($event)" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="objSinglePayment.InvestmentChequeFileName == ''">Upload
+                                                                    Investment
+                                                                    Cheque</span>
+                                                                <span class="value"
+                                                                    *ngIf="objSinglePayment.InvestmentChequeFileName != ''">{{objSinglePayment.InvestmentChequeFileName
+                                                                    | fileDisplayName}}</span>
+                                                            </div>
+                                                            <!-- <svg class="upload-icon" width="30" height="30"
+                                                                viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <a class="delete-icon"><i class="icon-close"></i></a> -->
+                                                        </label>
+
+                                                        <label class="w-100 format"
+                                                            *ngIf="objSinglePayment.InvestmentChequeFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                                PDF</span>
+                                                        </label>
+
+                                                        <label class="w-100 preview"
+                                                            *ngIf="objSinglePayment.InvestmentChequeFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onSingleInvestmentChequeFilePreview()">Preview</a></span>
+                                                        </label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-footer">
+                                <a (click)="onViewAllocationClick()" class="btn btn-link"><svg width="30" height="30"
+                                        viewBox="0 0 24 24">
+                                        <use xlink:href="#allocation"></use>
+                                    </svg>View Allocation</a>
+
+                                <button type="button" class="btn btn-primary btn-lg proceed" (click)="onProceed()"
+                                    [disabled]="isBusy">
+                                    <div *ngIf="isBusy">
+                                        <span class="spinner-border text-light"
+                                            style="margin-right: 10px; vertical-align: middle;" role="status"></span>
+                                        <span>Submit</span>
+                                    </div>
+                                    <span *ngIf="!isBusy">Submit</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

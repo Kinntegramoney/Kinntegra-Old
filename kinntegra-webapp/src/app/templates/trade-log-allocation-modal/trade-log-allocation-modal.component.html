@@ -1,0 +1,44 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticLeadLabel">{{allocationItem.SchemeName}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="activeModal.dismiss('Cross click')">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card small-card option-2 mb-4">
+                    <div class="card-header">
+                        <h6 class="card-title">Trade Status</h6>
+                    </div>
+                    <div class="card-body card-text1">
+                        <div class="transaction-wrapper trade-status">
+                            <div class="transaction-steps"
+                                *ngFor="let tradeStatusItem of allocationItem.TradeStatusLog">
+                                <div class="trade-title mb-2">
+                                    <h4 class="mb-0">{{tradeStatusItem.LogMessage}}</h4>
+                                    <div class="info">
+                                        <span>{{
+                                            tradeStatusItem.LogDate |
+                                            date:"hh:mm a | EEEE, d MMMM y": "IST"
+                                            }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="d-flex justify-content-end w-100">
+            <ng-container>
+                <button type="button" class="btn btn-outline-primary col-sm-2 col-5" data-bs-dismiss="modal"
+                    aria-label="Close" (click)="activeModal.dismiss('Cross click')">Close</button>
+            </ng-container>
+        </div>
+    </div>
+</div>

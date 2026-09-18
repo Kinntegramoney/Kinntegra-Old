@@ -1,0 +1,271 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="d-md-flex justify-content-between align-items-start w-100">
+            <h5 class="modal-title" id="staticBackdropLabel">{{dataItem.SchemeName}}
+                <small>
+                    <span>ISIN: {{dataItem.ISIN}}</span>
+                    <span>Scheme Code: {{dataItem.SchemeCode}}</span>
+                </small>
+            </h5>
+            <div class="text-right">
+                <a class="btn btn-link"><svg width="30" height="30" viewBox="0 0 24 24">
+                        <use xlink:href="#download"></use>
+                    </svg>Download Report</a>
+                <a class="btn btn-link"><svg width="30" height="30" viewBox="0 0 24 24">
+                        <use xlink:href="#mail"></use>
+                    </svg>Email Report</a>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="activeModal.dismiss('Cross click')">
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <nav ngbNav #nav="ngbNav" class="nav-tabs" [(activeId)]="activeTab">
+                    <ng-container [ngbNavItem]="0">
+                        <a ngbNavLink>Overview</a>
+                        <ng-template ngbNavContent>
+                            <div class="row justify-content-center">
+                                <div class="col-lg-6">
+                                    <div class="card allocation-card card-sm">
+                                        <div class="allocation-wrap">
+                                            <div class="card-body pt-2">
+                                                <div class="card-title pb-1 border-bottom d-flex align-items-center">
+                                                    <svg width="40" height="40" viewBox="5 5 45 45">
+                                                        <use xlink:href="#overview"></use>
+                                                    </svg>
+                                                    <h5 class="mb-0"> Overview</h5>
+                                                </div>
+                                                <span class="badge badge-warning badge-pill">Alpha/Benchmark:
+                                                    24%</span>
+                                                <div class="table-wrap mt-3">
+                                                    <table class="simple-table">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>Parameters</th>
+                                                                <th>Kinntegra</th>
+                                                                <th>Benchmark</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Investment</td>
+                                                                <td>₹{{dataItem.InvestmentAmount|shortCurrencyNumber}}
+                                                                </td>
+                                                                <td>₹{{dataItem.BenchmarkInvestment|shortCurrencyNumber}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Market Value</td>
+                                                                <td>₹{{dataItem.CurrentAmount|shortCurrencyNumber}}
+                                                                </td>
+                                                                <td>₹{{dataItem.BenchmarkWealth|shortCurrencyNumber}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Profit</td>
+                                                                <td>₹{{dataItem.InvestmentReturns|shortCurrencyNumber}}
+                                                                </td>
+                                                                <td>₹{{dataItem.BenchmarkReturns|shortCurrencyNumber}}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="allocation-chart">
+                                                <div class="card small-card option-2 option-2">
+                                                    <div class="card-header">
+                                                        <h6 class="card-title">Allocation</h6>
+                                                    </div>
+                                                    <table class="transaction-table mt-2">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="form-percentage primary-circle pt-3 pb-3">
+                                                                    <svg viewBox="0 0 36 36" width="60">
+                                                                        <path class="circle-bg" d="M18 2.0845
+                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                        a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                                                        <path class="circle"
+                                                                            [attr.stroke-dasharray]="currentStrokeDasharray"
+                                                                            d="M18 2.0845
+                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                        a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                                                    </svg>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-3 mb-sm-0 ps-2">
+                                                                        <label>Current</label>
+                                                                        <span
+                                                                            class="form-control-plaintext font-bold">{{dataItem.WeightagePercentage|number:'1.0-0'}}%</span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="form-percentage primary-circle pt-3 pb-3">
+                                                                    <svg viewBox="0 0 36 36" width="60">
+                                                                        <path class="circle-bg" d="M18 2.0845
+                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                        a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                                                        <path class="circle"
+                                                                            [attr.stroke-dasharray]="desiredLumpsumStrokeDasharray"
+                                                                            d="M18 2.0845
+                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                        a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                                                    </svg>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-group mb-3 mb-sm-0 ps-2">
+                                                                        <label>Desired</label>
+                                                                        <span
+                                                                            class="form-control-plaintext font-bold">{{dataItem.DesiredPercentage|number:'1.0-0'}}%</span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card allocation-card card-sm">
+                                        <div class="card-body pt-2">
+                                            <div class="card-title pb-1 border-bottom d-flex align-items-center">
+                                                <svg width="40" height="40" viewBox="5 5 45 45">
+                                                    <use xlink:href="#portfolio"></use>
+                                                </svg>
+                                                <h5 class="mb-0"> Portfolio Benchmark</h5>
+                                            </div>
+                                            <canvas id="portfolio-chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                    <ng-container [ngbNavItem]="1">
+                        <a ngbNavLink (click)="onTabChanged()">Transaction Details</a>
+                        <ng-template ngbNavContent>
+                            <div class="table-wrap">
+                                <ngx-datatable class="material" style="height: 400px;" [rows]="transactions"
+                                    [columnMode]="ColumnMode.standard" [headerHeight]="50" [rowHeight]="50"
+                                    [scrollbarH]="false" [scrollbarV]="true" #wealthDataTable>
+                                    <ngx-datatable-column name="TradeDate" [width]="90" [sortable]="true"
+                                        prop="TradeDate">
+                                        <ng-template ngx-datatable-header-template let-column="column">
+                                            Date</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{ row.TradeDate | date:'dd-MM-yyyy' }}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="TransactionType" [width]="200" [sortable]="true"
+                                        prop="TransactionType">
+                                        <ng-template ngx-datatable-header-template let-column="column">
+                                            Type</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{ row.TransactionType }}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Units" [width]="90" [sortable]="true" prop="Units">
+                                        <ng-template ngx-datatable-header-template
+                                            let-column="column">Units</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <ng-template #htmlHoldingAvgBuyContent>
+                                                <div innerHTML="Avg Buy: {{row.BuyAvg}}" style="text-align: left;">
+                                                </div>
+                                            </ng-template>
+                                            <span [ngbTooltip]="htmlHoldingAvgBuyContent" tooltipClass="custom-tooltip"
+                                                placement="right" triggers="hover" container="body">{{
+                                                row.Units|number:'1.3-3'}}</span>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="PurchaseNAV" [width]="90" [sortable]="true"
+                                        prop="PurchaseNAV">
+                                        <ng-template ngx-datatable-header-template let-column="column">
+                                            NAV</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{ row.PurchaseNAV | number:'1.2-2' }}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="InvestmentAmount" [width]="90" [sortable]="true"
+                                        prop="InvestmentAmount">
+                                        <ng-template ngx-datatable-header-template let-column="column">
+                                            Amount</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            ₹{{ row.InvestmentAmount | shortCurrencyNumber }}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="BalanceUnits" [width]="90" [sortable]="true"
+                                        prop="BalanceUnits">
+                                        <ng-template ngx-datatable-header-template let-column="column">
+                                            Bal. Units</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{ row.BalanceUnits | number:'1.3-3' }}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="CurrentNAV" [width]="90" [sortable]="true"
+                                        prop="CurrentNAV">
+                                        <ng-template ngx-datatable-header-template let-column="column">Prev. NAV
+                                        </ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{ row.CurrentNAV | number : '1.2-2' }}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="CurrentAmount" [width]="90" [sortable]="true"
+                                        prop="CurrentAmount">
+                                        <ng-template ngx-datatable-header-template let-column="column">Curr. Amt.
+                                        </ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            ₹{{ row.CurrentAmount|shortCurrencyNumber }}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="InvestmentReturns" [width]="90" [sortable]="true"
+                                        prop="InvestmentReturns">
+                                        <ng-template ngx-datatable-header-template let-column="column">P&L
+                                        </ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            ₹{{ row.InvestmentReturns|shortCurrencyNumber }}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="DaysCount" [width]="90" [sortable]="true"
+                                        prop="DaysCount">
+                                        <ng-template ngx-datatable-header-template let-column="column">Age(Days)
+                                        </ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{ row.DaysCount }}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="XIRR" [width]="90" [sortable]="true" prop="XIRR">
+                                        <ng-template ngx-datatable-header-template let-column="column">XIRR
+                                        </ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.XIRR | number : '1.2-2'}}%
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                </ngx-datatable>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                    <ng-container [ngbNavItem]="2">
+                        <a ngbNavLink>Fund Distribution</a>
+                        <ng-template ngbNavContent></ng-template>
+                    </ng-container>
+                </nav>
+            </div>
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+        </div>
+    </div>
+</div>

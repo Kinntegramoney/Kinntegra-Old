@@ -1,0 +1,332 @@
+<style>
+    .btn:focus,
+    .btn.focus {
+
+        box-shadow: 0 0 0 0 !important;
+    }
+</style>
+<div class="panel-option ">
+    <div class="my-3 d-flex justify-content-between align-items-center  border-bottom pb-2">
+        <h3 class="">Admin Menu</h3>
+        <a id="closeMenu"><i class="icon-close"></i></a>
+    </div>
+
+    <div ngbAccordion [closeOthers]="true">
+        <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+                <button ngbAccordionButton class="bg-white">
+                    Model Portfolio
+                </button>
+            </h2>
+            <div ngbAccordionCollapse>
+                <div ngbAccordionBody class="bg-white">
+                    <ng-template>
+                        <ul class="admin-list">
+                            <!-- <li>
+                                <a href="#">Set Scheme Details</a>
+                            </li> -->
+                            <li>
+                                <a href="view-portfolio">View Portfolio Logs</a>
+                            </li>
+                            <li>
+                                <a href="set-portfolio">Set Portfolio</a>
+                            </li>
+                            <!-- <li>
+                                <a href="viewschemelog">Set Scheme Log</a>
+                            </li> -->
+                            <li>
+                                <a href="expected-return">Expected Return</a>
+                            </li>
+                        </ul>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+                <button ngbAccordionButton class="bg-white">
+                    Master BSE
+                </button>
+            </h2>
+            <div ngbAccordionCollapse>
+                <div ngbAccordionBody class="bg-white">
+                    <ng-template>
+                        <ul class="admin-list">
+                            <!-- -- <li>
+                                <a href="#">Introduction</a>
+                            </li> -->
+                            <li>
+                                <a href="/amc-type">AMC</a>
+                            </li>
+                            <li>
+                                <a href="/cost-inflation-indices">Cost Inflation Indices</a>
+                            </li>
+                            <li>
+                                <a href="/annual-income">Gross Annual Income</a>
+                            </li>
+                            <li>
+                                <a href="/wealth-source">Wealth Source</a>
+                            </li>
+                            <li>
+                                <a href="/address-type">Address Type</a>
+                            </li>
+                            <li>
+                                <a href="/account-type">Bank Account Type</a>
+                            </li>
+                            <li>
+                                <a href="/incomecategory">Other Income Category</a>
+                            </li>
+                            <li>
+                                <a href="/exit-load">Exit Load</a>
+                            </li>
+                            <li>
+                                <a href="/tax-status">Tax Status</a>
+                            </li>
+                            <li>
+                                <a href="/country">Country & State</a>
+                            </li>
+                            <li>
+                                <a href="/occupations">Occupations</a>
+                            </li>
+                            <li>
+                                <a href="/department">Department</a>
+                            </li>
+                            <li>
+                                <a href="/designation">Designation</a>
+                            </li>
+                            <li>
+                                <a href="/kyc-status">Kyc Status</a>
+                            </li>
+                            <li>
+                                <a href="/tax-slab ">Tax Slab</a>
+                            </li>
+                            <li>
+                                <a href="/commercials">Commercial</a>
+                            </li>
+                        </ul>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+                <button ngbAccordionButton class="bg-white">
+                    Holiday
+                </button>
+            </h2>
+            <div ngbAccordionCollapse>
+                <div ngbAccordionBody class="bg-white">
+                    <ng-template>
+                        <ul class="admin-list">
+                            <li>
+                                <a href="/holiday-upload">Holiday Upload</a>
+                            </li>
+                            <li>
+                                <a href="/holiday-view">Holiday View</a>
+                            </li>
+                        </ul>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+                <button ngbAccordionButton class="bg-white">
+                    Master Upload
+                </button>
+            </h2>
+            <div ngbAccordionCollapse>
+                <div ngbAccordionBody class="bg-white">
+                    <ng-template>
+                        <ul class="admin-list">
+                            <li>
+                                <a href="/bank-upload ">Bank Master</a>
+                            </li>
+                            <li>
+                                <a href="/scheme-upload">Scheme Master</a>
+                            </li>
+                            <li>
+                                <a href="/sip-scheme-upload ">SIP Scheme Master</a>
+                            </li>
+                            <li>
+                                <a href="/swp-scheme-upload ">SWP Scheme Master</a>
+                            </li>
+                            <li>
+                                <a href="/stp-scheme-upload ">STP Scheme Master</a>
+                            </li>
+                            <!-- <li>
+                                <a href=" route('nav_upload.index') ">NAV Master</a>
+                            </li>
+                            <li>
+                                <a href=" route('amfiindia_upload.index') ">AMFI INDIA Master</a>
+                            </li> -->
+                        </ul>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+                <button ngbAccordionButton class="bg-white">
+                    Benchmark Data
+                </button>
+            </h2>
+            <div ngbAccordionCollapse>
+                <div ngbAccordionBody class="bg-white">
+                    <ng-template>
+                        <ul class="admin-list">
+                            <li>
+                                <a href="/benchmarkdata-upload">Upload Historical Data</a>
+                            </li>
+                            <li>
+                                <a href="/benchmarkdataisin-upload">Upload ISIN Data</a>
+                            </li>
+                        </ul>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <!-- <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+                <button ngbAccordionButton class="bg-white">
+                    Master View
+                </button>
+            </h2>
+            <div ngbAccordionCollapse>
+                <div ngbAccordionBody class="bg-white">
+                    <ng-template>
+                        <ul class="admin-list">
+                            <li>
+                                <a href=" /bank-view ">Bank Master</a>
+                            </li>
+                            <li>
+                                <a href=" route('scheme_upload.index') ">Scheme Master</a>
+                            </li>
+                            <li>
+                                <a href=" route('sipscheme_upload.index') ">SIP Scheme Master</a>
+                            </li>
+                            <li>
+                                <a href=" route('swpscheme_upload.index') ">SWP Scheme Master</a>
+                            </li>
+                            <li>
+                                <a href=" route('stpscheme_upload.index') ">STP Scheme Master</a>
+                            </li>
+                            <li>
+                                <a href=" route('nav_upload.index') ">NAV Master</a>
+                            </li>
+                            <li>
+                                <a href=" route('amfiindia_upload.index') ">AMFI INDIA Master</a>
+                            </li>
+                        </ul>
+                    </ng-template>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+                <button ngbAccordionButton class="bg-white">
+                    Payment Master
+                </button>
+            </h2>
+            <div ngbAccordionCollapse>
+                <div ngbAccordionBody class="bg-white">
+                    <ng-template>
+                        <ul class="admin-list">
+                            <li>
+                                <a href="paymenttype">Payment Type</a>
+                            </li>
+                            <li>
+                                <a href="paymentslab">Payment Slab</a>
+                            </li>
+                            <li>
+                                <a href="paymentlog">Payment Log</a>
+                            </li>
+                        </ul>
+                    </ng-template>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+                <button ngbAccordionButton class="bg-white">
+                    Rights & Authorization
+                </button>
+            </h2>
+            <div ngbAccordionCollapse>
+                <div ngbAccordionBody class="bg-white">
+                    <ng-template>
+                        <ul class="admin-list">
+                            <li>
+                                <a href=" route('roles.index') ">Roles</a>
+                            </li>
+                            <li>
+                                <a href=" route('permissions.index') ">Permission</a>
+                            </li>
+                            <li>
+                                <a href=" route('paymentlog') ">User</a>
+                            </li>
+                        </ul>
+                    </ng-template>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+                <button ngbAccordionButton class="bg-white">
+                    Exit Load
+                </button>
+            </h2>
+            <div ngbAccordionCollapse>
+                <div ngbAccordionBody class="bg-white">
+                    <ng-template>
+                        <ul class="admin-list">
+                            <li>
+                                <a href=" route('exit_load.create') ">Create/Update</a>
+                            </li>
+                            <li>
+                                <a href=" route('exit_load.index') ">View</a>
+                            </li>
+                        </ul>
+                    </ng-template>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+                <button ngbAccordionButton class="bg-white">
+                    Client Master Upload
+                </button>
+            </h2>
+            <div ngbAccordionCollapse>
+                <div ngbAccordionBody class="bg-white">
+                    <ng-template>
+                        <ul class="admin-list">
+                            <li>
+                                <a href=" route('client_master_upload.create') ">Upload</a>
+                            </li>
+                        </ul>
+                    </ng-template>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+                <button ngbAccordionButton class="bg-white">
+                    Terms & Conditions
+                </button>
+            </h2>
+            <div ngbAccordionCollapse>
+                <div ngbAccordionBody class="bg-white">
+                    <ng-template>
+                        <ul class="admin-list">
+                            <li>
+                                <a href="/terms-conditions">Create</a>
+                            </li>
+
+                        </ul>
+                    </ng-template>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>

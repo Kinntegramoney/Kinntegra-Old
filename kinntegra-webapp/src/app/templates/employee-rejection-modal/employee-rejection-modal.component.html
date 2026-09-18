@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Rejection Reason</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="activeModal.dismiss('Cross click')">
+                <!-- <span aria-hidden="true">&times;</span> -->
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12 reject_reason">
+                    <div class="form-group">
+                        <label for="reject_reason">Specify Details</label>
+                        <textarea class="form-control" id="reject_reason" name="reject_reason" rows="5" [(ngModel)]="objEmployeeReason.reason"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="proceed btn btn-primary btn-lg" style="min-width: 11rem" (click)="onSave()">Submit</button>
+        </div>
+    </div>
+</div>

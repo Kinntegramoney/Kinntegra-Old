@@ -1,0 +1,382 @@
+<div class="table-top-section">
+    <div class="section-header mb-4">
+        <app-header-right-template class="section-header"></app-header-right-template>
+    </div>
+</div>
+<div class="card w-100">
+    <div class="card-body">
+        <div class="row">
+            <div class="container-fluid">
+                <h3 class="card-title d-inline">
+                    <i class="icon-left-arrow back-btn" (click)="onBack()"></i>View
+                    PortFolio
+                </h3>
+
+                <div class="card mb-4" style="margin-top: 20px;">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <nav ngbNav #nav="ngbNav" class="nav-tabs" [(activeId)]="activeTab">
+                                    <ng-container [ngbNavItem]="i"
+                                        *ngFor="let portfolioItem of portfolioTypes; index as i">
+                                        <a ngbNavLink (click)="onTabChanged(portfolioItem)">{{portfolioItem.Name}}
+                                        </a>
+                                        <ng-template ngbNavContent *ngIf="portfolioItem.Code == 'W'">
+                                            <div>
+                                                <h6>Equity</h6>
+                                            </div>
+                                            <div style="width: 100%;">
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th rowspan="2" style="width: 50%;">Scheme Name</th>
+                                                            <th colspan="3" style="width: 30%; text-align: center;">
+                                                                Regular (Lumpsum & SIP)</th>
+                                                            <th colspan="2" style="width: 20%; text-align: center;">SWP
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="width: 10%;">RI %</th>
+                                                            <th style="width: 10%;">NRI %</th>
+                                                            <th style="width: 10%;">Priority</th>
+                                                            <th style="width: 10%;">Months</th>
+                                                            <th style="width: 10%;">Priority</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr
+                                                            *ngFor="let item of portfolioSchemesWealthEquity; index as i">
+                                                            <td>
+                                                                {{item.SchemeName}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.ResidentPercentage}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.NRIPercentage}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.LumpsumPriority}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.SWPMonths}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.SWPPriority}}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td>Total</td>
+                                                            <td>{{wealthEquityRITotal}}%</td>
+                                                            <td>{{wealthEquityNRITotal}}%</td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                            <div class="mt-5">
+                                                <h6>Debt</h6>
+                                            </div>
+                                            <div style="width: 100%;">
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th rowspan="2" style="width: 50%;">Scheme Name</th>
+                                                            <th colspan="3" style="width: 30%; text-align: center;">
+                                                                Regular (Lumpsum & SIP)</th>
+                                                            <th colspan="2" style="width: 20%; text-align: center;">SWP
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="width: 10%;">RI %</th>
+                                                            <th style="width: 10%;">NRI %</th>
+                                                            <th style="width: 10%;">Priority</th>
+                                                            <th style="width: 10%;">Months</th>
+                                                            <th style="width: 10%;">Priority</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of portfolioSchemesWealthDebt; index as i">
+                                                            <td>
+                                                                {{item.SchemeName}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.ResidentPercentage}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.NRIPercentage}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.LumpsumPriority}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.SWPMonths}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.SWPPriority}}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td>Total</td>
+                                                            <td>{{wealthDebtRITotal}}%</td>
+                                                            <td>{{wealthDebtNRITotal}}%</td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                            <div class="card small-card option-2 mt-5">
+                                                <div class="card-header">
+                                                    <h6 class="card-title">
+                                                        RATIONAL FOR TRADE
+                                                    </h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group mb-3">
+                                                        <textarea class="ng-select-form-control form-control"
+                                                            id="rational_trade_wealth" name="rational_trade_wealth"
+                                                            placeholder="Add Rational for trade"
+                                                            [(ngModel)]="rationalForTradeWealth" readonly></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template ngbNavContent *ngIf="portfolioItem.Code == 'T'">
+                                            <div style="width: 100%;">
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th rowspan="2" style="width: 70%;">Scheme Name</th>
+                                                            <th colspan="3" style="width: 30%; text-align: center;">
+                                                                Regular (Lumpsum & SIP)</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="width: 10%;">RI %</th>
+                                                            <th style="width: 10%;">NRI %</th>
+                                                            <th style="width: 10%;">Priority</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of portfolioSchemesTax; index as i">
+                                                            <td>
+                                                                {{item.SchemeName}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.ResidentPercentage}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.NRIPercentage}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.LumpsumPriority}}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td>Total</td>
+                                                            <td>{{taxRITotal}}%</td>
+                                                            <td>{{taxNRITotal}}%</td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                            <div class="card small-card option-2 mt-5">
+                                                <div class="card-header">
+                                                    <h6 class="card-title">
+                                                        RATIONAL FOR TRADE
+                                                    </h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group mb-3">
+                                                        <textarea class="ng-select-form-control form-control"
+                                                            id="rational_trade_tax" name="rational_trade_tax"
+                                                            placeholder="Add Rational for trade"
+                                                            [(ngModel)]="rationalForTradeTax" readonly></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template ngbNavContent *ngIf="portfolioItem.Code == 'ST'">
+                                            <div style="width: 100%;">
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th rowspan="2" style="width: 70%;">Scheme Name</th>
+                                                            <th colspan="3" style="width: 30%; text-align: center;">
+                                                                Regular (Lumpsum & SIP)</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="width: 10%;">RI %</th>
+                                                            <th style="width: 10%;">NRI %</th>
+                                                            <th style="width: 10%;">Priority</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of portfolioSchemesShortTerm; index as i">
+                                                            <td>
+                                                                {{item.SchemeName}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.ResidentPercentage}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.NRIPercentage}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.LumpsumPriority}}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td>Total</td>
+                                                            <td>{{shorttermRITotal}}%</td>
+                                                            <td>{{shorttermNRITotal}}%</td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                            <div class="card small-card option-2 mt-5">
+                                                <div class="card-header">
+                                                    <h6 class="card-title">
+                                                        RATIONAL FOR TRADE
+                                                    </h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group mb-3">
+                                                        <textarea class="ng-select-form-control form-control"
+                                                            id="rational_trade_shortterm"
+                                                            name="rational_trade_shortterm"
+                                                            placeholder="Add Rational for trade"
+                                                            [(ngModel)]="rationalForTradeShortTerm" readonly></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template ngbNavContent *ngIf="portfolioItem.Code == 'G'">
+                                            <div style="width: 100%;">
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th rowspan="2" style="width: 70%;">Scheme Name</th>
+                                                            <th colspan="3" style="width: 30%; text-align: center;">
+                                                                Regular (Lumpsum & SIP)</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="width: 10%;">RI %</th>
+                                                            <th style="width: 10%;">NRI %</th>
+                                                            <th style="width: 10%;">Priority</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr
+                                                            *ngFor="let item of portfolioSchemesCommodities; index as i">
+                                                            <td>
+                                                                {{item.SchemeName}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.ResidentPercentage}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.NRIPercentage}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.LumpsumPriority}}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td>Total</td>
+                                                            <td>{{commoditiesRITotal}}%</td>
+                                                            <td>{{commoditiesNRITotal}}%</td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                            <div class="card small-card option-2 mt-5">
+                                                <div class="card-header">
+                                                    <h6 class="card-title">
+                                                        RATIONAL FOR TRADE
+                                                    </h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group mb-3">
+                                                        <textarea class="ng-select-form-control form-control"
+                                                            id="rational_trade_commodities"
+                                                            name="rational_trade_commodities"
+                                                            placeholder="Add Rational for trade"
+                                                            [(ngModel)]="rationalForTradeCommodities"
+                                                            readonly></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ng-container>
+                                </nav>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group" *ngIf="currentPortfolio.Code == 'W'">
+                                    <div class="form-control ng-select-form-control">
+                                        <ng-select name="wealth_dates" [(ngModel)]="selectedWealthDate"
+                                            [virtualScroll]="false" appendTo="body" [dropdownPosition]="'bottom'"
+                                            (change)="onWealthDateChanged()">
+                                            <ng-option *ngFor="let dateItem of wealthDates"
+                                                [value]="dateItem.WefDate">{{
+                                                dateItem.DisplayDate}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="form-group" *ngIf="currentPortfolio.Code == 'T'">
+                                    <div class="form-control ng-select-form-control">
+                                        <ng-select name="tax_dates" [(ngModel)]="selectedTaxDate"
+                                            [virtualScroll]="false" appendTo="body" [dropdownPosition]="'bottom'"
+                                            (change)="onTaxDateChanged()">
+                                            <ng-option *ngFor="let dateItem of taxDates" [value]="dateItem.WefDate">{{
+                                                dateItem.DisplayDate}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="form-group" *ngIf="currentPortfolio.Code == 'ST'">
+                                    <div class="form-control ng-select-form-control">
+                                        <ng-select name="shortterm_dates" [(ngModel)]="selectedShortTermDate"
+                                            [virtualScroll]="false" appendTo="body" [dropdownPosition]="'bottom'"
+                                            (change)="onShortTermDateChanged()">
+                                            <ng-option *ngFor="let dateItem of shorttermDates"
+                                                [value]="dateItem.WefDate">{{
+                                                dateItem.DisplayDate}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="form-group" *ngIf="currentPortfolio.Code == 'G'">
+                                    <div class="form-control ng-select-form-control">
+                                        <ng-select name="commodities_dates" [(ngModel)]="selectedCommoditiesDate"
+                                            [virtualScroll]="false" appendTo="body" [dropdownPosition]="'bottom'"
+                                            (change)="onCommoditiesDateChanged()">
+                                            <ng-option *ngFor="let dateItem of commoditiesDates"
+                                                [value]="dateItem.WefDate">{{
+                                                dateItem.DisplayDate}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div [ngbNavOutlet]="nav"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

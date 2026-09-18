@@ -1,0 +1,154 @@
+<div class="body">
+    <div class="body-wrapper">
+        <div class="mobile-header">
+            <a class="brand-image" href="#">
+                <img src="assets/images/logo.svg">
+                <span>Kinntegra</span>
+            </a>
+            <div class="hamburger" (click)="openCloseSidebar(!isHeaderOpen)" [class.open]="isHeaderOpen">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <div class="header-wrap" [class.open-menu]="isHeaderOpen">
+            <header (mouseenter)="openCloseSidebar(true)" (mouseleave)="openCloseSidebar(false)"
+                [class.extended]="isHeaderOpen" [class.active]="isHeaderOpen">
+                <a class="brand-image" href="accounts">
+                    <img src="assets/images/logo.svg">
+                    <span>Kinntegra</span>
+                </a>
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="dashboard">
+                                <svg width="60" height="60" viewBox="0 0 60 60">
+                                    <use xlink:href="#dashboard" />
+                                </svg>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <!-- <li>
+                            <a href="#">
+                                <svg width="60" height="60" viewBox="0 0 60 60">
+                                    <use xlink:href="#analytics" />
+                                </svg>
+                                <span>Analytics</span>
+                            </a>
+                        </li> -->
+                        <li>
+                            <a href="transaction/414E2B5048745659672B513D">
+                                <svg width="60" height="60" viewBox="0 0 60 60">
+                                    <use xlink:href="#transactions" />
+                                </svg>
+                                <span>Transactions</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tradelog">
+                                <svg width="60" height="60" viewBox="0 0 60 60">
+                                    <use xlink:href="#logs" />
+                                </svg>
+                                <span>Trade Logs</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="client">
+                                <svg width="60" height="60" viewBox="0 0 60 60">
+                                    <use xlink:href="#client" />
+                                </svg>
+                                <span>Client</span>
+                            </a>
+                        </li>
+                        <!-- <li>
+                            <a href="#">
+                                <svg width="60" height="60" viewBox="0 0 60 60">
+                                    <use xlink:href="#messenger" />
+                                </svg>
+                                <span>Messenger</span>
+                            </a>
+                        </li> -->
+                        <!-- <li>
+                            <a href="#">
+                                <svg width="60" height="60" viewBox="0 0 60 60">
+                                    <use xlink:href="#calendar" />
+                                </svg>
+                                <span>Calendar</span>
+                            </a>
+                        </li> -->
+                        <li><!-- class="active" -->
+                            <a href="leads">
+                                <svg width="60" height="60" viewBox="0 0 60 60">
+                                    <use xlink:href="#lead" />
+                                </svg>
+                                <span>Lead Management</span>
+                            </a>
+                        </li>
+                        <li class="parent">
+                            <a href="javascript:void(0)">
+                                <svg width="60" height="60" viewBox="0 0 60 60">
+                                    <use xlink:href="#admin" />
+                                </svg>
+                                <span>Admin</span>
+                            </a>
+
+                            <ul class="children">
+                                <li *ngIf="userRole == 'sa' || userRole == 'associate'">
+                                    <a href="accounts">Accounts</a>
+                                </li>
+                                <!-- <li>
+                                    <a href="admin-verify">Verify</a>
+                                </li> -->
+                                <li *ngIf="isSuperUser || isPrimaryAssociate">
+                                    <a href="admin-master">Master</a>
+                                </li>
+                                <!-- <li>
+                                    <a href="#">Universal Reports</a>
+                                </li> -->
+                                <!-- <li>
+                                    <a href="#">Data Modification</a>
+                                </li> -->
+                                <!-- <li>
+                                    <a href="/data-upload">Data Upload</a>
+                                </li> -->
+                                <li>
+                                    <a href="mismatch-cases">Mismatched Cases</a>
+                                </li>
+                                <li *ngIf="isSuperUser || isPrimaryAssociate">
+                                    <a href="associate-tagging">Associate Tagging</a>
+                                </li>
+                                <li>
+                                    <a href="family-tagging">Family Tagging</a>
+                                </li>
+                                <li>
+                                    <a href="folio-transfer">Folio Transfer</a>
+                                </li>
+                                <li>
+                                    <a href="transaction-tagging">Transaction Tagging</a>
+                                </li>
+                                <li *ngIf="isSuperUser || isPrimaryAssociate">
+                                    <a href="units-mismatch">Mismatch Units</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- <li>
+                            <a href="#">
+                                <svg width="60" height="60" viewBox="0 0 60 60">
+                                    <use xlink:href="#query" />
+                                </svg>
+                                <span>Query Management</span>
+                            </a>
+                        </li> -->
+                    </ul>
+                </nav>
+            </header>
+        </div>
+
+        <!-- <main> -->
+        <router-outlet></router-outlet>
+        <!-- </main> -->
+    </div>
+</div>
+<div class="menu-backdrop" [class.visible]="isHeaderOpen" (click)="openCloseSidebar(false)"></div>

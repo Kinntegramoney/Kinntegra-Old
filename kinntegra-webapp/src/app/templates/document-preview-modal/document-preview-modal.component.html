@@ -1,0 +1,21 @@
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="staticLeadLabel">Document Preview</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                (click)="activeModal.dismiss('Cross click')">
+            </button>
+        </div>
+        <div class="modal-body">
+            <div style="width: 100%; height: 400px; text-align: center; overflow: hidden;" *ngIf="IsImageFile">
+                <img [src]="documentUrl" [alt]="FileName" style="height: 100%; width: 100%;">
+            </div>
+            <div style="width: 100%; height: 400px;" *ngIf="!IsImageFile">
+                <iframe #pdf [src]="documentUrl" type="application/pdf" frameBorder="0" scrolling="auto" width="100%" height="400px"></iframe>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="d-flex justify-content-end w-100">
+                <button type="button" class="btn btn-primary col-sm-3 col-6 ms-3 save_change" (click)="onDonwload()">Download</button>
+            </div>
+        </div>
+    </div>

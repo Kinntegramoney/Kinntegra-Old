@@ -1,0 +1,71 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="table-top-section d-flex justify-content-between align-items-center mb-4">
+            <a class="back-btn" href="#">
+                <i class="icon-left-arrow"></i>
+                Go Back
+            </a>
+            <div class="section-header">
+                <app-header-right-template class="section-header"></app-header-right-template>
+            </div>
+        </div>
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        
+                            <!-- @include('client.leftbar', ['is_verify' => $is_verify]) -->
+                            <app-client-leftbar-template [mode]="mode" [progressPercentage]="22" [activeSubComp]="''" [clientId]="clientId"
+                            [leadId]="leadId" [activeComp]="'comprehensive-plan'"></app-client-leftbar-template>
+                     
+                    </div>
+                    <div class="trial col-lg-8 col-xl-9 col-md-8 step-forms ps-0" id="comprehensive-plan" autocomplete="off">
+                        <div class="form-inner-section">
+                            <div class="form-header">
+                                <h3 class="card-title">Comprehensive plan</h3>
+                            </div>
+                            <div class="form-content">
+                                <div class="row">
+                                    <div class="col-sm-6 order-sm-2">
+                                        <!-- <lottie-player src="assets/images/client.json" background="transparent"
+                                            speed="1" style="height: 300px;" loop autoplay></lottie-player> -->
+                                        <ng-lottie style="height: 300px;" [options]="lottieOptions" (animationCreated)="animationCreated($event)"></ng-lottie>
+                                    </div>
+                                    <div class="col-sm-6 order-sm-1">
+                                        <div class="form-sections">
+                                            <h4 class="form-section-title text-uppercase">WHY DO THIS
+                                                EXERCISE?</h4>
+                                            <ul class="info-lists">
+                                                <li>Objectifying the purpose of investment.</li>
+                                                <li>Help our investors understand what is the minimum return
+                                                    they
+                                                    should earn on their entire portfolio to make sure that
+                                                    it at
+                                                    least lasts long till their life expectancy or meet
+                                                    their
+                                                    lifestyle inflation.</li>
+                                                <li>What is the real return each of their financial and
+                                                    physical
+                                                    assets have given them over years of investments.</li>
+                                                <li>How much risk one should take to achieve minimum return
+                                                    requirement and what asset class has the highest
+                                                    probability to
+                                                    achieve it.</li>
+                                                <li>On one single sheet you will be able to assess you
+                                                    current and
+                                                    future cash flows (both inflow and outflow).</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-primary btn-lg" (click)="onNext()">Proceed</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

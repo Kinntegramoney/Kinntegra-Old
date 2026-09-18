@@ -1,0 +1,16 @@
+<div class="main-card p-0" *ngIf="isError">
+    <div class="invalid-wrapper">
+        <div class="invalid-inner-content">
+            <div class="invalid-image">
+                <img src="../../../assets/images/invalid.png" alt="Invalid Image" class="img-fluid">
+            </div>
+            <div class="invalid-text">
+                <h4>You don’t have access to this resource</h4>
+                <small *ngIf="!isLinkExpired">We’re sorry! Some information pertaining to your profile <br>
+                    requires additional access rights.</small>
+                <small *ngIf="isLinkExpired">We’re sorry! This verification link is expired. Please contact your
+                    administrator for further details.</small>
+            </div>
+        </div>
+    </div>
+</div>

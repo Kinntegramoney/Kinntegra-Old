@@ -1,0 +1,293 @@
+<!-- @extends('layouts.master')
+
+@section('style')
+
+@endsection
+
+@section('content') -->
+<!-- <div class="panel-wrapper"> -->
+<!-- @include('admin.adminmenu') -->
+<!-- <div class="container-fluid">
+        <div class="section-header mb-4"> -->
+<!-- @include('partials.top') -->
+<!-- <app-header-right-template class="section-header"></app-header-right-template>
+        </div> -->
+<!-- {{-- <h3 class="section-title mb-4 d-flex justify-content-between">Introduction
+            <button class="btn btn-link d-md-none" id="toggleMenu">Admin Menu</button>
+        </h3> --}}
+        <div class="card mb-4">
+            {{-- <div class="card-header">
+                <h5 class="card-title mb-0">Add</h5>
+            </div> --}} -->
+<!-- <div class="card-body"> -->
+<!-- @if(session()->has('success'))
+                    <div class="alert alert-success fade show tr-position" role="alert">
+                        <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                        @foreach(session()->get('success') as $message)
+                        <div class="alert-text">{{ $message }}</div>
+                        @endforeach
+                        <div class="alert-close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"><i class="la la-close"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                @endif -->
+
+<div class="table-top-section">
+    <div class="section-header mb-4">
+        <!-- @include('partials.top') -->
+        <app-header-right-template class="section-header"></app-header-right-template>
+    </div>
+</div>
+<div class="card w-100">
+    <div class="card-body">
+        <div class="row">
+            <!-- @include('admin.adminmenu') -->
+            <!-- <div class="col-xl-3 col-lg-4 col-md-4">
+                <app-admin-master-leftbar-template></app-admin-master-leftbar-template>
+            </div> -->
+            <div class="container-fluid col-lg-8 col-xl-12">
+
+                <!-- {{-- <ul class="nav nav-tabs mb-4" id="master_uploads_tabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" data-toggle="tab" href="#scheme-master-upload"
+                                        role="tab" aria-selected="true">Scheme Holiday Upload</a>
+                                    <a class="nav-link" data-toggle="tab" href="#scheme-master-single"
+                                        role="tab" aria-selected="true">Scheme Holiday Manually</a>
+                                </li>
+                            </ul> --}} -->
+                <nav ngbNav #nav="ngbNav" class="nav-tabs">
+                    <ng-container [ngbNavItem]="1">
+                        <a ngbNavLink><i class="icon-left-arrow back-btn"
+                            (click)="onBack()"></i>BSE Holiday Upload</a>
+                        <ng-template ngbNavContent>
+                            <div class="tab-pane fade active show" id="general" role="tabpanel">
+                                <div class="tab-pane fade active show" id="bse-master-upload" role="tabpanel">
+                                    <div class="card small-card option-2 option-2 mb-4">
+                                        <div class="card-header">
+                                            <h5 class="card-title mb-0">UPLOAD NEW - BSE HOLIDAY MASTER</h5>
+                                            <!-- @if(isset($date)) -->
+                                            <div class="float-right mb-0">
+                                                <label>Last Updated date : </label>
+                                            </div>
+                                            <!-- @endif -->
+                                        </div>
+                                        <div class="card-body pt-4 pb-4">
+
+                                            <form enctype="multipart/form-data" id="upload-scheme" method="POST" action="">
+                                                <!-- @csrf -->
+                                                <input type="hidden" name="holiday_type" id="holiday_type" value="BSE">
+                                                <input type="hidden" name="is_upload" value="1">
+                                                <div class="row">
+                                                    <div class="col-xl-4 col-sm-12">
+                                                        <div class="form-group mb-3 mb-sm-0">
+                                                            <label for="scheme_upload">Upload</label>
+                                                            <label for="scheme_upload" class="btn input-btn w-100">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                    <use xlink:href="#upload"></use>
+                                                                </svg>
+                                                                <input id="scheme_upload" type="file"
+                                                                    name="scheme_upload" accept=".xlsx, .xls"
+                                                                    (change)="fileBrowseHandler($event , true)">
+                                                                <div class="value-wrap">
+                                                                    <span *ngIf="!documentFileExcel"
+                                                                        class="default-text">Upload</span>
+                                                                    <h6 class="default-text"
+                                                                        *ngIf="documentFileExcel">
+                                                                        {{documentFileExcel.name}}</h6>
+                                                                    <span class="value"></span>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-success mt-4" (click)="onSaveExcel()"
+                                                        [disabled]="isBusyExcel">
+                                                        <div *ngIf="isBusyExcel == true"
+                                                            class="spinner-border text-light" appDnd
+                                                            (fileDropped)="onFileDropped($event , true)" role="status">
+                                                        </div>
+                                                        <span *ngIf="!isBusyExcel">Upload</span>
+                                                    </button>
+                                                <div class="row mt-3">
+                                                    <div class="col-xl-12 col-sm-12">
+                                                        <b>Note :: While update the data from Excel Sheet , column title is mandatory and has to same as below
+                                                        </b>
+                                                        <table class="table table-bordered col-4">
+                                                            <thead class="thead-light">
+                                                            <tr>
+                                                                <th>Date</th>
+                                                                <th>Name</th>
+                                                            </tr>
+                                                            </thead>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+
+                    
+                    <ng-container [ngbNavItem]="2">
+                        <a ngbNavLink>Scheme Holiday Upload</a>
+                        <ng-template ngbNavContent>
+                            <div class="tab-pane fade active show" id="reminders" role="tabpanel">
+                                <div class="tab-pane fade" id="scheme-master-upload" role="tabpanel">
+                                    <div class="card small-card option-2 option-2 mb-4">
+                                        <div class="card-header">
+                                            <h5 class="card-title mb-0">UPLOAD NEW - SCHEME HOLIDAY MASTER</h5>
+                                            <!-- @if(isset($date)) -->
+                                            <div class="float-right mb-0">
+                                                <label>Last Updated date : </label>
+                                            </div>
+                                            <!-- @endif -->
+                                        </div>
+                                        <div class="card-body pt-4 pb-4">
+                                            <form enctype="multipart/form-data" id="upload-scheme" method="POST" action="">
+                                                <!-- @csrf -->
+                                                <input type="hidden" name="holiday_type" id="holiday_type" value="SCHEME">
+                                                <input type="hidden" name="is_upload" value="1">
+                                                <div class="row">
+                                                    <div class="col-xl-4 col-sm-12">
+                                                        <div class="form-group mb-3 mb-sm-0">
+                                                            <label for="holidaylist_upload">Upload</label>
+                                                            <label for="holidaylist_upload" class="btn input-btn w-100">
+
+                                                                <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                    <use xlink:href="#upload"></use>
+                                                                </svg>
+                                                                <input id="holidaylist_upload" type="file" name="holidaylist_upload">
+                                                                <div class="value-wrap">
+                                                                    <span class="default-text">Upload</span>
+                                                                    <span class="value"></span>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary mt-4">Upload</button>
+                                                <div class="row mt-3">
+                                                    <div class="col-xl-12 col-sm-12">
+                                                        <b>Note :: While update the data from Excel Sheet , column title is mandatory and has to same as below
+                                                        </b>
+                                                        <table class="table table-bordered col-4">
+                                                            <thead class="thead-light">
+                                                            <tr>
+                                                                <th>Date</th>
+                                                                <th>Name</th>
+                                                                <th>ISIN</th>
+                                                            </tr>
+                                                            </thead>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+
+
+                    <ng-container [ngbNavItem]="3">
+                        <a ngbNavLink>Scheme Holiday Manually</a>
+                        <ng-template ngbNavContent>
+                            <div class="tab-pane fade" id="alerts" role="tabpanel">
+                                <div class="tab-pane fade" id="scheme-master-single" role="tabpanel">
+
+
+                                    <div class="card small-card option-2 option-2 mb-4">
+                                        <div class="card-header">
+                                            <h5 class="card-title mb-0">ADD NEW HOLIDAY- SCHEME HOLIDAY MASTER</h5>
+                                            <!-- @if(isset($date)) -->
+                                            <div class="float-right mb-0">
+                                                <label>Last Updated date :</label>
+                                            </div>
+                                            <!-- @endif -->
+                                        </div>
+                                        <div class="card-body pt-4 pb-4">
+                                            <form enctype="multipart/form-data" id="upload-scheme" method="POST" action="">
+                                                <!-- @csrf -->
+                                                <input type="hidden" name="holiday_type" id="holiday_type" value="SCHEME">
+                                                <input type="hidden" name="id" value="">
+                                                <div class="row">
+                                                    <div class="col-xl-4 col-sm-12 scheme_date">
+                                                        <div class="form-group mb-3 mb-sm-0">
+                                                            <label>Date</label>
+                                                            <input type="text" name="scheme_date" class="form-control" placeholder="Select Date">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-sm-12 scheme_date">
+                                                        <div class="form-group mb-3 mb-sm-0">
+                                                            <label>Description</label>
+                                                            <input type="text" name="scheme_description" class="form-control" placeholder="Enter Description">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-sm-12 scheme_id">
+                                                        <div class="form-group mb-3 mb-sm-0">
+                                                            <label>Scheme</label>
+                                                            <div class="select-wrapper exclude">
+                                                                <select class="form-control" name="scheme_id">
+                                                                    <option value="" disabled selected>Select Scheme</option>
+                                                                    <!-- @foreach ($schemes as $scheme) -->
+                                                                        <option value=""></option>
+                                                                    <!-- @endforeach -->
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary mt-4">Save</button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </nav>
+                <div [ngbNavOutlet]="nav" class="col-12">
+               
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- {{-- <div class="card-footer text-right">
+                <button class="btn btn-primary btn-lg">Save Changes</button>
+            </div> --}} -->
+<!-- @endsection
+@section('modal')
+@endsection
+@section('script')
+<script>
+$(document).ready(function () {
+
+    $('#toggleMenu').on('click', function () {
+        $(".panel-option").toggleClass('open');
+    });
+    $('#closeMenu').on('click', function () {
+        $(".panel-option").removeClass('open');
+    });
+    $('input[name="scheme_date"]').datepicker({
+        autoclose: true,
+        format: "dd-mm-yyyy",
+        //startDate: new Date(),
+    });
+});
+</script>
+@endsection -->

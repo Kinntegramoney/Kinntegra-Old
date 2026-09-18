@@ -1,0 +1,317 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"></app-header-right-template>
+        </div>
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        <app-transaction-leftbar-template [transactionId]="clientTransactionId"
+                            [progressPercentage]="progressPercentage"></app-transaction-leftbar-template>
+                    </div>
+                    <form class="col-lg-8 col-xl-9 step-forms col-md-8 ps-0">
+                        <div class="form-inner-section">
+                            <div class="form-header">
+                                <h3 class="card-title d-inline"><i class="icon-left-arrow back-btn"
+                                        (click)="onBackClicked()"></i>Portfolio {{portfolioNumber}}: <span
+                                        class="text-capitalize">{{currentPortfolioTypeName}}</span></h3>
+                            </div>
+                            <div class="form-content">
+                                <div class="transaction-wrapper dynamic">
+                                    <div class="transaction-steps">
+                                        <div class="row">
+                                            <div class="col-xl-3 col-md-4">
+                                                <div class="form-group">
+                                                    <label>SIP Transaction Type</label>
+                                                    <ng-select class="ng-select-form-control form-control"
+                                                        name="SIPTransactionType"
+                                                        [(ngModel)]="selectedSIPTransactionType"
+                                                        (change)="onSIPTransactionTypeChanged()"
+                                                        [disabled]="currentTransactionTypeCode == 'C'" [dropdownPosition]="'bottom'">
+                                                        <ng-option value="N"
+                                                            *ngIf="currentTransactionTypeCode != 'C'">New
+                                                            SIP</ng-option>
+                                                        <ng-option value="M"
+                                                            *ngIf="currentTransactionTypeCode != 'C'">Modify
+                                                            SIP</ng-option>
+                                                        <ng-option value="C"
+                                                            *ngIf="currentTransactionTypeCode == 'C'">Cancel
+                                                            SIP</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-md-4" *ngIf="selectedSIPTransactionType != 'N'">
+                                                <div class="form-group">
+                                                    <label>SIP Modification</label>
+                                                    <ng-select class="ng-select-form-control form-control"
+                                                        name="SIPModification" [(ngModel)]="selectedSIPModificationType"
+                                                        (change)="onSIPModificationChanged()" [dropdownPosition]="'bottom'">
+                                                        <ng-option value="A">All</ng-option>
+                                                        <ng-option value="P">Partial</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="transaction-steps" *ngIf="showNewSip">
+                                        <div class="row">
+                                            <div class="col-xl-4 col-md-4">
+                                                <div class="sip_amount1">
+                                                    <div class="form-group mb-3">
+                                                        <label>SIP Amount
+                                                            <span *ngIf="selectedSIPTransactionType == 'M'">(₹ {{currentSIPamount|indianCurrencyNumber}})</span></label>
+                                                        <input type="number" class="form-control amount"
+                                                            [(ngModel)]="objClientTransactionPortfolio.SIPAmount"
+                                                            placeholder="Enter Amount" name="sip_amount" id="sip_amount"
+                                                            (blur)="onSipAmountChanged()">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="currentPortfolioTypeCode == 'W'"
+                                                [ngClass]="{'col-xl-4 col-md-4': ((selectedSipAllocation == null)||(selectedSipAllocation != null && selectedSipAllocation.AllocationType == 'R')), 'col-xl-2 col-md-2': (selectedSipAllocation!=null && selectedSipAllocation.AllocationType == 'C')}">
+                                                <div class="form-group">
+                                                    <label>Allocation</label>
+                                                    <ng-select class="ng-select-form-control form-control"
+                                                        [(ngModel)]="selectedSipAllocation"
+                                                        [placeholder]="'Select Allocation'" name="sip"
+                                                        (change)="onSipAllocationChange()" [dropdownPosition]="'bottom'">
+                                                        <ng-option *ngFor="let option of clientSip" [value]="option">
+                                                            {{ option.Allocation }}
+                                                        </ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-md-4"
+                                                *ngIf="currentPortfolioTypeCode == 'W' && selectedSipAllocation!=null && selectedSipAllocation.AllocationType == 'C'">
+                                                <div class="form-group">
+                                                    <label>Equity Ratio</label>
+                                                    <div class="form-control ng-select-form-control">
+                                                        <ng-select [(ngModel)]="selectedSipEquityRatio"
+                                                            name="sipequityRatio" (change)="onSipEquityChanged()" [dropdownPosition]="'bottom'">
+                                                            <ng-option *ngFor="let num of numbers" [value]="num">
+                                                                {{ num }}
+                                                            </ng-option>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-md-4">
+                                                <div class="form-group">
+                                                    <label>Tenure (Month)</label>
+                                                    <input type="number" class="form-control"
+                                                        [(ngModel)]="objClientTransactionPortfolio.SIPTenure"
+                                                        placeholder="Sip Tenure" name="sip_tenure" id="sip_tenure"
+                                                        (blur)="onSipTenureChanged()">
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-md-4">
+                                                <div class="form-group">
+                                                    <label>Frequency</label>
+                                                    <div class="form-control ng-select-form-control">
+                                                        <ng-select [(ngModel)]="selectedSipFrequency" name="frequency"
+                                                            (change)="onSipFrequencyChanged()" [dropdownPosition]="'bottom'">
+                                                            <ng-option value="Monthly">Monthly</ng-option>
+                                                        </ng-select>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="mandates-container">
+                                                <div class="form-inline">
+                                                    <div class="form-group custom-radio-btn">
+                                                        <label>Mandate:</label>
+                                                        <div class="form-check form-check-inline"
+                                                            *ngFor="let mandate of clientAccountMandate">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="sip_mandate" id="mandate{{mandate.Id}}"
+                                                                value="{{mandate.Id}}" [(ngModel)]="selectedMandate"
+                                                                (change)="onSipMandateChanged()">
+                                                            <ng-template #htmlContent>
+                                                                <div [innerHTML]="mandate.mandateData"
+                                                                    style="text-align: left;"></div>
+                                                            </ng-template>
+                                                            <label for="mandate{{mandate.Id}}"
+                                                                [ngbTooltip]="htmlContent" tooltipClass="custom-tooltip"
+                                                                placement="right" triggers="hover" container="body">
+                                                                <span class="badge badge-pill"
+                                                                [ngClass]="(mandate.Status =='APPROVED')?'badge-info':'badge-warning'">{{
+                                                                mandate.BSEMandateId }}</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="transaction-steps" *ngIf="showSipIncrement">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group custom-radio-btn">
+                                                    <label class="text-uppercase">Do you wish to increment your
+                                                        SIP?</label>
+                                                    <div class="form-inline mt-2">
+                                                        <div class="form-check form-check-inline">
+                                                            <input #incrementSipYes class="form-check-input"
+                                                                type="radio" name="sip_increment" id="increment_yes"
+                                                                value="true" (change)="onIsIncrementSipChanged($event)"
+                                                                [(ngModel)]="isIncrementSIP">
+                                                            <label class="form-check-label"
+                                                                for="increment_yes">Yes</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input #incrementSipNo class="form-check-input" type="radio"
+                                                                name="sip_increment" id="increment_no" value="false"
+                                                                (change)="onIsIncrementSipChanged($event)"
+                                                                [(ngModel)]="isIncrementSIP">
+                                                            <label class="form-check-label"
+                                                                for="increment_no">No</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngIf="showTenure">
+                                                <div class="col-xl-2 col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Tenure(Month)</label>
+                                                        <input type="number" class="form-control"
+                                                            placeholder="Sip Tenure" name="sip_increment_tenure"
+                                                            [(ngModel)]="objClientTransactionPortfolio.SIPIncrementTenure"
+                                                            id="sip_increment_tenure"
+                                                            (blur)="onSipIncrementTenureChanged()">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-3 col-md-5">
+                                                    <div class="form-group last-form-group">
+                                                        <label>Increment by Percent</label>
+                                                        <input type="number" class="form-control mr-0"
+                                                            name="sip_increment_by_percentage"
+                                                            id="sip_increment_by_percentage" placeholder="Percent"
+                                                            [(ngModel)]="objClientTransactionPortfolio.SIPIncrementPercentage"
+                                                            [disabled]="isAmountFilled"
+                                                            (input)="onSipIncrementPercentageChanged()">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-1 col-md-1">
+                                                    <div class="form-group last-form-group">
+                                                        <label>OR</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-3 col-md-5">
+                                                    <div class="form-group last-form-group">
+                                                        <label>Increment by Amount</label>
+                                                        <input type="number" class="form-control"
+                                                            name="sip_increment_by_amount" id="sip_increment_by_amount"
+                                                            placeholder="Amount"
+                                                            [(ngModel)]="objClientTransactionPortfolio.SIPIncrementAmount"
+                                                            [disabled]="isPercentageFilled"
+                                                            (input)="onSipIncrementAmountChanged()">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="transaction-steps" *ngIf="showDateOptions">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group custom-radio-btn">
+                                                    <label class="text-uppercase">Select SIP Start Date</label>
+                                                    <div class="form-inline mt-2">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="sip_start_date_type" id="sip_fixed" value="F"
+                                                                [(ngModel)]="selectedSipDateType"
+                                                                (ngModelChange)="onSIPStartDateChanged()">
+                                                            <label class="form-check-label"
+                                                                for="sip_fixed">Fixed</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="sip_start_date_type" id="sip_recommended"
+                                                                value="R" [(ngModel)]="selectedSipDateType"
+                                                                (ngModelChange)="onSIPStartDateChanged()">
+                                                            <label class="form-check-label" for="sip_recommended">
+                                                                <span class="text">Spread Across Month</span>
+                                                                <span
+                                                                    class="badge badge-success badge-pill ml-2">Recommended</span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="sip_start_date_type" id="sip_custom" value="C"
+                                                                [(ngModel)]="selectedSipDateType"
+                                                                (ngModelChange)="onSIPStartDateChanged()">
+                                                            <label class="form-check-label"
+                                                                for="sip_custom">Custom</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" *ngIf="selectedSipDateType === 'F'">
+                                            <div class="col-xl-4 col-md-6">
+                                                <div class="form-group">
+                                                    <label>Fixed Date</label>
+                                                    <ng-select class="ng-select-form-control form-control"
+                                                        name="sip_start_date" id="sip_start_date"
+                                                        [(ngModel)]="selectedSipDate" (change)="onSipDateChanged()" [dropdownPosition]="'bottom'">
+                                                        <ng-option [value]="num" *ngFor="let num of days">{{ num
+                                                            }}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" *ngIf="selectedSipDateType === 'R'">
+                                            <div class="col-xl-4 col-md-6">
+                                                <div class="form-group">
+                                                    <label>Spread Across Date</label>
+                                                    <ng-select class="form-control ng-select-form-control"
+                                                        name="sip_spread_accross_month" id="sip_spread_accross_month"
+                                                        [(ngModel)]="selectedSipDate" (change)="onSipDateChanged()"
+                                                        appendTo="body" [dropdownPosition]="'bottom'">
+                                                        <ng-option
+                                                            value="1,4,7,10,13,16,19,22,25">1,4,7,10,13,16,19,22,25</ng-option>
+                                                        <ng-option
+                                                            value="2,5,8,11,14,17,20,23,26">2,5,8,11,14,17,20,23,26</ng-option>
+                                                        <ng-option
+                                                            value="3,6,9,12,15,18,21,24,27">3,6,9,12,15,18,21,24,27</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- No row displayed for 'custom' selection as per requirement -->
+                                    </div>
+                                    <div class="transaction-steps" *ngIf="showFirstOrder">
+                                        <div class="row">
+                                            <div class="col-xl-3 col-md-4">
+                                                <div class="form-group">
+                                                    <label>First Order Today?</label>
+                                                    <ng-select class="ng-select-form-control form-control"
+                                                        name="SIPFirstOrderToday"
+                                                        [(ngModel)]="selectedSIPFirstOrderToday"
+                                                        (change)="onSIPFirstOrderTodayChanged()" [dropdownPosition]="'bottom'">
+                                                        <ng-option value="Y">Yes</ng-option>
+                                                        <ng-option value="N">No</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-footer ">
+                                <button (click)="onProceed()" class="btn btn-primary btn-lg ml-4 proceed "
+                                    [disabled]="disableProceed">Proceed</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

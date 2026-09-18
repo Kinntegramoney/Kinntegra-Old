@@ -1,0 +1,52 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Define reason to reject</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onClose()">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row form-sections" *ngFor="let portfolioItem of RejectionPortfolios; index as i">
+            <div class="col-12">
+                <h4 class="form-section-title text-uppercase text-grey ms-3">{{ portfolioItem.PortfolioName }}</h4>
+            </div>
+            <div class="col-12 d-flex flex-wrap ms-3">
+                <div class="form-group custom-checkbox me-3">
+                    <input type="checkbox" id="order_creation_{{portfolioItem.ClientTransactionPortfolioId}}"
+                        name="reject-order_creation_{{portfolioItem.ClientTransactionPortfolioId}}"
+                        [(ngModel)]="portfolioItem.IsOrderCreationIssue">
+                    <label for="order_creation_{{portfolioItem.ClientTransactionPortfolioId}}">Issue in Order
+                        Creation</label>
+                </div>
+                <div class="form-group custom-checkbox me-10">
+                    <input type="checkbox" id="order_payment_{{portfolioItem.ClientTransactionPortfolioId}}"
+                        name="reject-order_payment_{{portfolioItem.ClientTransactionPortfolioId}}"
+                        [(ngModel)]="portfolioItem.IsPaymentIssue">
+                    <label for="order_payment_{{portfolioItem.ClientTransactionPortfolioId}}">Issue in Payment</label>
+                </div>
+            </div>
+            <div class="col-12 d-flex flex-wrap">
+                <div class="col-md-6 order_creation_{{portfolioItem.ClientTransactionPortfolioId}}">
+                    <div class="form-group mb-3 me-3">
+                        <label>Issue in Order Creation :: Reject Reason</label>
+                        <textarea class="form-control reject_reason"
+                            name="order_creation-reason_{{portfolioItem.ClientTransactionPortfolioId}}" rows="4"
+                            placeholder="Add Comment" [(ngModel)]="portfolioItem.OrderCreationIssue"
+                            [disabled]="!portfolioItem.IsOrderCreationIssue"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-6 order_payment_{{portfolioItem.ClientTransactionPortfolioId}}">
+                    <div class="form-group mb-3">
+                        <label>Issue in Payment :: Reject Reason</label>
+                        <textarea class="form-control reject_reason"
+                            name="order_payment-reason_{{portfolioItem.ClientTransactionPortfolioId}}" rows="4"
+                            placeholder="Add Comment" [(ngModel)]="portfolioItem.PaymentIssue"
+                            [disabled]="!portfolioItem.IsPaymentIssue"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary col-sm-3" (click)="onSubmit()">Submit</button>
+    </div>
+</div>

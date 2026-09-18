@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Beau+Rivage&display=swap');
+
+html {
+    -webkit-print-color-adjust: exact;
+  }
+  
+body {
+    font-family: 'Poppins', sans-serif;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+@page{
+    margin-top: 0.5in;
+    margin-right: 0.25in;
+    margin-left: 0.25in;
+    margin-bottom: 0.5in;
+}
+
+table.details-table,
+        .details-table td {
+            // border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px 2px 5px 2px;
+            font-size: 16px;
+        }
+        .details-table th {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 2px;
+            padding-right: 2px;
+            font-size: 18px;
+            font-weight: 600;
+            background-color: #d0dfe7;
+        }

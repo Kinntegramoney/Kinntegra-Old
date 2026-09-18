@@ -1,0 +1,540 @@
+<!-- @extends('layouts.master')
+
+@section('style')
+<style>
+   
+</style>
+@endsection
+
+@section('content') -->
+<div class="table-top-section">
+    <div class="section-header mb-4">
+        <!-- @include('partials.top') -->
+        <app-header-right-template class="section-header"></app-header-right-template>
+    </div>
+</div>
+<div class="card w-100">
+    <div class="card-body">
+        <div class="row">
+            <!-- @include('admin.adminmenu') -->
+            <!-- <div class="col-xl-3 col-lg-4 col-md-4">
+                <app-admin-master-leftbar-template></app-admin-master-leftbar-template>
+            </div> -->
+            <div class="container-fluid col-lg-8 col-xl-12">
+                <h3 class="card-title d-inline"><i class="icon-left-arrow back-btn"
+                    (click)="onBack()"></i>Payment Type
+                    <button class="btn btn-link float-end mt-1" id="add_new_data">Add New</button>
+                </h3>
+                <div class="form-inner-section">
+                    <div class="card-body">
+
+                        <div id="success_alert" class="alert alert-success alert-dismissible fade show"
+                            style="display: none" role="alert">
+                            <div class="alert-text">
+                                <strong>Hooray !</strong> <span class="message"></span>
+                            </div>
+                            <button type="button" id="success_alert_close" class="close" data-dismiss="alert"
+                                aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="row flex-row-reverse ">
+
+                            <div class="col-lg-9 border-left col-md-7 ">
+                                <div class="admin-body">
+                                    <!-- <ul class="nav nav-tabs mb-4" id="lead-generation" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <a class="nav-link active" data-toggle="tab" href="#admin-paymentslab"
+                                                role="tab" aria-selected="true">Create New</a>
+                                        </li>
+                                    </ul> -->
+
+                                    <div class="tab-content" id="leadsContent">
+                                        <div class="tab-pane fade show active" id="admin-paymentslab" role="tabpanel">
+                                            <div class="card small-card option-2 option-2 mb-4">
+                                                <div class="card-header">
+                                                    <h5 class="card-title mb-0 status">Payment Amount Slab</h5>
+                                                    <span class="edit-now float-right mt-1" *ngIf="!ShowEditButton"
+                                                        (click)="onEditClicked()">Edit</span>
+                                                </div>
+                                                <div class="card-body pt-4 pb-4">
+                                                    <form id="add-update-data" method="POST" action="">
+                                                        <!-- @csrf -->
+                                                        <input type="hidden" name="id" value="">
+
+                                                        <div class="row">
+                                                            <div class="col-xl-4 col-sm-12 start_amount">
+                                                                <div class="form-group mb-3 mb-sm-0">
+                                                                    <label>Start Amount</label>
+                                                                    <input type="number" [disabled]="!isEdit"
+                                                                        [(ngModel)]="objPaymentSlab.StartAmount"
+                                                                        name="start_amount"
+                                                                        class="form-control text-capitalize"
+                                                                        placeholder="Enter Start Amount">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-sm-12 end_amount">
+                                                                <div class="form-group mb-3 mb-sm-0">
+                                                                    <label>End Amount</label>
+                                                                    <input type="number" [disabled]="!isEdit"
+                                                                        [(ngModel)]="objPaymentSlab.EndAmount"
+                                                                        name="end_amount"
+                                                                        class="form-control text-capitalize"
+                                                                        placeholder="Enter End Amount">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-sm-12 is_active">
+                                                                <div class="form-group mb-3 mb-sm-0">
+                                                                    <label>Active</label>
+                                                                    <select class="form-control" [disabled]="!isEdit"
+                                                                        [(ngModel)]="objPaymentSlab.Active"
+                                                                        name="is_active">
+                                                                        <option value="" disabled selected>Select Type
+                                                                        </option>
+                                                                        <Option value="1">Yes</Option>
+                                                                        <option value="0">No</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <button type="submit" class="btn btn-primary mt-4">Save</button>
+
+                                                        <!-- <button type="button" class="btn btn-primary mt-4 float-right" id="set_payment">Get Payment Types</button> -->
+                                                        <!-- {{-- <div class="card-header mt-4">
+                                                    <h5 class="card-title mb-0 status">Payment Mode</h5>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col-xl-4 col-sm-12 payment_type_1">
+                                                        <div class="form-group mb-3 mb-sm-0">
+                                                            <label>Payment (1)</label>
+                                                            <select class="form-control" name="payment_type_1">
+                                                                <option value="" disabled selected>Select Type</option>
+                                                                @foreach ($paymenttypes as $paymenttype)
+                                                                <option value="{{ $paymenttype->id }}">{{ $paymenttype->type }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-sm-12 payment_recommended_1">
+                                                        <div class="form-group mb-3 mb-sm-0">
+                                                            <label>Recommended</label>
+                                                            <select class="form-control" [disabled]="!isEdit"
+                                                            [(ngModel)]="objPaymentType.Select" name="payment_recommended_1">
+                                                                <option value="" disabled selected>Select Recommended</option>
+                                                                <option value="1">Yes</option>
+                                                                <option value="0" selected>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div> --}} -->
+                                                    </form>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- <div class="card small-card option-2 mb-4" id="paymentslab">
+                                                <div id="success_alert_sub"
+                                                    class="alert alert-success alert-dismissible fade show"
+                                                    style="display: none" role="alert">
+                                                    <div class="alert-text">
+                                                        <strong>Hooray !</strong> <span class="message"></span>
+                                                    </div>
+                                                    <button type="button" id="success_alert_sub_close" class="close"
+                                                        data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="card-body pb-4">
+                                                    <form id="add-update-data-payment" method="POST" action="">
+                                                        @csrf
+                                                @method('PUT')
+                                                        <input type="hidden" name="slab_id" value="">
+                                                        @php
+                                                    $i = 0;
+                                                    $payment_count = count($paymenttypes);
+                                                    //dd($payment_count);
+                                                @endphp
+                                                        <input type="hidden" name="payment_count" id="payment_count"
+                                                            value="{{ $payment_count }}">
+                                                        <div class="card-header">
+                                                            <h5 class="card-title mb-0">Payment Mode</h5>
+                                                            <div class="col-xl-4 pl-xl-0">
+
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="month">
+                                                                            <svg width="24" height="24"
+                                                                                viewBox="0 0 24 24">
+                                                                                <use xlink:href="#month"></use>
+                                                                            </svg>
+                                                                        </span>
+                                                                    </div>
+                                                                    <input type="text"
+                                                                        class="form-control text-truncate as_on_date"
+                                                                        id="as_on_date" placeholder="Select start date"
+                                                                        data-type="date" name="as_on_date">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @foreach ($paymenttypes as $paymenttype)
+                                                @php
+                                                    $i++;
+                                                @endphp
+                                                        <div class="row mt-3">
+                                                            <div class="col-xl-4 col-sm-12 payment_type_{{ $i }}">
+                                                                <div class="form-group mb-3 mb-sm-0">
+                                                                    <label>Payment ({{ $i }})</label>
+                                                                    <select class="form-control"
+                                                                        name="payment_type_{{ $i }}">
+                                                                        <option value="" disabled selected>Select Type
+                                                                        </option>
+                                                                        @foreach ($paymenttypes as $paymenttype)
+                                                                        <option value="{{ $paymenttype->id }}">{{
+                                                                            $paymenttype->type }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="col-xl-4 col-sm-12 payment_recommended_{{ $i }}">
+                                                                <div class="form-group mb-3 mb-sm-0">
+                                                                    <label>Recommended</label>
+                                                                    <select class="form-control"
+                                                                        name="payment_recommended_{{ $i }}">
+                                                                        <option value="" disabled selected>Select
+                                                                            Recommended</option>
+                                                                        <option value="1">Yes</option>
+                                                                        <option value="0" selected>No</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @endforeach
+
+                                                        <button type="submit" class="btn btn-primary mt-4">Save</button>
+                                                    </form>
+                                                </div>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-5">
+                                <h5 class="card-title mb-3">Amount Slab</h5>
+                                <!-- {{-- <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="table-search">
+                                    <svg width="24" height="24" viewBox="0 0 24 24">
+                                        <use xlink:href="#search"></use>
+                                    </svg>
+                                </span>
+                            </div>
+                            <input type="text" name="master_search" id="master_search" class="form-control" placeholder="Search"
+                                aria-label="table-search" aria-describedby="table-search">
+                        </div> --}} -->
+                                <ul class="logs-list mt-4">
+                                    <li *ngFor="let item of PaymentSlab">
+                                        <a (click)="onSelectedItem(item.Id)">
+                                            <h4>{{item.Name}}</h4>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- {{-- <div class="card-footer text-right">
+                <button class="btn btn-primary btn-lg">Save Changes</button>
+            </div> --}} -->
+                </div>
+            </div>
+        </div>
+
+        <!-- @endsection
+
+        @section('modal') -->
+        <div class="modal fade confirmation-modal" id="payment_success" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <!-- <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div> -->
+                    <div class="modal-body text-center">
+                        <div class="confirmation-popup">
+                            <div class="status-icon success">
+                                <div class="check"></div>
+                            </div>
+
+                            <p>Payment details updated Successfully !!!</p>
+                        </div>
+
+                        <div class="row justify-content-center">
+
+                            <div class="col-6">
+                                <button type="button" class="btn btn-primary w-100" data-dismiss="modal">OK</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- @endsection
+
+@section('script')
+<script>
+
+    $(document).ready(function () {
+
+        $('#toggleMenu').on('click', function () {
+            $(".panel-option").toggleClass('open');
+        });
+        $('#closeMenu').on('click', function () {
+            $(".panel-option").removeClass('open');
+        });
+        $('input[name="as_on_date"]').datepicker({
+            autoclose: true,
+            format: "dd-mm-yyyy",
+            startDate: new Date(),
+        });
+    });
+
+    $(document).on('click', '#set_payment', function(){
+        $("#paymentslab").show();
+    });
+
+    $(document).on('keyup', '#master_search', function (e) {
+        let value = e.target.value;
+        master_search(value);
+    });
+
+    function viewEditFunction($id)
+    {
+        let PostUri = "<?php echo URL::to('admin/master/payment/"+$id+"'); ?>";
+        $("#add-update-data-payment").attr('action',PostUri);
+        $.get("/admin/master/payment?id="+$id, function(output, status){
+            $('form#add-update-data').find("input[type=text], input[type=number]").val("");
+            $('form#add-update-data').find("input[type=text], input[type=number]").attr('readonly',false);
+            $(".edit-now").show();
+            $(".status").html('Update');
+            //console.log(output[0]['PaymentSets']);
+            let data = output[0];
+            console.log(data);
+            let id = data['id'];
+
+            let start_amount = data['start_amount'];
+            let end_amount = data['end_amount'];
+            let active = data['is_active'];
+            let payment_sets = data['PaymentSets'];
+            let as_on_date = data['as_on_date'];
+            $("input[name=id]").val(id);
+
+            $("input[name=start_amount]").val(start_amount);
+            $("input[name=end_amount]").val(end_amount);
+            $("select[name=is_active]").val(active).trigger('change');
+            $('form#add-update-data').find("input[type=text], input[type=number], select").attr('readonly',true);
+            $("#set_payment").show();
+            $("input[name=slab_id]").val(id);
+            $("input[name=as_on_date]").val(as_on_date);
+            let count = 1;
+            console.log(payment_sets);
+            $.each(payment_sets, function(i,o){
+                if(count == o.sr_no)
+                {
+                    $("select[name=payment_type_"+count+"]").val(o.payment_type_id).trigger('change');
+                    $("select[name=payment_recommended_"+count+"]").val(o.recommended).trigger('change');
+                }
+                count++;
+            });
+            let payment_count = parseInt($("#payment_count").val());
+            console.log(count, payment_count);
+            if(count < payment_count)
+            {
+                for (let i = count; i <= payment_count; i++) {
+                    $("select[name=payment_type_"+i+"]").val('').trigger('change');
+                    $("select[name=payment_recommended_"+i+"]").val('').trigger('change');
+                }
+            }
+            $("#paymentslab").hide();
+        });
+    }
+
+
+    $(document).on('click', '#add_new_data', function (e) {
+        $('form#add-update-data').find("input[type=text], input[type=number]").val("");
+        $('form#add-update-data').find("input[type=text], input[type=number]").attr('readonly',false);
+        $("input[name=id]").val('');
+        $(".status").html('Add');
+        $(".edit-now").hide();
+    });
+
+    $(document).on('click', '.edit-now', function (e) {
+        $('form#add-update-data').find("input[type=text], input[type=number], select").attr('readonly',false);
+    });
+
+
+    $(document).on('click', '#success_alert_close', function (e) {
+        $("#success_alert").hide();
+    });
+
+    $(document).on('click', '#success_alert_sub_close', function (e) {
+        $("#success_alert_sub").hide();
+    });
+
+    // $(document).on('key', 'input[name=type]', function (e) {
+    //     let val = e.target.value;
+    //     $(this).val(val.toUpperCase());
+    // });
+
+
+    function master_search(value)
+    {
+        let data = '';
+        $.get("/admin/master/payment?type="+value, function(output, status){
+            console.log(output);
+            $.each(output, function(i,o){
+                if(o.is_active == 0)
+                data += '<li><a href="javascript:void(0)" class="inactive_now" onclick="return viewEditFunction('+o.id+');"><h4>'+o.start_amount+'-'+o.end_amount+'</h4></a></li>';
+                else
+                data += '<li><a href="javascript:void(0)" onclick="return viewEditFunction('+o.id+');"><h4>'+o.start_amount+'-'+o.end_amount+'</h4></a></li>';
+            });
+            $('.logs-list').html(data);
+        });
+        return true;
+    }
+
+    $( "form#add-update-data" ).submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        var data = new FormData( form[ 0 ] );//form.serialize();
+        var post = form.attr('method');
+        console.log('sas');
+        $('.error').removeClass('error');
+        $('.err').removeClass('err');
+        $('.span_err').remove();
+
+        if($('input[name=type],input[name=code]').prop('readonly')){ return false;}
+        $.ajax({
+            type: post,
+            url: url,
+            data: data,
+            //async: false,
+            beforeSend: function() {
+                //$('#loading').show();
+            },
+            success:function(data) {
+                //$('#loading').show();
+                console.log(data);
+                $("#success_alert .alert-text .message").html(data);
+                $("#success_alert").show();
+                master_search('');
+                $('form#add-update-data').find("input[type=text], input[type=number]").attr('readonly',true);
+            },
+            error: function(xhr, textStatus, thrownError)
+            {
+                var response = jQuery.parseJSON(xhr.responseText);
+
+                if(response.server_errors)
+                {
+                    let error_data = '<ul class="alerts-lists">';
+                    console.log(response.server_errors);
+                    if (response.server_errors.length === undefined || response.server_errors.length === null) {
+                        $.each( response.server_errors, function( k, v ) {
+                            error_data += '<li>'+v+'</li>';
+                        });
+                    }else{
+                        error_data += response.server_errors;
+                    }
+
+                    error_data += '</ul>';
+                    $("#error_modal .card .card-body").html(error_data);
+                    $('#error_modal').modal('show');
+                }
+                if(response.errors)
+                {
+                    $.each( response.errors, function( k, v ) {
+                        $('.'+k).children().not("div.exclude").not("label").not("span").append("<label id='"+k+"_error' class='error span_err'>"+v+"</label>");
+                    });
+                }
+
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+        });
+        return false;
+    });
+
+
+    $( "form#add-update-data-payment" ).submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        var data = new FormData( form[ 0 ] );//form.serialize();
+        var post = form.attr('method');
+        console.log('sas');
+        $('.error').removeClass('error');
+        $('.err').removeClass('err');
+        $('.span_err').remove();
+
+
+        $.ajax({
+            type: post,
+            url: url,
+            data: data,
+            //async: false,
+            beforeSend: function() {
+                //$('#loading').show();
+            },
+            success:function(data) {
+                //$('#loading').show();
+                console.log(data);
+                // $("#success_alert_sub .alert-text .message").html(data);
+                // $("#success_alert_sub").show();
+                $("#payment_success").modal('show');
+                master_search('');
+                $('form#add-update-data').find("input[type=text], input[type=number]").attr('readonly',true);
+            },
+            error: function(xhr, textStatus, thrownError)
+            {
+                var response = jQuery.parseJSON(xhr.responseText);
+
+                if(response.server_errors)
+                {
+                    let error_data = '<ul class="alerts-lists">';
+                    console.log(response.server_errors);
+                    if (response.server_errors.length === undefined || response.server_errors.length === null) {
+                        $.each( response.server_errors, function( k, v ) {
+                            error_data += '<li>'+v+'</li>';
+                        });
+                    }else{
+                        error_data += response.server_errors;
+                    }
+
+                    error_data += '</ul>';
+                    $("#error_modal .card .card-body").html(error_data);
+                    $('#error_modal').modal('show');
+                }
+                if(response.errors)
+                {
+                    $.each( response.errors, function( k, v ) {
+                        $('.'+k).children().not("div.exclude").not("label").not("span").append("<label id='"+k+"_error' class='error span_err'>"+v+"</label>");
+                    });
+                }
+
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+        });
+        return false;
+    });
+</script>
+@endsection -->

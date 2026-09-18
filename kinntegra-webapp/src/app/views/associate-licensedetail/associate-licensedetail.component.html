@@ -1,0 +1,418 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"
+                *ngIf="mode != 'externalverify'"></app-header-right-template>
+        </div>
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        <app-associate-leftbar-template [activeComp]="'license-detail'" [activeSubComp]="''"
+                            [associateId]="associateid" [progressPercentage]="49" [mode]="mode"
+                            [ts]="ts"></app-associate-leftbar-template>
+                    </div>
+
+                    <form class="col-lg-8 col-xl-9 step-forms col-md-8 ps-0">
+                        <section class="trial step7 active" id="license-detail" data-step="7" autocomplete="off">
+                            <div class="form-inner-section">
+                                <div class="form-header">
+                                    <h3 class="card-title d-inline"><i class="icon-left-arrow back-btn"
+                                            (click)="onBack()"></i> License
+                                        Details</h3>
+                                    <span class="edit-now float-end mt-1" *ngIf="showEdit"
+                                        (click)="onEditClicked()">Edit</span>
+                                </div>
+                                <div class="form-content">
+                                    <div class="row">
+                                        <div class="col-xl-8 col-lg-9">
+                                            <!-- Section Start for ARN -->
+                                            <!-- If "PROFESSION" Selected :: MFD -->
+                                            <div class="row" id="arn_details" *ngIf="showARN">
+                                                <div class="col-sm-12">
+                                                    <h4 class="card-title">AMFI Details</h4>
+                                                </div>
+
+                                                <div class="col-sm-8 arn_name">
+                                                    <div class="form-group">
+                                                        <label for="arn_name">NAME AS PER ARN <span
+                                                                class="required-sign">*</span></label>
+                                                        <input type="text" id="arn_name"
+                                                            class="form-control text-capitalize"
+                                                            [(ngModel)]="objAssociate.ARNHolderName" name="arn_name"
+                                                            aria-describedby="arn_name" [disabled]="!isEdit">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 arn_upload">
+                                                    <div class="form-group">
+                                                        <label for="arn_upload" class="w-100">PROOF
+                                                            <span class="required-sign">*</span></label>
+                                                        <label for="arn_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (arnProofFileName != ''), 'input-btn-danger': (arnProofFileName == '')}"
+                                                            [ngbTooltip]="arnProofFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="arn_upload" type="file" name="arn_upload"
+                                                                (change)="onARNProofFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="arnProofFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="arnProofFileName != ''">{{arnProofFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="arnProofFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                                PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="arnProofFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onARNProofPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-sm-4 arn_view">
+                                                    <div class="form-group">
+                                                        <label for="arn_view" class="w-100">PROOF</label>
+                                                        <label for="arn_view" class="btn input-btn btn-view w-100">
+                                                             <input id="arn_view" type="button" @if
+                                                                (isset($data->arn_upload) && !empty($data->arn_upload))
+                                                            onclick="showImage('data->arn_upload }}')" @endif
+                                                            name="arn_view" /> 
+                                                            <input id="arn_view" type="button" name="arn_view" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text">
+                                                                    @if (isset($data->arn_upload) &&
+                                                                    !empty($data->arn_upload))
+                                                                    View Copy 
+                                                                    @else 
+                                                                    Not Uploaded 
+                                                                    @endif 
+                                                                </span>
+                                                                <span class="value"></span>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div> -->
+                                                <div class="col-sm-6 arn_rgn_no">
+                                                    <div class="form-group">
+                                                        <label for="arn_rgn_no">ARN REGISTRATION NUMBER <span
+                                                                class="required-sign">*</span></label>
+                                                        <div class="input-group exclude">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">ARN- &ensp;</span>
+                                                            </div>
+                                                            <input type="text" id="arn_rgn_no" class="form-control"
+                                                                name="arn_rgn_no" [(ngModel)]="objAssociate.ARN"
+                                                                aria-describedby="arn_rgn_no" [disabled]="!isEdit">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 arn_validity">
+                                                    <div class="form-group">
+                                                        <label for="arn_validity">VALIDITY <span
+                                                                class="required-sign">*</span></label>
+                                                        <!-- <input type="text" id="arn_validity" class="form-control"
+                                                            value="data->associate_licence->arn_validity"
+                                                            name="arn_validity" aria-describedby="arn_validity"> -->
+                                                        <div class="input-group">
+                                                            <input class="form-control" readonly
+                                                                placeholder="dd-mm-yyyy" name="dp"
+                                                                [(ngModel)]="objAssociate.ARNValidDate" ngbDatepicker
+                                                                #d1="ngbDatepicker" [minDate]="minDate"
+                                                                [maxDate]="maxDate" [disabled]="!isEdit" />
+                                                            <button class="btn btn-transparent" (click)="d1.toggle()"
+                                                                *ngIf="isEdit" type="button"><svg width="24" height="24"
+                                                                    viewBox="0 0 24 24">
+                                                                    <use xlink:href="#month"></use>
+                                                                </svg></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- EUIN Details -->
+                                            <div class="row" id="euin_details" *ngIf="showEUIN">
+                                                <div class="col-sm-12">
+                                                    <!--<h3 class="card-title">EUIN</h3>-->
+                                                    <h4 class="card-title">EUIN</h4>
+                                                </div>
+                                                <div class="col-sm-8 euin_name">
+                                                    <div class="form-group">
+                                                        <label for="euin_name">Name of EUIN Holder <span
+                                                                class="required-sign">*</span></label>
+                                                        <input type="text" class="form-control text-capitalize"
+                                                            id="euin_name" [(ngModel)]="objAssociate.EUINHolderName"
+                                                            name="euin_name" aria-describedby="euin_name"
+                                                            [disabled]="!isEdit" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 euin_upload">
+                                                    <div class="form-group">
+                                                        <label for="euin_upload" class="w-100">PROOF
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="euin_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (euinProofFileName != ''), 'input-btn-danger': (euinProofFileName == '')}"
+                                                            [ngbTooltip]="euinProofFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="euin_upload" type="file" name="euin_upload"
+                                                                (change)="onEUINProofFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="euinProofFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="euinProofFileName != ''">{{euinProofFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="euinProofFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                                PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="euinProofFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onEUINProofPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-sm-4 euin_view">
+                                                    <div class="form-group">
+                                                        <label for="euin_view" class="w-100">PROOF</label>
+                                                        <label for="euin_view" class="btn input-btn btn-view w-100">
+                                                            <input id="euin_view" type="button" @if
+                                                                (isset($data->euin_upload) &&
+                                                            !empty($data->euin_upload)) onclick="showImage('{{
+                                                            @$data->euin_upload }}')" @endif name="euin_view" />
+                                                            <input id="euin_view" type="button" name="euin_view" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text">
+                                                                     @if (isset($data->euin_upload) &&
+                                                                    !empty($data->euin_upload)) 
+                                                                    View Copy 
+                                                                     @else Not Uploaded @endif 
+                                                                </span>
+                                                                <span class="value"></span>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div> -->
+                                                <div class="col-sm-6 euin_no">
+                                                    <div class="form-group">
+                                                        <label for="euin_no">EUIN Number <span
+                                                                class="required-sign">*</span></label>
+                                                        <div class="input-group exclude">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">E &ensp;</span>
+                                                            </div>
+                                                            <input type="text" id="euin_no" class="form-control"
+                                                                name="euin_no" [(ngModel)]="objAssociate.EUIN"
+                                                                aria-describedby="euin_no" [disabled]="!isEdit">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 euin_validity">
+                                                    <div class="form-group">
+                                                        <label for="euin_validity">VALIDITY <span
+                                                                class="required-sign">*</span></label>
+                                                        <!-- <input type="text" id="euin_validity" class="form-control"
+                                                            value="data->associate_licence->euin_validity"
+                                                            name="euin_validity" aria-describedby="euin_validity"> -->
+                                                        <div class="input-group">
+                                                            <input class="form-control" readonly
+                                                                placeholder="dd-mm-yyyy" name="dp"
+                                                                [(ngModel)]="objAssociate.EUINValidDate" ngbDatepicker
+                                                                #d2="ngbDatepicker" [minDate]="minDate"
+                                                                [maxDate]="maxDate" [disabled]="!isEdit" />
+                                                            <button class="btn btn-transparent" (click)="d2.toggle()"
+                                                                *ngIf="isEdit" type="button"><svg width="24" height="24"
+                                                                    viewBox="0 0 24 24">
+                                                                    <use xlink:href="#month"></use>
+                                                                </svg></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- END -->
+                                            <!-- Section Start for RIA -->
+                                            <!-- If "PROFESSION" Selected :: RIA -->
+                                            <div class="row" id="ria_details" *ngIf="showRIA">
+                                                <div class="col-sm-12">
+                                                    <!--<h3 class="card-title">EUIN</h3>-->
+                                                    <h4 class="card-title">SEBI RIA Details</h4>
+                                                </div>
+                                                <div class="col-sm-8 ria_name">
+                                                    <div class="form-group">
+                                                        <label for="ria_name">NAME AS PER RIA <span
+                                                                class="required-sign">*</span></label>
+                                                        <div class="input-group exclude">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">INA &ensp;</span>
+                                                            </div>
+                                                            <input type="text" id="ria_name" name="ria_name"
+                                                                [(ngModel)]="objAssociate.RIAName"
+                                                                class="form-control text-capitalize"
+                                                                [disabled]="!isEdit">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 ria_upload">
+                                                    <div class="form-group">
+                                                        <label for="ria_upload" class="w-100">PROOF
+                                                            <!-- @if (!isset($data->associate_licence->ria_upload) &&
+                                                            empty($data->associate_licence->ria_upload))
+                                                            (Max 5MB) @endif -->
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="ria_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (riaProofFileName != ''), 'input-btn-danger': (riaProofFileName == '')}"
+                                                            [ngbTooltip]="riaProofFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="ria_upload" type="file" name="ria_upload"
+                                                                (change)="onRIAProofFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="riaProofFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="riaProofFileName != ''">{{riaProofFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="riaProofFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                                PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="riaProofFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onRIAProofPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-sm-4 ria_view">
+                                                    <div class="form-group">
+                                                        <label for="ria_view" class="w-100">PROOF</label>
+                                                        <label for="ria_view" class="btn input-btn btn-view w-100">
+                                                            <input id="ria_view" type="button" @if
+                                                                (isset($data->ria_upload) && !empty($data->ria_upload))
+                                                            onclick="showImage('data->ria_upload }}')" @endif
+                                                            name="ria_view" /> 
+                                                            <input id="ria_view" type="button"
+                                                            name="ria_view" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text">
+                                                                     @if (isset($data->ria_upload) &&
+                                                                    !empty($data->ria_upload)) 
+                                                                    View Copy 
+                                                                     @else Not Uploaded @endif 
+                                                                </span>
+                                                                <span class="value"></span>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div> -->
+                                                <div class="col-sm-6 ria_rgn_no">
+                                                    <div class="form-group">
+                                                        <label for="ria_rgn_no">SEBI REGISTRATION NUMBER <span
+                                                                class="required-sign">*</span></label>
+                                                        <div class="input-group exclude">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">RIA &ensp;</span>
+                                                            </div>
+                                                            <input type="text" id="ria_rgn_no" class="form-control"
+                                                                name="ria_rgn_no" [(ngModel)]="objAssociate.RIANumber"
+                                                                aria-describedby="ria_rgn_no" [disabled]="!isEdit">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 ria_validity">
+                                                    <div class="form-group">
+                                                        <label for="ria_validity">VALIDITY <span
+                                                                class="required-sign">*</span></label>
+                                                        <!-- <input type="text" id="ria_validity" class="form-control"
+                                                            value="data->associate_licence->ria_validity"
+                                                            name="ria_validity" aria-describedby="ria_validity"> -->
+                                                        <div class="input-group">
+                                                            <input class="form-control" readonly
+                                                                placeholder="dd-mm-yyyy" name="dp"
+                                                                [(ngModel)]="objAssociate.RIAValidDate" ngbDatepicker
+                                                                #d3="ngbDatepicker" [minDate]="minDate"
+                                                                [maxDate]="maxDate" [disabled]="!isEdit" />
+                                                            <button class="btn btn-transparent" (click)="d3.toggle()"
+                                                                *ngIf="isEdit" type="button"><svg width="24" height="24"
+                                                                    viewBox="0 0 24 24">
+                                                                    <use xlink:href="#month"></use>
+                                                                </svg></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-3 d-none d-lg-flex">
+                                            <ng-lottie style="height: 300px;" [options]="lottieOptions"
+                                                (animationCreated)="animationCreated($event)"></ng-lottie>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-footer">
+                                    <ng-container *ngIf="mode == 'create'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'edit'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                                            (click)="onNext()">Proceed</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'verify'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                                            (click)="onNext()">Proceed</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'externalverify'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onNext()">Next</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'viewdetails'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onNext()">Proceed</button>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

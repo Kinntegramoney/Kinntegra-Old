@@ -1,0 +1,70 @@
+<div class="auth-page" *ngIf="!isAuthorized">
+    <div class="auth-wrapper">
+        <div class="card auth-card">
+            <div class="card-body">
+                <div class="logo-wrap">
+                    <img class="img-fluid" src="assets/images/logo.svg" alt="Kinntegra">
+                </div>
+                <h3 class="card-title text-center">Login to Kinntegra</h3>
+                <form>
+                    <div class="form-group">
+                        <label for="user-id">PAN NO</label>
+                        <input type="text" name="user-id" class="form-control text-uppercase" placeholder=""
+                            [(ngModel)]="objLogin.UserName">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder=""
+                            [(ngModel)]="objLogin.Password" (keydown)="onPasswordKeydown($event)">
+                    </div>
+                    <button class="btn btn-primary w-100 btn-lg text-uppercase" type="button"
+                        (click)="onSigninClicked()">SIGN IN</button>
+                    <div class="d-sm-flex mt-3 justify-content-between align-items-center">
+                        <a style="text-decoration: none;" (click)="onForgotPasswordClicked()">Forgot Password?</a>
+                        <!-- <span class="d-block mt-2 mt-sm-0">Don't have an account ? <a href="#">Sign Up</a></span> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="text-center company-info">
+            <!-- Kinntegra Business Solutions Pvt. Ltd. (Member of BSE)
+            <br>AMFI Registration No: ARN-145633 | Cin:
+            U74999MH2018PTC306145 -->
+            Kinntegra Wealth Private Limited | CIN: U74999MH2018PTC306145 <br>
+            AMFI Registration No: ARN-145633 | BSE StarMF Member ID - 19941
+        </div>
+    </div>
+</div>
+<div class="auth-page" *ngIf="isAuthorized">
+    <div class="auth-wrapper">
+        <div class="card auth-card">
+            <div class="card-body">
+                <div class="logo-wrap">
+                    <img class="img-fluid" src="assets/images/logo.svg" alt="Kinntegra">
+                </div>
+                <!-- <h3 class="card-title text-center">Login to Kinntegra</h3> -->
+                <form>
+                    <div class="form-group">
+                        <label for="user-pin">PIN</label>
+                        <input type="password" name="user-pin" class="form-control" placeholder="" [(ngModel)]="pin"
+                            (keydown)="onPinKeydown($event)">
+                    </div>
+                    <button class="btn btn-primary w-100 btn-lg text-uppercase" type="button"
+                        (click)="onPinSiginClicked()">SIGN IN</button>
+                    <div class="d-sm-flex mt-3 justify-content-center">
+                        <a style="text-decoration: none;" (click)="onForgotPinClicked()">Forgot Pin</a>
+                        <!-- <span class="d-block mt-2 mt-sm-0">Don't have an account ? <a href="#">Sign Up</a></span> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="text-center company-info font">
+            <!-- Kinntegra Business Solutions Pvt. Ltd. (Member of BSE)
+           AMFI Registration No: ARN-145633 | Cin:
+            U74999MH2018PTC306145 -->
+            Kinntegra Wealth Private Limited | CIN: U74999MH2018PTC306145 <br>
+            AMFI Registration No: ARN-145633 | BSE StarMF Member ID - 19941
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap');
+
+/*Custom Variables*/
+@import "assets/styles/fonts";
+@import "assets/styles/custom_variables";
+@import "../node_modules/@ng-select/ng-select/themes/default.theme.css";
+/*Bootstrap Scss*/
+@import "bootstrap/scss/bootstrap";
+// @import "../node_modules/bootstrap/scss/functions";
+// @import "../node_modules/bootstrap/scss/variables";
+// @import "../node_modules/bootstrap/scss/mixins";
+// $theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+// @import "../node_modules/bootstrap/scss/root";
+// @import "../node_modules/bootstrap/scss/reboot";
+// @import "../node_modules/bootstrap/scss/type";
+// @import "../node_modules/bootstrap/scss/images";
+// @import "../node_modules/bootstrap/scss/code";
+// @import "../node_modules/bootstrap/scss/grid";
+// @import "../node_modules/bootstrap/scss/tables";
+// @import "./node_modules/bootstrap/scss/forms";
+// @import "../node_modules/bootstrap/scss/buttons";
+// @import "../node_modules/bootstrap/scss/transitions";
+// @import "../node_modules/bootstrap/scss/dropdown";
+// @import "../node_modules/bootstrap/scss/button-group";
+// @import "../node_modules/bootstrap/scss/input-group";
+// @import "../node_modules/bootstrap/scss/custom-forms";
+// @import "../node_modules/bootstrap/scss/nav";
+// @import "../node_modules/bootstrap/scss/navbar";
+// @import "../node_modules/bootstrap/scss/card";
+// @import "../node_modules/bootstrap/scss/breadcrumb";
+// @import "../node_modules/bootstrap/scss/pagination";
+// @import "../node_modules/bootstrap/scss/badge";
+// @import "../node_modules/bootstrap/scss/jumbotron";
+// @import "../node_modules/bootstrap/scss/alert";
+// @import "../node_modules/bootstrap/scss/progress";
+// @import "../node_modules/bootstrap/scss/media";
+// @import "../node_modules/bootstrap/scss/list-group";
+// @import "../node_modules/bootstrap/scss/close";
+// @import "../node_modules/bootstrap/scss/modal";
+// @import "../node_modules/bootstrap/scss/tooltip";
+// @import "../node_modules/bootstrap/scss/popover";
+// @import "../node_modules/bootstrap/scss/carousel";
+// @import "../node_modules/bootstrap/scss/utilities";
+// @import "../node_modules/bootstrap/scss/print";
+
+// @import "../../node_modules/select2/src/scss/core.scss";
+// @import "../../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
+//// @import "../../node_modules/fullcalendar/main.min.css";
+// @import "../../node_modules/tiny-slider/src/tiny-slider.scss";
+
+@import "assets/styles/range";
+
+/*Custom Styling*/
+@import "assets/styles/header";
+@import "assets/styles/footer";
+
+@import "assets/styles/common";
+@import "assets/styles/datepicker";
+
+@import "assets/styles/navigation";
+@import "assets/styles/form";
+
+@import "assets/styles/auth";
+
+@import '../node_modules/@swimlane/ngx-datatable/index.css';
+@import '../node_modules/@swimlane/ngx-datatable/themes/material.scss';
+@import '../node_modules/@swimlane/ngx-datatable/assets/icons.css';
+@import "assets/styles/datatable";

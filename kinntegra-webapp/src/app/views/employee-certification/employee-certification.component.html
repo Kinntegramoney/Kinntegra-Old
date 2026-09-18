@@ -1,0 +1,577 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"
+                *ngIf="mode != 'externalverify'"></app-header-right-template>
+        </div>
+
+
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        <app-employee-leftbar-template [activeComp]="'certification-detail'" [activeSubComp]="''"
+                            [employeeId]="employeeCertificateId" [mode]="mode" [ts]="ts"
+                            [progressPercentage]="72"></app-employee-leftbar-template>
+                    </div>
+
+
+                    <form class="col-lg-8 col-xl-9 step-forms col-md-8 ps-0" enctype="multipart/form-data"
+                        id="form-information">
+                        <section class="trial active" id="employee-detail" data-step="2" autocomplete="off">
+                            <div class="form-inner-section">
+                                <div class="form-header">
+                                    <h3 class="card-title d-inline"><i
+                                            class="icon-left-arrow back-btn" (click)="onBack()"></i>Certification</h3>
+                                    <span class="edit-now float-end mt-1" *ngIf="showEdit"
+                                        (click)="onEditClicked()">Edit</span>
+                                </div>
+                                <div class="form-content">
+                                    <div class="row">
+                                        <div class="col-xl-8 col-lg-9">
+
+                                            <div class="row" id="nism_va_details" *ngIf="showNism">
+
+                                                <div class="col-sm-12">
+                                                    <h3 class="card-title"> MFD Certificate Details</h3>
+                                                    <h4 class="card-title">NISM VA CERTIFICATE</h4>
+                                                </div>
+                                                <div class="col-sm-8 nism_va_no">
+                                                    <div class="form-group">
+                                                        <label for="nism_va_no">NISM VA CERTIFICATE NUMBER <span
+                                                                class="required-sign">*</span></label>
+                                                        <input type="text" id="nism_va_no" class="form-control" value=""
+                                                            name="nism_va_no" aria-describedby="nism_va_no"
+                                                            [(ngModel)]="objEmployeeCertificateDetails.NismVaNumber"
+                                                            [disabled]="!isEdit">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 nism_va_upload">
+                                                    <input type="hidden" name="is_nism_va_upload" value="">
+                                                    <div class="form-group">
+                                                        <label for="nism_va_upload" class="w-100">PROOF
+
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="nism_va_upload" class="btn input-btn w-100"   [ngClass]="{'input-btn-primary': (nismVaCertificateDocumentFileName != ''), 'input-btn-danger': (nismVaCertificateDocumentFileName == '')}"
+                                                        [ngbTooltip]="nismVaCertificateDocumentFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="nism_va_upload" type="file" name="nism_va_upload"
+                                                                (change)="onNismVaCertificateFileChanged($event)" [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="nismVaCertificateDocumentFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="nismVaCertificateDocumentFileName != ''">{{nismVaCertificateDocumentFileName|fileDisplayName}}</span>
+                                                            
+
+                                                            </div>
+                                                        </label>
+
+
+                                                        <label class="w-100 format" *ngIf="nismVaCertificateDocumentFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                                PDF</span>
+                                                        </label>
+
+                                                        <label class="w-100 preview" *ngIf="nismVaCertificateDocumentFileName != ''">
+                                                            <span class="text-lowercase font-italic text-primary"><a
+                                                                    (click)="onNismProofPreview()">Preview</a></span>
+                                                        </label>
+
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8 nism_va_validity">
+                                                    <div class="form-group">
+                                                        <label for="nism_va_validity">VALIDITY <span
+                                                                class="required-sign">*</span></label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" readonly
+                                                                placeholder="dd-mm-yyyy" name="NismVaValidDate"
+                                                                [(ngModel)]="objEmployeeCertificateDetails.NismVaValidDate"
+                                                                ngbDatepicker #d="ngbDatepicker" [minDate]="minDate"
+                                                                [maxDate]="maxDate" />
+                                                            <button class="btn btn-transparent" (click)="d.toggle()"
+                                                                *ngIf="isEdit" type="button"><svg width="24" height="24"
+                                                                    viewBox="0 0 24 24">
+                                                                    <use xlink:href="#month"></use>
+                                                                </svg></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" id="euin_details" *ngIf="showEun">
+                                                <div class="col-sm-12">
+                                                    <h4 class="card-title">EUIN</h4>
+                                                </div>
+                                                <div class="col-sm-8 euin_name">
+                                                    <div class="form-group">
+                                                        <label for="euin_name">Name of EUIN Holder <span
+                                                                class="required-sign">*</span></label>
+                                                        <input type="text" class="form-control text-capitalize"
+                                                            id="euin_name" value="" name="euin_name"
+                                                            aria-describedby="euin_name"
+                                                            [(ngModel)]="objEmployeeCertificateDetails.EUINHolderName"
+                                                            [disabled]="!isEdit" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 euin_upload">
+                                                    <input type="hidden" name="is_euin_upload" value="">
+                                                    <div class="form-group">
+                                                        <label for="euin_upload" class="w-100">PROOF
+
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="euin_upload" class="btn input-btn w-100"
+                                                        [ngClass]="{'input-btn-primary': (euinProofDocumentFileName != ''), 'input-btn-danger': (euinProofDocumentFileName == '')}" 
+                                                        [ngbTooltip]="euinProofDocumentFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="euin_upload" type="file" name="euin_upload"
+                                                                (change)="onEuinProofFileChanged($event)" [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="euinProofDocumentFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="euinProofDocumentFileName != ''">{{euinProofDocumentFileName|fileDisplayName}}</span>
+                                                            
+
+                                                            </div>
+                                                        </label>
+
+                                                        <label class="w-100 format"
+                                                        *ngIf="euinProofDocumentFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                                PDF</span>
+                                                        </label>
+
+                                                        <label class="w-100 preview"
+                                                        *ngIf="euinProofDocumentFileName != ''">
+                                                            <span class="text-lowercase font-italic text-primary"><a
+                                                                    (click)="onEuinProofPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6 euin_no">
+                                                    <div class="form-group">
+                                                        <label for="euin_no">EUIN Number <span
+                                                                class="required-sign">*</span></label>
+                                                        <div class="input-group exclude">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">E &ensp;</span>
+                                                            </div>
+                                                            <input type="text" id="euin_no" class="form-control"
+                                                                name="euin_no" value="" aria-describedby="euin_no"
+                                                                [(ngModel)]="objEmployeeCertificateDetails.EUIN"
+                                                                [disabled]="!isEdit">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 euin_validity">
+                                                    <div class="form-group">
+                                                        <label for="euin_validity">VALIDITY <span
+                                                                class="required-sign">*</span></label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" readonly
+                                                                placeholder="dd-mm-yyyy" name="EUINValidDate"
+                                                                [(ngModel)]="objEmployeeCertificateDetails.EUINValidDate"
+                                                                ngbDatepicker #d1="ngbDatepicker" [minDate]="minDate"
+                                                                [maxDate]="maxDate" />
+                                                            <button class="btn btn-transparent" (click)="d1.toggle()"
+                                                                *ngIf="isEdit" type="button"><svg width="24" height="24"
+                                                                    viewBox="0 0 24 24">
+                                                                    <use xlink:href="#month"></use>
+                                                                </svg></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row flex-column" id="ca_cs_type" *ngIf="showOtherCertification">
+                                                <div class="col-sm-12">
+                                                    <h3 class="card-title">Other Certificate Details</h3>
+                                                </div>
+                                                <div class="col-sm-8 ca_cs_certificate_type">
+
+                                                    <div class="form-group">
+                                                        <h4 class="form-section-title text-uppercase text-grey">
+                                                            Certification Type <span class="required-sign">*</span></h4>
+                                                        <div class="dropdown form-control ng-select-form-control">
+                                                            <ng-select [items]="otherCertifications" [multiple]="true"
+                                                                bindLabel="Name" [closeOnSelect]="false"
+                                                                bindValue="Name" [(ngModel)]="selectedCertification"
+                                                                name="certification" (change)="onCertificationChanged()"
+                                                                [disabled]="!isEdit" [dropdownPosition]="'bottom'">
+                                                                <ng-template ng-option-tmp let-item="item"
+                                                                    let-item$="item$" let-index="index">
+                                                                    <input id="item-{{index}}" type="checkbox"
+                                                                        [(ngModel)]="item$.selected"
+                                                                        [ngModelOptions]="{standalone: true}" />
+                                                                    {{item.Name}}
+                                                                </ng-template>
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- CA CERTIFICATE  -->
+
+                                            <div class="row" id="ca_details" *ngIf="showCa">
+                                                <div class="col-sm-12">
+                                                    <h4 class="card-title">CA DETAILS</h4>
+                                                </div>
+                                                <div class="col-sm-8 ca_no">
+                                                    <div class="form-group">
+                                                        <label for="ca_no">CA CERTIFICATE NO <span
+                                                                class="required-sign">*</span></label>
+                                                        <input type="text" id="ca_no" class="form-control" name="ca_no"
+                                                            value="" aria-describedby="ca_no"
+                                                            [(ngModel)]="objEmployeeCertificateDetails.CANumber"
+                                                            [disabled]="!isEdit">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 ca_upload">
+                                                    <input type="hidden" name="is_ca_upload" value="">
+                                                    <div class="form-group">
+                                                        <label for="ca_upload" class="w-100">PROFF
+
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="ca_upload" class="btn input-btn w-100"
+                                                        [ngClass]="{'input-btn-primary': (caCertificateDocumentFileName != ''), 'input-btn-danger': (caCertificateDocumentFileName == '')}"
+                                                        [ngbTooltip]="caCertificateDocumentFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="ca_upload" type="file" name="ca_upload"
+                                                                (change)="onCaCertificateFileChanged($event)" [disabled]="!isEdit"  />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="caCertificateDocumentFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="caCertificateDocumentFileName != ''">{{caCertificateDocumentFileName|fileDisplayName}}</span>
+                                                       
+
+                                                            </div>
+                                                        </label>
+
+                                                        <label class="w-100 format"
+                                                        *ngIf="caCertificateDocumentFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                                PDF</span>
+                                                        </label>
+
+                                                        <label class="w-100 preview"
+                                                        *ngIf="caCertificateDocumentFileName != ''">
+                                                            <span class="text-lowercase font-italic text-primary"><a
+                                                                    (click)="onCaProofPreview()">Preview</a></span>
+                                                        </label>
+
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8 ca_validity">
+                                                    <div class="form-group">
+                                                        <label for="ca_validity">VALIDITY (IF ANY)</label>
+                                                        <!-- <input type="text" id="ca_validity" class="form-control"
+                                                            value="" name="ca_validity" aria-describedby="ca_validity"> -->
+
+
+
+                                                        <div class="input-group">
+                                                            <input class="form-control" readonly
+                                                                placeholder="dd-mm-yyyy" name="CAValidDate"
+                                                                [(ngModel)]="objEmployeeCertificateDetails.CAValidDate"
+                                                                ngbDatepicker #d2="ngbDatepicker" [minDate]="minDate"
+                                                                [maxDate]="maxDate" />
+                                                            <button class="btn btn-transparent" (click)="d2.toggle()"
+                                                                *ngIf="isEdit" type="button"><svg width="24" height="24"
+                                                                    viewBox="0 0 24 24">
+                                                                    <use xlink:href="#month"></use>
+                                                                </svg></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- CS CERTIFICATE  -->
+
+                                            <div class="row" id="cs_details" *ngIf="showCs">
+                                                <div class="col-sm-12">
+                                                    <h4 class="card-title">CS DETAILS</h4>
+                                                </div>
+                                                <div class="col-sm-8 cs_no">
+                                                    <div class="form-group">
+                                                        <label for="cs_no">CS CERTIFICATE NO <span
+                                                                class="required-sign">*</span></label>
+                                                        <input type="text" id="cs_no" class="form-control" name="cs_no"
+                                                            value="" aria-describedby="cs_no"
+                                                            [(ngModel)]="objEmployeeCertificateDetails.CSNumber"
+                                                            [disabled]="!isEdit">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 cs_upload">
+                                                    <input type="hidden" name="is_cs_upload" value="">
+                                                    <div class="form-group">
+                                                        <label for="cs_upload" class="w-100">PROOF
+
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="cs_upload" class="btn input-btn w-100"
+                                                        [ngClass]="{'input-btn-primary': (csCertificateDocumentFileName != ''), 'input-btn-danger': (csCertificateDocumentFileName == '')}"
+                                                        [ngbTooltip]="csCertificateDocumentFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="cs_upload" type="file" name="cs_upload"
+                                                                (change)="onCsCertificateFileChanged($event)" [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="csCertificateDocumentFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="csCertificateDocumentFileName != ''">{{csCertificateDocumentFileName|fileDisplayName}}</span>
+                                                       
+
+                                                            </div>
+                                                        </label>
+
+                                                        <label class="w-100 format"
+                                                        *ngIf="csCertificateDocumentFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                                PDF</span>
+                                                        </label>
+
+
+                                                        <label class="w-100 preview"
+                                                        *ngIf="csCertificateDocumentFileName != ''">
+                                                            <span class="text-lowercase font-italic text-primary"><a
+                                                                    (click)="onCsProofPreview()">Preview</a></span>
+                                                        </label>
+
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8 cs_validity">
+                                                    <div class="form-group">
+                                                        <label for="cs_validity">VALIDITY (IF ANY)</label>
+                                                        <!-- <input type="text" id="cs_validity" class="form-control"
+                                                            value="" name="cs_validity" aria-describedby="cs_validity"> -->
+
+
+
+
+                                                        <div class="input-group">
+                                                            <input class="form-control" readonly
+                                                                placeholder="dd-mm-yyyy" name="CSValidDate"
+                                                                [(ngModel)]="objEmployeeCertificateDetails.CSValidDate"
+                                                                ngbDatepicker #d3="ngbDatepicker" [minDate]="minDate"
+                                                                [maxDate]="maxDate" />
+                                                            <button class="btn btn-transparent" (click)="d3.toggle()"
+                                                                *ngIf="isEdit" type="button"><svg width="24" height="24"
+                                                                    viewBox="0 0 24 24">
+                                                                    <use xlink:href="#month"></use>
+                                                                </svg></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- OTHER CERTIFICATE  -->
+
+                                            <div class="row" id="course_details" *ngIf="showOther">
+                                                <div class="col-sm-12">
+                                                    <h4 class="card-title">Degree/Course Details</h4>
+                                                </div>
+                                                <div class="col-sm-8 course_name">
+                                                    <div class="form-group">
+                                                        <label for="course_name">Name of Course/Degree <span
+                                                                class="required-sign">*</span></label>
+                                                        <input type="text" id="course_name" class="form-control"
+                                                            value="" name="course_name" aria-describedby="course_name"
+                                                            [(ngModel)]="objEmployeeCertificateDetails.DegreeName"
+                                                            [disabled]="!isEdit">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 course_upload">
+                                                    <input type="hidden" name="is_course_upload" value="">
+                                                    <div class="form-group">
+                                                        <label for="course_upload" class="w-100">PROOF
+
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="course_upload" class="btn input-btn w-100"
+                                                        [ngClass]="{'input-btn-primary': (degreeCertificateDocumentFileName != ''), 'input-btn-danger': (degreeCertificateDocumentFileName == '')}" 
+                                                        [ngbTooltip]="degreeCertificateDocumentFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="course_upload" type="file" name="course_upload"
+                                                                (change)="onDegreeCertificateFileChanged($event)" [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="degreeCertificateDocumentFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="degreeCertificateDocumentFileName != ''">{{degreeCertificateDocumentFileName|fileDisplayName}}</span>
+                                                             
+                                                            </div>
+                                                        </label>
+
+                                                        <label class="w-100 format"
+                                                        *ngIf="degreeCertificateDocumentFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                                PDF</span>
+                                                        </label>
+
+
+                                                        <label class="w-100 preview"
+                                                        *ngIf="degreeCertificateDocumentFileName != ''">
+                                                            <span class="text-lowercase font-italic text-primary"><a
+                                                                    (click)="onDegreeProofPreview()">Preview</a></span>
+                                                        </label>
+
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8 course_no">
+                                                    <div class="form-group">
+                                                        <label for="course_no">COURSE CERTIFICATE NO <span
+                                                                class="required-sign">*</span></label>
+                                                        <input type="text" id="course_no" class="form-control" value=""
+                                                            name="course_no" aria-describedby="course_no"
+                                                            [(ngModel)]="objEmployeeCertificateDetails.DegreeNumber"
+                                                            [disabled]="!isEdit">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-8 course_validity">
+                                                    <div class="form-group">
+                                                        <label for="course_validity">VALIDITY (IF ANY)</label>
+                                                        <!-- <input type="text" id="course_validity" class="form-control"
+                                                            value="" name="course_validity"
+                                                            aria-describedby="course_validity"> -->
+
+
+                                                        <div class="input-group">
+                                                            <input class="form-control" readonly
+                                                                placeholder="dd-mm-yyyy" name="DegreeValidDate"
+                                                                [(ngModel)]="objEmployeeCertificateDetails.DegreeValidDate"
+                                                                ngbDatepicker #d4="ngbDatepicker" [minDate]="minDate"
+                                                                [maxDate]="maxDate" />
+                                                            <button class="btn btn-transparent" (click)="d4.toggle()"
+                                                                *ngIf="isEdit" type="button"><svg width="24" height="24"
+                                                                    viewBox="0 0 24 24">
+                                                                    <use xlink:href="#month"></use>
+                                                                </svg></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-12" *ngIf="this.mode === 'externalverify'">
+                                                <label for="cs_no" style="font-size: 20px;color: black;">Terms &
+                                                    Conditions</label>
+                                                <div class="terms-panel"
+                                                    [innerHTML]="objEmployeeTermsCondition.TermsContent">
+                                                </div>
+                                                <div class="col-sm-10 mt-3">
+                                                    <div class="form-group custom-checkbox">
+                                                        <input #chkpermanent type="checkbox" id="terms_conditions"
+                                                            name="terms_conditions"
+                                                            (change)="onTermsConditionsChange(chkpermanent.checked)"
+                                                            [(ngModel)]="objEmployeeCertificateDetails.terms">
+                                                        <label for="terms_conditions">I accept the Terms &
+                                                            Conditions</label>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-xl-4 col-lg-3 d-none d-lg-flex">
+                                            <ng-lottie style="height: 300px;" [options]="lottieOptions"
+                                                (animationCreated)="animationCreated($event)"></ng-lottie>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-footer ">
+                                    <ng-container *ngIf="mode == 'create'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Confirm</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Confirm</span>
+                                        </button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'edit'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                                            (click)="onNextEdit()">Proceed</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'verify'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                                            (click)="onNextVerify()">Proceed</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'externalverify'">
+                                        <button type="button" class="reject-now btn btn-primary btn-lg"
+                                            [disabled]="!objEmployeeCertificateDetails.terms ||isBusy"
+                                            (click)="onAcceptClicked()"><div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                    <span *ngIf="!isBusy">Accept</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Accept</span></button>
+                                        <button type="button" class="reject-now btn btn-danger btn-lg ms-3"
+                                            [disabled]="rejectButtonClicked ||!objEmployeeCertificateDetails.terms"
+                                            (click)="onRejectClicked()">Reject</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'viewdetails'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onNextEdit()">Proceed</button>
+                                    </ng-container>
+
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

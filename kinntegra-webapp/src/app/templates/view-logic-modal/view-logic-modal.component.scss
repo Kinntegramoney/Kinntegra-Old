@@ -1,0 +1,253 @@
+.table-fix {
+    table-layout: fixed;
+}
+
+.form-control-plaintext {
+    pointer-events: none;
+    cursor: none !important;
+}
+
+.min_invalid td span {
+    color: #dc3545;
+    /* //border-color: #dc3545; */
+}
+
+.normal-table input,
+.normal-table select {
+    font-size: 0.875rem;
+}
+
+// a:(::disabled) {
+//     cursor: none !important;
+// }
+
+a.delete-scheme {
+    background: #ffffff;
+}
+
+.table-fix {
+    table-layout: fixed;
+}
+
+tr.ntab th {
+    border-top: 0;
+    text-transform: uppercase;
+    color: #a3a3a3;
+    vertical-align: bottom;
+    white-space: nowrap;
+}
+
+.accor.collapsed i {
+    /* -webkit-transform: none;
+          transform: none; */
+    font-size: 1rem;
+    margin: 0;
+    transition: 0.5s linear;
+    transform: rotate(180deg) !important;
+}
+
+.rotate {
+    -moz-transition: all 2s linear;
+    -webkit-transition: all 2s linear;
+    transition: all 2s linear;
+}
+
+.rotate.down {
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+/* .accor .btnn i {
+            font-size: 1rem;
+            margin: 0;
+            transition: 0.5s linear;
+            transform: rotate(180deg);
+        } */
+.accor {
+    /* text-align: center; */
+    /* background: #f4f4f4; */
+    font-weight: bold;
+}
+
+.accor i {
+    /* text-align: center; */
+    /* background: #f4f4f4; */
+
+    font-size: 1rem;
+    margin: 0;
+    transition: 0.5s linear;
+    transform: none !important;
+}
+
+.display_hide {
+    display: none;
+    ;
+}
+
+.display_hide.active {
+    display: block;
+    ;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+.messenger-wrapper {
+    display: flex;
+    height: auto;
+    min-height: 200px;
+}
+
+.pl-1 {
+    padding-left: 1rem !important;
+}
+
+.pr-1 {
+    padding-right: 1rem !important;
+}
+
+.total_sip_percentage span {
+    font-size: 12px !important;
+}
+
+.text-error {
+    color: #ce4b4b;
+}
+
+label.error {
+    color: #ce4b4b;
+}
+
+.pb-1 {
+    padding-bottom: 1rem !important;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.table-dark {
+    color: #fed8b3;
+    background-color: #548989;
+}
+
+.table-error {
+    background-color: #f51010 !important;
+    color: #ffffff !important;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.withdrawal-amount {
+    display: none;
+}
+
+/*Select2 ReadOnly Start*/
+select[readonly].select2-hidden-accessible+.select2-container {
+    pointer-events: none;
+    touch-action: none;
+}
+
+select[readonly].select2-hidden-accessible+.select2-container .select2-selection {
+    background: #eee;
+    box-shadow: none;
+}
+
+select[readonly].select2-hidden-accessible+.select2-container .select2-selection__arrow,
+select[readonly].select2-hidden-accessible+.select2-container .select2-selection__clear {
+    display: none;
+}
+
+.select2-container--default .select2-results__option[aria-disabled=true] {
+    display: none;
+}
+
+.edit-now,
+.reset-now,
+.save-now {
+    font-size: 12px;
+    font-weight: 600;
+    // font-style: italic;
+}
+
+.edit-now:hover,
+.save-now:hover,
+.reset-now:hover {
+    cursor: pointer;
+    color: #1a2b2a;
+    text-decoration: underline;
+}
+
+/* input[readonly] {
+        background-color: #f6f6f6 !important;
+    } */
+.s_info {
+    font-size: 1.5rem;
+    color: red;
+}
+
+.s_info_color {
+    color: red;
+}
+
+form-control.is-invalid {
+    padding-right: 0 !important;
+    background-image: none !important;
+}
+
+.select2 .select2-selection .alert {
+    border-left-color: limegreen !important;
+}
+
+/* .tableFixHead          { overflow: auto; height: 500px; }
+.tableFixHead thead th { position: sticky; top: 0; z-index: 1; } */
+.tableFixHead {
+    overflow: auto;
+    height: 500px;
+}
+
+.tableFixHead thead th {
+    position: sticky;
+    top: 0;
+    z-index: 9;
+    background: #fff
+}
+
+.tableFixHead tbody th {
+    position: sticky;
+    left: 0;
+    z-index: 8;
+}
+
+.scheme_custom_date_equity,
+.scheme_custom_date_sip,
+.scheme_custom_date_debt,
+.scheme_amount_common,
+.scheme_custom_sip_amount {
+    font-size: 13px !important;
+    font-weight: 500 !important
+}

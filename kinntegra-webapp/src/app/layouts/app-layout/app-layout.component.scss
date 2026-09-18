@@ -1,0 +1,16 @@
+@import "../../../assets/styles/custom_variables";
+.body {
+    padding: 2rem 1rem 1rem 7rem;
+
+    @media (max-width: $xl) {
+        padding: 2.5rem 1.688rem 1.688rem 7rem;
+    }
+
+    @media (max-width: $lg) {
+        padding: 2rem 1rem 2rem 6.5rem;
+    }
+
+    @media (max-width: $md) {
+        padding: 1rem 0 0;
+    }
+}

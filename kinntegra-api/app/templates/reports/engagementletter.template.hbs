@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Kinntegra - Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <link rel="icon" href="favicon.ico" type="image/ico" sizes="16x16">
+
+
+
+</head>
+
+
+<body class="engagement">
+    <header class="engagement-heading">
+        <div class="row justify-content-center pt-3">
+            <div class="card">
+                <div class="d-flex justify-content-between header-section px-3 pt-3 align-items-center">
+                    <address class="engagement-address">
+                        <h2 class="mb-1 d-block" style="margin:0px">Kinntegra Wealth Private Limited(AMFI Registered Mutual Fund Distributor)</h2>
+                        <strong>Registered Address</strong>: 6302, Island City Center Two, G D Ambekar Marg, Dadar
+                        (East), Mumbai 400014<br>
+                        <strong>Contact Details:</strong> +91-9136051689<br>
+                        <strong>Website:</strong> www.kinntegra.co.in | <strong>Email:</strong>
+                        info@kinntegra.co.in<br>
+                        <strong>CIN:</strong> U74999MH2018PTC306145<br>
+                    </address>
+                    <a class="engagement-image">
+                        <img class="img-fluid" src="{{LogoImagePath}}">
+                        <!-- <span>Kinntegra</span> -->
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+    <footer class="engagement-footer">
+        <div class="row justify-content-center pt-3">
+            <div class="card">
+                <div class="d-flex justify-content-between header-section px-3 pt-3 align-items-center">
+                    <a class="engagement-image footer">
+                        <img class="img-fluid" src="{{LogoImagePath}}">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <main>
+        <div class="row justify-content-center pt-3 m-5">
+            <div class="card">
+                <div class="row pull-right">
+                    <p style="padding-top:12.5px" class="pr-3 ">{{ApplicationDate}}</p>
+                </div>
+                <div style="padding-top:15px;text-align: center;">
+                    <h4 class="font-weight-bold"><u>Letter of Engagement</u></h4>
+                </div>
+                <div class="card-body p-3" style="font-size:13px ; padding:10px">
+                    <div class="pt-4">
+                        <h4 class="pt-4">Dear {{ClientName}}</h4>
+                        <p class="pt-4">We appreciate the opportunity to meet in person and discuss your comprehensive
+                            financial needs, encompassing both the
+                            investments you have accumulated and the new inflows and outflows you have proposed, each
+                            with its own timeline.
+                        </p>
+                        <p class="pt-2">This engagement letter outlines the specific terms of our engagement between:
+                        </p>
+                        {{!-- <p class="pt-2 font-weight-bold font-italic" style="font-weight: bold;font-style:italic;">
+                            Kinntegra Wealth Private Limited
+                            (Distributor), {{AuthorisedPerson1}} - representative of {{AssociateName}}
+                            (Client
+                            Engagement Partner of Kinntegra Wealth Private Limited) &amp; {{ClientName}} (Client)
+                        </p> --}}
+                        {{#if AuthorisedPerson1}}
+                        <p class="pt-2 font-weight-bold font-italic" style="font-weight: bold; font-style: italic;">
+                            Kinntegra Wealth Private Limited (Distributor), {{ AuthorisedPerson1 }} - representative of
+                            {{ AssociateName }} (Client Engagement Partner of Kinntegra Wealth Private Limited) &amp; {{
+                            ClientName }} (Client)
+                        </p>
+                        {{else}}
+                        <p class="pt-2 font-weight-bold font-italic" style="font-weight: bold; font-style: italic;">
+                            Kinntegra Wealth Private Limited (Distributor), {{ AssociateName }} - representative of {{
+                            AssociateName }} (Client Engagement Partner of Kinntegra Wealth Private Limited) &amp; {{
+                            ClientName }} (Client)
+                        </p>
+                        {{/if}}
+
+                        <p class="pt-2">If the scope or terms of the engagement change, they should be documented in
+                            writing and mutually agreed upon by
+                            all parties to the engagement.
+                        </p>
+                    </div>
+                    <div class="pt-2">
+                        <h4 class="pt-2 font-weight-bold ">Scope of Services</h4>
+                        <p class="engagement-heading-html-top">
+                            Please be assured that all information that you provide will be kept strictly confidential.
+                            During the engagement we may, on occasion, be required to consult with other third-party
+                            professionals at which time we would obtain your permission to disclose your personal
+                            information.
+                        </p>
+                        <p class="engagement-heading-html-top">
+                            As discussed during our introductory meeting, this engagement may include all services
+                            required to develop a financial strategy. These services will specifically include:
+                        </p>
+                        <ul class="pb-0">
+                            <li class="pl-4">Reviewing and prioritizing your goals and objectives</li>
+                            <li class="pl-4">Reviewing your current investment portfolio and developing a strategy.</li>
+                            <li class="pl-4">Assessing net worth and liquidity.</li>
+                            <li class="pl-4">Developing an action plan to implement the agreed upon recommendations.
+                            </li>
+                        </ul>
+                        <h4 class="pt-2 font-weight-bold">Ongoing Relationship</h4>
+                        <p class="engagement-heading-html-top">
+                            This will be an on-going professional relationship. At a minimum, we will meet on a
+                            semi-annual basis to ensure the plan is still appropriate for you. Either party may
+                            terminate this agreement by providing 1 month's notice to the other in writing.
+                        </p>
+                        <h4 class="pt-2 font-weight-bold">Income Disclosure</h4>
+                        <p class="engagement-heading-html-top">Our distribution services entitle us to earn up to 1.5%
+                            (scheme specific) of the total expense ratio up to 2.25% charged
+                            to you by Fund House adjusted with the daily NAV.
+                        </p>
+                        <p class="engagement-heading-html-top">Pursuant to Regulation 4(d) of SECURITIES AND EXCHANGE
+                            BOARD OF INDIA (INVESTMENT ADVISERS) REGULATIONS,
+                            2013, we are currently exempted from obtaining registration. Following is the snapshot for
+                            the same
+                        </p>
+                    </div>
+                    <div class="row engagement-heading-html-top" style="margin-top:30px;">
+                        <div class="col"></div>
+                        <div class="col-10">
+                            <p class="pt-2" style="font-size: 12.5px; margin-left: 150px; margin-right:50px">(d) Any
+                                Distributor of mutual
+                                funds, who is member of a self regulatory organisation <br>recognised by the Board or is
+                                registered with an association of asset management <br>companies of mutual funds,
+                                providing
+                                any investment advice to its clients incidental <br>to its primary activity:</p>
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                    <div style="page-break-before:always;"></div>
+                    <header class="engagement-heading">
+                        <div class="row justify-content-center pt-3">
+                            <div class="card">
+                                <div class="d-flex justify-content-between header-section px-3 pt-3 align-items-center">
+                                    <address class="engagement-address">
+                                        <h2 class="mb-1 d-block" style="margin:0px">Kinntegra Wealth Private Limited(AMFI Registered Mutual Fund Distributor)
+                                        </h2>
+                                        <strong>Registered Address</strong>: 6302, Island City Center Two, G D Ambekar
+                                        Marg, Dadar (East), Mumbai 400014<br>
+                                        <strong>Contact Details:</strong> +91-9136051689<br>
+                                        <strong>Website:</strong> www.kinntegra.co.in | <strong>Email:</strong>
+                                        info@kinntegra.co.in<br>
+                                        <strong>CIN:</strong> U74999MH2018PTC306145<br>
+                                    </address>
+                                    <a class="engagement-image">
+                                        <img class="img-fluid" src="{{LogoImagePath}}">
+                                        <!-- <span>Kinntegra</span> -->
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </header>
+                    <br>
+                    <div style="margin-top: 20px;"></div>
+                    <br>
+
+                    <div style="margin-top: 20px">
+                        <p class="pt-5">If in future, the regulation entitles us to take an advisory license, such fees
+                            are payable to us by you by we offer Direct
+                            plans. Such fees would be computed on an average of daily AUM payable quarterly. Official
+                            communication will be
+                            given to you prior to implementing such a change.
+                        </p>
+                    </div>
+                    <div class="pt-4">
+                        <h4 class="pt-2 font-weight-bold">Client Disclosure</h4>
+                        <p class="engagement-heading-html-top">In order to ensure that the investment strategy contains
+                            sound and
+                            appropriate recommendations, it is your
+                            responsibility to provide complete and accurate information regarding pertinent aspects of
+                            your personal and financial
+                            situation including objectives, needs and values, investment statements, tax returns, copies
+                            of wills, powers of
+                            attorney, insurance policies, employment benefits, retirement benefits, and other relevant
+                            documents. This list is not
+                            all-inclusive and any other relevant information should be disclosed in a timely manner. It
+                            is your responsibility to
+                            ensure that any material changes to the above noted circumstances are disclosed to us on a
+                            timely basis since they
+                            could impact the investment recommendations.
+                        </p>
+                    </div>
+                    <div class="pt-4">
+                        <h4 class="pt-2 font-weight-bold">Conflicts of Interest</h4>
+                        <p class="engagement-heading-html-top">We have no known conflicts of interest in the acceptance
+                            of this
+                            engagement. We commit that we will advise you of
+                            any conflicts of interest, in writing, if they should arise. We acknowledge our
+                            responsibility to adhere to the standards
+                            established by AMFI and SEBI.
+                        </p>
+                    </div>
+                    <div class="pt-4">
+                        <h4 class="pt-2 font-weight-bold">Contact Details</h4>
+                        {{#if AuthorisedPerson1}}
+                        <p class="engagement-heading-html-top">For any queries or information, you may need,
+                            please
+                            contact
+                            {{AuthorisedPerson1}} - representative of {{AssociateName}} on
+                        </p>
+                        {{else}}
+                           <p class="engagement-heading-html-top">For any queries or information, you may need,
+                            please
+                            contact
+                            {{AssociateName}} - representative of {{AssociateName}} on
+                        </p>
+                        {{/if}}
+                        <br>
+                        <p class="p-html-top"><b class="font-weight-bold">Phone:</b> {{Mobile1}}</p>
+                        <br>
+                        <p class="p-html-top"><b class="font-weight-bold">Email ID:</b> {{Email1}}</p>
+                    </div>
+                    <div class="pt-4">
+                        <p class="">Alternatively, you can reach out to our helpdesk on <b>{{HelpdeskContact}}</b> or
+                            email us at
+                            <b>info@kinntegra.co.in</b> and help us with your <b>client code - {{ClientCode}}</b> and
+                            the
+                            query
+                        </p>
+                    </div>
+                    <div class="pt-4">
+                        <p class="">We look forward to working with you and help you reach your financial strategy.</p>
+                    </div>
+                    <div class="pt-4">
+                        <table class="engagement-table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="p-4 th-engagement" scope="col" style="height:75px;"></th>
+                                    <th class="th-engagement" scope="col"></th>
+                                    <th class="th-engagement" scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="td-engagement" style="text-align: center;">
+                                        {{ClientName}}<br>
+                                        (Client)
+                                    </td>
+                                    <td class="text-center td-engagement" style="text-align: center;">
+                                        {{AssociateName}} (Kinntegra Wealth Private Limited)<br>
+                                        (CEP of Kinntegra Wealth Private Limited)
+                                    </td>
+                                    <td class="text-center td-engagement" style="text-align: center;">
+                                        Kinntegra Wealth Private Limited<br>
+                                        (Distributor)
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {{!-- <p class="">Regards,</p>
+                        <p class="pt-2 font-weight-bold">Kinntegra Wealth Private Limited</p> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

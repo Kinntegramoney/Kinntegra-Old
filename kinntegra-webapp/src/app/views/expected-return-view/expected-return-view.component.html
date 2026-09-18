@@ -1,0 +1,168 @@
+<div class="table-top-section">
+    <div class="section-header mb-4">
+        <!-- @include('partials.top') -->
+        <app-header-right-template class="section-header"></app-header-right-template>
+    </div>
+</div>
+<div class="card w-100">
+    <div class="card-body">
+        <div class="row">
+
+            <div class="container-fluid col-lg-8 col-xl-12">
+                <h3 class="card-title d-inline"><i class="icon-left-arrow back-btn" (click)="onBack()"></i>Wealth
+                    Expected Return
+                    <button class="btn btn-link float-end" id="add_new_data">Add New</button>
+                </h3>
+                <div class="card mb-4" style="margin-top: 20px;">
+                    <div class="card-body" >
+
+                        <div class="row flex-row-reverse ">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="admin-body">
+
+                                    <nav ngbNav #nav="ngbNav" class="nav nav-tabs mb-3">
+                                        <ng-container ngbNavItem>
+                                            <a ngbNavLink>Wealth Expected Return</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="tab-pane fade show active" id="admin-equity"
+                                                    role="tabpanel">
+                                                    <ngx-datatable class="material" [rows]="objExpectedReturnTable"
+                                                        [columnMode]="ColumnMode.force" [rowHeight]="'auto'"
+                                                        [headerHeight]="50"  [limit]="100"
+                                                        [scrollbarH]="false" class="custom-header">
+                                                        <ngx-datatable-column [sortable]="false" name="EquityRatio"
+                                                            [width]="100">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">
+                                                                Equity Ratio
+                                                            </ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                {{row.EquityRatio}}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+
+                                                        <ngx-datatable-column [sortable]="false" name="DebtRatio"
+                                                            [width]="100">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">
+                                                                Debt Ratio
+                                                            </ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                {{row.DebtRatio}}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+
+                                                        <ngx-datatable-column [sortable]="false" name="EquityReturn"
+                                                            [width]="100">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">
+                                                                Equity Return
+                                                            </ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                {{row.EquityReturn}}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+
+                                                        <ngx-datatable-column [sortable]="false" name="DebtReturn"
+                                                            [width]="100">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">
+                                                                Debt Return
+                                                            </ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                {{row.DebtReturn}}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+
+                                                        <ngx-datatable-column [sortable]="false" name="TotalReturn"
+                                                            [width]="100">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">
+                                                                Total Return
+                                                            </ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                {{row.TotalReturn | number : '1.2-2'}}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+
+                                                        <ngx-datatable-column [sortable]="false" name="YearlyValue"
+                                                            [width]="100">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">
+                                                                Yearly Value
+                                                            </ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                {{row.YearlyValue | number : '1.0-0'}}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+
+                                                        <ngx-datatable-column [sortable]="false" name="MonthlyValue"
+                                                            [width]="100">
+                                                            <ng-template ngx-datatable-header-template
+                                                                let-column="column">
+                                                                Monthly Value
+                                                            </ng-template>
+                                                            <ng-template ngx-datatable-cell-template
+                                                                let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                                {{row.MonthlyValue}}
+                                                            </ng-template>
+                                                        </ngx-datatable-column>
+                                                    </ngx-datatable>
+                                                </div>
+                                            </ng-template>
+                                        </ng-container>
+                                    </nav>
+                                    <div class="tab-content" id="leadsContent">
+                                        <div class="tab-pane fade show active" id="admin-tax" role="tabpanel">
+                                            <div class="card small-card option-2 option-2 mb-4">
+                                                <div class="card-header">
+                                                    <h5 class="card-title mb-0 status">Add</h5>
+                                                    <span class="edit-now float-right mt-1"
+                                                        style="display: none">Edit</span>
+                                                </div>
+                                                <div class="card-body pt-4 pb-4">
+                                                    <div class="row">
+                                                        <div class="col-xl-3 col-sm-12 ">
+                                                            <div class="form-group">
+                                                                <label>Equity %</label>
+                                                                <input type="number" class="form-control" name="equity"
+                                                                    value="" [(ngModel)]="objExpectedReturn.EquityFixedRatio">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-3 col-sm-12 ">
+                                                            <div class="form-group">
+                                                                <label>Debt %</label>
+                                                                <input type="number" class="form-control" name="debt"
+                                                                    value="" [(ngModel)]="objExpectedReturn.DebtFixedRatio">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-3 col-sm-12 index_value">
+                                                            <div class="form-group">
+                                                                <label>Investment Amount</label>
+                                                                <input type="number" class="form-control" name="amount"
+                                                                    value=""
+                                                                    [(ngModel)]="objExpectedReturn.TotalInvestmentValue" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button class="btn btn-primary" (click)="onSave()">Save</button>
+
+                                                </div>
+                                            </div>
+                                            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>

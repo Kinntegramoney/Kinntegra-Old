@@ -1,0 +1,84 @@
+<div class="custom-wrapper-left">
+    <div class="inner-section">
+        <h3 class="card-title">New Transaction</h3>
+        <div class="form-percentage">
+            <svg viewBox="0 0 36 36" class="circular-chart orange">
+                <path class="circle-bg" d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="circle" [attr.stroke-dasharray]="strokeDasharray" d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <text x="18" y="20.35" class="percentage">{{progressPercentage}}%</text>
+            </svg>
+        </div>
+        <div class="form-lists">
+            <div class="transaction-table-wrap">
+                <div class="title">
+                    <svg width="40" height="40" viewBox="0 0 60 60">
+                        <use xlink:href="#transactions"></use>
+                    </svg>
+                    <h6>Trade for {{objTransaction.ClientName}}</h6>
+                </div>
+                <div class="table-wrap">
+                    <table class="transaction-table">
+                        <tr>
+                            <th style="width: 59%;">Type</th>
+                            <td>{{objTransaction.TransactionType}}</td>
+                        </tr>
+                        <tr>
+                            <th>Plan</th>
+                            <td class="text-capitalize">{{objTransaction.TransactionPlan}}</td>
+                        </tr>
+                        <tr>
+                            <th>Criteria</th>
+                            <td class="text-capitalize">{{objTransaction.SellCriteria}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table-wrap">
+                    <table class="transaction-table" *ngFor="let item of recommendedData">
+                        <tr
+                            style="border-top: 1px gainsboro dashed; border-bottom: 1px gainsboro dashed; font-weight: bold;">
+                            <th style="font-weight: bold;">Portfolio</th>
+                            <td style="font-weight: bold;">{{item.PortfolioTypeName}}</td>
+                        </tr>
+                        <tr *ngFor="let yearItem of item.Data">
+                            <th>{{yearItem.Name}}</th>
+                            <td>₹{{yearItem.CurrentAmount | indianCurrencyNumber}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="transaction-table-wrap">
+                <div class="title">
+                    <svg width="40" height="40" viewBox="0 0 60 60">
+                        <use xlink:href="#transactions"></use>
+                    </svg>
+                    <h6>Accounts</h6>
+                </div>
+                <div class="table-wrap">
+                    <table class="transaction-table">
+                        <tr *ngFor="let item of accountsData">
+                            <th *ngIf="item.UCC != ''">
+                                <ng-template #htmlAccountContent>
+                                    <div innerHTML="{{item.TooltipContent}}" style="text-align: left;"></div>
+                                </ng-template>
+                                <span [ngbTooltip]="htmlAccountContent" tooltipClass="custom-tooltip" placement="right"
+                                    triggers="hover" container="body">{{item.UCC}}</span>
+                            </th>
+                            <th *ngIf="item.UCC == ''">
+                                <ng-template #htmlAccountContent>
+                                    <div innerHTML="{{item.TooltipContent}}" style="text-align: left;"></div>
+                                </ng-template>
+                                <span [ngbTooltip]="htmlAccountContent" tooltipClass="custom-tooltip" placement="right"
+                                    triggers="hover" container="body">No UCC</span>
+                            </th>
+                            <td>₹{{item.CurrentAmount | indianCurrencyNumber}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

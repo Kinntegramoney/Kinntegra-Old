@@ -1,0 +1,186 @@
+
+
+
+
+<html>
+<head><title>Redirecting to Bank</title>
+<style>
+
+.bodytxt4 {
+
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #666666;
+}
+.bodytxt {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: normal;
+	color: #000000;
+
+}
+.bullet1 {
+
+	list-style-type:	square;
+	list-style-position: inside;
+	list-style-image: none;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	color: #FF9900;
+}
+.bodytxt2 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: normal;
+	color: #333333;
+
+}
+A.sac2 {
+	COLOR: #000000;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	text-decoration: none;
+}
+A.sac2:visited {
+	COLOR: #314D5A; TEXT-DECORATION: none
+}
+A.sac2:hover {
+	COLOR: #FF9900; TEXT-DECORATION: underline
+}
+</style>
+
+</head>
+<script language=JavaScript>
+
+
+var message="Function Disabled!";
+
+
+function clickIE4(){
+if (event.button==2){
+return false;
+}
+}
+
+function clickNS4(e){
+if (document.layers||document.getElementById&&!document.all){
+if (e.which==2||e.which==3){
+return false;
+}
+}
+}
+
+if (document.layers){
+document.captureEvents(Event.MOUSEDOWN);
+document.onmousedown=clickNS4;
+}
+else if (document.all&&!document.getElementById){
+document.onmousedown=clickIE4;
+}
+
+document.oncontextmenu=new Function("return false")
+
+</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+             
+              <tr>
+                <td  align="center"></td>
+              </tr>
+              <tr>
+                <td height="85" align="center"><br>
+                  <table width="80%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+                    <tr>
+                      <td bgcolor="#CCCCCC"><table width="100%" border="0" cellpadding="6" cellspacing="0" bgcolor="#FFFFFF">
+                          <tr> 
+                            <td colspan="2" align="left" valign="bottom"><span class="bodytxt4">Your payment request is being processed...</span></td>
+                          </tr>
+                          <tr valign="top"> 
+                            <td colspan="2" align="left"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr> 
+                                  <td width="87%" bgcolor="#cccccc" height="1" align="center"></td>
+                                </tr>
+                              </table></td>
+                          </tr>
+                          <tr> 
+                            <td width="60%" align="left" valign="bottom"><table width="95%" border="0" cellpadding="1" cellspacing="0" bgcolor="#FFFFFF">
+                                <tr> 
+                                  <td align="right" valign="top"></td>
+                                  <td class="bodytxt">&nbsp;</td>
+                                </tr>
+                                <tr> 
+                                  <td height="19"  align="right" valign="top"><li class="bullet1"></li></td>
+                                  <td class="bodytxt2">This is a secure payment 
+                                    gateway using 128 bit SSL encryption.</td>
+                                </tr>
+                                <tr> 
+                                  <td align="right" valign="top"> <li class="bullet1"></li></td>
+                                  <td class="bodytxt2" >When you submit the transaction, 
+                                    the server will take about 1 to 5 seconds 
+                                    to process, but it may take longer at certain 
+                                    times. </td>
+                                </tr>
+                                <tr> 
+                                  <td align="right" valign="top"><li class="bullet1"></li></td>
+                                  <td class="bodytxt2" >Please do not press "Submit" 
+                                    button once again or the "Back" or "Refresh" 
+                                    buttons. </td>
+                                </tr>
+                              </table></td>
+                            <td align="right" valign="bottom"><table width="80%" border="0" cellpadding="1" cellspacing="0" bgcolor="#FFFFFF">
+                                <tr bgcolor="#FFFCF8"> 
+                                  <td align="right" bgcolor="#FFFFFF"></td>
+                                </tr>
+                                <tr bgcolor="#FFFCF8"> 
+                                  <td align="right" valign="middle" bgcolor="#FFFFFF" class="bodytxt2">&nbsp;</td>
+                                </tr>
+                                <tr bgcolor="#FFFCF8"> 
+                                  <td align="right" bgcolor="#FFFFFF" class="bodytxt2" >&nbsp;</td>
+                                </tr>
+                              </table></td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                  </table>
+                  
+                </td>
+              </tr>
+            </table>
+           
+          
+         
+             </td>
+        </tr>  
+
+
+      </table></td>
+  </tr>
+  
+</table>
+
+
+
+<body>
+<form name="Bankfrm" method="post" action='https://www.kotak.com/pmtgt/ksecLogin.jsp'>
+ 
+			  
+              <input type = "hidden" name = "merchantId" value="OTNRBILLD">
+			
+              
+			  
+              <input type = "hidden" name = "msg" value="aJApHBmLJ82UGYE13wseR7hBtNw0R01v5DrO7T4LorVlRR2nsqALwTScoVHq6Cdh6SEuWQ8EMpEDizm0f7wMMTnaX9KVxJqtM%2B8Lq3LMjIgutqBzKgwX0CMStMlrtFbeMWvh3xZ83bpTba0tjh7dw450ndrB8be3eGT%2FfG2AL1n0VXSG1NIBpHupA%2BMAThMzx3Gte4m1GrT9Dr4Szn1jr4uPndTM0EfV18yUcMRbsho%3D">
+			
+              
+	</form>
+</body>
+<script>
+document.Bankfrm.submit();
+</script>
+</html>

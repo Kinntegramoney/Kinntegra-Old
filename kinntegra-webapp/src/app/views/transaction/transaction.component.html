@@ -1,0 +1,630 @@
+<div class="main" *ngIf="profiles.length > 0">
+    <div class="container-fluid">
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"></app-header-right-template>
+        </div>
+        <div class="row">
+            <div class="col-xl-7 col-lg-6 col-md-6">
+                <form id="transaction_step1" action="" method="post">
+                    <div class="card card-sm">
+                        <div class="card-body">
+                            <h3 class="card-title border-bottom">
+                                <svg width="50" height="50" viewBox="0 5 50 50">
+                                    <use xlink:href="#new-transactions" />
+                                </svg>
+                                New Transaction
+                            </h3>
+                            <div class="transaction-wrapper dynamic">
+                                <div class="transaction-steps">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-xl-6">
+                                            <h4 class="title">Enter Details</h4>
+                                            <div class="form-group">
+                                                <label>Type</label>
+                                                <div class="form-control ng-select-form-control">
+                                                    <ng-select [(ngModel)]="objClientTransaction.TransactionTypeId"
+                                                        name="TransactionTypeId"
+                                                        (change)="OnTransactionTypeChange('new')"
+                                                        [dropdownPosition]="'bottom'">
+                                                        <ng-option *ngFor="let transactiontype of transactiontypes"
+                                                            [value]="transactiontype.Id">{{transactiontype.Name}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Client</label>
+                                                <div class="form-control ng-select-form-control">
+                                                    <ng-select [(ngModel)]="selectedProfile"
+                                                        name="PANCardNumber" (change)="onClientProfileChanged('new')"
+                                                        class="clb-select" [dropdownPosition]="'bottom'">
+                                                        <ng-option *ngFor="let item of profiles"
+                                                            [value]="item.DisplayValue">
+                                                            {{item.Name}} - {{item.PANCardNumber}}
+                                                        </ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Account</label>
+                                                <div class="form-control ng-select-form-control">
+                                                    <ng-select [(ngModel)]="selectedClientAccount" name="ClientAccount"
+                                                        (change)="onClientChanged('new')" class="clb-select"
+                                                        [dropdownPosition]="'bottom'" [items]="clients"
+                                                        *ngIf="selectedTransactionTypeCode != 'S' && selectedTransactionTypeCode != 'SW' && selectedTransactionTypeCode != 'C'">
+                                                        <ng-template ng-label-tmp let-item="item">
+                                                            <span class="ng-value-label">{{item.FirstHolderName}}<span
+                                                                    style="font-size: 10px;" *ngIf="item.UCC != ''">
+                                                                    ({{item.UCC}})</span></span>
+                                                        </ng-template>
+                                                        <!-- <ng-option *ngFor="let item of clients"
+                                                            [value]="item"> -->
+                                                        <ng-template ng-option-tmp let-item="item" let-index="index"
+                                                            let-search="searchTerm">
+                                                            <div>
+                                                                <div style="font-size: 12px;">
+                                                                    {{item.FirstHolderName}}<span
+                                                                        style="font-size: 10px;" *ngIf="item.UCC != ''">
+                                                                        (UCC: {{item.UCC}})</span></div>
+                                                                <div style="font-size: 10px;">
+                                                                    <span
+                                                                        *ngIf="item.SecondHolderName != ''">{{item.SecondHolderName}}</span>
+                                                                    <span *ngIf="item.ThirdHolderName != ''"> |
+                                                                        {{item.ThirdHolderName}}</span>
+                                                                </div>
+                                                                <div style="font-size: 10px;">
+                                                                    <span *ngIf="item.GuardianName != ''">Guardian:
+                                                                        {{item.GuardianName}}</span>
+                                                                </div>
+                                                                <div style="font-size: 10px;">
+                                                                    <span *ngIf="item.FirstNomineeName != ''">Nominee:
+                                                                        {{item.FirstNomineeName}}</span>
+                                                                    <span *ngIf="item.SecondNomineeName != ''"> |
+                                                                        {{item.SecondNomineeName}}</span>
+                                                                    <span *ngIf="item.ThirdNomineeName != ''"> |
+                                                                        {{item.ThirdNomineeName}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                        <ng-template ng-footer-tmp><button type="button"
+                                                                (click)="onClickToLead()"
+                                                                class="btn btn-transparent border-0 w-100">+ Add
+                                                                Client</button></ng-template>
+                                                        <!-- </ng-option> -->
+                                                    </ng-select>
+                                                    <ng-select [(ngModel)]="selectedClientAccounts" name="ClientAccount"
+                                                        (change)="onClientAccountsChanged('new')" class="clb-select"
+                                                        [dropdownPosition]="'bottom'" [items]="clients"
+                                                        [multiple]="true" [closeOnSelect]="false"
+                                                        *ngIf="selectedTransactionTypeCode == 'S' || selectedTransactionTypeCode == 'SW' || selectedTransactionTypeCode == 'C'">
+                                                        <ng-template ng-label-tmp let-item="item">
+                                                            <span class="ng-value-label">{{item.FirstHolderName}}<span
+                                                                    style="font-size: 10px;" *ngIf="item.UCC != ''">
+                                                                    ({{item.UCC}})</span></span>
+                                                        </ng-template>
+                                                        <!-- <ng-option *ngFor="let item of clients"
+                                                            [value]="item"> -->
+                                                        <ng-template ng-header-tmp>
+                                                            <div
+                                                                class="form-group custom-checkbox form-group-ng-select-header">
+                                                                <input type="checkbox" id="selectAllClients"
+                                                                    name="selectAllClients"
+                                                                    [(ngModel)]="IsSelectedAllClients"
+                                                                    (change)="onIsSelectedAllClientsChanged()">
+                                                                <label for="selectAllClients">All</label>
+                                                            </div>
+                                                        </ng-template>
+                                                        <ng-template ng-option-tmp let-item="item" let-item$="item$"
+                                                            let-index="index" let-search="searchTerm">
+                                                            <div>
+                                                                <div style="font-size: 12px;">
+                                                                    <input id="item-{{ index }}" type="checkbox"
+                                                                        [ngModel]="item$.selected"
+                                                                        [ngModelOptions]="{standalone: true}" />
+                                                                    {{item.FirstHolderName}}
+                                                                    <span style="font-size: 10px;"
+                                                                        *ngIf="item.UCC != ''"> (UCC:
+                                                                        {{item.UCC}})</span>
+                                                                </div>
+                                                                <div style="font-size: 10px;">
+                                                                    <span *ngIf="item.GuardianName != ''">Guardian:
+                                                                        {{item.GuardianName}}</span>
+                                                                </div>
+                                                                <div style="font-size: 10px;">
+                                                                    <span
+                                                                        *ngIf="item.SecondHolderName != ''">{{item.SecondHolderName}}</span>
+                                                                    <span *ngIf="item.ThirdHolderName != ''"> |
+                                                                        {{item.ThirdHolderName}}</span>
+                                                                </div>
+                                                                <div style="font-size: 10px;">
+                                                                    <span *ngIf="item.FirstNomineeName != ''">Nominee:
+                                                                        {{item.FirstNomineeName}}</span>
+                                                                    <span *ngIf="item.SecondNomineeName != ''"> |
+                                                                        {{item.SecondNomineeName}}</span>
+                                                                    <span *ngIf="item.ThirdNomineeName != ''"> |
+                                                                        {{item.ThirdNomineeName}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                        <ng-template ng-footer-tmp><button type="button"
+                                                                (click)="onClickToLead()"
+                                                                class="btn btn-transparent border-0 w-100">+ Add
+                                                                Client</button></ng-template>
+                                                        <!-- </ng-option> -->
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Plan</label>
+                                                <div class="form-control ng-select-form-control">
+                                                    <ng-select [(ngModel)]="objClientTransaction.TransactionPlanId"
+                                                        name="TransactionPlanId"
+                                                        (change)="OnTransactionPlanChange('new')"
+                                                        [dropdownPosition]="'bottom'">
+                                                        <ng-option *ngFor="let transactionplan of transactionplans"
+                                                            [value]="transactionplan.Id">{{transactionplan.Name}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" *ngIf="selectedTransactionTypeCode == 'S'">
+                                                <label>Sell Criteria</label>
+                                                <div class="form-control ng-select-form-control">
+                                                    <ng-select [(ngModel)]="objClientTransaction.SellCriteria"
+                                                        name="SellCriteria" (change)="OnSellCriteriaChange('new')"
+                                                        [dropdownPosition]="'bottom'">
+                                                        <ng-option *ngFor="let item of sellCriterias"
+                                                            [value]="item.Code">{{item.Name}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group"
+                                                *ngIf="selectedTransactionTypeCode == 'SW' && selectedTransactionPlanCode == 'IS'">
+                                                <label>Switch By</label>
+                                                <div class="form-control ng-select-form-control">
+                                                    <ng-select [(ngModel)]="objClientTransaction.SwitchBy"
+                                                        name="SwitchBy" (change)="onSwitchByChanged('new')"
+                                                        class="clb-select" [dropdownPosition]="'bottom'">
+                                                        <ng-option *ngFor="let item of switchByList"
+                                                            [value]="item.Code">
+                                                            {{item.Name}}
+                                                        </ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group"
+                                                *ngIf="selectedTransactionTypeCode == 'SW' && selectedTransactionPlanCode == 'STP'">
+                                                <label>STP Type</label>
+                                                <div class="form-control ng-select-form-control">
+                                                    <ng-select [(ngModel)]="objClientTransaction.STPType" name="STPType"
+                                                        (change)="onSTPTypeChanged('new')" class="clb-select"
+                                                        [dropdownPosition]="'bottom'">
+                                                        <ng-option *ngFor="let item of stpTypeList" [value]="item.Code">
+                                                            {{item.Name}}
+                                                        </ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" *ngIf="selectedTransactionTypeCode == 'SW'">
+                                                <label>Scheme Type</label>
+                                                <div class="form-control ng-select-form-control">
+                                                    <ng-select [(ngModel)]="selectedIntraSwitchSchemeTypes"
+                                                        name="IntraSwitchSchemeTypes"
+                                                        (change)="onIntraSwitchSchemeTypesChanged('new')"
+                                                        class="clb-select" [dropdownPosition]="'bottom'"
+                                                        [items]="intraSwitchSchemeTypes" [multiple]="true"
+                                                        [closeOnSelect]="false"
+                                                        [disabled]="objClientTransaction.SwitchBy == 'TF' && selectedTransactionPlanCode == 'IS'">
+                                                        <ng-template ng-label-tmp let-item="item">
+                                                            <span class="ng-value-label">{{item.Name}}</span>
+                                                        </ng-template>
+                                                        <ng-template ng-header-tmp>
+                                                            <div
+                                                                class="form-group custom-checkbox form-group-ng-select-header">
+                                                                <input type="checkbox"
+                                                                    id="selectAllIntraSwitchSchemeTypes"
+                                                                    name="selectIntraSwitchSchemeTypes"
+                                                                    [(ngModel)]="IsSelectedAllIntraSwitchSchemeTypes"
+                                                                    (change)="onIsSelectedAllIntraSwitchSchemeTypesChanged()">
+                                                                <label for="selectAllIntraSwitchSchemeTypes">All</label>
+                                                            </div>
+                                                        </ng-template>
+                                                        <ng-template ng-option-tmp let-item="item" let-item$="item$"
+                                                            let-index="index" let-search="searchTerm">
+                                                            <div>
+                                                                <div style="font-size: 12px;">
+                                                                    <input id="item-{{ index }}" type="checkbox"
+                                                                        [ngModel]="item$.selected"
+                                                                        [ngModelOptions]="{standalone: true}" />
+                                                                    {{item.Name}}
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-6">
+                                            <ng-lottie style="height: 300px;" [options]="lottieOptions"
+                                                (animationCreated)="animationCreated($event)"></ng-lottie>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="transaction-steps"
+                                    *ngIf="showtransactionportfolio && selectedTransactionTypeCode != 'S'">
+                                    <h4 class="title">Select Portfolio</h4>
+
+                                    <div id="transaction_steps">
+                                        <div class="big-checkbox mb-3"
+                                            *ngFor="let portfolio of transactionportfoliotypes">
+                                            <input type="checkbox" [(ngModel)]="portfolio.IsSelected"
+                                                id="{{portfolio.Id}}" name="portfolio_{{portfolio.Id}}"
+                                                [disabled]="selectedTransactionTypeCode == 'C' && (selectedTransactionPlanCode == 'SWP' || selectedTransactionPlanCode == 'STP')">
+                                            <label [for]="portfolio.Id">
+                                                <span class="check-mark"></span>
+                                                <svg width="60" height="60" viewBox="0 0 70 70"
+                                                    *ngIf="portfolio.Code=='W'">
+                                                    <use xlink:href="#wealth" />
+                                                </svg>
+                                                <svg width="60" height="60" viewBox="0 0 70 70"
+                                                    *ngIf="portfolio.Code=='T'">
+                                                    <use xlink:href="#tax" />
+                                                </svg>
+                                                <svg width="60" height="60" viewBox="0 0 70 70"
+                                                    *ngIf="portfolio.Code=='ST'">
+                                                    <use xlink:href="#short-term" />
+                                                </svg>
+                                                <svg width="60" height="60" viewBox="0 0 70 70"
+                                                    *ngIf="portfolio.Code=='G'">
+                                                    <use xlink:href="#wealth" />
+                                                </svg>
+                                                <svg width="60" height="60" viewBox="0 0 70 70"
+                                                    *ngIf="portfolio.Code=='O'">
+                                                    <use xlink:href="#wealth" />
+                                                </svg>
+                                                <h4>{{ portfolio.Name }}</h4>
+                                                <div class="sip-details">
+                                                    <ul class="transaction-details wealth_value">
+                                                        <li>
+                                                            <label>Market Value(₹)</label>
+                                                            <span class="value">{{portfolio.MarketValue |
+                                                                indianCurrencyNumber}}</span>
+                                                        </li>
+                                                        <li>
+                                                            <label>SIP Amount(₹)</label>
+                                                            <span class="value">{{portfolio.SIPAmount |
+                                                                indianCurrencyNumber}}</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="transaction-steps"
+                                    *ngIf="showtransactionportfolio && selectedTransactionTypeCode == 'S'">
+                                    <h4 class="title">Select Portfolio</h4>
+
+                                    <div id="transaction_steps">
+                                        <div class="big-checkbox mb-3"
+                                            *ngFor="let portfolio of transactionportfoliotypes">
+                                            <input type="checkbox" [(ngModel)]="portfolio.IsSelected"
+                                                id="{{portfolio.Id}}" name="portfolio_{{portfolio.Id}}"
+                                                [disabled]="objClientTransaction.SellCriteria != null && objClientTransaction.SellCriteria == 'A'">
+                                            <label [for]="portfolio.Id">
+                                                <span class="check-mark"></span>
+                                                <svg width="60" height="60" viewBox="0 0 70 70">
+                                                    <use xlink:href="#wealth" />
+                                                </svg>
+                                                <h4>{{ portfolio.Name }}</h4>
+                                                <div class="sip-details">
+                                                    <ul class="transaction-details wealth_value">
+                                                        <li>
+                                                            <label>Market Value(₹)</label>
+                                                            <span class="value">{{portfolio.MarketValue |
+                                                                indianCurrencyNumber}}</span>
+                                                        </li>
+                                                        <li>
+                                                            <label>Long Term Value(₹)</label>
+                                                            <span class="value">{{portfolio.LongTermValue |
+                                                                indianCurrencyNumber}}</span>
+                                                        </li>
+                                                        <li>
+                                                            <label>Short Term Value(₹)</label>
+                                                            <span class="value">{{portfolio.ShortTermValue |
+                                                                indianCurrencyNumber}}</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="transaction-steps"
+                                    *ngIf="selectedTransactionTypeCode == 'SW' && selectedTransactionPlanCode == 'IS' && selectedIntraSwitchSchemeTypes.length > 0">
+                                    <h4 class="title">Select Scheme</h4>
+                                    <div id="transaction_steps">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-xl-12">
+                                                <div class="form-group">
+                                                    <div class="form-control ng-select-form-control">
+                                                        <ng-select [(ngModel)]="selectedIntraSwitchSchemes"
+                                                            name="selectedIntraSwitchSchemes"
+                                                            (change)="onIntraSwitchSchemesChanged('new')"
+                                                            class="clb-select" [dropdownPosition]="'bottom'"
+                                                            [items]="intraSwitchSchemes" [multiple]="true"
+                                                            [closeOnSelect]="false"
+                                                            [disabled]="objClientTransaction.SwitchBy == 'TF' && selectedTransactionPlanCode == 'IS'">
+                                                            <ng-template ng-label-tmp let-item="item">
+                                                                <span class="ng-value-label">{{item.FolioNumber}} |
+                                                                    {{item.SchemeName}}</span>
+                                                            </ng-template>
+                                                            <ng-template ng-header-tmp>
+                                                                <div
+                                                                    class="form-group custom-checkbox form-group-ng-select-header">
+                                                                    <input type="checkbox"
+                                                                        id="selectAllIntraSwitchSchemes"
+                                                                        name="selectAllIntraSwitchSchemes"
+                                                                        [(ngModel)]="IsSelectedAllIntraSwitchSchemes"
+                                                                        (change)="onIsSelectedAllIntraSwitchSchemesChanged()">
+                                                                    <label for="selectAllIntraSwitchSchemes">All</label>
+                                                                </div>
+                                                            </ng-template>
+                                                            <ng-template ng-option-tmp let-item="item" let-item$="item$"
+                                                                let-index="index" let-search="searchTerm">
+                                                                <div>
+                                                                    <div style="font-size: 12px;">
+                                                                        <input id="item-{{ index }}" type="checkbox"
+                                                                            [ngModel]="item$.selected"
+                                                                            [ngModelOptions]="{standalone: true}" />
+                                                                        {{item.FolioNumber}} | {{item.SchemeName}}
+                                                                    </div>
+                                                                </div>
+                                                            </ng-template>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="transaction-steps"
+                                    *ngIf="selectedTransactionTypeCode == 'SW' && selectedTransactionPlanCode == 'STP' && selectedIntraSwitchSchemeTypes.length > 0">
+                                    <h4 class="title">Select Scheme</h4>
+                                    <div id="transaction_steps">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-xl-12">
+                                                <div class="form-group">
+                                                    <div class="form-control ng-select-form-control">
+                                                        <ng-select [(ngModel)]="selectedSTPSwitchSchemes"
+                                                            name="selectedSTPSwitchSchemes"
+                                                            (change)="onSTPSwitchSchemesChanged('new')"
+                                                            class="clb-select" [dropdownPosition]="'bottom'"
+                                                            [items]="stpSwitchSchemes" [multiple]="true"
+                                                            [closeOnSelect]="false">
+                                                            <ng-template ng-label-tmp let-item="item">
+                                                                <span class="ng-value-label">{{item.FolioNumber}} |
+                                                                    {{item.SchemeName}}</span>
+                                                            </ng-template>
+                                                            <ng-template ng-header-tmp>
+                                                                <div
+                                                                    class="form-group custom-checkbox form-group-ng-select-header">
+                                                                    <input type="checkbox"
+                                                                        id="selectAllSTPSwitchSchemes"
+                                                                        name="selectAllSTPSwitchSchemes"
+                                                                        [(ngModel)]="IsSelectedAllSTPSwitchSchemes"
+                                                                        (change)="onIsSelectedAllSTPSwitchSchemesChanged()">
+                                                                    <label for="selectAllSTPSwitchSchemes">All</label>
+                                                                </div>
+                                                            </ng-template>
+                                                            <ng-template ng-option-tmp let-item="item" let-item$="item$"
+                                                                let-index="index" let-search="searchTerm">
+                                                                <div>
+                                                                    <div style="font-size: 12px;">
+                                                                        <input id="item-{{ index }}" type="checkbox"
+                                                                            [ngModel]="item$.selected"
+                                                                            [ngModelOptions]="{standalone: true}" />
+                                                                        {{item.FolioNumber}} | {{item.SchemeName}}
+                                                                    </div>
+                                                                </div>
+                                                            </ng-template>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="text-right" style="margin-left:425px;">
+                                <button type="button" class="btn btn-primary btn-lg proceed" (click)="onProceed()">
+                                    <div *ngIf="isBusy">
+                                        <span class="spinner-border text-light"
+                                            style="margin-right: 10px; vertical-align: middle;" role="status"></span>
+                                        <span>Proceed</span>
+                                    </div>
+                                    <span *ngIf="!isBusy">Proceed</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xl-5 col-lg-6 col-md-6 mt-4 mt-md-0">
+                <div class="card card-sm">
+                    <div class="card-body">
+                        <h3 class="card-title border-bottom">
+                            <svg width="50" height="50" viewBox="0 5 50 50">
+                                <use xlink:href="#trade" />
+                            </svg>
+                            Transactions
+                        </h3>
+
+                        <div class="filter-options d-flex justify-content-between align-items-center mb-4">
+                            <div class="input-group w-75">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="table-search">
+                                        <svg width="24" height="24" viewBox="0 0 24 24">
+                                            <use xlink:href="#search" />
+                                        </svg>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Search" aria-label="table-search"
+                                    id="tableSearch" aria-describedby="table-search">
+                            </div>
+                            <button class="btn btn-icon" (click)="onTransactionFilterClick()" data-toggle="modal"
+                                data-target="#filterModal">
+                                <svg width="40" viewBox="0 0 36 36">
+                                    <use xlink:href="#filter" />
+                                </svg>
+                            </button>
+                        </div>
+                        <nav ngbNav #nav="ngbNav" class="nav nav-tabs mb-3">
+                            <ng-container [ngbNavItem]="1">
+                                <a ngbNavLink>Recent</a>
+                                <ng-template ngbNavContent>
+                                    <div>
+                                        <ul class="transaction-list">
+                                            <li *ngFor="let row of objRecentTransactions">
+                                                <div class="list-title">
+                                                    <h5>{{row.TradeType}}</h5>
+                                                    <a (click)="onViewTrade(row)">
+                                                        <i class="icon-link-arrow"></i>
+                                                    </a>
+                                                </div>
+
+                                                <ul class="transaction-details">
+                                                    <li>
+                                                        <label>Client Name</label>
+                                                        <span class="value">{{row.ClientName}}</span>
+                                                    </li>
+                                                    <li>
+                                                        <label>Amount</label>
+                                                        <span class="value">₹{{ row.Amount|indianCurrencyNumber
+                                                            }}</span>
+                                                    </li>
+                                                    <!-- <li>
+                                                        <label>Portfolio</label>
+                                                        <span class="value">Wealth</span>
+                                                    </li> -->
+                                                    <li>
+                                                        <label>Status</label>
+                                                        <span class="value">{{row.LogMessage}}</span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </ng-template>
+                            </ng-container>
+                            <ng-container [ngbNavItem]="2">
+                                <a ngbNavLink>Pending</a>
+                                <ng-template ngbNavContent>
+                                    <div>
+                                        <ul class="transaction-list">
+                                            <li *ngFor="let row of objPendingTransactions">
+                                                <div class="list-title">
+                                                    <h5>{{row.TradeType}}</h5>
+                                                    <a (click)="onViewTrade(row)">
+                                                        <i class="icon-link-arrow"></i>
+                                                    </a>
+                                                </div>
+
+                                                <ul class="transaction-details">
+                                                    <li>
+                                                        <label>Client Name</label>
+                                                        <span class="value">{{row.ClientName}}</span>
+                                                    </li>
+                                                    <li>
+                                                        <label>Amount</label>
+                                                        <span class="value">₹{{ row.Amount|indianCurrencyNumber
+                                                            }}</span>
+                                                    </li>
+                                                    <!-- <li>
+                                                        <label>Portfolio</label>
+                                                        <span class="value">Wealth</span>
+                                                    </li> -->
+                                                    <li>
+                                                        <label>Initiation Date</label>
+                                                        <span class="value">{{ row.TransactionDate | date: 'dd-MMM-yyyy'
+                                                            }}</span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </ng-template>
+                            </ng-container>
+                            <ng-container [ngbNavItem]="3">
+                                <a ngbNavLink>Recommended</a>
+                                <ng-template ngbNavContent>
+                                    <div>
+                                        <ul class="transaction-list">
+                                            <li *ngFor="let row of objRecommendedTransactions">
+                                                <div class="list-title">
+                                                    <h5>Sell holdings for {{row.FirstHolderName}} (PAN:
+                                                        {{row.ProfilePan}})</h5>
+                                                    <a (click)="onCreateTrade(row)">
+                                                        <i class="icon-link-arrow"></i>
+                                                    </a>
+                                                </div>
+
+                                                <ul class="transaction-details">
+                                                    <li *ngFor="let item of row.Transactions">
+                                                        <label>{{item.SchemeName}}</label>
+                                                        <span class="value">₹{{ item.CurrentAmount|indianCurrencyNumber
+                                                            }}</span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </ng-template>
+                            </ng-container>
+                            <ng-container [ngbNavItem]="4">
+                                <a ngbNavLink>Reminder</a>
+                                <ng-template ngbNavContent>
+                                    <div>
+                                        <ul class="transaction-list">
+                                            <li *ngFor="let row of objReminderTransactions">
+                                                <div class="list-title">
+                                                    <h5>{{row.FirstHolderName}}</h5>
+                                                    <!-- <a (click)="onViewTrade(row)">
+                                                        <i class="icon-link-arrow"></i>
+                                                    </a> -->
+                                                </div>
+
+                                                <ul class="transaction-details">
+                                                    <li>
+                                                        <label>Folio Number</label>
+                                                        <span class="value">{{row.FolioNumber}}</span>
+                                                    </li>
+                                                    <li>
+                                                        <label>Scheme Name</label>
+                                                        <span class="value">{{row.SchemeName}}</span>
+                                                    </li>
+                                                    <li>
+                                                        <label>{{row.TransactionType}} Amount</label>
+                                                        <span class="value">₹{{ row.Amount|indianCurrencyNumber
+                                                            }}</span>
+                                                    </li>
+                                                    <li>
+                                                        <label>End Date</label>
+                                                        <span class="value">{{ row.EndDate | date: 'dd-MMM-yyyy'
+                                                            }}</span>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </ng-template>
+                            </ng-container>
+                        </nav>
+                        <div [ngbNavOutlet]="nav"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

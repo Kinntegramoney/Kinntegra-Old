@@ -1,0 +1,187 @@
+Delivered-To: feeds@kinntegra.co.in
+Received: by 2002:a05:6020:1ac5:b0:750:4120:300e with SMTP id ez5csp1263424wdb;
+        Thu, 19 Feb 2026 16:34:21 -0800 (PST)
+X-Received: by 2002:a05:6a20:a104:b0:394:5fdc:cd19 with SMTP id adf61e73a8af0-39517c96f5amr3288694637.10.1771547660731;
+        Thu, 19 Feb 2026 16:34:20 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771547660; cv=none;
+        d=google.com; s=arc-20240605;
+        b=bcLvx+elrliVlspIOuITV2iyVdi59LbpLHOflwmkNaE8w8hRhgv1Jt9qCEBlO+o6Gy
+         sKriKwsQ+ytqFOMl0Z9QNnJB2ST+MLkfQBTCdIXtrtsEoMz5WFUIZjN9Guc3OgdInmh1
+         gDto4MHOhkALgmyIUeca5ge6c78Fw67WnLVtnhBTiVDK/RKmRbKSWweqh2M6/55oG6/4
+         RPabkOcPVS1QWGUCPv5Ht0nMDJaXzbOAe5fNWXH4BPsXi9f2nOOM6ltVTm1XPUfT/Oxa
+         24ReZB5zxFqzZh7CE3OLbaNWTDeZrzX04XRwwOm4zzFyfcBLoytpj3Aw1L7Q6SJFRlL1
+         Dw7Q=ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=date:message-id:subject:to:from:reply-to:priority:importance
+         :content-class:mime-version:thread-topic:thread-index:dkim-signature
+         :dkim-signature;
+        bh=akZDNTg1ZEsyYU3mB6XuLHShCvfcNkRZwVabBgqMPmU=;
+        fh=iUp5D67Gj/mfa8QWSd1s8b3+nb4XbTjXJtgGvTP+yL8=;
+        b=Wk7ZqfEthWwmezNVLOm8CS30FpbAQ+mRRPaNSNI/+eo1QAG8Q+KrqkGIthgOpGdqBd
+         x86dgLwR4mLnt4Q+8WV8dBBNaZ9M8G9AEmwHIQRn9y1OCD6VO3SDma5ofMfAltHP9IFQ
+         NxmqaRwGuKbAveRPvNpseMFcW7rcZ9bPF1a39sqwV6GSDOBZ4zcY5gFhZzKfCriIpZBV
+         CcTaTmveRNcztaMTrm/5u9VcEzrPnLEw0wn3p7I5ToK+2W9hrtba+Q8i88gf0jQ3vpfX
+         aj14L/hAYqc3JV7kuEh5Guq3l7Ql8XtVeFld7Lqlo/33ThSyDePfIzoWzKWrjIf4lzbc
+         Adww==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@kfintech.com header.s=sc2048 header.b=GxzBt8Je;
+       dkim=pass header.i=@sendclean.net header.s=sctrans1 header.b=OzJpv0hQ;
+       spf=pass (google.com: domain of b-319961056-feeds=kinntegra.co.in@sctrans.kfintech.com designates 45.115.29.23 as permitted sender) smtp.mailfrom="b-319961056-feeds=kinntegra.co.in@sctrans.kfintech.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=kfintech.com
+Return-Path: <b-319961056-feeds=kinntegra.co.in@sctrans.kfintech.com>
+Received: from sender23.sendclean.email (sender23.sendclean.email. [45.115.29.23])
+        by mx.google.com with ESMTPS id d2e1a72fcca58-824c6a546bfsi39027149b3a.66.2026.02.19.16.34.19
+        for <feeds@kinntegra.co.in>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Feb 2026 16:34:20 -0800 (PST)
+Received-SPF: pass (google.com: domain of b-319961056-feeds=kinntegra.co.in@sctrans.kfintech.com designates 45.115.29.23 as permitted sender) client-ip=45.115.29.23;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@kfintech.com header.s=sc2048 header.b=GxzBt8Je;
+       dkim=pass header.i=@sendclean.net header.s=sctrans1 header.b=OzJpv0hQ;
+       spf=pass (google.com: domain of b-319961056-feeds=kinntegra.co.in@sctrans.kfintech.com designates 45.115.29.23 as permitted sender) smtp.mailfrom="b-319961056-feeds=kinntegra.co.in@sctrans.kfintech.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=kfintech.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kfintech.com;
+ q=dns/txt; s=sc2048; bh=akZDNTg1ZEsyYU3mB6XuLHShCvfcNkRZwVabBgqMPmU=;
+ h=from:reply-to:subject:to:mime-version:content-type;
+ b=GxzBt8JeS3lgSZ4DVljm+2iVNMQddDdIquV/szgDVQNfGCafvBiMbwAZzRA0fF5NyQLoIJD+Dls1
+ XgOkBjSpqqU3Vd64nK0bZRmkENzvfSgdp5aVINl1b3rkn4moud543EuJDfnlqhdqg+DM5jNXO92b
+ MOKjW6a1Zvw36017lisH+m/XBdFuGdQkpolt5vMb1qeegp7+PvcPbaU8TE9m/7BRPNnGt2sUvo3t
+ KL1HfgrtQYjJZZ/lc14IXqU/UcW5+o07SS7//4OcfH4O5F8WFHXh31OSWNkETPYy96YTOZfQgL4o
+ iXdxQLEhCGeUwOgwJDMKzt1xNz7tzAoJUJ8adw=DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendclean.net;
+ q=dns/txt; s=sctrans1; bh=akZDNTg1ZEsyYU3mB6XuLHShCvfcNkRZwVabBgqMPmU=;
+ h=from:reply-to:subject:to:mime-version:content-type;
+ b=OzJpv0hQ233k9gfXXQ1Aa4sMQhlfvyf0IrOQ6j5hVOjz3z3Mlo1QX6CGCZj1MAUyonNMidcK5AIv
+ XwUocZ8RTPzypGrQqX4NtwIi6Bhs05fHibW6Xx8N0dExhTIJpW5AFNh6MQDFO+v5qU/X24tQn7JX
+ pxRVo0YKcSNK31jXezyF/dAfvnpMeU57JuYqZnq0uUsHum/hSBb34cY+lI9my3JixQ0vZ3Ym4Swf
+ Z8t5hwQseqOJT6xuqfg4N9D9hJCzfZrDKFWNc29b7jo1osxkZCegjLUOY+1+Y5beQoUJFwclPsAq
+ b3wass9RsxXeY0vQMX0RmfpXehZ53XShP8+FgQ=Received: from (103.147.26.4) by sender23.sendclean.email id
+ CA88B72C-4FCF-4034-B198-9E95028626C1.1 for <feeds@kinntegra.co.in>; Fri,
+ 20 Feb 2026 00:34:16 +0000 (envelope-from
+ <b-319961056-feeds=kinntegra.co.in@sctrans.kfintech.com>)
+X-Apiheader: DSS_SUB3_MFSD307_WBTRN4089755_20260220060416
+X-Apiheader: DSS_SUB3_MFSD307_WBTRN4089755_20260220060416
+Thread-Index: AdyiAKUUVhDlMZuFQUW+KQW/0hc1eQ=Thread-Topic: Subscribed Transaction Feeds Report for Ref. No. :
+ WBTRN4089755
+MIME-Version: 1.0
+X-Mailer: Microsoft CDO for Windows 2000
+Content-Class: urn:content-classes:message
+Importance: normal
+Priority: normal
+X-Mimeole: Produced By Microsoft MimeOLE
+Return-Path: distributorcare@kfintech.com
+X-Originalarrivaltime: 20 Feb 2026 00:34:16.0796 (UTC)
+ FILETIME=[A51AA9C0:01DCA200]
+Reply-To: distributorcare@kfintech.com
+X-Unique-ID: <00A83875AB9D4DE1AC4F65042B95FA50@Kfintech.com>
+From: distributorcare@kfintech.com
+To: feeds@kinntegra.co.in
+Subject: Subscribed Transaction Feeds Report for Ref. No. : WBTRN4089755
+Message-ID: <00A83875AB9D4DE1AC4F65042B95FA50@Kfintech.com>
+Date: Fri, 20 Feb 2026 00:34:16 +0000
+X-Mta-Unique-Id:
+ qqttqbdb.bqeesknn--319961056-CA88B72C-4FCF-4034-B198-9E95028626C1.1.1
+Content-Type: multipart/alternative;
+ boundary="----sm-b=_-?=_1-17715476569510.9586303473912974"
+
+------sm-b=_-?=_1-17715476569510.9586303473912974
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+
+ <https://scdelivery.kfintech.com/c/?u=3Dundefined&p=3Dqqttqbdb.bqeesknn--319961056-CA88B72C-4FCF-4034-B198-9E95028626C1.1.1&e=3Ds1=20
+
+Dear Distributor,=20
+
+As per your request for Transaction Feeds Report on mfs.kfintech.com.
+Click Here
+<https://scdelivery.kfintech.com/c/?u=3Dundefined&p=3Dqqttqbdb.bqeesknn--319961056-CA88B72C-4FCF-4034-B198-9E95028626C1.1.1&e=3Ds1
+qrytype=3DUzN8V0JUUk40MDg5NzU1NjEyMzI5fDIwMjYwMjIw>  to download the
+report.
+
+Please feel free to contact us at distributorcare@kfintech.com in case
+of any queries.
+
+Parameters Selected For Requested Report
+[TRANSACTION FEEDS REPORT]=09
+Broker Name	FEEDS=09
+Broker Code	ARN-145633=09
+Frequency	Daily=09
+From Date	17/02/2026=09
+To Date	20/02/2026=09
+Funds	ALL=09
+File Type	DBF=09
+Report No	MFSD307=09
+Report Description	Transaction Feeds Report - WithOut Split=09
+Dispatch Date/Time	20/02/2026 06:04:16=09
+KFintech in its endeavor to give better services to the Distributors
+and to make transactions more secure and safe, has introduced AES 256
+Bit Encryption for the requests of Mail Back Services and Subscription
+Services.	=20
+NOTE :- These feeds are provided for the sole purpose of transaction
+confirmation. Please note that QC process for some of the transactions
+will take place post this and to that extent, correction of data entry
+or other anomalies will happen later. Please refer to the statement of
+account, before raising any queries/complaints. =09
+Kindly note the following points before assigning the password:	=20
+For .kmfs files:
+
+1.	 Download the file on any location of your computer and rename
+the file extension to ".exe", eg. WBTRN9999.exe. =09
+2.	 Double clicking the renamed file would prompt you for the
+location where the file would be saved once it is decrypted. On
+selection of the path you would also be prompted for the password
+entered while requesting the report.	=20
+3.	 On entering the password, the file is decrypted and saved to
+the selected location	=20
+For .zip files:
+
+1.	 Download the file on any location of your computer.=09
+2.	 Select the zip file, extract to desired location. On selection
+of the path you would also be prompted for the password entered while
+requesting the report.	=20
+3.	 On entering the password, the file is saved to the selected
+location	=20
+
+
+To download Product codes, please click here
+<https://scdelivery.kfintech.com/c/?u=3Dundefined&p=3Dqqttqbdb.bqeesknn--319961056-CA88B72C-4FCF-4034-B198-9E95028626C1.1.1&e=3Ds1
+s> .
+
+
+Thank you for accessing our services at mfs.kfintech.com.
+
+
+Regards,
+KFintech Mutual Fund Services
+* The toll free number is accessible from any BSNL / MTNL touch-tone
+phone (land line), Mon - Sat from 9.30 AM to 5.30 PM.
+  _____ =20
+
+This message is confidential and privileged and is intended only for
+the addressee named herein. Any unauthorized form of access, copying,
+distribution or reuse of this information by anyone except the
+addressee is strictly prohibited and such use may result in legal
+action. If you are not the intended addressee, please destroy all
+copies of the said information in your possession and also delete the
+same from your computer. The Information furnished here is liable to be
+confirmed and reconciled and may not be final. Information on the
+internet cannot be guaranteed to be secure or error-free.=20
+
+  _____ =20
+
+
+
+------sm-b=_-?=_1-17715476569510.9586303473912974
+Content-Type: text/html
+Content-Transfer-Encoding: quoted-printable
+
+<img src=3D"https://mfs.kfintech.com/mfs/distributor/images/karvy_fintech.png"><br><br><font face =3D "Calibri" size=3D"2">Dear Distributor, <br><br>As per your request for Transaction Feeds Report on <a href=3Dhttps://mfs.kfintech.com target=3D_blank>mfs.kfintech.com</a>. <a href=3D"https://scdelivery.kfintech.com/c/?u=3Diuuqt%3B00ngt%2Flgjoufdi%2Fdpn0ngt0Ejtusjcvups0Sfrvftut0Sfr%60bmmsqutmjol%2Fbtqy%40rszuzqf%3EV%7BO9W1KVVl51NEh6O%7BV2OkFzN%7BJ6gEJxNkZxNkJx&p=3Dqqttqbdb.bqeesknn--319961056-CA88B72C-4FCF-4034-B198-9E95028626C1.1.1&e=3Ds1" target=3D_blank><b> Click Here</b></a> to download the report.<br><br>Please feel free to contact us at <a mailto:distributorcare@kfintech.com> distributorcare@kfintech.com </a> in case of any queries.<br><br><td><font face=3D"Calibri" size=3D"2" color=3D"#FFFFFF"><center><table cellSpacing=3D" 0" width=3D"60%" cellpadding=3D"4" style=3D"border-collapse: collapse" border=3D"1"><tr bgColor=3D"#000078"><td align=3D"middle" colSpan=3D"2"><font face=3D"Arial" size=3D"2" color=3D"#FFFFFF"><b>Parameters Selected For Requested Report<br>[TRANSACTION FEEDS REPORT]</b></font></td></tr><tr bgColor=3D"#dce9f7"><td align=3D"left"><fon
+ t face=3D"Arial" size=3D"2" color=3D"#000000"><b>Broker Name</b></font></td><td><font face=3D"Arial" size=3D"2" color=3D"#000000">FEEDS</font></td></tr><tr bgColor=3D"#dce9f7"><td align=3D"left"><font face=3D"Arial" size=3D"2" color=3D"#000000">Broker Code</font></td><td><font face=3D"Arial" size=3D"2" color=3D"#000000">ARN-145633</font></td><tr bgColor=3D"#dce9f7"><td align=3D"left"><font face=3D"Arial" size=3D"2" color=3D"#000000">Frequency</font></td><td><font face=3D"Arial" size=3D"2" color=3D"#000000">Daily</font></td></tr><tr bgColor=3D"#dce9f7"><td align=3D"left"><font face=3D"Arial" size=3D"2" color=3D"#000000">From Date</font></td><td><font face=3D"Arial" size=3D"2" color=3D"#000000">17/02/2026</font></td></tr><tr bgColor=3D"#dce9f7"><td align=3D"left"><font face=3D"Arial" size=3D"2" color=3D"#000000">To Date</font></td><td><font face=3D"Arial" size=3D"2" color=3D"#000000">20/02/2026</font></td></tr><tr bgColor=3D"#dce9f7"><td align=3D"left"><font face=3D"Arial" size=3D"2" color=3D"#000000">Funds</font></td><td><font face=3D"Arial" size=3D"2" color=3D"#000
+ 000">ALL</font></td></tr><tr bgColor=3D"#dce9f7"><td align=3D"left"><font face=3D"Arial" size=3D"2" color=3D"#000000">File Type</font></td><td><font face=3D"Arial" size=3D"2" color=3D"#000000">DBF</font></td></tr><tr bgColor=3D"#dce9f7"><td align=3D"left"><font face=3D"Arial" size=3D"2" color=3D"#000000">Report No</font></td><td><font face=3D"Arial" size=3D"2" color=3D"#000000">MFSD307</font></td></tr><tr bgColor=3D"#dce9f7"><td align=3D"left"><font face=3D"Arial" size=3D"2" color=3D"#000000">Report Description</font></td><td><font face=3D"Arial" size=3D"2" color=3D"#000000">Transaction Feeds Report - WithOut Split</font></td></tr><tr bgColor=3D"#dce9f7"><td align=3D"left"><font face=3D"Arial" size=3D"2" color=3D"#000000">Dispatch Date/Time</font></td><td><font face=3D"Arial" size=3D"2" color=3D"#000000">20/02/2026 06:04:16</font></td></tr></table></center></font></td></tr></table></center><table border=3D"0" cellpadding=3D"4" cellspacing=3D"1" style=3D"border-collapse: collapse" bordercolor=3D"#111111" width=3D"100%" height=3D"210"> <tr> <td width=3D"1
+ 00%" height=3D"69" colspan=3D"2"><font face=3D"Calibri" size=3D"2">KFintech  in its endeavor to give better services to the Distributors and to make  transactions more secure and safe, has introduced AES 256 Bit Encryption  for the requests of Mail Back Services and Subscription Services.</font></td> </tr> <tr> <td width=3D"100%" height=3D"16" colspan=3D"2"><font color=3D"Red" face=3D"Calibri" size=3D"2">  NOTE :- These feeds are provided for the sole purpose of transaction confirmation. Please note that QC process for some of the transactions will take place post this and to that extent, correction of data entry or other anomalies will happen later. Please refer to the statement of account, before raising any queries/complaints. </font></td> </tr> <tr> <td width=3D"100%" height=3D"16" colspan=3D"2"><font face=3D"Calibri" size=3D"2"><b> Kindly note the following points before assigning the password:</font></td> </tr> <tr><td width=3D"100%" height=3D"16" colspan=3D"2"><font face=3D"Calibri" size=3D"2"><b><p><span s
+ tyle=3D"text-decoration: underline;">For .kmfs files:</span></p></b></font></td></tr> <tr> <td width=3D"33" height=3D"15"><font face=3D"Calibri" size=3D"2"> <p align=3D"justify">1.</font></td> <td width=3D"96%" height=3D"35"><font face=3D"Calibri" size=3D"2">Download the file on  any location of your computer and rename the file extension to <b>".exe"</b>,  eg. WBTRN9999.exe. </font></td> </tr> <tr> <td width=3D"33" height=3D"13"><font face=3D"Calibri" size=3D"2">2.</font></td> <td width=3D"96%" height=3D"33"><font face=3D"Calibri" size=3D"2"> <p align=3D"justify">Double clicking the renamed file would prompt you for the  location where the file would be saved once it is decrypted. On selection of  the path you would also be prompted for the password entered while  requesting the report.</font></td> </tr> <tr> <td width=3D"33" height=3D"15"><font face=3D"Calibri" size=3D"2"> <p align=3D"justify">3.</font></td> <td width=3D"96%" height=3D"35"><font face=3D"Calibri" size=3D"2">On entering the  password, the file is decrypted and sa
+ ved to the selected location</font></td> </tr> <tr> <td width=3D"100%" height=3D"16" colspan=3D"2"><font face=3D"Calibri" size=3D"2"><b> <p><span style=3D"text-decoration: underline;">For .zip files:</span></p></b></font></td> </tr> <tr> <td><font face=3D"Calibri" size=3D"2"><p align=3D"justify">1.</font></td> <td width=3D"96%" height=3D"35"><font face=3D"Calibri" size=3D"2">Download the file on  any location of your computer.</b></font></td></tr>  <tr> <td width=3D"33" height=3D"33"><font face=3D"Calibri" size=3D"2">2.</font></td> <td width=3D"96%" height=3D"33"><font face=3D"Calibri" size=3D"2"> <p align=3D"justify">Select the zip file, extract to desired location.  On selection of  the path you would also be prompted for the password entered while  requesting the report.</font></td> </tr> <tr> <td width=3D"33" height=3D"35"><font face=3D"Calibri" size=3D"2"> <p align=3D"justify">3.</font></td> <td width=3D"96%" height=3D"35"><font face=3D"Calibri" size=3D"2">On entering the  password, the file is saved to the selected location</font
+ ></td> </tr> </table><br><br>To download Product codes, please <a href=3D"https://scdelivery.kfintech.com/c/?u=3Diuuqt%3B00ngt%2Flgjoufdi%2Fdpn0ngt0ejtusjcvups0epxompbet0GVODPEFT.QSPEDPEF%2Fymt&p=3Dqqttqbdb.bqeesknn--319961056-CA88B72C-4FCF-4034-B198-9E95028626C1.1.1&e=3Ds1" target=3D_blank>click here</a>.<br><br><br>Thank you for accessing our services at <a href=3Dhttps://mfs.kfintech.com target=3D_blank>mfs.kfintech.com</a>.<br><br><br>Regards,<br>KFintech Mutual Fund Services</font></br><br><font face=3D"Calibri" size=3D"1">* The toll free number is accessible from any BSNL / MTNL touch-tone phone (land line), Mon - Sat from 9.30 AM to 5.30 PM.</font><hr size=3D"1"></font><small><small><p align=3D"justify"><font face=3D"Calibri" size=3D"1">This message is confidential and privileged and is intended only for the addressee named herein. Any unauthorized form of access, copying, distribution or reuse of this information by anyone except the addressee is strictly prohibited and such use may result in legal action. If you are not the intended addressee, please destroy all copies of the said information in your possession
+  and also delete the same from your computer. The Information furnished here is liable to be confirmed and reconciled and may not be final. Information on the internet cannot be guaranteed to be secure or error-free.</font><font face=3D"Calibri" size=3D"1"> </p><p></p></font></small></small><p align=3D"justify"></p><hr size=3D"1"><p></p><img src=3D"https://scdelivery.kfintech.com/o/?p=3Dqqttqbdb.bqeesknn--319961056-CA88B72C-4FCF-4034-B198-9E95028626C1.1.1" height=3D"1" width=3D"1"/>
+
+
+------sm-b=_-?=_1-17715476569510.9586303473912974--

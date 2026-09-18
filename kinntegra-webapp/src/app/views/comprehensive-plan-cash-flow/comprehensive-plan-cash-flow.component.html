@@ -1,0 +1,135 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="table-top-section d-flex justify-content-between align-items-center mb-4">
+            <a class="back-btn" href="#">
+                <i class="icon-left-arrow"></i>
+                Go Back
+            </a>
+            <div class="section-header">
+                <app-header-right-template class="section-header"></app-header-right-template>
+            </div>
+        </div>
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+
+                        <!-- @include('client.leftbar', ['is_verify' => $is_verify]) -->
+                        <app-client-leftbar-template [activeComp]="'comprehensive-plan'" [mode]="mode" [activeSubComp]="'cash-flow-details'"
+                            [clientId]="clientId" [leadId]="leadId"
+                            [progressPercentage]="22"></app-client-leftbar-template>
+
+                    </div>
+                    <div class="trial col-lg-8 col-xl-9 col-md-8 step-forms ps-0" id="cash-flow" autocomplete="off">
+                        <div class="form-inner-section">
+                            <div class="form-header">
+                                <h3 class="card-title">Projected Cash Flow</h3>
+                            </div>
+                            <div class="form-content">
+                                <div class="row ">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="cash-name">Name</label>
+                                            <ng-select class=" ng-select-form-control form-control" id="cash-name"
+                                                style="width: 100%;" [dropdownPosition]="'bottom'">
+                                                <ng-option value="" disabled selected>Select Member</ng-option>
+                                                <ng-option>O+</ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="cash-year">Cashflow Year</label>
+                                            <ng-select class=" ng-select-form-control form-control" id="cash-year"
+                                                [multiple]="true" style="width: 100%;" [dropdownPosition]="'bottom'">
+                                                <ng-option>2020</ng-option>
+                                                <ng-option>2021</ng-option>
+                                                <ng-option>2022</ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <nav ngbNav #nav="ngbNav" class="nav-tabs">
+                                    <ng-container ngbNavItem>
+                                        <a ngbNavLink>Projected Inflow</a>
+                                        <ng-template ngbNavContent>
+                                            <div class="tab-pane fade show active mt-4" id="inflow" role="tabpanel">
+                                                <div class="form-group line-success mb-2">
+                                                    <label for="inflow">Projected Inflow</label>
+                                                    <input type="text" readonly="" class="form-control-plaintext"
+                                                        id="inflow" value="₹17.88L">
+                                                </div>
+                                                <ngx-datatable class="material w-50" [rows]="objParameters"
+                                                    [columnMode]="ColumnMode.force" rowHeight="auto" [footerHeight]="50"
+                                                    [headerHeight]="50" [limit]="10" [scrollbarH]="true">
+                                                    <ngx-datatable-column name="Parameter" [minWidth]="100"
+                                                        [sortable]="true" prop="parameter">
+                                                        <ng-template ngx-datatable-header-template
+                                                            let-column="column">PARAMETER</ng-template>
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{ row.parameter }}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+
+                                                    <ngx-datatable-column name="Amount" [minWidth]="100"
+                                                        [sortable]="true" prop="amount">
+                                                        <ng-template ngx-datatable-header-template
+                                                            let-column="column">AMOUNT</ng-template>
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{ row.amount }}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                </ngx-datatable>
+                                            </div>
+                                        </ng-template>
+                                    </ng-container>
+                                    <ng-container ngbNavItem>
+                                        <a ngbNavLink>Projected Outflow</a>
+                                        <ng-template ngbNavContent>
+                                            <div class="tab-pane fade show mt-4" id="outflow" role="tabpanel">
+                                                <div class="form-group line-danger mb-2">
+                                                    <label for="outflow">Projected outflow</label>
+                                                    <input type="text" readonly="" class="form-control-plaintext"
+                                                        id="outflow" value="₹17.88L">
+                                                </div>
+                                                <ngx-datatable class="material w-50" [rows]="objParameters"
+                                                    [columnMode]="ColumnMode.force" rowHeight="auto" [footerHeight]="50"
+                                                    [headerHeight]="50" [limit]="10" [scrollbarH]="true">
+                                                    <ngx-datatable-column name="Parameter" [minWidth]="100"
+                                                        [sortable]="true" prop="parameter">
+                                                        <ng-template ngx-datatable-header-template
+                                                            let-column="column">PARAMETER</ng-template>
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{ row.parameter }}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+
+                                                    <ngx-datatable-column name="Amount" [minWidth]="100"
+                                                        [sortable]="true" prop="amount">
+                                                        <ng-template ngx-datatable-header-template
+                                                            let-column="column">AMOUNT</ng-template>
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row">
+                                                            {{ row.amount }}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                </ngx-datatable>
+                                            </div>
+                                        </ng-template>
+                                    </ng-container>
+                                </nav>
+                                <div [ngbNavOutlet]="nav"></div>
+                            </div>
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-primary btn-lg" (click)="onNext()">Proceed</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

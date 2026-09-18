@@ -1,0 +1,29 @@
+.mobile-header {
+    display: none;
+    @media (max-width: $md) {
+        
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: -3px 2px 3px rgba(0, 0, 0, 0.1);
+        margin-top: -1rem;
+        position: sticky;
+        top: 0;
+        left: 0;
+        background: #ffffff;
+        z-index: 999;
+        margin-bottom: 1rem;
+        .brand-image {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary, $primary);
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            img {
+                width: 3rem;
+                margin: 0 0.5rem;
+            }
+        }
+    }
+}

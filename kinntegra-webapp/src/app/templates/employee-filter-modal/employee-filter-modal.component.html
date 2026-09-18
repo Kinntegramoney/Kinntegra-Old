@@ -1,0 +1,142 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Filters: Employee</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="activeModal.dismiss('Cross click')">      
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row form-sections">
+            <div class="col-sm-6 filter_state">
+                <div class="form-group last-form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By State</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [items]="states" [multiple]="true" bindLabel="Name" [closeOnSelect]="false"
+                        bindValue="Name" [(ngModel)]="FilterEmployeeData.selectedStates" name="state" [dropdownPosition]="'bottom'">
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [(ngModel)]="item$.selected"
+                                    [ngModelOptions]="{standalone: true}" />
+                                {{item.Name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 filter_city">
+                <div class="form-group last-form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By City</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [items]="cities" [multiple]="true" bindLabel="Name" [closeOnSelect]="false"
+                        bindValue="Name" [(ngModel)]="FilterEmployeeData.selectedCities" name="city" [dropdownPosition]="'bottom'">
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [(ngModel)]="item$.selected"
+                                    [ngModelOptions]="{standalone: true}" />
+                                {{item.Name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>    
+            <div class="col-sm-6 filter_associate">
+                <div class="form-group last-form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By Associate</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [items]="associates" [multiple]="true" bindLabel="Name" [closeOnSelect]="false"
+                        bindValue="Name"[(ngModel)]="FilterEmployeeData.selectedAssociate" name="associate" [dropdownPosition]="'bottom'">
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [(ngModel)]="item$.selected"
+                                    [ngModelOptions]="{standalone: true}" />
+                                {{item.Name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 filter_department">
+                <div class="form-group last-form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By Department</h4>
+
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [items]="departments" [multiple]="true" bindLabel="Name" [closeOnSelect]="false"
+                        bindValue="Name" [(ngModel)]="FilterEmployeeData.selectedDepartment" name="department" [dropdownPosition]="'bottom'">
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [(ngModel)]="item$.selected"
+                                    [ngModelOptions]="{standalone: true}" />
+                                {{item.Name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 filter_grade">
+                <div class="form-group last-form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By Grade</h4>
+
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [items]="grades" [multiple]="true" bindLabel="Name" [closeOnSelect]="false"
+                        bindValue="Name" [(ngModel)]="FilterEmployeeData.selectedGrade" name="grade" [dropdownPosition]="'bottom'">
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [(ngModel)]="item$.selected"
+                                    [ngModelOptions]="{standalone: true}" />
+                                {{item.Name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 filter_employee">
+                <div class="form-group last-form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By Employee</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [items]="employees" [multiple]="true" bindLabel="Name" [closeOnSelect]="false"
+                        bindValue="Name" [(ngModel)]="FilterEmployeeData.selectedEmployee" name="employee" [dropdownPosition]="'bottom'">
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [(ngModel)]="item$.selected"
+                                    [ngModelOptions]="{standalone: true}" />
+                                {{item.Name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>    
+            <div class="col-sm-6 filter_status">
+                <div class="form-group last-form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By Account Status</h4>
+
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [items]="statues" [multiple]="true" bindLabel="Name" [closeOnSelect]="false"
+                            bindValue="Name" [(ngModel)]="FilterEmployeeData.selectedStatus" name="status" [dropdownPosition]="'bottom'">
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [(ngModel)]="item$.selected"
+                                    [ngModelOptions]="{standalone: true}" />
+                                {{item.Name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 filter_lastlogin">
+                <div class="form-group last-form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By Last Login</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [items]="lastLogins" [multiple]="true" bindLabel="Name" [closeOnSelect]="false"
+                            bindValue="Name" [(ngModel)]="FilterEmployeeData.selectedLastLogins" name="status" [dropdownPosition]="'bottom'">
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [(ngModel)]="item$.selected"
+                                    [ngModelOptions]="{standalone: true}" />
+                                {{item.Name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+      
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary col-sm-3" (click)="onClearFilter()">Clear Filter</button>
+        <button type="button" class="btn btn-warning col-sm-3" (click)="onRemoveFilter()">Remove Filter</button>
+        <button type="button" class="btn btn-primary col-sm-3" (click)="onFilter()">Apply Filter</button>
+    </div>
+
+</div>

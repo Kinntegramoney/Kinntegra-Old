@@ -1,0 +1,572 @@
+<div class="main">
+  <div class="container-fluid">
+    <!-- <div class="table-top-section d-flex justify-content-between align-items-center mb-4"> -->
+      <!-- <a class="back-btn" href="#">
+        <i class="icon-left-arrow"></i>
+        Go Back
+      </a> -->
+      <div class="section-header mb-4">
+        <app-header-right-template class="section-header"></app-header-right-template>
+      </div>
+    <!-- </div> -->
+    <div class="card w-100">
+      <div class="card-body p-0">
+        <div class="row">
+          <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+            <app-client-leftbar-template [activeComp]="'introduction'" [activeSubComp]="''" [clientId]="clientId"
+              [leadId]="leadId" [mode]="mode" [progressPercentage]="11"></app-client-leftbar-template>
+          </div>
+          <form class="col-lg-8 col-xl-9 step-forms col-md-8 ps-0">
+            <section class="trial step1 active" id="general-information" data-step="1" autocomplete="off">
+              <div class="form-inner-section">
+                <div class="form-header">
+                  <h3 class="card-title d-inline">Introduction</h3>
+                  <span class="edit-now float-end mt-1" *ngIf="showEdit" (click)="onEditClicked()">Edit</span>
+                </div>
+                <div class="form-content">
+                  <div class="row">
+                    <div class="col-sm-4 associate_id">
+                      <div class="form-group">
+
+                        <label for="associate">Associate Name <span class="required-sign">*</span></label>
+
+                        <div class="form-control ng-select-form-control">
+                          <ng-select [(ngModel)]="objClient.AssociateId" name="associate"
+                            (change)="onAssociateChanged()" disabled="true" appendTo="body" [dropdownPosition]="'bottom'">
+                            <ng-option *ngFor="let associate of associates"
+                              [value]="associate.Id">{{associate.Name}}</ng-option>
+                          </ng-select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4 employee_id">
+                      <div class="form-group">
+                        <label for="employee">Employee Name <span class="required-sign">*</span></label>
+                        <div class="form-control ng-select-form-control">
+                          <ng-select [(ngModel)]="objClient.EmployeeId" name="employee" [disabled]="!isEdit"
+                            appendTo="body" [dropdownPosition]="'bottom'">
+                            <ng-option *ngFor="let employee of employees"
+                              [value]="employee.Id">{{employee.Name}}</ng-option>
+                          </ng-select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 inline-form" id="accounttype">
+                      <div class="form-group" style="margin-bottom: 5px">
+                        <label for="accounttype" style="margin-bottom: 13px">Account Type</label>
+                        <div class="d-flex">
+                          <div class="form-group custom-checkbox mb-0">
+                            <input #chkindividual type="checkbox" id="individual" name="accounttype"
+                              [checked]="objClient.IsIndividual"
+                              (change)="onIndividualAccountTypeChanged(chkindividual.checked)" [disabled]="!isEdit" />
+                            <label for="individual">Individual</label>
+                          </div>
+                          <div class="form-group custom-checkbox mb-0 ">
+                            <input #chknonindividual type="checkbox" id="nonindividual" name="accounttype"
+                              [checked]="objClient.IsNonIndividual"
+                              (change)="onNonIndividualAccountTypeChanged(chknonindividual.checked)"
+                              [disabled]="!isEdit" />
+                            <label for="nonindividual">Non Individual</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12" id="family_detail" *ngIf="objClient.IsIndividual">
+                      <hr />
+                      <div class="form-sections mb-0">
+                        <h4 class="form-section-title text-uppercase">
+                          FAMILY Details - {{ familyName }}
+                        </h4>
+                        <ul ngbNav #navIndividual="ngbNav" class="nav nav-tabs members-tab no-wrap"
+                          [(activeId)]="activeMemberTab">
+                          <li [ngbNavItem]="i" class="nav-item mb-3" *ngFor="let memberItem of members; index as i">
+                            <button ngbNavLink class="nav-link member_tab">{{ memberItem.Name }}
+                              <span *ngIf="isEdit" class="delete-member"
+                                (click)="onRemoveMember($event, memberItem.UID)"><i class="icon-close"></i></span>
+                            </button>
+                            <ng-template ngbNavContent>
+                              <div class="row">
+                                <div class="col-sm-4 member-name">
+                                  <div class="form-group">
+                                    <label for="member-name-{{i}}">Name <span class="required-sign">*</span></label>
+                                    <input type="text" class="form-control member-name" id="member-name-{{i}}"
+                                      name="member-name-{{i}}" placeholder="Enter Name" [(ngModel)]="memberItem.Name"
+                                      [disabled]="!isEdit" (blur)="onNameChanged(memberItem)"/>
+                                  </div>
+                                </div>
+
+                                <div class="col-sm-4 member-birthdate">
+                                  <div class="form-group">
+                                    <label>Date of Birth <span class="required-sign">*</span></label>
+                                    <div class="input-group">
+                                      <input class="form-control" readonly placeholder="dd-mm-yyyy"
+                                        name="member-dob-{{i}}" [(ngModel)]="memberItem.DateOfBirth" ngbDatepicker
+                                        #memberdob="ngbDatepicker" [minDate]="minDate" [maxDate]="maxDate" />
+                                      <button *ngIf="isEdit" class="btn btn-transparent" (click)="memberdob.toggle()"
+                                        type="button"><svg width="24" height="24" viewBox="0 0 24 24">
+                                          <use xlink:href="#month"></use>
+                                        </svg></button>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4 member-relation">
+                                  <div class="form-group">
+                                    <label for="member-relation-{{i}}">Relation <span class="required-sign">*</span></label>
+                                    <div class="form-control ng-select-form-control">
+                                      <ng-select name="memeber-relation-{{i}}" [(ngModel)]="memberItem.RelationId"
+                                        [disabled]="!isEdit || memberItem.IsSelf" appendTo="body" [dropdownPosition]="'bottom'">
+                                        <ng-option *ngFor="let relation of relations" [value]="relation.Id">{{
+                                          relation.Name
+                                          }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4 member-fathername">
+                                  <div class="form-group">
+                                    <label for="member-fathername-{{i}}">Father Name <span class="required-sign">*</span></label>
+                                    <input type="text" class="form-control member-fathername" id="member-fathername-{{i}}"
+                                      name="member-fathername-{{i}}" placeholder="Enter Father Name" [(ngModel)]="memberItem.FatherName"
+                                      [disabled]="!isEdit" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-4 member-taxstatus">
+                                  <div class="form-group">
+                                    <label for="member-taxstatus-{{i}}">Tax Status <span class="required-sign">*</span></label>
+                                    <div class="form-control ng-select-form-control">
+                                      <ng-select name="member-taxstatus-{{i}}" [(ngModel)]="memberItem.TaxStatusId"
+                                        [disabled]="!isEdit" appendTo="body" [dropdownPosition]="'bottom'">
+                                        <ng-option *ngFor="let taxStatus of individualTaxStatus"
+                                          [value]="taxStatus.Id">{{
+                                          taxStatus.Name }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-2 member-taxslab">
+                                  <div class="form-group">
+                                    <label for="member-taxslab-{{i}}">Tax Slab <span class="required-sign">*</span></label>
+                                    <div class="form-control ng-select-form-control">
+                                      <ng-select name="member-taxslab-{{i}}" [(ngModel)]="memberItem.TaxSlabId"
+                                        [disabled]="!isEdit" appendTo="body" [dropdownPosition]="'bottom'">
+                                        <ng-option *ngFor="let taxSlab of individualTaxSlabs" [value]="taxSlab.Id">{{
+                                          taxSlab.Name }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-2 member-lifeexpectancy">
+                                  <div class="form-group">
+                                    <label for="member-lifeexpectancy-{{i}}">Life Expectancy <span class="required-sign">*</span></label>
+                                    <input type="number" class="form-control member_lifeexpectancy"
+                                      id="member-lifeexpectancy-{{i}}" name="member-lifeexpectancy"
+                                      placeholder="Enter Life Expectancy" [(ngModel)]="memberItem.LifeExpectancy"
+                                      [disabled]="!isEdit" />
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </li>
+                          <li *ngIf="isEdit" [ngbNavItem]="-1" class="nav-item add-member-item mb-4">
+                            <button ngbNavLink class="nav-link add-member" (click)="onAddMemberClicked()">Add
+                              Member</button>
+                            <ng-template ngbNavContent>
+                              <div class="row">
+                                <div class="col-sm-4 member-name">
+                                  <div class="form-group">
+                                    <label for="member-name">Name <span class="required-sign">*</span></label>
+                                    <input type="text" class="form-control member-name" id="member-name"
+                                      name="member-name" placeholder="Enter Name" [(ngModel)]="objNewMember.Name"
+                                      (blur)="onValidateNewMember()" />
+                                  </div>
+                                </div>
+
+                                <div class="col-sm-4 member-birthdate">
+                                  <div class="form-group">
+                                    <label>Date of Birth <span class="required-sign">*</span></label>
+                                    <div class="input-group">
+                                      <input class="form-control" readonly placeholder="dd-mm-yyyy" name="memeber-dob"
+                                        [(ngModel)]="objNewMember.DateOfBirth" ngbDatepicker
+                                        #newmemeberdob="ngbDatepicker" (dateSelect)="onNewMemberDOBChange($event)"
+                                        [minDate]="minDate" [maxDate]="maxDate" />
+                                      <button class="btn btn-transparent" (click)="newmemeberdob.toggle()"
+                                        type="button"><svg width="24" height="24" viewBox="0 0 24 24">
+                                          <use xlink:href="#month"></use>
+                                        </svg></button>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4 member-relation">
+                                  <div class="form-group">
+                                    <label for="member-relation">Relation <span class="required-sign">*</span></label>
+                                    <div class="form-control ng-select-form-control">
+                                      <ng-select name="member-relation" [(ngModel)]="objNewMember.RelationId"
+                                        (change)="onNewMemberRelationChanged()" [disabled]="!isEdit" appendTo="body" [dropdownPosition]="'bottom'">
+                                        <ng-option *ngFor="let relation of relations" [value]="relation.Id">{{
+                                          relation.Name
+                                          }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4 member-name">
+                                  <div class="form-group">
+                                    <label for="member-fathername">Father Name <span class="required-sign">*</span></label>
+                                    <input type="text" class="form-control member-fathername" id="member-fathername"
+                                      name="member-fathername" placeholder="Enter Father Name" [(ngModel)]="objNewMember.FatherName"
+                                      (blur)="onValidateNewMember()" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-4 member-taxstatus">
+                                  <div class="form-group">
+                                    <label for="member-taxstatus">Tax Status <span class="required-sign">*</span></label>
+                                    <div class="form-control ng-select-form-control">
+                                      <ng-select name="member-taxstatus" [(ngModel)]="objNewMember.TaxStatusId"
+                                        (change)="onNewMemberTaxStatusChanged()" [disabled]="!isEdit" appendTo="body" [dropdownPosition]="'bottom'">
+                                        <ng-option *ngFor="let taxStatus of individualTaxStatus"
+                                          [value]="taxStatus.Id">{{
+                                          taxStatus.Name }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-2 member-taxslab">
+                                  <div class="form-group">
+                                    <label for="member-taxslab">Tax Slab <span class="required-sign">*</span></label>
+                                    <div class="form-control ng-select-form-control">
+                                      <ng-select name="member-taxslab" [(ngModel)]="objNewMember.TaxSlabId"
+                                        (change)="onNewMemberTaxSlabChanged()" [disabled]="!isEdit" appendTo="body" [dropdownPosition]="'bottom'">
+                                        <ng-option *ngFor="let taxSlab of individualTaxSlabs" [value]="taxSlab.Id">{{
+                                          taxSlab.Name }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-2 member-lifeexpectancy">
+                                  <div class="form-group">
+                                    <label for="member-lifeexpectancy">Life Expectancy <span class="required-sign">*</span></label>
+                                    <input type="number" class="form-control member_lifeexpectancy"
+                                      id="member-lifeexpectancy" name="member-lifeexpectancy"
+                                      placeholder="Enter Life Expectancy" [(ngModel)]="objNewMember.LifeExpectancy"
+                                      (blur)="onValidateNewMember()" />
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </li>
+                        </ul>
+                        <div [ngbNavOutlet]="navIndividual"></div>
+                      </div>
+                    </div>
+
+                    <div id="company_detail" class="col-12" *ngIf="objClient.IsNonIndividual">
+                      <hr />
+                      <div class="form-sections mb-0">
+                        <h4 class="form-section-title text-uppercase">
+                          Company Details
+                        </h4>
+                        <ul ngbNav #navNonIndividual="ngbNav" class="nav nav-tabs companys-tab no-wrap"
+                          [(activeId)]="activeCompanyTab">
+                          <li [ngbNavItem]="i" class="nav-item mb-3" *ngFor="let companyItem of companies; index as i">
+                            <button ngbNavLink class="nav-link company_tab">{{ companyItem.Name }}
+                              <span *ngIf="isEdit" class="delete-company"
+                                (click)="onRemoveCompany($event, companyItem.UID)"><i class="icon-close"></i></span>
+                            </button>
+                            <ng-template ngbNavContent>
+                              <div class="row">
+                                <div class="col-sm-4 company-cname">
+                                  <div class="form-group">
+                                    <label for="company-cname-{{i}}">Name of Establishment</label>
+                                    <input type="text" class="form-control company-cname" id="company-cname-{{i}}"
+                                      name="company-cname-{{i}}" placeholder="Enter Name" [(ngModel)]="companyItem.Name"
+                                      [disabled]="!isEdit" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-3 company-cincorpdate">
+                                  <div class="form-group">
+                                    <label for="company-cincorpdate-{{i}}">Date of Incorporation</label>
+                                    <div class="input-group">
+                                      <input class="form-control" readonly placeholder="dd-mm-yyyy"
+                                        name="company-cincorpdate-{{i}}" [(ngModel)]="companyItem.DateOfIncorporation"
+                                        ngbDatepicker #companydoi="ngbDatepicker" [minDate]="minDate"
+                                        [maxDate]="maxDate" />
+                                      <button *ngIf="isEdit" class="btn btn-transparent" (click)="companydoi.toggle()"
+                                        type="button"><svg width="24" height="24" viewBox="0 0 24 24">
+                                          <use xlink:href="#month"></use>
+                                        </svg></button>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-3 company-ctaxstatus">
+                                  <div class="form-group">
+                                    <label for="company-ctaxstatus-{{i}}">Tax Status</label>
+                                    <div class="form-control ng-select-form-control">
+                                      <ng-select name="company-ctaxstatus-{{i}}" [(ngModel)]="companyItem.TaxStatusId"
+                                        [disabled]="!isEdit" appendTo="body" [dropdownPosition]="'bottom'">
+                                        <ng-option *ngFor="let taxStatus of nonIndividualTaxStatus"
+                                          [value]="taxStatus.Id">{{
+                                          taxStatus.Name }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-2 company-ctaxslab">
+                                  <div class="form-group">
+                                    <label for="company-ctaxslab-{{i}}">Tax Slab</label>
+                                    <div class="form-control ng-select-form-control">
+                                      <ng-select name="company-ctaxslab-{{i}}" [(ngModel)]="companyItem.TaxSlabId"
+                                        [disabled]="!isEdit" appendTo="body" [dropdownPosition]="'bottom'">
+                                        <ng-option *ngFor="let taxSlab of nonIndividualTaxSlabs" [value]="taxSlab.Id">{{
+                                          taxSlab.Name }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                  <h4 class="form-section-title text-uppercase">
+                                    AUTHORIZED Personel Details
+                                  </h4>
+                                </div>
+                                <div class="col-sm-4 company-cauthname1">
+                                  <div class="form-group">
+                                    <label for="company-cauthname1-{{i}}">AUTHORIZED SIGNITORY NAME - 1</label>
+                                    <div class="form-control ng-select-form-control">
+                                      <ng-select name="company-cauthname1-{{i}}"
+                                        [(ngModel)]="companyItem.AuthorizedPerson1UID" [disabled]="!isEdit"
+                                        appendTo="body" [dropdownPosition]="'bottom'">
+                                        <ng-option *ngFor="let memberItem of members" [value]="memberItem.UID">{{
+                                          memberItem.Name }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-sm-4 company-cauthdesignation1">
+                                  <div class="form-group">
+                                    <label for="company-cauthdesignation1-{{i}}">Designation</label>
+                                    <input type="text" class="form-control" id="company-cauthdesignation1"
+                                      name="company-cauthdesignation1-{{i}}" placeholder=""
+                                      [(ngModel)]="companyItem.AuthorizedPerson1Designation" [disabled]="!isEdit" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-12"></div>
+
+                                <div class="col-sm-4 company-cauthname2">
+                                  <div class="form-group">
+                                    <label for="company-cauthname2-{{i}}">AUTHORIZED SIGNITORY NAME - 2</label>
+                                    <div class="form-control ng-select-form-control">
+                                      <ng-select name="company-cauthname2-{{i}}"
+                                        [(ngModel)]="companyItem.AuthorizedPerson2UID" [disabled]="!isEdit"
+                                        appendTo="body" [dropdownPosition]="'bottom'">
+                                        <ng-option *ngFor="let memberItem of members" [value]="memberItem.UID">{{
+                                          memberItem.Name }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4 company-cauthdesignation2">
+                                  <div class="form-group">
+                                    <label for="company-cauthdesignation2-{{i}}">Designation</label>
+                                    <input type="text" class="form-control cauthdesignation"
+                                      id="company-cauthdesignation2-{{i}}" name="company-cauthdesignation2"
+                                      placeholder="" [(ngModel)]="companyItem.AuthorizedPerson2Designation"
+                                      [disabled]="!isEdit" />
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </li>
+                          <li *ngIf="isEdit" [ngbNavItem]="-1" class="nav-item add-company-item mb-3">
+                            <button ngbNavLink class="nav-link add-member" (click)="onAddCompanyClicked()">Add
+                              Company</button>
+                            <ng-template ngbNavContent>
+                              <div class="row">
+                                <div class="col-sm-4 company-cname">
+                                  <div class="form-group">
+                                    <label for="company-cname">Name of Establishment</label>
+                                    <input type="text" class="form-control company-cname" id="company-cname"
+                                      name="company-cname" placeholder="Enter Name" [(ngModel)]="objNewCompany.Name"
+                                      (blur)="onValidateNewCompany()" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-3 company-cincorpdate">
+                                  <div class="form-group">
+                                    <label for="company-cincorpdate">Date of Incorporation</label>
+                                    <div class="input-group">
+                                      <input class="form-control" readonly placeholder="dd-mm-yyyy"
+                                        name="company-cincorpdate" [(ngModel)]="objNewCompany.DateOfIncorporation"
+                                        ngbDatepicker #newcompanydoi="ngbDatepicker"
+                                        (dateSelect)="onNewCompanyDateChange($event)" [minDate]="minDate"
+                                        [maxDate]="maxDate" />
+                                      <button class="btn btn-transparent" (click)="newcompanydoi.toggle()"
+                                        type="button"><svg width="24" height="24" viewBox="0 0 24 24">
+                                          <use xlink:href="#month"></use>
+                                        </svg></button>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-3 company-ctaxstatus">
+                                  <div class="form-group">
+                                    <label for="company-ctaxstatus">Tax Status</label>
+                                    <div class="form-control ng-select-form-control">
+                                      <ng-select name="company-ctaxstatus" [(ngModel)]="objNewCompany.TaxStatusId"
+                                        (change)="onNewCompanyTaxStatusChanged()" [disabled]="!isEdit" appendTo="body" [dropdownPosition]="'bottom'">
+                                        <ng-option *ngFor="let taxStatus of nonIndividualTaxStatus"
+                                          [value]="taxStatus.Id">{{
+                                          taxStatus.Name }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-2 company-ctaxslab">
+                                  <div class="form-group">
+                                    <label for="company-ctaxslab">Tax Slab</label>
+                                    <div class="form-control ng-select-form-control">
+                                      <ng-select name="company-ctaxslab" [(ngModel)]="objNewCompany.TaxSlabId"
+                                        (change)="onNewCompanyTaxSlabChanged()" [disabled]="!isEdit" appendTo="body" [dropdownPosition]="'bottom'">
+                                        <ng-option *ngFor="let taxSlab of nonIndividualTaxSlabs" [value]="taxSlab.Id">{{
+                                          taxSlab.Name }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                  <h4 class="form-section-title text-uppercase">
+                                    AUTHORIZED Personel Details
+                                  </h4>
+                                </div>
+                                <div class="col-sm-4 company-cauthname1">
+                                  <div class="form-group">
+                                    <label for="company-cauthname1">AUTHORIZED SIGNITORY NAME - 1</label>
+                                    <div class="form-control ng-select-form-control">
+                                      <ng-select name="company-cauthname1"
+                                        [(ngModel)]="objNewCompany.AuthorizedPerson1UID"
+                                        (change)="onAuthorizedPerson1UIDChanged()" [disabled]="!isEdit" appendTo="body" [dropdownPosition]="'bottom'">
+                                        <ng-option *ngFor="let memberItem of members" [value]="memberItem.UID">{{
+                                          memberItem.Name }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-sm-4 company-cauthdesignation1">
+                                  <div class="form-group">
+                                    <label for="company-cauthdesignation1">Designation</label>
+                                    <input type="text" class="form-control" id="company-cauthdesignation1"
+                                      name="company-cauthdesignation1" placeholder=""
+                                      [(ngModel)]="objNewCompany.AuthorizedPerson1Designation"
+                                      (blur)="onValidateNewCompany()" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-12"></div>
+
+                                <div class="col-sm-4 company-cauthname2">
+                                  <div class="form-group">
+                                    <label for="company-cauthname2">AUTHORIZED SIGNITORY NAME - 2</label>
+                                    <div class="form-control ng-select-form-control">
+                                      <ng-select name="company-cauthname2"
+                                        [(ngModel)]="objNewCompany.AuthorizedPerson2UID"
+                                        (change)="onAuthorizedPerson2UIDChanged()" [disabled]="!isEdit" appendTo="body" [dropdownPosition]="'bottom'">
+                                        <ng-option *ngFor="let memberItem of members" [value]="memberItem.UID">{{
+                                          memberItem.Name }}</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4 company-cauthdesignation2">
+                                  <div class="form-group">
+                                    <label for="company-cauthdesignation2">Designation</label>
+                                    <input type="text" class="form-control cauthdesignation"
+                                      id="company-cauthdesignation2" name="company-cauthdesignation2" placeholder=""
+                                      [(ngModel)]="objNewCompany.AuthorizedPerson2Designation"
+                                      (blur)="onValidateNewCompany()" />
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </li>
+                        </ul>
+                        <div [ngbNavOutlet]="navNonIndividual"></div>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <hr />
+                      <div class="form-sections">
+                        <h4 class="form-section-title text-uppercase">
+                          Select Next Step
+                        </h4>
+                        <div class="row">
+                          <div class="col-sm-4 proceedto">
+                            <div class="form-group">
+                              <label for="proceedto">Proceed to</label>
+                              <div class="form-control ng-select-form-control">
+                                <ng-select name="proceedto" [(ngModel)]="proceedTo" [disabled]="!isEdit"
+                                  appendTo="body" [dropdownPosition]="'bottom'">
+                                  <ng-option value="Comprehensive Plan">Comprehensive Plan</ng-option>
+                                  <ng-option value="Account Opening">Account Opening</ng-option>
+                                </ng-select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-footer">
+                  <ng-container *ngIf="mode == 'create'">
+                    <button type="button" class="btn btn-primary btn-lg proceed" (click)="onProceed()"
+                      [disabled]="isBusy">
+                      <div *ngIf="isBusy">
+                        <span class="spinner-border text-light" style="margin-right: 10px; vertical-align: middle;"
+                          role="status"></span>
+                        <span>Proceed</span>
+                      </div>
+                      <span *ngIf="!isBusy">Proceed</span>
+                    </button>
+                  </ng-container>
+                  <ng-container *ngIf="mode == 'edit'">
+                    <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed" (click)="onProceed()"
+                      [disabled]="isBusy">
+                      <div *ngIf="isBusy">
+                        <span class="spinner-border text-light" style="margin-right: 10px; vertical-align: middle;"
+                          role="status"></span>
+                        <span>Proceed</span>
+                      </div>
+                      <span *ngIf="!isBusy">Proceed</span>
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                      (click)="onNext()">Proceed</button>
+                  </ng-container>
+                  <ng-container *ngIf="mode == 'verify'">
+                    <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed" (click)="onProceed()"
+                      [disabled]="isBusy">
+                      <div *ngIf="isBusy">
+                        <span class="spinner-border text-light" style="margin-right: 10px; vertical-align: middle;"
+                          role="status"></span>
+                        <span>Proceed</span>
+                      </div>
+                      <span *ngIf="!isBusy">Proceed</span>
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                      (click)="onNext()">Proceed</button>
+                  </ng-container>
+                  <ng-container *ngIf="mode == 'externalverify'">
+                    <button type="button" class="btn btn-primary btn-lg proceed" (click)="onNext()">Next</button>
+                  </ng-container>
+                  <ng-container *ngIf="mode == 'viewdetails'">
+                    <button type="button" class="btn btn-primary btn-lg proceed" (click)="onNext()">Proceed</button>
+                  </ng-container>
+                </div>
+              </div>
+            </section>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Beau+Rivage&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap');
+
+
+html {
+    -webkit-print-color-adjust: exact;
+}
+
+body {
+    // font-family: 'Poppins', sans-serif;
+    font-family: "Cabin", sans-serif;
+    // text-align: justify;
+    
+}
+
+@page {
+    margin-top: 0.25in;
+    margin-right: 0.25in;
+    margin-left: 0.25in;
+    margin-bottom: 0.25in;
+}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Beau+Rivage&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap');
+
+
+
+// html {
+//     -webkit-print-color-adjust: exact;
+// }
+
+
+body 
+{ margin-bottom: 20px;
+    font-family: "Cabin", sans-serif 
+}
+table, table td, table th
+{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    border-collapse: collapse;
+}
+table td p
+{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+}
+.table-bordered, .table-bordered td, .table-bordered th
+{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    
+}
+.table.table-sm, .table.table-sm td, .table.table-sm th
+{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+
+}
+.table-box
+{
+    margin-right: 10px;
+}
+.table-box td
+{
+    height: 24px;
+    width: 24px;
+    text-align: start;
+    vertical-align: text-top;
+    padding: 5px 8px;
+    
+    /*padding: 1px 1px 1px 1px;*/
+}
+
+
+.page-border {
+    margin: 0 0 0 0;
+    padding: 45px;
+    border: 1px solid #000000;
+    // height: 860px;
+    margin-bottom: 15px;
+    position: relative;
+}
+.engagement-footer {
+    position: absolute;
+    bottom: 2px;
+    right: 5px;
+//   margin-right: auto;
+
+}
+
+// .footer {
+//     float: right;
+// }
+
+// footer .pagenum:before {
+//     content: counter(page);
+// }
+
+
+.signature-section {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.signature-box {
+    border: 1px solid black;
+    width: 30%;
+    height: 45px;
+    text-align: center;
+    padding-top: 30px;
+}
+
+.table-box-new
+{
+    margin-right: 10px;
+}
+.table-box-new td
+{
+    height: 34px;
+    width: 45px;
+    text-align: center;
+    vertical-align: text-top;
+    padding: 2px;
+   
+}
+// .table-box-new tr
+// {
+//     height: 34px;
+//     width: 45px;
+//     text-align: center;
+//     vertical-align: text-top;
+//     padding: 10px;
+   
+// }
+/* Hide the default radio button */
+input[type="radio"] {
+    display: none;
+  }
+  
+  /* Style the label to include a custom square radio button */
+  label {
+    display: inline-block;
+    position: relative;
+    padding-left: 18px; /* Adjust the spacing as needed */
+    cursor: pointer;
+    user-select: none;
+  
+    /* Custom square */
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px; /* Adjust the width as needed */
+      height: 14px; /* Adjust the height as needed */
+      border: 1px solid #000; /* Border color */
+      background-color: #fff; /* Background color */
+    }
+  }
+  
+  /* Style the square to change appearance when the radio button is checked */
+  input[type="radio"]:checked + label::before {
+    background-color: #000; /* Background color when checked */
+  }
+  
+  .first-td{
+    width: 10%;
+  }

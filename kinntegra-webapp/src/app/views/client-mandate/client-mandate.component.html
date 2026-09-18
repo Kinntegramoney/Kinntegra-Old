@@ -1,0 +1,274 @@
+<div class="main">
+    <div class="container-fluid">
+        <!-- <div class="table-top-section d-flex justify-content-between align-items-center mb-4"> -->
+        <!-- <a class="back-btn" href="">
+                <i class="icon-left-arrow"></i>
+                Go Back
+            </a> -->
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"></app-header-right-template>
+        </div>
+        <!-- </div> -->
+
+        <div class="col d-flex justify-content-center align-item-center">
+            <div class="card w-100">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                            <app-client-leftbar-template [activeComp]="'mandate'" [activeSubComp]="''"
+                                [clientId]="clientId" [leadId]="leadId" [mode]="mode"
+                                [progressPercentage]="66"></app-client-leftbar-template>
+                        </div>
+
+                        <form class="col-lg-8 col-xl-9 col-md-8 step-forms ps-0">
+
+                            <section class="trial active" id="mandate_creation" data-step="1" autocomplete="off">
+                                <div class="form-inner-section">
+                                    <div class="form-header">
+                                        <h3 class="card-title d-inline"><i
+                                                class="icon-left-arrow back-btn back_to_creation"
+                                                (click)="onBackClicked()"></i>Mandate Creation
+
+                                        </h3>
+                                        <!-- <span class="edit-now float-end mt-1">Edit</span> -->
+                                    </div>
+                                    <div class="form-sub-header-warning"
+                                        *ngIf="mode=='verify' && modificationLog.length > 0">
+                                        <div *ngFor="let item of modificationLog">
+                                            <div>
+                                                <span class="badge badge-default badge-pill">{{item.ModificationDate |
+                                                    date:
+                                                    'dd-MM-yyyy'}}</span>
+                                            </div>
+                                            <div class="content">{{item.ModificationReason}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-content">
+                                        <div class="row flex-column">
+                                            <div class="col-12" id="account_detail">
+                                                <div class="form-sections">
+                                                    <ul ngbNav #navAccount="ngbNav"
+                                                        class="nav nav-tabs accounts-tab no-wrap"
+                                                        [(activeId)]="activeTab">
+                                                        <li [ngbNavItem]="i" class="nav-item mb-4"
+                                                            *ngFor="let accountItem of objAccounts; index as i">
+                                                            <button ngbNavLink class="nav-link add-bank bank_added"
+                                                                (click)="onAccountItemClicked(accountItem)">{{i+1}} -
+                                                                {{accountItem.AccountHolderName}}</button>
+                                                            <ng-template ngbNavContent>
+                                                                <div class="form-sections mt-3">
+                                                                    <ngx-datatable class="material"
+                                                                        [rows]="accountItem.ClientAccountMandate"
+                                                                        [columnMode]="ColumnMode.force"
+                                                                        [headerHeight]="50" [rowHeight]="'auto'"
+                                                                        [scrollbarV]="false" [scrollbarH]="true">
+                                                                        <ngx-datatable-column [sortable]="false"
+                                                                            name="clientKycBankId" [width]="300">
+                                                                            <ng-template ngx-datatable-header-template
+                                                                                let-column="column">
+                                                                                Bank Name
+                                                                            </ng-template>
+                                                                            <ng-template ngx-datatable-cell-template
+                                                                                let-rowIndex="rowIndex"
+                                                                                let-value="value" let-row="row">
+                                                                                <div *ngIf="row.Status!=''">
+                                                                                    <span>{{row.Bank.BankName}}</span><br />
+                                                                                    <span>A/c No: {{row.Bank.AccountNumber}}</span> | <span>Mandate Id: {{row.BSEMandateId}}</span>
+                                                                                </div>
+                                                                                <div class="form-control ng-select-form-control"
+                                                                                    *ngIf="row.Status==''">
+                                                                                    <ng-select appendTo="body"
+                                                                                        [items]="banks"
+                                                                                        bindLabel="BankAccountName"
+                                                                                        bindValue="Id" groupBy="Name"
+                                                                                        [(ngModel)]="row['ClientKycBankId']"
+                                                                                        name="ClientKycBankId_{{i}}_{{rowIndex}}"
+                                                                                        (change)="onBankChanged(row)"
+                                                                                        [disabled]="(row.Status!='')"
+                                                                                        [dropdownPosition]="'bottom'">
+                                                                                        <ng-template ng-optgroup-tmp
+                                                                                            let-item="item">
+                                                                                            {{item.Name ||
+                                                                                            'Account Holder'}}
+                                                                                        </ng-template>
+                                                                                        <ng-template ng-option-tmp
+                                                                                            let-item="item">
+                                                                                            <div class="line">
+                                                                                                {{item.BankName}}</div>
+                                                                                            <div class="line">
+                                                                                                {{item.AccountNumber}}
+                                                                                            </div>
+                                                                                        </ng-template>
+                                                                                    </ng-select>
+                                                                                </div>
+                                                                            </ng-template>
+                                                                        </ngx-datatable-column>
+                                                                        <ngx-datatable-column [sortable]="false"
+                                                                            name="amount" [width]="150">
+                                                                            <ng-template ngx-datatable-header-template
+                                                                                let-column="column">
+                                                                                Amount
+                                                                            </ng-template>
+                                                                            <ng-template ngx-datatable-cell-template
+                                                                                let-rowIndex="rowIndex"
+                                                                                let-value="value" let-row="row">
+                                                                                <div *ngIf="row.Status!=''">
+                                                                                    <span>{{row.Amount}}</span>
+                                                                                </div>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder="Enter Bank Name"
+                                                                                    id="bank-bank_name_pid_bank.sr_no"
+                                                                                    name="Amount_{{i}}_{{rowIndex}}"
+                                                                                    [(ngModel)]="row['Amount']"
+                                                                                    (blur)="onAmountChanged(row)"
+                                                                                    [disabled]="(row.Status!='')"
+                                                                                    *ngIf="row.Status==''">
+                                                                            </ng-template>
+                                                                        </ngx-datatable-column>
+                                                                        <ngx-datatable-column [sortable]="false"
+                                                                            name="mandateTypeId" [width]="150">
+                                                                            <ng-template ngx-datatable-header-template
+                                                                                let-column="column">
+                                                                                Type
+                                                                            </ng-template>
+                                                                            <ng-template ngx-datatable-cell-template
+                                                                                let-rowIndex="rowIndex"
+                                                                                let-value="value" let-row="row">
+                                                                                <div *ngIf="row.Status!=''">
+                                                                                    <span>{{row.MandateTypeName}}</span>
+                                                                                </div>
+                                                                                <div class="form-control ng-select-form-control"
+                                                                                    *ngIf="row.Status==''">
+                                                                                    <ng-select appendTo="body"
+                                                                                        [(ngModel)]="row['MandateTypeId']"
+                                                                                        name="MandateTypeId_{{i}}_{{rowIndex}}"
+                                                                                        (change)="onMandateTypeChanged(row)"
+                                                                                        [disabled]="(row.Status!='')"
+                                                                                        [dropdownPosition]="'bottom'">
+                                                                                        <ng-option
+                                                                                            *ngFor="let mandateType of mandateTypes"
+                                                                                            [value]="mandateType.Id">{{mandateType.Name}}</ng-option>
+                                                                                    </ng-select>
+                                                                                </div>
+                                                                            </ng-template>
+                                                                        </ngx-datatable-column>
+                                                                        <ngx-datatable-column name="status"
+                                                                            [sortable]="false" [width]="200">
+                                                                            <ng-template ngx-datatable-header-template
+                                                                                let-column="column">
+                                                                                Status
+                                                                            </ng-template>
+                                                                            <ng-template ngx-datatable-cell-template
+                                                                                let-rowIndex="rowIndex"
+                                                                                let-value="value" let-row="row">
+                                                                                <ng-template #htmlRemarkContent>
+                                                                                    <div innerHTML="{{row.BSERemarks}}"
+                                                                                        style="text-align: left;"></div>
+                                                                                </ng-template>
+                                                                                <span
+                                                                                    class="badge badge-success badge-pill"
+                                                                                    *ngIf="row.Status=='APPROVED'">{{row.Status}}
+                                                                                </span>
+                                                                                <span
+                                                                                    class="badge badge-danger badge-pill"
+                                                                                    *ngIf="row.Status=='REJECTED'"
+                                                                                    [ngbTooltip]="htmlRemarkContent"
+                                                                                    tooltipClass="custom-tooltip"
+                                                                                    placement="left" triggers="hover"
+                                                                                    container="body">{{row.Status}}
+                                                                                </span>
+                                                                                <span
+                                                                                    class="badge badge-warning badge-pill"
+                                                                                    *ngIf="(((row.Status!='APPROVED') && (row.Status!='REJECTED')) && (row.Status!=''))">{{row.Status}}
+                                                                                </span>
+                                                                                <button *ngIf="row.Status==''"
+                                                                                    type="button"
+                                                                                    id="bank_delete_pid_bank.sr_no"
+                                                                                    class="delete-bank-button btn btn-danger btn-width-sm w-20"
+                                                                                    data-pid="pid"
+                                                                                    data-bank_count="bank.sr_no"
+                                                                                    (click)="deleteMandateRow(accountItem,row,rowIndex)">X</button>
+                                                                            </ng-template>
+                                                                        </ngx-datatable-column>
+                                                                    </ngx-datatable>
+                                                                    <div class="mandate-list mt-3"
+                                                                        *ngIf="mode == 'create' || mode == 'edit'">
+                                                                        <a class="btn btn-link d-block m-auto add-more-mandate"
+                                                                            (click)="onAddMandateClicked(accountItem)">
+                                                                            <svg width="30" height="30"
+                                                                                viewBox="-2 -2 28 28" class="mr-0">
+                                                                                <use xlink:href="#add-btn"></use>
+                                                                            </svg> Add Mandate
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </ng-template>
+                                                        </li>
+                                                    </ul>
+                                                    <div [ngbNavOutlet]="navAccount"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-footer">
+                                        <ng-container *ngIf="mode == 'create'">
+                                            <button type="button" class="btn btn-primary btn-lg proceed"
+                                                (click)="onProceed()" [disabled]="isBusy">
+                                                <div *ngIf="isBusy">
+                                                    <span class="spinner-border text-light"
+                                                        style="margin-right: 10px; vertical-align: middle;"
+                                                        role="status"></span>
+                                                    <span>Proceed</span>
+                                                </div>
+                                                <span *ngIf="!isBusy">Proceed</span>
+                                            </button>
+                                        </ng-container>
+                                        <ng-container *ngIf="mode == 'edit'">
+                                            <!-- <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                                (click)="onProceed()" [disabled]="isBusy">
+                                                <div *ngIf="isBusy">
+                                                    <span class="spinner-border text-light"
+                                                        style="margin-right: 10px; vertical-align: middle;"
+                                                        role="status"></span>
+                                                    <span>Proceed</span>
+                                                </div>
+                                                <span *ngIf="!isBusy">Proceed</span>
+                                            </button>
+                                            <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                                                (click)="onNext()">Proceed</button> -->
+                                            <button type="button" class="btn btn-primary btn-lg proceed"
+                                                (click)="onProceed()" [disabled]="isBusy">
+                                                <div *ngIf="isBusy">
+                                                    <span class="spinner-border text-light"
+                                                        style="margin-right: 10px; vertical-align: middle;"
+                                                        role="status"></span>
+                                                    <span>Proceed</span>
+                                                </div>
+                                                <span *ngIf="!isBusy">Proceed</span>
+                                            </button>
+                                        </ng-container>
+                                        <ng-container *ngIf="mode == 'verify'">
+                                            <button type="button" class="btn btn-primary btn-lg proceed me-3"
+                                                (click)="onApprovedClicked()">Approve</button>
+                                            <button type="button" class="btn btn-danger btn-lg"
+                                                (click)="onRejectClicked()">Reject</button>
+                                        </ng-container>
+                                        <ng-container *ngIf="mode == 'externalverify'">
+                                            <button type="button" class="btn btn-primary btn-lg proceed"
+                                                (click)="onNext()">Next</button>
+                                        </ng-container>
+                                        <ng-container *ngIf="mode == 'viewdetails'">
+                                            <button type="button" class="btn btn-primary btn-lg proceed"
+                                                (click)="onNext()">Proceed</button>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </section>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

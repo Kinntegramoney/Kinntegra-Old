@@ -1,0 +1,331 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"></app-header-right-template>
+        </div>
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        <app-transaction-sell-leftbar-template [transactionId]="clientTransactionId"
+                            [transactionPortfolioTypeId]="transactionPortfolioTypeId"
+                            [transactionPortfolioType]="portfolioName"
+                            [transactionPortfolioTypeCode]="transactionPortfolioTypeCode"
+                            [progressPercentage]="progressPercentage"></app-transaction-sell-leftbar-template>
+                    </div>
+                    <div class="col-lg-8 col-xl-9 step-forms col-md-8 ps-0" *ngIf="transactionPlanCode == 'L'">
+                        <div class="form-inner-section">
+                            <div class="form-header">
+                                <h3 class="card-title d-inline">
+                                    <i class="icon-left-arrow back-btn" (click)="onBackClicked()"></i>
+                                    <span *ngIf="transactionPortfolioTypeCode=='A'">Portfolio: </span>
+                                    <span *ngIf="transactionPortfolioTypeCode!='A'">Portfolio {{portfolioNumber}}:
+                                    </span>
+                                    <span class="text-capitalize">{{portfolioName}}</span>
+                                </h3>
+                            </div>
+                            <div class="form-content">
+                                <div class="transaction-wrapper dynamic">
+                                    <div class="transaction-steps">
+                                        <h4 class="text-uppercase mb-3">Select where to sell from</h4>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group custom-radio-btn mb-0">
+                                                    <div class="form-check form-check-inline m-0">
+                                                        <input class="form-check-input" type="radio" name="allocation"
+                                                            id="recommended" value="R"
+                                                            [(ngModel)]="objClientTransactionPortfolio.SellFrom"
+                                                            (change)="onSellFromChanged($event)">
+                                                        <label class="form-check-label" for="recommended">
+                                                            <span class="label">Recommended</span>
+                                                        </label>
+                                                        <!-- <label class="form-check-label" for="recommended">
+                                                            <span class="label">Recommended <span
+                                                                    class="badge badge-success badge-pill ml-2">Exit
+                                                                    Free + Tax Free</span></span>
+                                                            <h6 class="mb-0">₹25.33L</h6>
+                                                        </label> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group custom-radio-btn mb-0">
+                                                    <div class="form-check form-check-inline m-0">
+                                                        <input class="form-check-input" type="radio" name="allocation"
+                                                            id="custom" value="C"
+                                                            [(ngModel)]="objClientTransactionPortfolio.SellFrom"
+                                                            (change)="onSellFromChanged($event)">
+                                                        <label class="form-check-label" for="custom">
+                                                            <span class="label">Custom</span>
+                                                        </label>
+                                                        <!-- <label class="form-check-label" for="custom">
+                                                            <span class="label">Custom</span>
+                                                            <h6 class="mb-0">₹40L</h6>
+                                                        </label> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="row" *ngIf="objClientTransactionPortfolio.SellFrom == 'R'">
+                                            <div class="col-md-6">
+                                                <div class="form-group custom-radio-btn mb-0 ms-4">
+                                                    <div class="form-check form-check-inline m-0">
+                                                        <div *ngFor="let item of recommendedData" class="mb-1">
+                                                            <span class="me-2">{{item.Name}}</span>
+                                                            <span class="badge badge-success badge-pill ms-1 me-1"
+                                                                *ngIf="item.IsRecommended == true">Recommended</span>
+                                                            <span>(₹ {{item.CurrentAmount}})</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <div class="transaction-steps"
+                                        *ngIf="objClientTransactionPortfolio.SellFrom == 'C'">
+                                        <h4 class="text-uppercase mb-3">Sell Type</h4>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <div class="form-group custom-radio-btn mb-0">
+                                                    <div class="form-check form-check-inline m-0">
+                                                        <input class="form-check-input" type="radio" name="selltype"
+                                                            id="selltype_all" value="A"
+                                                            [(ngModel)]="objClientTransactionPortfolio.CustomSellType"
+                                                            (change)="onCustomSellTypeChanged($event)">
+                                                        <label class="form-check-label" for="selltype_all">
+                                                            <span class="label">All</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group custom-radio-btn mb-0">
+                                                    <div class="form-check form-check-inline m-0">
+                                                        <input class="form-check-input" type="radio" name="selltype"
+                                                            id="selltype_partial" value="P"
+                                                            [(ngModel)]="objClientTransactionPortfolio.CustomSellType"
+                                                            (change)="onCustomSellTypeChanged($event)">
+                                                        <label class="form-check-label" for="selltype_partial">
+                                                            <span class="label">Partial</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group custom-radio-btn mb-0">
+                                                    <div class="form-check form-check-inline m-0">
+                                                        <input class="form-check-input" type="radio" name="selltype"
+                                                            id="selltype_exit_free" value="E"
+                                                            [(ngModel)]="objClientTransactionPortfolio.CustomSellType"
+                                                            (change)="onCustomSellTypeChanged($event)">
+                                                        <label class="form-check-label" for="selltype_exit_free">
+                                                            <span class="label">Exit Free</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group custom-radio-btn mb-0">
+                                                    <div class="form-check form-check-inline m-0">
+                                                        <input class="form-check-input" type="radio" name="selltype"
+                                                            id="selltype_tax_free" value="T"
+                                                            [(ngModel)]="objClientTransactionPortfolio.CustomSellType"
+                                                            (change)="onCustomSellTypeChanged($event)">
+                                                        <label class="form-check-label" for="selltype_tax_free">
+                                                            <span class="label">Tax Free</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group custom-radio-btn mb-0">
+                                                    <div class="form-check form-check-inline m-0">
+                                                        <input class="form-check-input" type="radio" name="selltype"
+                                                            id="selltype_long_term" value="L"
+                                                            [(ngModel)]="objClientTransactionPortfolio.CustomSellType"
+                                                            (change)="onCustomSellTypeChanged($event)">
+                                                        <label class="form-check-label" for="selltype_long_term">
+                                                            <span class="label">Exit Free Long Term</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="transaction-steps"
+                                        *ngIf="objClientTransactionPortfolio.SellFrom == 'R'">
+                                        <div class="row">
+                                            <div class="col-xl-3 col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Enter Amount</label>
+                                                    <input type="text" class="form-control" placeholder="Enter Amount"
+                                                        [(ngModel)]="objClientTransactionPortfolio.Amount"
+                                                        (input)="onChangeEnterAmount()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-footer">
+                                <button class="btn btn-primary btn-lg ml-4" data-toggle="modal" data-target="#cancelsip"
+                                    (click)="onProceed()" [disabled]="showProceed">Proceed</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-xl-9 step-forms col-md-8 ps-0"
+                        *ngIf="transactionPlanCode == 'SWP' || transactionPlanCode == 'ASWP'">
+                        <div class="form-inner-section">
+                            <div class="form-header">
+                                <h3 class="card-title d-inline">
+                                    <i class="icon-left-arrow back-btn" (click)="onBackClicked()"></i>
+                                    <span>Sell: </span>
+                                    <span class="text-capitalize" *ngIf="transactionPlanCode == 'SWP'">SWP</span>
+                                    <span class="text-capitalize" *ngIf="transactionPlanCode == 'ASWP'">Advance
+                                        SWP</span>
+                                </h3>
+                            </div>
+                            <div class="form-content">
+                                <div class="transaction-wrapper dynamic">
+                                    <div class="transaction-steps">
+                                        <div class="row">
+                                            <div class="col-xl-4 col-md-6 amount1">
+                                                <div class="form-group">
+                                                    <label>SWP Setup Amount</label>
+                                                    <input type="number" class="form-control" id="amount" name="amount"
+                                                        placeholder="Enter Amount" value=""
+                                                        [(ngModel)]="portfolioWealthMarketValue" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="transaction-steps">
+                                        <div class="row" *ngIf="existingSWP.length > 0">
+                                            <div class="col-xl-12 col-md-12">
+                                                <h6>Existing SWP</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngFor="let item of existingSWP; index as i">
+                                            <div class="col-xl-2 col-md-3">
+                                                <div class="form-group">
+                                                    <label>Frequency</label>
+                                                    <span class="form-control">{{item.SWPFrequency}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-md-3">
+                                                <div class="form-group">
+                                                    <label>Months</label>
+                                                    <span class="form-control">{{item.SWPMonths}}</span>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-xl-3 col-md-3">
+                                                <div class="form-group">
+                                                    <label>SWP Withdrawal %</label>
+                                                    <span class="form-control">{{item.SWPPercentage}}</span>
+                                                </div>
+                                            </div> -->
+                                            <div class="col-xl-2 col-md-3">
+                                                <div class="sip_amount1">
+                                                    <div class="form-group mb-3">
+                                                        <label>SWP Amount</label>
+                                                        <span class="form-control amount">{{item.SWPAmount}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-md-3">
+                                                <div class="form-group">
+                                                    <label>Start Date</label>
+                                                    <span class="form-control">{{item.SWPStartDate |
+                                                        date:'dd-MM-yyyy'}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="existingSWP.length > 0">
+                                            <div class="col-xl-12 col-md-12">
+                                                <h6>New SWP</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-3 col-md-3">
+                                                <div class="form-group">
+                                                    <label>Frequency</label>
+                                                    <div class="form-control ng-select-form-control">
+                                                        <ng-select [(ngModel)]="selectedSwpFrequency" name="frequency"
+                                                            (change)="onSwpFrequencyChanged()"
+                                                            [dropdownPosition]="'bottom'">
+                                                            <ng-option value="Monthly">Monthly</ng-option>
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-md-3">
+                                                <div class="form-group">
+                                                    <label>No. of Months (max 60)</label>
+                                                    <input type="number" class="form-control"
+                                                        [(ngModel)]="objClientTransactionPortfolio.SWPMonths"
+                                                        placeholder="SWP Months" name="sip_months" id="sip_months"
+                                                        min="1" max="60" (blur)="onSWPMonthsChanged()">
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-xl-3 col-md-3">
+                                                <div class="form-group">
+                                                    <label>SWP Withdrawal %</label>
+                                                    <input type="number" class="form-control"
+                                                        [(ngModel)]="objClientTransactionPortfolio.SWPPercentage"
+                                                        placeholder="Sip Tenure" name="sip_tenure" id="sip_tenure"
+                                                        (blur)="onSWPPercentageChanged()">
+                                                </div>
+                                            </div> -->
+                                            <div class="col-xl-3 col-md-3">
+                                                <div class="sip_amount1">
+                                                    <div class="form-group mb-3">
+                                                        <label>SWP Amount (max. {{maxSWPAmount}})
+                                                            <span ngbTooltip="Calculated at 9.5%" tooltipClass="custom-tooltip"
+                                                                placement="right" triggers="hover">
+                                                                <svg width="32" height="32" viewBox="0 0 60 60"
+                                                                    style="margin: -6px;">
+                                                                    <use xlink:href="#alert-icon" />
+                                                                </svg></span>
+                                                        </label>
+                                                        <input type="number" class="form-control amount"
+                                                            [(ngModel)]="objClientTransactionPortfolio.SWPAmount"
+                                                            placeholder="Enter Amount" name="sip_amount" id="sip_amount"
+                                                            (blur)="onSWPAmountChanged()">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="transaction-steps" *ngIf="showSWPDateOptions">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="text-uppercase">SWP Start Date</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" readonly placeholder="dd-mm-yyyy"
+                                                            name="start-date" [(ngModel)]="swpStartDate" ngbDatepicker
+                                                            #startdate="ngbDatepicker" [minDate]="minDate"
+                                                            (dateSelect)="onSwpStartDate($event)" />
+                                                        <button class="btn btn-transparent" (click)="startdate.toggle()"
+                                                            type="button"><svg width="24" height="24"
+                                                                viewBox="0 0 24 24">
+                                                                <use xlink:href="#month"></use>
+                                                            </svg></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-footer">
+                                <button class="btn btn-primary btn-lg ml-4" data-toggle="modal" data-target="#cancelsip"
+                                    (click)="onProceed()" [disabled]="showProceed">Proceed</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

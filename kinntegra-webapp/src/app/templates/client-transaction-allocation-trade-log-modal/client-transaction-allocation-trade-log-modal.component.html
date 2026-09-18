@@ -1,0 +1,34 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">{{OrderItem.SchemeName}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="activeModal.dismiss('Cross click')">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="card small-card option-2 mb-4">
+            <div class="card-header">
+                <h6 class="card-title">View Log</h6>
+            </div>
+            <div class="card-body card-text1">
+                <div class="transaction-wrapper trade-status">
+                    <div class="transaction-steps" *ngFor="let tradeStatusItem of OrderItem.TradeStatusLog">
+                        <div class="trade-title mb-2">
+                            <h4 class="mb-0">{{tradeStatusItem.LogMessage}}</h4>
+                            <div class="info">
+                                <span>{{
+                                    tradeStatusItem.LogDate |
+                                    date:"hh:mm a | EEEE, d MMMM y": "IST"
+                                    }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary col-sm-3" (click)="onClose()">Close</button>
+    </div>
+</div>

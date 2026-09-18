@@ -1,0 +1,101 @@
+<div class="table-top-section">
+    <div class="section-header mb-4">
+        <app-header-right-template class="section-header"></app-header-right-template>
+    </div>
+</div>
+<div class="card w-100">
+    <div class="card-body">
+        <h3 class="card-title border-bottom">
+            <i class="icon-left-arrow back-btn mb-4" (click)="onBack()"></i>
+            Transaction Tagging: Step 2
+        </h3>
+        <div class="row">
+            <div class="col-lg-12 col-xl-12">
+                <ngx-datatable class="material" style="height: 400px;" [rows]="historyData" [columnMode]="ColumnMode.force" [headerHeight]="50"
+                    [footerHeight]="50" [rowHeight]="50" [scrollbarH]="false" [scrollbarV]="true" [selected]="selectedHistoryData"
+                    [selectionType]="SelectionType.checkbox" (activate)="onActivate($event)"
+                    (select)="onSelectAllChanged($event)" [displayCheck]="onDisplayCheck">
+                    <ngx-datatable-column [width]="50" [sortable]="true" name="UCC">
+                        <ng-template ngx-datatable-header-template let-column="column">UCC</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            <span *ngIf="row.UCC != ''">{{row.UCC}}</span>
+                            <span *ngIf="row.UCC == ''">No UCC</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="50" [sortable]="true" name="FolioNumber">
+                        <ng-template ngx-datatable-header-template let-column="column">Folio Number</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            {{row.FolioNumber}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="250" [sortable]="true" name="SchemeName">
+                        <ng-template ngx-datatable-header-template let-column="column">Scheme Name</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            {{row.SchemeName}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="50" [sortable]="true" name="Portfolio">
+                        <ng-template ngx-datatable-header-template let-column="column">Portfolio</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            {{row.Portfolio}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="50" [sortable]="true" name="OrderDate">
+                        <ng-template ngx-datatable-header-template let-column="column">Date</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            {{row.OrderDate | date:'dd MMM yyyy'}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="50" [sortable]="true" name="PurchaseRedemptionType">
+                        <ng-template ngx-datatable-header-template let-column="column">Type</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            <ng-template #htmlWealthContent>
+                                <div innerHTML="{{row.TransactionType}}"
+                                    style="text-align: left;"></div>
+                            </ng-template>
+                            <span [ngbTooltip]="htmlWealthContent"
+                                tooltipClass="custom-tooltip"
+                                placement="right" triggers="hover"
+                                container="body">{{row.PurchaseRedemptionType}}</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="50" [sortable]="true" name="Units">
+                        <ng-template ngx-datatable-header-template let-column="column">Units</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            {{row.Units}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="50" [sortable]="true" name="Amount">
+                        <ng-template ngx-datatable-header-template let-column="column">Amount</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            {{row.Amount}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="80" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+                        [resizeable]="false" [headerCheckboxable]="false" [checkboxable]="true">
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="text-right">
+            <button type="button" class="btn btn-primary btn-lg proceed" (click)="onProceed()">
+                <div *ngIf="isBusy">
+                    <span class="spinner-border text-light" style="margin-right: 10px; vertical-align: middle;"
+                        role="status"></span>
+                    <span>Club</span>
+                </div>
+                <span *ngIf="!isBusy">Club</span>
+            </button>
+        </div>
+    </div>
+</div>

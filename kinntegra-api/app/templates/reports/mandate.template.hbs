@@ -1,0 +1,603 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{!--
+    <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+    <title>Kinntegra</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    {{!--
+    <link href="{{ public_path('/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ public_path('/css/mdb-app.min.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ public_path('/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ public_path('/favicon.ico') }}" type="image/x-icon"> --}}
+</head>
+
+<body>
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <table style="width: 100%;">
+                    <tr>
+                        <td rowspan="2" style="width: 170px; padding:0px;">
+                            <p style="font-weight: bold; text-decoration: underline;">NACH/ECS/AUTO DEBIT MANDATE
+                                INSTRUCTION FORM</p>
+                            <P>Tick(<img src="{{CheckmarkImagePath}}" style="margin-bottom: -5px;"/>)</P>
+                        </td>
+                        <td style="padding:0px">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td
+                                        style="vertical-align: middle; width: 35px; padding-right: 5px; padding-left: 5px;">
+                                        UMRN</td>
+                                    <td>
+                                        <table class="table table-sm table-bordered table-box" style="width: 100%;">
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width: 40px; padding-right: 5px; text-align: right;">Date</td>
+                                    <td style="padding-right: 5px;">
+                                        <table class="table table-sm table-bordered table-box">
+                                            <tr>
+                                                <td>{{Param.[0].data}}</td>
+                                                <td>{{Param.[1].data}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-right: 5px;">
+                                        <table class="table table-sm table-bordered table-box">
+                                            <tr>
+                                                <td>{{Param.[2].data}}</td>
+                                                <td>{{Param.[3].data}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table class="table table-sm table-bordered table-box">
+                                            <tr>
+                                                <td>{{Param.[4].data}}</td>
+                                                <td>{{Param.[5].data}}</td>
+                                                <td>{{Param.[6].data}}</td>
+                                                <td>{{Param.[7].data}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0px;">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="width: 240px; padding-right: 5px;">Sponsor Bank Code</td>
+                                    <td style="width:165px;">
+                                        <table class="table table-sm table-bordered table-box" style="width:100%;">
+                                            <tr>
+                                                <td style="text-align: left; padding-left: 5px;">ICIC0TREA00</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width: 200px; padding-right: 5px; text-align: right">Utility Code</td>
+                                    <td style="width: 425px;">
+                                        <table class="table table-sm table-bordered table-box" style="width:100%;">
+                                            <tr>
+                                                <td style="text-align: left; padding-left: 5px;">YESB00709000028661</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0px;">
+                <table style="width: 100%;border-spacing: 0; margin:0px;">
+                    <tr>
+                        <td style="width: 65px;">
+                            <table class="table table-sm table-bordered" style="width:100%">
+                                <tr>
+                                    <td style="padding-top: 2px; padding-bottom: 2px;">CREATE<img
+                                            src="{{CheckmarkImagePath}}" style="position: fixed; top: 65px;" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: 2px; padding-bottom: 2px;">MODIFY</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: 2px; padding-bottom: 2px;">CANCEL</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="padding-left: 20px;">
+                            <table style="border-spacing: 0;">
+                                <tr>
+                                    <td style="width: 130px; padding-right: 5px; text-align: left;">I/We hereby
+                                        authorize</td>
+                                    <td style="width: 200px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="width:100%;border-spacing: 0;">
+                                            <tr>
+                                                <td style="text-align: left; padding-left: 5px; font-weight: bold;">ICCL</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width: 120px; padding-right: 5px; text-align: right">to debit (tick <img
+                                            src="{{ CheckmarkImagePath }}" style="margin-bottom: -5px;" />)</td>
+                                    <td style="width: 240px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="width:100%;border-spacing: 0;">
+                                            <tr>
+                                                <td style="text-align: left; padding-left: 5px;"><img
+                                                        src="{{ CheckmarkImagePath }}"
+                                                        style="position: fixed; top: 60px; {{Param.[8].data}}" />SB/CS/CC/SB-NRE/SB-NRO/Other
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-right: 5px; text-align: left; padding-top: 5px;">Bank a/c number
+                                    </td>
+                                    <td colspan="3" style="padding-top: 5px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="width:100%;border-spacing: 0;">
+                                            <tr>
+                                                <td>{{Param.[9].data}}</td>
+                                                <td>{{Param.[10].data}}</td>
+                                                <td>{{Param.[11].data}}</td>
+                                                <td>{{Param.[12].data}}</td>
+                                                <td>{{Param.[13].data}}</td>
+                                                <td>{{Param.[14].data}}</td>
+                                                <td>{{Param.[15].data}}</td>
+                                                <td>{{Param.[16].data}}</td>
+                                                <td>{{Param.[17].data}}</td>
+                                                <td>{{Param.[18].data}}</td>
+                                                <td>{{Param.[19].data}}</td>
+                                                <td>{{Param.[20].data}}</td>
+                                                <td>{{Param.[21].data}}</td>
+                                                <td>{{Param.[22].data}}</td>
+                                                <td>{{Param.[23].data}}</td>
+                                                <td>{{Param.[24].data}}</td>
+                                                <td>{{Param.[25].data}}</td>
+                                                <td>{{Param.[26].data}}</td>
+                                                <td>{{Param.[27].data}}</td>
+                                                <td>{{Param.[28].data}}</td>
+                                                <td>{{Param.[29].data}}</td>
+                                                <td>{{Param.[30].data}}</td>
+                                                <td>{{Param.[31].data}}</td>
+                                                <td>{{Param.[32].data}}</td>
+                                                <td>{{Param.[33].data}}</td>
+                                                <td>{{Param.[34].data}}</td>
+                                                <td>{{Param.[35].data}}</td>
+                                                <td>{{Param.[36].data}}</td>
+                                                <td>{{Param.[37].data}}</td>
+                                                <td>{{Param.[38].data}}</td>
+                                                <td>{{Param.[39].data}}</td>
+                                                <td>{{Param.[40].data}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="border-spacing: 0;">
+                    <tr>
+                        <td style="width: 70px; padding-right: 5px; text-align: left;">with Bank</td>
+                        <td style="width: 170px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="width: 100%;border-spacing: 0;">
+                                <tr>
+                                    <td style="padding-left: 5px; text-align: left;">{{Param.[41].data}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 75px; padding-right: 5px; text-align: right;">IFSC</td>
+                        <td style="width: 200px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="width: 100%;border-spacing: 0;">
+                                <tr>
+                                    <td>{{Param.[42].data}}</td>
+                                    <td>{{Param.[43].data}}</td>
+                                    <td>{{Param.[44].data}}</td>
+                                    <td>{{Param.[45].data}}</td>
+                                    <td>{{Param.[46].data}}</td>
+                                    <td>{{Param.[47].data}}</td>
+                                    <td>{{Param.[48].data}}</td>
+                                    <td>{{Param.[49].data}}</td>
+                                    <td>{{Param.[50].data}}</td>
+                                    <td>{{Param.[51].data}}</td>
+                                    <td>{{Param.[52].data}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width:70px; padding-right: 5px; text-align: right;">or MICR</td>
+                        <td style="width: 180px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="width: 100%;border-spacing: 0;">
+                                <tr>
+                                    <td>{{Param.[53].data}}</td>
+                                    <td>{{Param.[54].data}}</td>
+                                    <td>{{Param.[55].data}}</td>
+                                    <td>{{Param.[56].data}}</td>
+                                    <td>{{Param.[57].data}}</td>
+                                    <td>{{Param.[58].data}}</td>
+                                    <td>{{Param.[59].data}}</td>
+                                    <td>{{Param.[60].data}}</td>
+                                    <td>{{Param.[61].data}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="margin-top: 5px;border-spacing: 0;">
+                    <tr>
+                        <td style="width: 145px; padding-right: 5px; text-align: left;">an amount of Rupees</td>
+                        <td style="width: 450px;padding-right:5px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="width:100%;border-spacing: 0;">
+                                <tr>
+                                    <td style="padding-left: 5px; text-align: left;">{{Param.[62].data}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 175px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="width: 100%;border-spacing: 0;">
+                                <tr>
+                                    <td style="text-align:left; padding-left: 5px;">&#8377; {{Param.[63].data}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="margin-top: 5px;border-spacing: 0;">
+                    <tr>
+                        <td style="width: 80px;">FREQUENCY</td>
+                        <td style="width: 400px;">
+                            <table style="border-spacing: 0;">
+                                <tr>
+                                    <td style="width: 15px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-left: 5px;padding-right:8px;">Mthly</td>
+                                    <td style="width: 15px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-left: 5px;padding-right:8px;">Qtly</td>
+                                    <td style="width: 15px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-left: 5px;padding-right:8px;">H-Yrly</td>
+                                    <td style="width: 15px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-left: 5px;padding-right:8px;">Yrly</td>
+                                    <td style="width: 15px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td style="padding:0px;"><img
+                                                        src="{{ CheckmarkImagePath }}"
+                                                        style="width:15px;" /></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-left: 2px;">As & when presented</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td></td>
+                        <td style="width: 335px;">
+                            <table style="border-spacing: 0;">
+                                <tr>
+                                    <td style="width: 75px;">DEBIT TYPE</td>
+                                    <td style="width: 15px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-left: 5px;padding-right:8px;">Fixed Amount</td>
+                                    <td style="width: 15px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td style="padding:0px;"><img
+                                                        src="{{ CheckmarkImagePath }}"
+                                                        style="width:15px;" /></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-left: 5px;padding-right:8px;">Maximum Amount</td>
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="margin-top: 5px;border-spacing: 0;">
+                    <tr>
+                        <td style="width: 220px; padding-right: 5; text-align: left;">Reference 1 (Mandate Reference
+                            No.)</td>
+                        <td style="width:180px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="border-spacing: 0;width:100%;">
+                                <tr>
+                                    <td style="padding-left: 5px; text-align: left;">{{Param.[64].data}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 75px; padding-right: 5; text-align: right;">Phone No.</td>
+                        <td style="width: 285px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="border-spacing: 0;width:100%;">
+                                <tr>
+                                    <td style="padding-left: 5px; text-align: left;">{{Param.[65].data}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 220px; padding-right: 5; text-align: left; padding-top: 5px;">Reference 2
+                            (Unique Client Code-UCC)</td>
+                        <td style="width:180px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="margin-top:5px;border-spacing: 0;width:100%;">
+                                <tr>
+                                    <td style="padding-left: 5px; text-align: left;">{{Param.[66].data}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 75px; padding-right: 5; text-align: right; padding-top: 5px;">Email ID</td>
+                        <td style="width:285px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="margin-top:5px;border-spacing: 0;width:100%;">
+                                <tr>
+                                    <td style="padding-left: 5px; text-align: left;">{{Param.[67].data}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 5px; padding-bottom: 5px; font-size: 9px;">
+                I agree for the debit of mandate processing charges by the bank whom I am authorizing to debit my
+                account as per latest schedule of charges of the bank.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="border-spacing: 0;">
+                    <tr>
+                        <td style="width: 25%;">
+                            <div style="border: #000 solid 1px; padding: 10px 5px 5px 5px;">
+                                <p
+                                    style="position: absolute; top:310px; left: 7px; background-color: white; padding-left: 5px; padding-right: 5px;">
+                                    PERIOD</p>
+                                <table style="width: 100%;border-spacing: 0;">
+                                    <tr>
+                                        <td style="padding-right: 5px; text-align: right;">From</td>
+                                        <td style="padding-right: 5px;">
+                                            <table class="table table-sm table-bordered table-box"
+                                                style="border-spacing: 0;">
+                                                <tr>
+                                                    <td>{{Param.[0].data}}</td>
+                                                    <td>{{Param.[1].data}}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="padding-right: 5px;">
+                                            <table class="table table-sm table-bordered table-box"
+                                                style="border-spacing: 0;">
+                                                <tr>
+                                                    <td>{{Param.[2].data}}</td>
+                                                    <td>{{Param.[3].data}}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table class="table table-sm table-bordered table-box"
+                                                style="border-spacing: 0;">
+                                                <tr>
+                                                    <td>{{Param.[4].data}}</td>
+                                                    <td>{{Param.[5].data}}</td>
+                                                    <td>{{Param.[6].data}}</td>
+                                                    <td>{{Param.[7].data}}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 5px; text-align: right; padding-top: 5px;">To</td>
+                                        <td style="padding-right: 5px; padding-top: 5px;">
+                                            <table class="table table-sm table-bordered table-box"
+                                                style="border-spacing: 0;">
+                                                <tr>
+                                                    <td>{{Param.[72].data}}</td>
+                                                    <td>{{Param.[73].data}}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="padding-right: 5px; padding-top: 5px;">
+                                            <table class="table table-sm table-bordered table-box"
+                                                style="border-spacing: 0;">
+                                                <tr>
+                                                    <td>{{Param.[74].data}}</td>
+                                                    <td>{{Param.[75].data}}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="padding-top: 5px;">
+                                            <table class="table table-sm table-bordered table-box"
+                                                style="border-spacing: 0;">
+                                                <tr>
+                                                    <td>{{Param.[76].data}}</td>
+                                                    <td>{{Param.[77].data}}</td>
+                                                    <td>{{Param.[78].data}}</td>
+                                                    <td>{{Param.[79].data}}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 5px; text-align: right; padding-top: 5px;">Or</td>
+                                        <td colspan="3" style="padding-top: 5px;">
+                                            <table style="width: 100%;border-spacing: 0;">
+                                                <tr>
+                                                    <td>
+                                                        <table class="table table-sm table-bordered table-box"
+                                                            style="border-spacing: 0;">
+                                                            <tr>
+                                                                <td>{{!-- <img
+                                                                        src="{{ CheckmarkImagePath }}" /> --}}
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td style="padding-left: 5px;">Until Canceled</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td style="width: 193px;">
+                            <table style="width: 100%;border-spacing: 0;">
+                                <tr>
+                                    <td style="height: 95px; padding-left: 25px;">
+                                        <div style="height: 75px; width: 100%; border-bottom: #555555 solid 1px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 10px;">
+                                        <div style="width: 100%; border-bottom: #000000 solid 1px;">1.</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 193px;">
+                            <table style="width: 100%;border-spacing: 0;">
+                                <tr>
+                                    <td style="height: 95px; padding-left: 25px;">
+                                        <div style="height: 75px; width: 100%; border-bottom: #555555 solid 1px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 10px;">
+                                        <div style="width: 100%; border-bottom: #000000 solid 1px;">2.</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 193px;">
+                            <table style="width: 100%;border-spacing: 0;">
+                                <tr>
+                                    <td style="height: 95px; padding-left: 25px;">
+                                        <div style="height: 75px; width: 100%; border-bottom: #555555 solid 1px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 10px;">
+                                        <div style="width: 100%; border-bottom: #000000 solid 1px;">3.</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 5px; font-size: 8px;">
+                - This is to confirm that the declaration has been carefully read, understood & made by me/us. I am
+                authorizing the user entity/Corporate to debit my account, based on the instructions as agreed and
+                signed by me.
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size: 8px;">
+                - I have understood that I am authorized to cancel/amend this mandate by appropriately communicating the
+                cancellation/amendment request to the User entity/Corporate or the bank where I have authorized the
+                debit.
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

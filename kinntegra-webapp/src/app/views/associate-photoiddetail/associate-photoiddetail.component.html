@@ -1,0 +1,255 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"
+                *ngIf="mode != 'externalverify'"></app-header-right-template>
+        </div>
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        <app-associate-leftbar-template [activeComp]="'entity-detail'" [activeSubComp]="'photo'"
+                            [associateId]="associateid" [progressPercentage]="21" [mode]="mode"
+                            [ts]="ts"></app-associate-leftbar-template>
+                    </div>
+
+                    <form class="col-lg-8 col-xl-9 step-forms col-md-8 ps-0">
+                        <section class="trial step3 active" id="photo-detail" data-step="3" autocomplete="off">
+                            <div class="form-inner-section">
+                                <div class="form-header">
+                                    <h3 class="card-title d-inline"><i class="icon-left-arrow back-btn"
+                                            (click)="onBack()"></i> Photo ID
+                                        Details</h3>
+                                    <span class="edit-now float-end mt-1" *ngIf="showEdit"
+                                        (click)="onEditClicked()">Edit</span>
+                                </div>
+                                <div class="form-content">
+                                    <div class="row">
+                                        <div class="col-xl-8 col-lg-9">
+                                            <div class="row">
+                                                <!-- For Individual Case :: Name, PANCARD NUMBER, AADHAR CARD NUMBER, Date of Birth field is require-->
+                                                <div class="col-sm-8 name">
+                                                    <div class="form-group">
+                                                        <label for="name">Name (As per Pancard) <span
+                                                                class="required-sign">*</span></label>
+                                                        <input type="text" class="form-control text-capitalize"
+                                                            id="name" name="name" aria-describedby="name"
+                                                            [(ngModel)]="objAssociate.Name" [disabled]="!isEdit">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 photo_upload" *ngIf="selfPhotoDiv">
+                                                    <div class="form-group">
+                                                        <label for="photo_upload" class="w-100" #selfPhoto>SELF PHOTO
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="photo_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (selfPhotoFileName != ''), 'input-btn-danger': (selfPhotoFileName == '')}"
+                                                            [ngbTooltip]="selfPhotoFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="photo_upload" type="file" name="fileName"
+                                                                (change)="onSelfPhotoFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="selfPhotoFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="selfPhotoFileName != ''">{{selfPhotoFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="selfPhotoFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                                PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="selfPhotoFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onSelfPhotoPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8 pan_no">
+                                                    <div class="form-group">
+                                                        <label for="pan_no">PANCARD NUMBER <span
+                                                                class="required-sign">*</span></label>
+                                                        <input type="text" class="form-control text-uppercase"
+                                                            id="pan_no" name="pan_no" aria-describedby="pan_no" maxlength="10"
+                                                            [(ngModel)]="objAssociate.PANCardNumber"
+                                                            [disabled]="!isEdit">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 pan_upload">
+                                                    <div class="form-group">
+                                                        <label for="pan_upload" class="w-100" #panCard>PANCARD
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="pan_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (panCardFileName != ''), 'input-btn-danger': (panCardFileName == '')}"
+                                                            [ngbTooltip]="panCardFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="pan_upload" type="file" name="fileName"
+                                                                (change)="onPanCardFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="panCardFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="panCardFileName != ''">{{panCardFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="panCardFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                                PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="panCardFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onPANCardPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8 aadhar_no" *ngIf="aadharNumberDiv">
+                                                    <div class="form-group">
+                                                        <label for="aadhar_no">AADHAR CARD NUMBER <span
+                                                                class="required-sign">*</span></label>
+                                                        <input type="text" class="form-control" id="aadhar_no"
+                                                            name="aadhar_no" aria-describedby="aadhar_no" maxlength="12"
+                                                            [(ngModel)]="objAssociate.AadharCardNumber"
+                                                            [disabled]="!isEdit">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 aadhar_upload" *ngIf="aadharCardDiv">
+                                                    <div class="form-group">
+                                                        <label for="aadhar_upload" class="w-100" #aadharCard>AADHAR CARD
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="aadhar_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (aadharCardFileName != ''), 'input-btn-danger': (aadharCardFileName == '')}"
+                                                            [ngbTooltip]="aadharCardFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="aadhar_upload" type="file" name="fileName" (change)="onAadharCardFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="aadharCardFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="aadharCardFileName != ''">{{aadharCardFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="aadharCardFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                                PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="aadharCardFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onAadharCardPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8 birth_incorp_date" *ngIf="DateOfBirth">
+                                                    <div class="form-group">
+                                                        <label for="birth_incorp_date"><span id="birth_incorp_date">Date
+                                                                Of Birth</span>
+                                                            <span class="required-sign">*</span></label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" readonly
+                                                                placeholder="dd-mm-yyyy" name="dp"
+                                                                [(ngModel)]="objAssociate.DateOfBirth" ngbDatepicker
+                                                                #d="ngbDatepicker" [minDate]="minDate"
+                                                                [maxDate]="maxDate" [disabled]="!isEdit" />
+                                                            <button class="btn btn-transparent" (click)="d.toggle()"
+                                                                *ngIf="isEdit" type="button"><svg width="24" height="24"
+                                                                    viewBox="0 0 24 24">
+                                                                    <use xlink:href="#month"></use>
+                                                                </svg></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8 birth_incorp_date" *ngIf="DateOfIncorporation">
+                                                    <div class="form-group">
+                                                        <label for="birth_incorp_date"><span id="birth_incorp_date">Date
+                                                                Of Incorporation</span>
+                                                            <span class="required-sign">*</span></label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" readonly
+                                                                placeholder="dd-mm-yyyy" name="dp"
+                                                                [(ngModel)]="objAssociate.DateOfIncorporation"
+                                                                ngbDatepicker #d="ngbDatepicker" [minDate]="minDate"
+                                                                [maxDate]="maxDate" [disabled]="!isEdit" />
+                                                            <button class="btn btn-transparent" (click)="d.toggle()"
+                                                                *ngIf="isEdit" type="button"><svg width="24" height="24"
+                                                                    viewBox="0 0 24 24">
+                                                                    <use xlink:href="#month"></use>
+                                                                </svg></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-3 d-none d-lg-flex">
+                                            <ng-lottie style="height: 300px;" [options]="lottieOptions"
+                                                (animationCreated)="animationCreated($event)"></ng-lottie>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-footer">
+                                    <ng-container *ngIf="mode == 'create'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'edit'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                                            (click)="onNext()">Proceed</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'verify'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                                            (click)="onNext()">Proceed</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'externalverify'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onNext()">Next</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'viewdetails'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onNext()">Proceed</button>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,577 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"
+                *ngIf="mode != 'externalverify'"></app-header-right-template>
+        </div>
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        <app-associate-leftbar-template [activeComp]="'entity-detail'" [activeSubComp]="'other'"
+                            [associateId]="associateid" [progressPercentage]="42" [mode]="mode"
+                            [ts]="ts"></app-associate-leftbar-template>
+                    </div>
+
+                    <form class="col-lg-8 col-xl-9 step-forms col-md-8 ps-0">
+                        <section class="trial step6 active" id="other-detail" data-step="6" autocomplete="off">
+                            <div class="form-inner-section">
+                                <div class="form-header">
+                                    <h3 class="card-title d-inline"><i class="icon-left-arrow back-btn"
+                                            (click)="onBack()"></i> Other
+                                        Details
+                                    </h3>
+                                    <span class="edit-now float-end mt-1" *ngIf="showEdit"
+                                        (click)="onEditClicked()">Edit</span>
+                                </div>
+                                <div class="form-content">
+                                    <div class="row">
+                                        <div class="col-xl-8 col-lg-9">
+                                            <div class="row" id="gst_details">
+                                                <div class="col-sm-12">
+                                                    <h4 class="form-group">
+                                                        GST Details
+                                                    </h4>
+                                                </div>
+                                                <div class="col-sm-8 gst_no">
+                                                    <div class="form-group">
+                                                        <label for="gst_no">GST Number</label>
+                                                        <input type="text" class="form-control text-uppercase"
+                                                            id="gst_no" name="gst_no" [(ngModel)]="objAssociate.GSTIN"
+                                                            aria-describedby="gst_no" [disabled]="!isEdit">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 gst_upload">
+                                                    <div class="form-group">
+                                                        <label for="gst_upload" class="w-100 gst_upload_label">PROOF
+                                                        </label>
+                                                        <label for="gst_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (gstinCertificateFileName != ''), 'input-btn-danger': (gstinCertificateFileName == '')}"
+                                                            [ngbTooltip]="gstinCertificateFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="gst_upload" type="file" name="gst_upload"
+                                                                (change)="onGSTINCertificateFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="gstinCertificateFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="gstinCertificateFileName != ''">{{gstinCertificateFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="gstinCertificateFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG, PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="gstinCertificateFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onGSTINCertificatePreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-sm-8 gst_validity">
+                                                    <div class="form-group">
+                                                        <label for="gst_validity">VALIDITY (If ANY)</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" readonly
+                                                                placeholder="dd-mm-yyyy" name="dp"
+                                                                [(ngModel)]="objAssociate.GSTINValidDate" ngbDatepicker
+                                                                #d="ngbDatepicker" [minDate]="minDate"
+                                                                [maxDate]="maxDate" [disabled]="!isEdit" />
+                                                            <button class="btn btn-transparent" (click)="d.toggle()"
+                                                                *ngIf="isEdit" type="button"><svg width="24" height="24"
+                                                                    viewBox="0 0 24 24">
+                                                                    <use xlink:href="#month"></use>
+                                                                </svg></button>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                            <div class="row" id="shop_est_details" *ngIf="shopEst">
+                                                <div class="col-sm-12">
+                                                    <h4>SHOP & ESTABLISHMENT Details </h4>
+                                                </div>
+                                                <div class="col-sm-8 shop_est_no">
+                                                    <div class="form-group">
+                                                        <label for="shop_est_no">SHOP & ESTABLISHMENT CERTIFICATE NO
+                                                            <span class="required-sign">*</span></label>
+                                                        <input type="text" class="form-control" id="shop_est_no"
+                                                            [(ngModel)]="objAssociate.ShopCertificateNumber"
+                                                            aria-describedby="shop_est_no" name="shop_est_no"
+                                                            [disabled]="!isEdit">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 shop_est_upload">
+                                                    <div class="form-group">
+                                                        <label for="shop_est_upload" class="w-100">PROOF
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="shop_est_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (shopEstablishmentCertificateFileName != ''), 'input-btn-danger': (shopEstablishmentCertificateFileName == '')}"
+                                                            [ngbTooltip]="shopEstablishmentCertificateFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="shop_est_upload" type="file"
+                                                                name="shop_est_upload"
+                                                                (change)="onShopEstablishmentCertificateFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="shopEstablishmentCertificateFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="shopEstablishmentCertificateFileName != ''">{{shopEstablishmentCertificateFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="shopEstablishmentCertificateFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG, PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="shopEstablishmentCertificateFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onShopEstablishmentCertificatePreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8 shop_est_validity">
+                                                    <div class="form-group">
+                                                        <label for="shop_est_validity">VALIDITY <span
+                                                                class="required-sign">*</span></label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" readonly
+                                                                placeholder="dd-mm-yyyy" name="dp"
+                                                                [(ngModel)]="objAssociate.ShopCertificateValidDate"
+                                                                ngbDatepicker #d1="ngbDatepicker" [minDate]="minDate"
+                                                                [maxDate]="maxDate" [disabled]="!isEdit" />
+                                                            <button class="btn btn-transparent" (click)="d1.toggle()"
+                                                                *ngIf="isEdit" type="button"><svg width="24" height="24"
+                                                                    viewBox="0 0 24 24">
+                                                                    <use xlink:href="#month"></use>
+                                                                </svg></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="pd_details" *ngIf="partnership">
+                                                <div class="col-sm-12">
+                                                    <h4>
+                                                        PARTNERSHIP FIRM Details
+                                                    </h4>
+                                                </div>
+                                                <div class="col-sm-6 pd_upload">
+                                                    <div class="form-group">
+                                                        <label for="pd_upload" class="w-100">PARTNERSHIP DEED
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="pd_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (partnershipDeedFileName != ''), 'input-btn-danger': (partnershipDeedFileName == '')}"
+                                                            [ngbTooltip]="partnershipDeedFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="pd_upload" type="file" name="pd_upload"
+                                                                (change)="onPartnershipDeedFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="partnershipDeedFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="partnershipDeedFileName != ''">{{partnershipDeedFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="partnershipDeedFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG, PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="partnershipDeedFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onPartnershipDeedPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 pd_asl_upload">
+                                                    <div class="form-group">
+                                                        <label for="pd_asl_upload" class="w-100">AUTHORIZED SIGNATORY
+                                                            LIST
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="pd_asl_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (authorizedSignatoryListFileName != ''), 'input-btn-danger': (authorizedSignatoryListFileName == '')}"
+                                                            [ngbTooltip]="authorizedSignatoryListFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="pd_asl_upload" type="file" name="pd_asl_upload"
+                                                                (change)="onAuthorizedSignatoryListFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="authorizedSignatoryListFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="authorizedSignatoryListFileName != ''">{{authorizedSignatoryListFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="authorizedSignatoryListFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG, PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="authorizedSignatoryListFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onAuthorizedSignatoryListPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 pd_coi_upload">
+                                                    <div class="form-group">
+                                                        <label for="pd_coi_upload" class="w-100">CERTIFICATE OF
+                                                            INCORPORATION
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="pd_coi_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (ceriticateofIncorporationFileName != ''), 'input-btn-danger': (ceriticateofIncorporationFileName == '')}"
+                                                            [ngbTooltip]="ceriticateofIncorporationFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="pd_coi_upload" type="file" name="pd_coi_upload"
+                                                                (change)="onCeriticateofIncorporationFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="ceriticateofIncorporationFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="ceriticateofIncorporationFileName != ''">{{ceriticateofIncorporationFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="ceriticateofIncorporationFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG, PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="ceriticateofIncorporationFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onCeriticateofIncorporationPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="co_details" *ngIf="corporate">
+                                                <div class="col-sm-12">
+                                                    <h4>
+                                                        CORPORATE Details
+                                                    </h4>
+                                                </div>
+                                                <div class="col-sm-6 co_moa_upload">
+                                                    <div class="form-group">
+                                                        <label for="co_moa_upload" class="w-100">MEMORANDUM OF
+                                                            ASSOCIATION
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="co_moa_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (memorandumofAssociationFileName != ''), 'input-btn-danger': (memorandumofAssociationFileName == '')}"
+                                                            [ngbTooltip]="memorandumofAssociationFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="co_moa_upload" type="file" name="co_moa_upload"
+                                                                (change)="onMemorandumofAssociationFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="memorandumofAssociationFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="memorandumofAssociationFileName != ''">{{memorandumofAssociationFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="memorandumofAssociationFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG, PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="memorandumofAssociationFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onMemorandumofAssociationPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 co_aoa_upload">
+                                                    <div class="form-group">
+                                                        <label for="co_aoa_upload" class="w-100">ARTICLE OF ASSOCIATION
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="co_aoa_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (articleofAssociationFileName != ''), 'input-btn-danger': (articleofAssociationFileName == '')}"
+                                                            [ngbTooltip]="articleofAssociationFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="co_aoa_upload" type="file" name="co_aoa_upload"
+                                                                (change)="onArticleofAssociationFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="articleofAssociationFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="articleofAssociationFileName != ''">{{articleofAssociationFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="articleofAssociationFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG, PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="articleofAssociationFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onArticleofAssociationPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 co_coi_upload">
+                                                    <div class="form-group">
+                                                        <label for="co_coi_upload" class="w-100">CERTIFICATE OF
+                                                            INCORPORATION
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="co_coi_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (ceriticateofIncorporationFileName != ''), 'input-btn-danger': (ceriticateofIncorporationFileName == '')}"
+                                                            [ngbTooltip]="ceriticateofIncorporationFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="co_coi_upload" type="file" name="co_coi_upload"
+                                                                (change)="onCeriticateofIncorporationFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="ceriticateofIncorporationFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="ceriticateofIncorporationFileName != ''">{{ceriticateofIncorporationFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="ceriticateofIncorporationFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG, PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="ceriticateofIncorporationFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onCeriticateofIncorporationPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 co_asl_upload">
+                                                    <div class="form-group">
+                                                        <label for="co_asl_upload" class="w-100">AUTHORIZED SIGNATORY
+                                                            LIST
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="co_asl_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (authorizedSignatoryListFileName != ''), 'input-btn-danger': (authorizedSignatoryListFileName == '')}"
+                                                            [ngbTooltip]="authorizedSignatoryListFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="co_asl_upload" type="file" name="co_asl_upload"
+                                                                (change)="onAuthorizedSignatoryListFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="authorizedSignatoryListFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="authorizedSignatoryListFileName != ''">{{authorizedSignatoryListFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="authorizedSignatoryListFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG, PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="authorizedSignatoryListFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onAuthorizedSignatoryListPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 co_br_upload">
+                                                    <div class="form-group">
+                                                        <label for="co_br_upload" class="w-100">BOARD RESOLUTION
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="co_br_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (boardResolutionFileName != ''), 'input-btn-danger': (boardResolutionFileName == '')}"
+                                                            [ngbTooltip]="boardResolutionFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="co_br_upload" type="file" name="co_br_upload"
+                                                                (change)="onBoardResolutionFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="boardResolutionFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="boardResolutionFileName != ''">{{boardResolutionFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="boardResolutionFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG, PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="boardResolutionFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onBoardResolutionPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <h4>
+                                                        TAN Details
+                                                    </h4>
+                                                </div>
+                                                <div class="col-sm-8 tan_no">
+                                                    <div class="form-group">
+                                                        <label for="tan_no">TAN Number</label>
+                                                        <input type="text" class="form-control text-uppercase"
+                                                            id="tan_no" name="tan_no" [(ngModel)]="objAssociate.TAN"
+                                                            aria-describedby="tan_no" [disabled]="!isEdit">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 co_tan_upload">
+                                                    <div class="form-group">
+                                                        <label for="co_tan_upload" class="w-100">TAN Upload
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="co_tan_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (tanCertificateFileName != ''), 'input-btn-danger': (tanCertificateFileName == '')}"
+                                                            [ngbTooltip]="tanCertificateFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="co_tan_upload" type="file" name="co_tan_upload"
+                                                                (change)="onTANCertificateFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="tanCertificateFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="tanCertificateFileName != ''">{{tanCertificateFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="tanCertificateFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG, PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="tanCertificateFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onTANCertificatePreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="white_labeling">
+                                                <div class="col-sm-12">
+                                                    <h3 class="card-title">
+                                                        White Labelling
+                                                    </h3>
+                                                </div>
+                                                <div class="col-sm-8 primary_color">
+                                                    <div class="form-group">
+                                                        <label for="primary_color">Primary Color</label>
+                                                        <input type="text" class="form-control" name="primary_color"
+                                                            [(ngModel)]="objAssociate.PrimaryColor"
+                                                            [(colorPicker)]="objAssociate.PrimaryColor"
+                                                            id="primary_color" aria-describedby="primary_color"
+                                                            placeholder="Primary Color" [disabled]="!isEdit">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 logo_upload">
+                                                    <div class="form-group">
+                                                        <label for="logo_upload" class="w-100">Logo
+                                                        </label>
+                                                        <label for="logo_upload" class="btn input-btn w-100"
+                                                            [ngClass]="{'input-btn-primary': (logoFileName != ''), 'input-btn-danger': (logoFileName == '')}"
+                                                            [ngbTooltip]="logoFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="logo_upload" type="file" name="logo_upload"
+                                                                (change)="onLogoFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="logoFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="logoFileName != ''">{{logoFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="logoFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG, PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview" *ngIf="logoFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onLogoPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8 secondary_color">
+                                                    <div class="form-group">
+                                                        <label for="secondary_color">Secondary Color</label>
+                                                        <input type="text" class="form-control" name="secondary_color"
+                                                            [(ngModel)]="objAssociate.SecondaryColor"
+                                                            [(colorPicker)]="objAssociate.SecondaryColor"
+                                                            id="secondary_color" aria-describedby="secondary_color"
+                                                            placeholder="Secondary Color" [disabled]="!isEdit">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-3 d-none d-lg-flex">
+                                            <ng-lottie style="height: 300px;" [options]="lottieOptions"
+                                                (animationCreated)="animationCreated($event)"></ng-lottie>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-footer">
+                                    <ng-container *ngIf="mode == 'create'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'edit'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                                            (click)="onNext()">Proceed</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'verify'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                                            (click)="onNext()">Proceed</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'externalverify'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onNext()">Next</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'viewdetails'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onNext()">Proceed</button>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

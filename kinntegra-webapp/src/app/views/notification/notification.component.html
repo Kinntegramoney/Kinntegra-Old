@@ -1,0 +1,62 @@
+<!-- @extends('layouts.master')
+
+@section('style')
+@endsection
+
+
+@section('content') -->
+<main>
+
+    <div class="section-header mb-4">
+        <!-- @include('partials.top') -->
+        <app-header-right-template class="section-header"></app-header-right-template>
+    </div>
+    <h3 class="card-title mb-3"> Notification</h3>
+    <div class="card card-sm">
+        <div class="card-body " style="max-height:40rem">
+            <nav ngbNav #nav="ngbNav" class="nav nav-tabs mb-3">
+                <ng-container [ngbNavItem]="1">
+                    <a ngbNavLink>General</a>
+                    <ng-template ngbNavContent>
+                        <div>
+                            <ul class="alerts-lists" id="notification_general" style="overflow-y: scroll; height:30rem">
+                                <li *ngFor="let item of generalNotifications" class="p-3"
+                                    [ngClass]="(item.IsRead === true) ? 'message_read':'message_unread'">
+                                    <h5 class="icon_hand" (click)="onNotificationClicked(item)">{{item.Title}}</h5>
+                                    <div class="info">
+                                        <span>{{ item.RecordDate | date:"hh:mm a":"IST" }}</span>
+                                        <span>{{ item.RecordDate | date:"fullDate":"IST" }}</span>
+                                        <span *ngIf="item.Description != ''"><a (click)="onViewDetails(item)">View
+                                                Details</a></span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </ng-template>
+                </ng-container>
+                <ng-container [ngbNavItem]="2">
+                    <a ngbNavLink>Reminders</a>
+                    <ng-template ngbNavContent>
+                        <div class="tab-pane fade active show" id="reminders" role="tabpanel">
+                            <ul class="alerts-lists" id="notification_reminder"
+                                style="overflow-y: scroll; height:30rem">
+
+                            </ul>
+                        </div>
+                    </ng-template>
+                </ng-container>
+                <ng-container [ngbNavItem]="3">
+                    <a ngbNavLink>Alerts</a>
+                    <ng-template ngbNavContent>
+                        <div class="tab-pane fade" id="alerts" role="tabpanel">
+                            <ul class="alerts-lists" id="notification_alert" style="overflow-y: scroll; height:30rem">
+
+                            </ul>
+                        </div>
+                    </ng-template>
+                </ng-container>
+            </nav>
+            <div [ngbNavOutlet]="nav"></div>
+        </div>
+    </div>
+</main>

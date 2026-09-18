@@ -1,0 +1,39 @@
+.edit-now {
+    font-size: 12px;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.edit-now:hover {
+    cursor: pointer;
+    color: #1a2b2a;
+    text-decoration: underline;
+}
+
+.members-tab .nav-item .nav-link.added-member {
+    padding-right: 1rem;
+}
+
+.readonly {
+    pointer-events: none;
+}
+
+.members-tab .nav-item .nav-link.can_delete.active {
+    border: 1px solid #dc3a3a;
+    background-color: #dc3a3a;
+    color: #fff;
+}
+
+
+
+.members-tab .nav-item .delete-member {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    color: var(--primary, #365b58);
+    cursor: pointer;
+    font-size: 8px;
+    // pointer-events: none;
+}

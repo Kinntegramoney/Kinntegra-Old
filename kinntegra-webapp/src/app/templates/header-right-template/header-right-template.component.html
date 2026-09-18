@@ -1,0 +1,18 @@
+<div class="dropdown text-right" ngbDropdown container="body" #myDrop="ngbDropdown">
+    <a class="dropdown-toggle profile-img" type="button" ngbDropdownToggle>
+        <span class="initials title_tag">{{userInitial}}</span>
+        <span>{{userDisplayName}}</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu placement="bottom-left">
+        <!-- <a class="dropdown-item" href="#">View Profile</a> -->
+        <a class="dropdown-item" (click)="onLogoutClicked()">
+            Logout
+        </a>
+    </div>
+</div>
+<a class="btn btn-icon outline-dark notification-bell" href="notifications">
+    <span class="count" id="notification_bell_count">{{unReadNotificationCount}}</span>
+    <svg width="30" height="30" viewBox="0 -1 17 25">
+        <use xlink:href="#notification" />
+    </svg>
+</a>

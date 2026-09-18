@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="">
+    <title>Kinntegra</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <style>
+        @page {
+            margin: 0px;
+            font-size: 12px;
+        }
+
+        body {
+            margin: 0px;
+        }
+
+        table,
+        table td,
+        table th {
+            margin: 0 0 0 0;
+            padding: 0 0 0 0;
+        }
+
+        table td p {
+            margin: 0 0 0 0;
+            padding: 0 0 0 0;
+        }
+
+        .table-bordered,
+        .table-bordered td,
+        {
+        margin: 0 0 0 0;
+        padding: 0 0 0 0;
+        border: 1px solid #000000;
+        }
+
+        .table.table-sm,
+        .table.table-sm td,
+        .table.table-sm th {
+            margin: 0 0 0 0;
+            padding: 0 0 0 0;
+        }
+
+        .table-box {
+            margin-right: 10px;
+        }
+
+        .table-box td {
+            height: 18px;
+            width: 14px;
+            text-align: center;
+            vertical-align: middle;
+            /*padding: 1px 1px 1px 1px;*/
+        }
+    </style>
+</head>
+
+<body style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;">
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <table style="width: 100%;">
+                    <tr>
+                        <td rowspan="2" style="width: 250px;">
+                            <p style="font-weight: bold; text-decoration: underline;">NACH/ECS/AUTO DEBIT MANDATE
+                                INSTRUCTION FORM</p>
+                            <P>Tick(<img src="{{ LogoImagePath }}"
+                                    style="vertical-align:middle;display:inline-block;transform:translateY(-2px)" />)</P>
+                        </td>
+                        <td colspan="6">
+                            <table>
+                                <tr>
+                                    <td style="vertical-align: middle; padding-right: 5px;">UMRN</td>
+                                    <td>
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-left:20px; padding-right: 8px; text-align: right;">Date</td>
+                                    <td style="padding-right: 2px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td> 0 </td>
+                                                <td> 1 </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-right: 2px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td> 2 </td>
+                                                <td> 3 </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td> 5</td>
+                                                <td> 5</td>
+                                                <td> 5</td>
+                                                <td> 7 </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="width:855px; margin-top: 5px;border-spacing: 0;">
+                                <tr>
+                                    <td style="width: 200px; padding-right: 5px;">Sponsor Bank Code</td>
+                                    <td style="width:300px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="width:100%;border-spacing: 0;">
+                                            <tr>
+                                                <td style="text-align: left; padding-left: 5px;">CITI000PIGW</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width: 120px; padding-right: 5px; text-align: right">Utility Code</td>
+                                    <td style="width: 380px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="width:100%;border-spacing: 0;">
+                                            <tr>
+                                                <td style="text-align: left; padding-left: 5px;">CITI00002000000037</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="width: 100%;border-spacing: 0;">
+                    <tr>
+                        <td style="width: 70px;">
+                            <table class="table table-sm table-bordered" style="border-spacing: 0;">
+                                <tr>
+                                    <td style="padding-top: 2px; padding-bottom: 2px;">CREATE<img src="{{ LogoImagePath }}"
+                                            style="position: fixed; top: 100px;left:65px;" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: 2px; padding-bottom: 2px;">MODIFY</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: 2px; padding-bottom: 2px;">CANCEL</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="padding-left: 30px;">
+                            <table style="border-spacing: 0;">
+                                <tr>
+                                    <td style="width: 200px; padding-right: 5px; text-align: left;">I/We hereby
+                                        authorize</td>
+                                    <td style="width: 280px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="width:100%;border-spacing: 0;">
+                                            <tr>
+                                                <td style="text-align: left; padding-left: 5px; font-weight: bold;">BSE
+                                                    Limited</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width: 160px; padding-right: 5px; text-align: right">to debit (tick <img
+                                            src="{{ LogoImagePath }}"
+                                            style="vertical-align:middle;display:inline-block;transform:translateY(-2px)" />)
+                                    </td>
+                                    <td style="width:350px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="width:100%;border-spacing: 0;">
+                                            <tr>
+                                                <td style="text-align: left; padding-left: 5px;"><img src="{{ LogoImagePath }}"
+                                                        style="position: fixed; top:105px; right: 270px;"  />SB/CS/CC/SB-NRE/SB-NRO/Other
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-right: 5px; text-align: left; padding-top: 5px;">Bank a/c number
+                                    </td>
+                                    <td colspan="3" style="padding-top: 5px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="width:100%;border-spacing: 0;">
+                                            <tr>
+                                                <td> 9 </td>
+                                                <td> 10 </td>
+                                                <td> 11 </td>
+                                                <td> 12 </td>
+                                                <td> 13 </td>
+                                                <td> 14 </td>
+                                                <td> 15 </td>
+                                                <td>16 </td>
+                                                <td> 17 </td>
+                                                <td> 18 </td>
+                                                <td> 19 </td>
+                                                <td> 20 </td>
+                                                <td> 21 </td>
+                                                <td> 22 </td>
+                                                <td> 23 </td>
+                                                <td> 24 </td>
+                                                <td> 25 </td>
+                                                <td> 26 </td>
+                                                <td> 27 </td>
+                                                <td> 28 </td>
+                                                <td> 29 </td>
+                                                <td>30 </td>
+                                                <td> 31 </td>
+                                                <td> 32 </td>
+                                                <td> 33 </td>
+                                                <td> 34 </td>
+                                                <td> 35 </td>
+                                                <td> 36 </td>
+                                                <td> 37 </td>
+                                                <td> 38 </td>
+                                                <td> 39 </td>
+                                                <td> 40 </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="border-spacing: 0;">
+                    <tr>
+                        <td style="width: 70px; padding-right: 5px; text-align: left;">with Bank</td>
+                        <td style="width: 220px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="width: 100%;border-spacing: 0;">
+                                <tr>
+                                    <td style="padding-left: 5px; text-align: left;"> 41 </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 80px; padding-right: 5px; text-align: right;">IFSC</td>
+                        <td style="width: 300px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="width: 100%;border-spacing: 0;">
+                                <tr>
+                                    <td>42 </td>
+                                    <td>43 </td>
+                                    <td>44 </td>
+                                    <td> 45 </td>
+                                    <td> 46 </td>
+                                    <td>47 </td>
+                                    <td>48 </td>
+                                    <td> 49 </td>
+                                    <td>50 </td>
+                                    <td>51 </td>
+                                    <td>52 </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width:80px; padding-right: 5px; text-align: right;">or MICR</td>
+                        <td style="width: 280px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="width: 100%;border-spacing: 0;">
+                                <tr>
+                                    <td> 53 </td>
+                                    <td> 54 </td>
+                                    <td> 55 </td>
+                                    <td>56 </td>
+                                    <td> 57 </td>
+                                    <td> 58 </td>
+                                    <td> 59 </td>
+                                    <td>60 </td>
+                                    <td>61 </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="margin-top: 5px;border-spacing: 0;">
+                    <tr>
+                        <td style="width: 205px; padding-right: 5px; text-align: left;">an amount of Rupees</td>
+                        <td style="width: 555px;padding-right:5px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="width:100%;border-spacing: 0;">
+                                <tr>
+                                    <td style="padding-left: 5px; text-align: left;"> 62 </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 305px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="width: 100%;border-spacing: 0;">
+                                <tr>
+                                    <td style="text-align:left; padding-left: 5px;">&#8377; 63 </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="margin-top: 5px;border-spacing: 0;">
+                    <tr>
+                        <td style="width: 110px;">FREQUENCY</td>
+                        <td style="width: 480px;">
+                            <table style="border-spacing: 0;">
+                                <tr>
+                                    <td style="width: 45px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-left: 5px;padding-right:8px;">Mthly</td>
+                                    <td style="width: 45px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-left: 5px;padding-right:8px;">Qtly</td>
+                                    <td style="width: 45px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-left: 5px;padding-right:10px;">H-Yrly</td>
+                                    <td style="width: 45px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-left: 5px;padding-right:8px;">Yrly</td>
+                                    <td style="width: 45px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td style="padding:0px;"><img src="{{ LogoImagePath }}" style="width:18px;" /></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-left:8px; width: 250px;">As & when presented</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td></td>
+                        <td style="width: 380px;">
+                            <table style="border-spacing: 0;">
+                                <tr>
+                                    <td style="width: 55px;">DEBIT TYPE</td>
+                                    <td style="width: 45px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-left: 5px;padding-right:8px;width: 55px;">Fixed Amount</td>
+                                    <td style="width: 45px;">
+                                        <table class="table table-sm table-bordered table-box"
+                                            style="border-spacing: 0;">
+                                            <tr>
+                                                <td style="padding:0px;"><img src="{{ LogoImagePath }}" style="width:20px;" /></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="padding-left: 5px;padding-right:8px;width: 55px;">Maximum Amount</td>
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="margin-top: 5px;border-spacing: 0;">
+                    <tr>
+                        <td style="width: 300px; padding-right: 5; text-align: left;">Reference 1 (Mandate Reference
+                            No.)</td>
+                        <td style="width:200px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="border-spacing: 0;width:100%;">
+                                <tr>
+                                    <td style="padding-left: 5px; text-align: left;"> 64 </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 165px; padding-right: 5; text-align: right;">Phone No.</td>
+                        <td style="width: 385px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="border-spacing: 0;width:100%;">
+                                <tr>
+                                    <td style="padding-left: 5px; text-align: left;"> 65 </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 300px; padding-right: 5; text-align: left; padding-top: 5px;">Reference 2
+                            (Unique Client Code-UCC)</td>
+                        <td style="width:200px;">
+                            <table class="table table-sm table-bordered table-box"
+                                style="margin-top:5px;border-spacing: 0;width:100%;">
+                                <tr>
+                                    <td style="padding-left: 5px; text-align: left;"> 66 </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 160px; padding-right: 5; text-align: right; padding-top: 5px;">Email ID</td>
+                        <td style="width:385px;">
+                             <table class="table table-sm table-bordered table-box"
+                                style="margin-top:5px;border-spacing: 0;width:100%;">
+                                <tr>
+                                    <td style="padding-left: 5px; text-align: left;"> 67 </td>
+                                </tr>
+                            </table>
+                           
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 5px; padding-bottom: 5px; font-size: 12px;">
+                I agree for the debit of mandate processing charges by the bank whom I am authorizing to debit my
+                account as per latest schedule of charges of the bank.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style=" margin-top: 5px;border-spacing: 0;">
+                    <tr>
+                        <td style="width: 25%;">
+                            <div style="border: #000 solid 1px; padding: 10px 5px 5px 5px;">
+                                <p style=" background-color: white; padding-left: 5px; padding-right: 5px;margin-bottom: 5px;">
+                                    PERIOD</p>
+                                <table style="width: 100%;border-spacing: 0;">
+                                    <tr>
+                                        <td style="padding-right: 5px; text-align: right;">From</td>
+                                        <td style="padding-right: 5px;">
+                                            <table class="table table-sm table-bordered table-box"
+                                                style="border-spacing: 0;">
+                                                <tr>
+                                                    <td> 0 </td>
+                                                    <td> 1 </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="padding-right: 5px;">
+                                            <table class="table table-sm table-bordered table-box"
+                                                style="border-spacing: 0;">
+                                                <tr>
+                                                    <td> 2 </td>
+                                                    <td> 3 </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table class="table table-sm table-bordered table-box"
+                                                style="border-spacing: 0;">
+                                                <tr>
+                                                    <td> 5</td>
+                                                    <td> 5</td>
+                                                    <td> 5</td>
+                                                    <td> 7 </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 5px; text-align: right; padding-top: 5px;">To</td>
+                                        <td style="padding-right: 5px; padding-top: 5px;">
+                                            <table class="table table-sm table-bordered table-box"
+                                                style="border-spacing: 0;">
+                                                <tr>
+                                                    <td>D</td>
+                                                    <td>D</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="padding-right: 5px; padding-top: 5px;">
+                                            <table class="table table-sm table-bordered table-box"
+                                                style="border-spacing: 0;">
+                                                <tr>
+                                                    <td>M</td>
+                                                    <td>M</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="padding-top: 5px;">
+                                            <table class="table table-sm table-bordered table-box"
+                                                style="border-spacing: 0;">
+                                                <tr>
+                                                    <td>Y</td>
+                                                    <td>Y</td>
+                                                    <td>Y</td>
+                                                    <td>Y</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-right: 5px; text-align: right; padding-top: 5px;">Or</td>
+                                        <td colspan="3" style="padding-top: 5px;">
+                                            <table style="width: 100%;border-spacing: 0;">
+                                                <tr>
+                                                    <td>
+                                                        <table class="table table-sm table-bordered table-box"
+                                                            style="border-spacing: 0;">
+                                                            <tr>
+                                                                <td><img src="{{ LogoImagePath }}" />
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td style="padding-left: 5px;">Until Canceled</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td style="width: 193px;">
+                            <table style="width: 100%;border-spacing: 0;">
+                                <tr>
+                                    <td style="height: 95px; padding-left: 25px;">
+                                        <div style="height: 75px; width: 100%; border-bottom: #555555 solid 1px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 10px;">
+                                        <div style="width: 100%; border-bottom: #000000 solid 1px;">1.</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 193px;">
+                            <table style="width: 100%;border-spacing: 0;">
+                                <tr>
+                                    <td style="height: 95px; padding-left: 25px;">
+                                        <div style="height: 75px; width: 100%; border-bottom: #555555 solid 1px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 10px;">
+                                        <div style="width: 100%; border-bottom: #000000 solid 1px;">2.</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 193px;">
+                            <table style="width: 100%;border-spacing: 0;">
+                                <tr>
+                                    <td style="height: 95px; padding-left: 25px;">
+                                        <div style="height: 75px; width: 100%; border-bottom: #555555 solid 1px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 10px;">
+                                        <div style="width: 100%; border-bottom: #000000 solid 1px;">3.</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 5px; font-size: 9px;">
+                - This is to confirm that the declaration has been carefully read, understood & made by me/us. I am
+                authorizing the user entity/Corporate to debit my account, based on the instructions as agreed and
+                signed by me.
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size: 9px;">
+                - I have understood that I am authorized to cancel/amend this mandate by appropriately communicating the
+                cancellation/amendment request to the User entity/Corporate or the bank where I have authorized the
+                debit.
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+
+</html>

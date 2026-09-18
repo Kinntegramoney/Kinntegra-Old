@@ -1,0 +1,46 @@
+//   /*Select2 ReadOnly Start*/
+//   select[readonly].select2-hidden-accessible+.select2-container {
+//     touch-action: none;
+//  }
+
+//  select[readonly].select2-hidden-accessible+.select2-container .select2-selection {
+//      background: #eee;
+//      box-shadow: none;
+//  }
+
+//  select[readonly].select2-hidden-accessible+.select2-container .select2-selection__arrow,
+//  select[readonly].select2-hidden-accessible+.select2-container .select2-selection__clear {
+//      display: none;
+//  }
+
+//  .select2-container--default .select2-results__option[aria-disabled=true] {
+//      display: none;
+//  }
+
+//  .readonly {
+//      pointer-events: none;
+//  }
+// .inactive_now{
+//  color: #a02929  !important;
+// }
+// .edit-now {
+//  font-size: 12px;
+//  font-weight: 600;
+//  font-style: italic;
+// }
+// .edit-now:hover {
+//  cursor: pointer;
+//  color: #1a2b2a;
+//  text-decoration: underline;
+// }
+// /* Chrome, Safari, Edge, Opera */
+// input::-webkit-outer-spin-button,
+// input::-webkit-inner-spin-button {
+// -webkit-appearance: none;
+// margin: 0;
+// }
+
+// /* Firefox */
+// input[type=number] {
+// -moz-appearance: textfield;
+// }

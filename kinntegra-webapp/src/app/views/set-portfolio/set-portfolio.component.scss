@@ -1,0 +1,25 @@
+table {
+    width: 100%;
+    border: 1px solid #ddd;
+
+    th {
+        padding: 5px;
+        border: 1px solid #ddd;
+    }
+
+    td {
+        padding: 5px;
+        border: 1px solid #ddd;
+    }
+}
+
+.form-footer {
+    // border-top: 1px solid $light-border;
+    // box-shadow: 0 2px 40px rgba(0, 0, 0, 0.09);
+    padding: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    @media (max-width: 767px) {
+        justify-content: center;
+    }
+}

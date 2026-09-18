@@ -1,0 +1,135 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticLeadLabel">Transaction Tagging: {{firstHolderName}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="activeModal.dismiss('Cross click')">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row form-sections">
+            <div class="col-lg-12 col-xl-12 mb-4">
+                <ngx-datatable class="material" style="height: 400px;" [rows]="historyData"
+                    [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [rowHeight]="50"
+                    [scrollbarH]="false" [scrollbarV]="true">
+                    <ngx-datatable-column [width]="50" [sortable]="true" name="UCC">
+                        <ng-template ngx-datatable-header-template let-column="column">UCC</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            <span *ngIf="row.UCC != ''">{{row.UCC}}</span>
+                            <span *ngIf="row.UCC == ''">No UCC</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="50" [sortable]="true" name="FolioNumber">
+                        <ng-template ngx-datatable-header-template let-column="column">Folio Number</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            {{row.FolioNumber}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="250" [sortable]="true" name="SchemeName">
+                        <ng-template ngx-datatable-header-template let-column="column">Scheme Name</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            {{row.SchemeName}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="50" [sortable]="true" name="Portfolio">
+                        <ng-template ngx-datatable-header-template let-column="column">Portfolio</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            {{row.Portfolio}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="50" [sortable]="true" name="OrderDate">
+                        <ng-template ngx-datatable-header-template let-column="column">Date</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            {{row.OrderDate | date:'dd MMM yyyy'}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="50" [sortable]="true" name="PurchaseRedemptionType">
+                        <ng-template ngx-datatable-header-template let-column="column">Type</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            {{row.PurchaseRedemptionType}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="50" [sortable]="true" name="Units">
+                        <ng-template ngx-datatable-header-template let-column="column">Units</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            {{row.Units}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="50" [sortable]="true" name="Amount">
+                        <ng-template ngx-datatable-header-template let-column="column">Amount</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            {{row.Amount}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </div>
+        </div>
+        <div class="row form-sections">
+            <div class="col-lg-6 col-xl-6" *ngIf="transactionType=='Buy'">
+                <div class="row">
+                    <div class="col-lg-12 col-xl-12">
+                        <div class="form-group">
+                            <label>Investment Type</label>
+                            <ng-select class="ng-select-form-control form-control" name="InvestmentType"
+                                [(ngModel)]="investmentType" id="InvestmentType" [dropdownPosition]="'bottom'">
+                                <ng-option *ngFor="let item of investmentTypes" [value]="item.Code">
+                                    {{ item.Name }}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-6" *ngIf="investmentType=='RA'">
+                        <div class="form-group">
+                            <label>Reinvest Amount</label>
+                            <input type="number" class="form-control" id="ReinvestmentAmount" name="ReinvestmentAmount"
+                                placeholder="Enter Amount" value="" [(ngModel)]="reinvestmentAmount">
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-6" *ngIf="investmentType=='RA'">
+                        <div class="form-group">
+                            <label>Add. Amount</label>
+                            <input type="number" class="form-control" id="AdditionalAmount" name="AdditionalAmount"
+                                placeholder="Enter Amount" value="" [(ngModel)]="additionalAmount">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xl-6"
+                *ngIf="clientTransactionId == '414E2B5048745659672B513D' && transactionType=='Buy'">
+                <div class="form-group">
+                    <label>Payment Type</label>
+                    <ng-select class="ng-select-form-control form-control" name="PaymentType" [(ngModel)]="paymentType"
+                        id="PaymentType" [dropdownPosition]="'bottom'">
+                        <ng-option *ngFor="let item of paymentTypes" [value]="item.Name">
+                            {{ item.Name }}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="d-flex justify-content-end w-100">
+            <ng-container>
+                <button type="button" class="btn btn-outline-primary col-sm-2 col-5" data-bs-dismiss="modal"
+                    aria-label="Close" (click)="activeModal.dismiss('Cross click')">Cancel</button>
+                <button type="button" class="btn btn-primary col-sm-3 col-6 ms-3" (click)="onSave()"
+                    [disabled]="isBusy">
+                    <div *ngIf="isBusy">
+                        <span class="spinner-border text-light" style="margin-right: 10px; vertical-align: middle;"
+                            role="status"></span>
+                        <span>Submit</span>
+                    </div>
+                    <span *ngIf="!isBusy">Submit</span>
+                </button>
+            </ng-container>
+        </div>
+    </div>
+</div>

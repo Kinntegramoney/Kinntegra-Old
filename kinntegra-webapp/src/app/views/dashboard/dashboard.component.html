@@ -1,0 +1,298 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"></app-header-right-template>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="welcome-card mb-4">
+                    <div class="welcome-text">
+                        Welcome Back,
+                        <h2 class="mb-0">{{userDisplayName}}</h2>
+                    </div>
+                </div>
+                <div class="card card-sm mb-4">
+                    <div class="card-body pt-2">
+                        <div class="card-title pb-1 border-bottom d-flex align-items-center">
+                            <svg width="40" height="40" viewBox="5 5 50 50">
+                                <use xlink:href="#icon-clients"></use>
+                            </svg>
+                            <h5 class="mb-0">Clients</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <canvas id="vennChartClient"></canvas>
+                            </div>
+                            <div class="col-md-5">
+                                <ul class="chart-data">
+                                    <li *ngFor="let item of clientCount">
+                                        <div class="left-section">
+                                            <div class="circle-indicator"
+                                                [ngClass]="{'warning': (item.RecordType == 'NRI'), 'info': (item.RecordType == 'Corporate'), 'purple': (item.RecordType == 'Minor')}">
+                                            </div>
+                                            <h6 class="mb-0">{{item.RecordType}}</h6>
+                                        </div>
+                                        <div class="right-section">
+                                            {{item.RecordCount}}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card allocation-card card-sm">
+                    <div class="card-body pt-2 pb-0">
+                        <div
+                            class="card-title pb-1 border-bottom d-sm-flex justify-content-between align-items-center mb-0">
+                            <div class="d-flex align-items-center">
+                                <svg width="40" height="40" viewBox="5 5 50 50">
+                                    <use xlink:href="#calendar"></use>
+                                </svg>
+                                <h5 class="mb-0"> Calendar</h5>
+                            </div>
+                            <div class="action-btns mt-3 mt-sm-0">
+                                <button class="btn btn-link">
+                                    <svg width="30" height="30" viewBox="-2 -2 28 28" class="mr-0">
+                                        <use xlink:href="#add-btn"></use>
+                                    </svg>
+                                    Add Event</button>
+                                <button class="btn btn-link">
+                                    <svg width="30" height="30" viewBox="5 5 50 50" class="mr-0">
+                                        <use xlink:href="#calendar"></use>
+                                    </svg> View in Calendar</button>
+                            </div>
+                        </div>
+                        <div class="extended-body">
+                            <div class="calendar-slider-wrapper">
+                                <div class="calendar-slider">
+                                </div>
+                            </div>
+                            <div class="calendar-events mb-0">
+                                <a href="#" class="events birthdays">
+                                    <span class="circle"></span>3 birthdays<i class="icon-right-arrow"></i>
+                                </a>
+                                <a href="#" class="events tasks ">
+                                    <span class="circle"></span>3 tasks<i class="icon-right-arrow"></i>
+                                </a>
+                                <a href="#" class="events reminders ">
+                                    <span class="circle"></span>3 reminders<i class="icon-right-arrow"></i>
+                                </a>
+                            </div>
+                            <div class="calendar-wrapper">
+                                <div id='single-calendar-main'></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card allocation-card card-sm">
+                    <div class="card-body pt-2">
+                        <div class="card-title pb-1 border-bottom d-flex align-items-center">
+                            <svg width="40" height="40" viewBox="5 5 50 50">
+                                <use xlink:href="#logs"></use>
+                            </svg>
+                            <h5 class="mb-0"> Trade Logs</h5>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-5">
+                                <canvas id="trade-chart" height="200"></canvas>
+                            </div>
+                            <div class="col-md-7 mt-3 mt-md-0">
+                                <ul class="chart-data">
+                                    <li>
+                                        <div class="left-section">
+                                            <div class="circle-indicator"></div>
+                                            <h6 class="mb-0">Pending Trades</h6>
+                                        </div>
+                                        <div class="right-section">
+                                            91<i class="icon-link-arrow"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="left-section">
+                                            <div class="circle-indicator warning"></div>
+                                            <h6 class="mb-0">Processing Trades</h6>
+                                        </div>
+                                        <div class="right-section">
+                                            91<i class="icon-link-arrow"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card allocation-card card-sm">
+                    <div class="card-body pt-2">
+                        <div class="card-title pb-1 border-bottom d-flex align-items-center">
+                            <svg width="40" height="40" viewBox="0 0 50 50">
+                                <use xlink:href="#cron-job"></use>
+                            </svg>
+                            <h5 class="mb-0"> Cron Job Analysis</h5>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-5">
+                                <canvas id="job-chart" height="200"></canvas>
+                            </div>
+                            <div class="col-md-7 mt-3 mt-md-0">
+                                <ul class="chart-data">
+                                    <li>
+                                        <div class="left-section">
+                                            <div class="circle-indicator"></div>
+                                            <h6 class="mb-0">Online</h6>
+                                        </div>
+                                        <div class="right-section">
+                                            91<i class="icon-link-arrow"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="left-section">
+                                            <div class="circle-indicator info"></div>
+                                            <h6 class="mb-0">Offline</h6>
+                                        </div>
+                                        <div class="right-section">
+                                            91<i class="icon-link-arrow"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="left-section">
+                                            <div class="circle-indicator warning"></div>
+                                            <h6 class="mb-0">Needs Attention</h6>
+                                        </div>
+                                        <div class="right-section">
+                                            91<i class="icon-link-arrow"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card allocation-card card-sm">
+                    <div class="card-body pt-2">
+                        <div class="card-title pb-1 border-bottom d-flex align-items-center justify-content-between">
+                            <div class=" d-flex align-items-center">
+                                <svg width="40" height="40" viewBox="-5 -5 35 35">
+                                    <use xlink:href="#notification"></use>
+                                </svg>
+                                <h5 class="mb-0"> Notifications</h5>
+                            </div>
+                            <a href="#" class="btn btn-link">View All</a>
+                        </div>
+                        <ul class="nav nav-tabs mb-3" id="notification-tabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" data-toggle="tab" href="#general" role="tab"
+                                    aria-selected="true">General</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" data-toggle="tab" href="#reminder" role="tab"
+                                    aria-selected="false">Reminders</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade active show" id="general" role="tabpanel">
+                                <ul class="alerts-lists">
+                                    <li>
+                                        <h5>The SIP trade for Rakesh Sharma has been approved by RTA</h5>
+                                        <div class="info">
+                                            <span>02:10 AM</span>
+                                            <span>Tuesday, 23rd Mar 2020</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h5>The SIP trade for Rakesh Sharma has been approved by RTA</h5>
+                                        <div class="info">
+                                            <span>02:10 AM</span>
+                                            <span>Tuesday, 23rd Mar 2020</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h5>The SIP trade for Rakesh Sharma has been approved by RTA</h5>
+                                        <div class="info">
+                                            <span>02:10 AM</span>
+                                            <span>Tuesday, 23rd Mar 2020</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane fade" id="reminder" role="tabpanel">
+                                <ul class="alerts-lists">
+                                    <li>
+                                        <h5>The SIP trade for Rakesh Sharma has been approved by RTA</h5>
+                                        <div class="info">
+                                            <span>02:10 AM</span>
+                                            <span>Tuesday, 23rd Mar 2020</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h5>The SIP trade for Rakesh Sharma has been approved by RTA</h5>
+                                        <div class="info">
+                                            <span>02:10 AM</span>
+                                            <span>Tuesday, 23rd Mar 2020</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <h5>The SIP trade for Rakesh Sharma has been approved by RTA</h5>
+                                        <div class="info">
+                                            <span>02:10 AM</span>
+                                            <span>Tuesday, 23rd Mar 2020</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card allocation-card card-sm">
+                    <div class="card-body pt-2">
+                        <div class="card-title pb-1 border-bottom d-flex align-items-center justify-content-between">
+                            <div class=" d-flex align-items-center">
+                                <svg width="40" height="40" viewBox="8 8 35 35">
+                                    <use xlink:href="#alert-icon"></use>
+                                </svg>
+                                <h5 class="mb-0"> Alerts</h5>
+                            </div>
+                            <a href="#" class="btn btn-link" data-toggle="modal" data-target="#attention">View
+                                All</a>
+                        </div>
+                        <ul class="alerts-lists">
+                            <li>
+                                <h5>The SIP trade for Rakesh Sharma has been approved by RTA</h5>
+                                <div class="info">
+                                    <span>02:10 AM</span>
+                                    <span>Tuesday, 23rd Mar 2020</span>
+                                </div>
+                            </li>
+                            <li>
+                                <h5>The SIP trade for Rakesh Sharma has been approved by RTA</h5>
+                                <div class="info">
+                                    <span>02:10 AM</span>
+                                    <span>Tuesday, 23rd Mar 2020</span>
+                                </div>
+                            </li>
+                            <li>
+                                <h5>The SIP trade for Rakesh Sharma has been approved by RTA</h5>
+                                <div class="info">
+                                    <span>02:10 AM</span>
+                                    <span>Tuesday, 23rd Mar 2020</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

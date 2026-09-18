@@ -1,0 +1,484 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="section-header mb-4">
+            <button class="btn btn-primary btn-width-lg" (click)="onNewLeadClick()">New
+                Lead</button>
+            <app-header-right-template class="section-header"></app-header-right-template>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 mb-3 mb-xl-0">
+                <nav ngbNav #nav="ngbNav" class="nav-tabs">
+                    <ng-container ngbNavItem>
+                        <a (click)="activeTab = 1;" ngbNavLink>Leads</a>
+                        <ng-template ngbNavContent>
+                            <div>
+                                <ngx-datatable #leadTable class="material" [rows]="objLeads"
+                                    [columnMode]="ColumnMode.force" [rowHeight]="'auto'" [footerHeight]="50"
+                                    [headerHeight]="50" [limit]="10" [scrollbarH]="true">
+                                    <ngx-datatable-column name="ClientName" [width]="300" [sortable]="true"
+                                        prop="ClientName">
+                                        <ng-template ngx-datatable-header-template let-column="column">Family
+                                            Name</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <!-- <span *ngIf="row.isDeleted" class="initials badge badge-default">{{
+                                                row.ClientInitials }}</span>
+                                            <span *ngIf="!row.isDeleted" class="initials badge badge-info">{{
+                                                row.ClientInitials }}</span> -->
+                                            {{row.ClientName}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="AssociateName" [width]="275" [sortable]="true"
+                                        prop="AssociateName">
+                                        <ng-template ngx-datatable-header-template let-column="column">Associate
+                                            Name</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <ng-template #htmlContent>
+                                                <div [innerHTML]="row.AssociateData" style="text-align: left;"></div>
+                                            </ng-template>
+                                            <span [ngbTooltip]="htmlContent" tooltipClass="custom-tooltip"
+                                                placement="right" triggers="hover"
+                                                container="body">{{row.AssociateName}}</span>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Location" [width]="200" [sortable]="true" prop="City">
+                                        <ng-template ngx-datatable-header-template
+                                            let-column="column">Location</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.City}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Date" [width]="150" [sortable]="true" prop="LeadDate">
+                                        <ng-template ngx-datatable-header-template
+                                            let-column="column">Date(DD-MM-YY)</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.LeadDate | date:'dd-MM-yyyy':'IST'}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Actions" [width]="230" [sortable]="false">
+                                        <ng-template ngx-datatable-header-template
+                                            let-column="column">Actions</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">Proceed to:
+                                            <a *ngIf="row.IsDeleted" class="table-link inactiveLink ico5">
+                                                <span class="badge badge-default badge-pill">Introduction
+                                                    <i class="icon-right-arrow"></i>
+                                                </span>
+                                            </a>
+                                            <a *ngIf="!row.IsDeleted" class="table-link ico5"
+                                                (click)="onProceedIntro(row)">
+                                                <span class="badge badge-info badge-pill">Introduction
+                                                    <i class="icon-right-arrow"></i>
+                                                </span>
+                                            </a> </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column [width]="50" [sortable]="false" [frozenRight]="true">
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <div class="d-inline-block" ngbDropdown container="body"
+                                                #myDrop="ngbDropdown">
+                                                <button type="button" class="btn btn-view bg-gray me-2"
+                                                    id="dropdownManual" ngbDropdownToggle>
+                                                    <i class="icon-dots"></i>
+                                                </button>
+                                                <div ngbDropdownMenu aria-labelledby="dropdownManual"
+                                                    placement="bottom-left">
+                                                    <a ngbDropdownItem (click)="onEditLead(row)">Edit Lead</a>
+                                                    <a ngbDropdownItem (click)="onDeleteLead(row)">Delete Lead</a>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                </ngx-datatable>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                    <ng-container ngbNavItem>
+                        <a (click)="activeTab = 2;" ngbNavLink>Introduction</a>
+                        <ng-template ngbNavContent>
+                            <div>
+                                <ngx-datatable #introTable class="material" [rows]="objLeadsIntroduction"
+                                    [columnMode]="ColumnMode.force" [rowHeight]="'auto'" [footerHeight]="50"
+                                    [headerHeight]="50" [limit]="10" [scrollbarH]="true">
+                                    <ngx-datatable-column name="ClientName" [width]="300" [sortable]="true"
+                                        prop="ClientName">
+                                        <ng-template ngx-datatable-header-template let-column="column">Client
+                                            Name</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <!-- <span *ngIf="row.isDeleted" class="initials badge badge-default">{{
+                                                row.ClientInitials }}</span>
+                                            <span *ngIf="!row.isDeleted" class="initials badge badge-info">{{
+                                                row.ClientInitials }}</span> -->
+                                            {{row.ClientName}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="AssociateName" [width]="200" [sortable]="true"
+                                        prop="AssociateName">
+                                        <ng-template ngx-datatable-header-template let-column="column">Associate
+                                            Name</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <ng-template #htmlContent>
+                                                <div [innerHTML]="row.AssociateData" style="text-align: left;"></div>
+                                            </ng-template>
+                                            <span [ngbTooltip]="htmlContent" tooltipClass="custom-tooltip"
+                                                placement="right" triggers="hover"
+                                                container="body">{{row.AssociateName}}</span>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Location" [width]="100" [sortable]="true" prop="City">
+                                        <ng-template ngx-datatable-header-template
+                                            let-column="column">Location</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.City}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Date" [width]="150" [sortable]="true" prop="LeadDate">
+                                        <ng-template ngx-datatable-header-template
+                                            let-column="column">Date(DD-MM-YY)</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.LeadDate | date:'dd-MM-yyyy':'IST'}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Actions" [width]="405" [sortable]="false">
+                                        <ng-template ngx-datatable-header-template
+                                            let-column="column">Actions</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <div style="display: inline-flex; gap:3px;">
+                                                <span style="width: 70px;">Proceed to:</span>
+                                                <a class="table-link ico5" (click)="onProceedDataGathering(row)">
+                                                    <span class="badge badge-danger badge-pill">Data Gathering
+                                                        <i class="icon-right-arrow"></i>
+                                                    </span>
+                                                </a>
+                                                <div
+                                                    style="height: 25px; border-left: 2px solid #a3a3a3; margin-right: 0px; margin-left: 5px;">
+                                                </div>
+                                                <a class="table-link ico5" (click)="onProceedAccountOpening(row)">
+                                                    <span class="badge badge-danger adge-pill"
+                                                        *ngIf="row.AccountFamilyMember == 0">Account Opening
+                                                        <i class="icon-right-arrow"></i>
+                                                    </span>
+                                                    <span class="badge badge-warning adge-pill"
+                                                        *ngIf="row.TotalFamilyMember > row.AccountFamilyMember && row.AccountFamilyMember != 0">Account
+                                                        Opening
+                                                        <i class="icon-right-arrow"></i>
+                                                    </span>
+                                                    <span class="badge badge-success adge-pill"
+                                                        *ngIf="row.TotalFamilyMember == row.AccountFamilyMember">Account
+                                                        Opening
+                                                        <i class="icon-right-arrow"></i>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="MoreActions" [width]="50" [sortable]="false"
+                                        [frozenRight]="true">
+                                        <ng-template ngx-datatable-header-template let-column="column"></ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <div class="d-inline-block" ngbDropdown container="body"
+                                                #myDrop="ngbDropdown">
+                                                <button type="button" class="btn btn-view bg-gray" id="dropdownManual"
+                                                    ngbDropdownToggle>
+                                                    <i class="icon-dots"></i>
+                                                </button>
+                                                <div ngbDropdownMenu aria-labelledby="dropdownManual"
+                                                    placement="bottom-left">
+                                                    <a ngbDropdownItem (click)="onEditClient(row)">Edit Family</a>
+                                                    <a ngbDropdownItem (click)="onDeleteClient(row)"
+                                                        *ngIf="row.AccountFamilyMember == 0">Delete Family</a>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                </ngx-datatable>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                    <ng-container ngbNavItem>
+                        <a (click)="activeTab = 3;" ngbNavLink>Comprehensive Analysis</a>
+                        <ng-template ngbNavContent>
+                            <div *ngIf="false">
+                                <ngx-datatable #comprehensiveTable class="material" [rows]="objLeadsComprehensive"
+                                    [columnMode]="ColumnMode.force" [rowHeight]="'auto'" [footerHeight]="50"
+                                    [headerHeight]="50" [limit]="10" [scrollbarH]="true">
+                                    <ngx-datatable-column name="ClientName" [width]="300" [sortable]="true"
+                                        prop="ClientName">
+                                        <ng-template ngx-datatable-header-template let-column="column">Client
+                                            Name</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.ClientName}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="AssociateName" [width]="200" [sortable]="true"
+                                        prop="AssociateName">
+                                        <ng-template ngx-datatable-header-template let-column="column">Associate
+                                            Name</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <ng-template #htmlContent>
+                                                <div [innerHTML]="row.AssociateData" style="text-align: left;"></div>
+                                            </ng-template>
+                                            <span [ngbTooltip]="htmlContent" tooltipClass="custom-tooltip"
+                                                placement="right" triggers="hover"
+                                                container="body">{{row.AssociateName}}</span>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Location" [width]="100" [sortable]="true" prop="City">
+                                        <ng-template ngx-datatable-header-template
+                                            let-column="column">Location</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.City}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Date" [width]="150" [sortable]="true" prop="LeadDate">
+                                        <ng-template ngx-datatable-header-template
+                                            let-column="column">Date(DD-MM-YY)</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.LeadDate | date:'dd-MM-yyyy':'IST'}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Actions" [width]="405" [sortable]="false">
+                                        <ng-template ngx-datatable-header-template
+                                            let-column="column">Actions</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <div style="display: inline-flex; gap:3px;">
+                                                <span style="width: 70px;">Proceed to:</span>
+                                                <a class="table-link ico5" (click)="onProceedDataGathering(row)">
+                                                    <span class="badge badge-danger badge-pill">Data Gathering
+                                                        <i class="icon-right-arrow"></i>
+                                                    </span>
+                                                </a>
+                                                <div
+                                                    style="height: 25px; border-left: 2px solid #a3a3a3; margin-right: 0px; margin-left: 5px;">
+                                                </div>
+                                                <a class="table-link ico5" (click)="onProceedAccountOpening(row)">
+                                                    <span class="badge badge-danger adge-pill"
+                                                        *ngIf="row.AccountFamilyMember == 0">Account Opening
+                                                        <i class="icon-right-arrow"></i>
+                                                    </span>
+                                                    <span class="badge badge-warning adge-pill"
+                                                        *ngIf="row.TotalFamilyMember > row.AccountFamilyMember && row.AccountFamilyMember != 0">Account
+                                                        Opening
+                                                        <i class="icon-right-arrow"></i>
+                                                    </span>
+                                                    <span class="badge badge-success adge-pill"
+                                                        *ngIf="row.TotalFamilyMember == row.AccountFamilyMember">Account
+                                                        Opening
+                                                        <i class="icon-right-arrow"></i>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="MoreActions" [width]="50" [sortable]="false"
+                                        [frozenRight]="true">
+                                        <ng-template ngx-datatable-header-template let-column="column"></ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <div class="d-inline-block" ngbDropdown container="body"
+                                                #myDrop="ngbDropdown">
+                                                <button type="button" class="btn btn-view bg-gray" id="dropdownManual"
+                                                    ngbDropdownToggle>
+                                                    <i class="icon-dots"></i>
+                                                </button>
+                                                <div ngbDropdownMenu aria-labelledby="dropdownManual"
+                                                    placement="bottom-left">
+                                                    <a ngbDropdownItem (click)="onEditClient(row)">Edit</a>
+                                                    <a ngbDropdownItem (click)="onDeleteClient(row)"
+                                                        *ngIf="row.AccountFamilyMember == 0">Delete</a>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                </ngx-datatable>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"></div>
+                                <div class="col-6 align-self-center">
+                                    <ng-lottie style="height: 300px;" [options]="lottieOptions"
+                                        (animationCreated)="animationCreated($event)"></ng-lottie>
+                                </div>
+                                <div class="col-3"></div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                    <ng-container ngbNavItem>
+                        <a (click)="activeTab = 4;" ngbNavLink>Accounts</a>
+                        <ng-template ngbNavContent>
+                            <div>
+                                <ngx-datatable #accountTable class="material" [rows]="objLeadsAccount"
+                                    [columnMode]="ColumnMode.force" [rowHeight]="'auto'" [footerHeight]="50"
+                                    [headerHeight]="50" [limit]="10" [scrollbarH]="true">
+                                    <ngx-datatable-column name="ClientName" [width]="300" [sortable]="true"
+                                        prop="ClientName">
+                                        <ng-template ngx-datatable-header-template let-column="column">Client
+                                            Name</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <!-- <span *ngIf="row.isDeleted" class="initials badge badge-default">{{
+                                                row.ClientInitials }}</span>
+                                            <span *ngIf="!row.isDeleted" class="initials badge badge-info">{{
+                                                row.ClientInitials }}</span> -->
+                                            <ng-template #htmlContent>
+                                                <div [innerHTML]="row.AccountData" style="text-align: left;"></div>
+                                            </ng-template>
+                                            <span [ngbTooltip]="htmlContent" tooltipClass="custom-tooltip"
+                                                placement="right" triggers="hover"
+                                                container="body">{{row.ClientName}}</span>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="AssociateName" [width]="200" [sortable]="true"
+                                        prop="AssociateName">
+                                        <ng-template ngx-datatable-header-template let-column="column">Associate
+                                            Name</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <ng-template #htmlContent>
+                                                <div [innerHTML]="row.AssociateData" style="text-align: left;"></div>
+                                            </ng-template>
+                                            <span [ngbTooltip]="htmlContent" tooltipClass="custom-tooltip"
+                                                placement="right" triggers="hover"
+                                                container="body">{{row.AssociateName}}</span>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Location" [width]="100" [sortable]="true" prop="City">
+                                        <ng-template ngx-datatable-header-template
+                                            let-column="column">Location</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.City}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Date" [width]="150" [sortable]="true"
+                                        prop="AccountCreatedDate">
+                                        <ng-template ngx-datatable-header-template
+                                            let-column="column">Date(DD-MM-YY)</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <ng-template #htmlContent>
+                                                <div [innerHTML]="row.LastModifiedData" style="text-align: left;"></div>
+                                            </ng-template>
+                                            <span [ngbTooltip]="htmlContent" tooltipClass="custom-tooltip"
+                                                placement="right" triggers="hover"
+                                                container="body">{{row.AccountCreatedDate |
+                                                date:'dd-MM-yyyy':'IST'}}</span>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Actions" [width]="405" [sortable]="false">
+                                        <ng-template ngx-datatable-header-template
+                                            let-column="column">Actions</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <div style="display: inline-flex; gap:3px;">
+                                                <span style="width: 70px;">Proceed to:</span>
+                                                <a class="table-link ico5" (click)="onProceedAccountDataGathering(row)">
+                                                    <span class="badge badge-danger badge-pill">Data Gathering
+                                                        <i class="icon-right-arrow"></i>
+                                                    </span>
+                                                </a>
+                                                <div
+                                                    style="height: 25px; border-left: 2px solid #a3a3a3; margin-right: 0px; margin-left: 5px;">
+                                                </div>
+                                                <a class="table-link ico5" (click)="onProceedTransaction(row)">
+                                                    <span class="badge badge-danger adge-pill"
+                                                        *ngIf="row.IsTranasctionComplteted == false">Transaction
+                                                        <i class="icon-right-arrow"></i>
+                                                    </span>
+                                                    <span class="badge badge-success adge-pill"
+                                                        *ngIf="row.IsTranasctionComplteted == true">Transaction
+                                                        <i class="icon-right-arrow"></i>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="MoreActions" [width]="50" [sortable]="false"
+                                        [frozenRight]="true">
+                                        <ng-template ngx-datatable-header-template let-column="column"></ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            <div class="d-inline-block" ngbDropdown container="body"
+                                                #myDrop="ngbDropdown">
+                                                <button type="button" class="btn btn-view bg-gray" id="dropdownManual"
+                                                    ngbDropdownToggle>
+                                                    <i class="icon-dots"></i>
+                                                </button>
+                                                <div ngbDropdownMenu aria-labelledby="dropdownManual"
+                                                    placement="bottom-left">
+                                                    <a ngbDropdownItem (click)="onViewClientAccount(row)">View
+                                                        Details</a>
+                                                    <a ngbDropdownItem (click)="onEditClientAccount(row)">Edit
+                                                        Details</a>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                </ngx-datatable>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </nav>
+            </div>
+            <div class="col-xl-6 pl-xl-0">
+                <div class="table-options">
+                    <div class="searchinput-wrapper mb-3 mb-sm-0">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="table-search">
+                                    <svg width="24" height="24" viewBox="0 0 24 24">
+                                        <use xlink:href="#search" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control custom-search-input" placeholder="Search"
+                                aria-label="table-search" id="tableSearch" aria-describedby="table-search"
+                                [(ngModel)]="objSearchKeyword" (input)="searchClientRecord()">
+                        </div>
+                    </div>
+
+                    <!-- <div class="input-group mb-3 mb-sm-0">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="month">
+                                <svg width="24" height="24" viewBox="0 0 24 24">
+                                    <use xlink:href="#month" />
+                                </svg>
+                            </span>
+                        </div>
+                        <input type="text" name="dates" class="form-control daterange text-truncate" />
+                    </div> -->
+
+                    <!-- <button class="btn btn-icon" data-toggle="modal" (click)="onFilterClick()"
+                        data-target="#filterModal">
+                        <svg width="40" viewBox="0 0 36 36">
+                            <use xlink:href="#filter" />
+                        </svg>
+                    </button> -->
+                    <!-- <div class="table-nav">
+                        <button class="btn btn-transparent btn-sm" id="previous" disabled>
+                            <i class="icon-left-arrow"></i>
+                        </button>
+                        <button class="btn btn-transparent btn-sm" id="next">
+                            <i class="icon-right-arrow"></i>
+                        </button>
+                    </div>
+                    <a href="#" class="btn btn-primary ml-3 profile_export" download="profile_file">Download</a> -->
+                </div>
+            </div>
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Filters: Associate</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="activeModal.dismiss('Cross click')">
+            <!-- <span aria-hidden="true">&times;</span> -->
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row form-sections">
+            <div class="col-sm-6 filter_state">
+                <div class="form-group last-form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By State</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [items]="states" [multiple]="true" bindLabel="Name" [closeOnSelect]="false"
+                            bindValue="Name" [(ngModel)]="FilterAssociateData.selectedStates" name="state" [dropdownPosition]="'bottom'">
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [(ngModel)]="item$.selected"
+                                    [ngModelOptions]="{standalone: true}" />
+                                {{item.Name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 filter_city">
+                <div class="form-group last-form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By City</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [items]="cities" [multiple]="true" bindLabel="Name" [closeOnSelect]="false"
+                            bindValue="Name" [(ngModel)]="FilterAssociateData.selectedCities" name="city" [dropdownPosition]="'bottom'">
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [(ngModel)]="item$.selected"
+                                    [ngModelOptions]="{standalone: true}" />
+                                {{item.Name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 filter_associate">
+                <div class="form-group last-form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By Associate</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [items]="associates" [multiple]="true" bindLabel="Name" [closeOnSelect]="false"
+                            bindValue="Name" [(ngModel)]="FilterAssociateData.selectedAssociate" name="associate" [dropdownPosition]="'bottom'">
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [(ngModel)]="item$.selected"
+                                    [ngModelOptions]="{standalone: true}" />
+                                {{item.Name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-sm-6 filter_status">
+                <div class="form-group last-form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By Account Status</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [items]="status" [multiple]="true" bindLabel="Name" [closeOnSelect]="false"
+                            bindValue="Name" [(ngModel)]="FilterAssociateData.selectedStatus" name="status" [dropdownPosition]="'bottom'">
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [(ngModel)]="item$.selected"
+                                    [ngModelOptions]="{standalone: true}" />
+                                {{item.Name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 filter_lastlogin">
+                <div class="form-group last-form-group">
+                    <h4 class="form-section-title text-uppercase text-grey">Filter By Last Login</h4>
+                    <div class="dropdown form-control ng-select-form-control">
+                        <ng-select [items]="lastLogins" [multiple]="true" bindLabel="Name" [closeOnSelect]="false"
+                            bindValue="Name" [(ngModel)]="FilterAssociateData.selectedLastLogins" name="status" [dropdownPosition]="'bottom'">
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                <input id="item-{{index}}" type="checkbox" [(ngModel)]="item$.selected"
+                                    [ngModelOptions]="{standalone: true}" />
+                                {{item.Name}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary col-sm-3" (click)="onClearFilter()">Clear Filter</button>
+        <button type="button" class="btn btn-warning col-sm-3" (click)="onRemoveFilter()">Remove Filter</button>
+        <button type="button" class="btn btn-primary col-sm-3" (click)="onFilter()">Apply Filter</button>
+    </div>
+</div>

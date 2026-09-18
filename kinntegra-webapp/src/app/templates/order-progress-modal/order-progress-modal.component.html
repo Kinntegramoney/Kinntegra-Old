@@ -1,0 +1,29 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticLeadLabel" *ngIf="!ShowFinalStatus">Please wait... Do not press back button or refresh this page.</h5>
+    </div>
+    <div class="modal-body">
+        <div class="row form-sections justify-content-center">
+            <div class="col-6" style="text-align: center;">
+                <img src="../../../assets/images/load.gif" style="height: 64px;"/>
+            </div>
+            <!-- <div class="col-6">
+                <ng-lottie style="height: 300px;" [options]="lottieOptions" (animationCreated)="animationCreated($event)"></ng-lottie>
+            </div> -->
+        </div>
+        <div class="row form-sections justify-content-center">
+            <div class="col-12" style="text-align: center;">
+                <div class="error-lists" style="text-align: center;">
+                    {{StatusMessage}}
+                </div>
+                <div class="error-lists mt-4" *ngIf="ShowFinalStatus" style="text-align: center;">
+                    You can close page now.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="proceed btn btn-primary btn-lg" style="min-width: 11rem;"
+            (click)="onClose()" *ngIf="ShowTryAgain">Try Again</button>
+    </div>
+</div>

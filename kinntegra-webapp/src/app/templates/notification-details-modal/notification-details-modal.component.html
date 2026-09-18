@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Notification Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                (click)="activeModal.dismiss('Cross click')">
+                <!-- <span aria-hidden="true">&times;</span> -->
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12 reject_reason">
+                    <div class="form-group notification-detail-item">
+                        <span>{{notificationItem.Title}}</span>
+                        <div class="form-control notification-detail-box mt-3">{{notificationItem.Description}}</div>
+                        <div class="info">
+                            <span>{{ notificationItem.RecordDate | date:"hh:mm a":"IST" }}</span>
+                            <span>{{ notificationItem.RecordDate | date:"fullDate":"IST" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="proceed btn btn-primary btn-lg" style="min-width: 11rem"
+                (click)="onClose()">Ok</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,327 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticLeadLabel">Folio Transfer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="activeModal.dismiss('Cross click')">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row form-sections">
+            <div class="col-12">
+                <h4 class="form-section-title text-primary text-uppercase">Account Details</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Associate Code</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objFeed.SubBrokerCode}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">UCC</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objFeed.Ucc}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Tax Status</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objFeed.TaxStatus}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">First Holder</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objFeed.FirstHolderName}}
+                        </div>
+                        <div class="form-control-sub-plaintext"
+                            *ngIf="objFeed.FirstHolderName!='' && objFeed.FirstHolderPan!=''">
+                            PAN: {{objFeed.FirstHolderPan}}
+                        </div>
+                        <div class="form-control-sub-plaintext"
+                            *ngIf="objFeed.FirstHolderName!='' && objFeed.FirstHolderPan==''">
+                            PAN: Not Found
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Second Holder</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objFeed.SecondHolderName}}
+                        </div>
+                        <div class="form-control-sub-plaintext"
+                            *ngIf="objFeed.SecondHolderName!='' && objFeed.SecondHolderPan!=''">
+                            PAN: {{objFeed.SecondHolderPan}}
+                        </div>
+                        <div class="form-control-sub-plaintext"
+                            *ngIf="objFeed.SecondHolderName!='' && objFeed.SecondHolderPan==''">
+                            PAN: Not Found
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Third Holder</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objFeed.ThirdHolderName}}
+                        </div>
+                        <div class="form-control-sub-plaintext"
+                            *ngIf="objFeed.ThirdHolderName!='' && objFeed.ThirdHolderPan!=''">
+                            PAN: {{objFeed.ThirdHolderPan}}
+                        </div>
+                        <div class="form-control-sub-plaintext"
+                            *ngIf="objFeed.ThirdHolderName!='' && objFeed.ThirdHolderPan==''">
+                            PAN: Not Found
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Guardian</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objFeed.GuardianName}}
+                        </div>
+                        <div class="form-control-sub-plaintext"
+                            *ngIf="objFeed.GuardianName!='' && objFeed.GuardianPan!=''">
+                            PAN: {{objFeed.GuardianPan}}
+                        </div>
+                        <div class="form-control-sub-plaintext"
+                            *ngIf="objFeed.GuardianName!='' && objFeed.GuardianPan==''">
+                            PAN: Not Found
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Nominee 1</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objFeed.NomineeName}} <span class="form-control-sub-plaintext"
+                                *ngIf="objFeed.NomineeName!=''">({{objFeed.NomineePercentage}}%)</span>
+                        </div>
+                        <div class="form-control-sub-plaintext"
+                            *ngIf="objFeed.NomineeName!='' && objFeed.NomineeRelation!=''">
+                            Relation: {{objFeed.NomineeRelation}}
+                        </div>
+                        <div class="form-control-sub-plaintext"
+                            *ngIf="objFeed.NomineeName!='' && objFeed.NomineeRelation==''">
+                            Relation: Not Found
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Nominee 2</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objFeed.Nominee2Name}} <span class="form-control-sub-plaintext"
+                                *ngIf="objFeed.Nominee2Name!=''">({{objFeed.Nominee2Percentage}}%)</span>
+                        </div>
+                        <div class="form-control-sub-plaintext"
+                            *ngIf="objFeed.Nominee2Name!='' && objFeed.Nominee2Relation!=''">
+                            Relation: {{objFeed.Nominee2Relation}}
+                        </div>
+                        <div class="form-control-sub-plaintext"
+                            *ngIf="objFeed.Nominee2Name!='' && objFeed.Nominee2Relation==''">
+                            Relation: Not Found
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Nominee 3</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objFeed.Nominee3Name}} <span class="form-control-sub-plaintext"
+                                *ngIf="objFeed.Nominee3Name!=''">({{objFeed.Nominee3Percentage}}%)</span>
+                        </div>
+                        <div class="form-control-sub-plaintext"
+                            *ngIf="objFeed.Nominee3Name!='' && objFeed.Nominee3Relation!=''">
+                            Relation: {{objFeed.Nominee3Relation}}
+                        </div>
+                        <div class="form-control-sub-plaintext"
+                            *ngIf="objFeed.Nominee3Name!='' && objFeed.Nominee3Relation==''">
+                            Relation: Not Found
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row form-sections">
+            <div class="col-12">
+                <h4 class="form-section-title text-primary text-uppercase">Folio Details</h4>
+            </div>
+            <div class="col-12">
+                <ngx-datatable class="material" [rows]="objFeed.FolioLists" [columnMode]="ColumnMode.force" [headerHeight]="50"
+                    [footerHeight]="50" [rowHeight]="50" [scrollbarH]="false" [selected]="selectedFolios"
+                    [selectionType]="SelectionType.checkbox" (activate)="onActivate($event)"
+                    (select)="onSelectAllChanged($event)">
+                    <ngx-datatable-column [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+                        [resizeable]="false" [headerCheckboxable]="true" [checkboxable]="true">
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="200" [sortable]="false" name="FolioNumber">
+                        <ng-template ngx-datatable-header-template let-column="column">Folio Number</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            {{row.FolioNumber}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="900" [sortable]="false" name="FundDescription">
+                        <ng-template ngx-datatable-header-template let-column="column">Fund</ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                            let-row="row">
+                            {{row.FundDescription}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </div>
+        </div>
+        <div class="row form-sections">
+            <div class="col-12">
+                <h4 class="form-section-title text-primary text-uppercase">Transfer To</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="associate">Associate</label>
+                        <div class="form-control ng-select-form-control">
+                            <ng-select [(ngModel)]="selectedAssociate" name="associate" (change)="onAssociateChanged()" [dropdownPosition]="'bottom'">
+                                <ng-option *ngFor="let item of associates"
+                                    [value]="item">{{item.BSEMemberId}}{{item.AssociateCode}} -
+                                    {{item.AssociateName}}</ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="client_account">New Account</label>
+                        <div class="form-control ng-select-form-control">
+                            <ng-select [(ngModel)]="selectedAccount" name="client_account"
+                                (change)="onNewAccountChanged()" [dropdownPosition]="'bottom'">
+                                <ng-option *ngFor="let item of accounts" [value]="item">{{item.UCC}} -
+                                    {{item.AccountHolderName}}</ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Associate Code</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objNewAccount.SubBrokerCode}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">UCC</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objNewAccount.Ucc}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Tax Status</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objNewAccount.TaxStatus}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">First Holder</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objNewAccount.FirstHolderName}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Second Holder</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objNewAccount.SecondHolderName}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Third Holder</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objNewAccount.ThirdHolderName}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Guardian</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objNewAccount.GuardianName}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Nominee 1</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objNewAccount.NomineeName}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Nominee 2</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objNewAccount.Nominee2Name}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="client_account_type">Nominee 3</label>
+                        <div class="form-control-plaintext font-bold">
+                            {{objNewAccount.Nominee3Name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="d-flex justify-content-end w-100">
+            <ng-container>
+                <button type="button" class="btn btn-outline-primary col-sm-2 col-5" data-bs-dismiss="modal"
+                    aria-label="Close" (click)="activeModal.dismiss('Cross click')">Cancel</button>
+                <button type="button" class="btn btn-primary col-sm-3 col-6 ms-3" (click)="onSave()"
+                    [disabled]="isBusy">
+                    <div *ngIf="isBusy">
+                        <span class="spinner-border text-light" style="margin-right: 10px; vertical-align: middle;"
+                            role="status"></span>
+                        <span>Proceed</span>
+                    </div>
+                    <span *ngIf="!isBusy">Proceed</span>
+                </button>
+            </ng-container>
+        </div>
+    </div>
+</div>

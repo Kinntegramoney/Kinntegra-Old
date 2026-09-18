@@ -1,0 +1,198 @@
+<div class="table-top-section">
+    <div class="section-header mb-4">
+
+        <app-header-right-template class="section-header"></app-header-right-template>
+    </div>
+</div>
+<div class="card w-100">
+    <div class="card-body">
+        <div class="row">
+
+            <div class="container-fluid col-lg-8 col-xl-12">
+                <h3 class="card-title d-inline"><i class="icon-left-arrow back-btn" (click)="onBack()"></i>Terms
+                    Conditions
+                    <button class="btn btn-link float-end mt-1" id="add_new_data" (click)="onAddnew()">Add New</button>
+                </h3>
+                <div class="form-inner-section">
+                    <div class="card-body">
+
+                        <div id="success_alert" class="alert alert-success alert-dismissible fade show"
+                            style="display: none" role="alert">
+                            <div class="alert-text">
+                                <strong>Hooray !</strong> <span class="message"></span>
+                            </div>
+                            <button type="button" id="success_alert_close" class="close" data-dismiss="alert"
+                                aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="row flex-row-reverse ">
+
+                            <div class="col-lg-9 border-left col-md-7 ">
+                                <div class="admin-body">
+
+
+                                    <div class="tab-content" id="leadsContent">
+                                        <div class="tab-pane fade show active" id="admin-tax" role="tabpanel">
+                                            <div class="card small-card option-2 option-2 mb-4">
+                                                <div class="card-header">
+                                                    <h5 class="card-title mb-0 status">Add</h5>
+                                                    <span class="edit-now float-right mt-1" *ngIf="!ShowEditButton" (click)="onEditClicked()">Edit</span>
+                                                </div>
+                                                <div class="card-body pt-4 pb-4">
+                                                    <form id="add-update-data">
+
+
+
+                                                        <div class="row">
+                                                            <div class="col-xl-4 col-sm-12 name">
+                                                                <div class="form-group mb-3 mb-sm-0">
+                                                                    <label>w.e.f.Date<span
+                                                                            class="required-sign">*</span></label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control"
+                                                                            placeholder="dd-mm-yyyy" name="wefDate"
+                                                                            ngbDatepicker #d="ngbDatepicker"
+                                                                            [(ngModel)]="objTermsConditions.WefDate"  [disabled]="!isEdit"/>
+                                                                        <button class="btn btn-transparent"
+                                                                            (click)="d.toggle()" type="button"><svg
+                                                                                width="24" height="24"
+                                                                                viewBox="0 0 24 24">
+                                                                                <use xlink:href="#month"></use>
+                                                                            </svg></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-sm-12 code">
+                                                                <div class="form-group mb-3 mb-sm-0">
+                                                                    <label for="term-type">Term Type <span
+                                                                            class="required-sign">*</span></label>
+                                                                    <div class="form-control ng-select-form-control">
+                                                                        <ng-select
+                                                                            [(ngModel)]="objTermsConditions.TermsType"
+                                                                            name="termtype" [disabled]="!isEdit" [dropdownPosition]="'bottom'">
+                                                                            <ng-option *ngFor="let term of TermsTypes"
+                                                                                [value]="term">{{term}}</ng-option>
+                                                                        </ng-select >
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-12 mt-3 mb-xl-0">
+                                                                <div class="form-group">
+                                                                    <label for="reject_reason">Terms Content<span
+                                                                            class="required-sign">*</span></label>
+                                                                    <textarea class="form-control mt-4"
+                                                                        id="reject_reason" name="reject_reason"
+                                                                        rows="10"
+                                                                        [(ngModel)]="objTermsConditions.TermsContent" [disabled]="!isEdit"></textarea>
+                                                                </div>
+                                                            </div>
+                                                   
+                                                        </div>
+                                                        <button (click)="onSave()"
+                                                            class="btn btn-primary btn-lg mt-2">Save</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-5">
+                                <h5 class="card-title mb-3">Lists</h5>
+                                <div class="input-group ">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="table-search">
+                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                <use xlink:href="#search"></use>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <input type="text" name="master_search" id="master_search" class="form-control"
+                                        placeholder="Search" aria-label="table-search" aria-describedby="table-search" [(ngModel)]="objName" (input)="searchTermConditionsRecord()">
+                                </div>
+                                <ul class="logs-list mt-4">
+                                    <li *ngFor="let term of termsConditions">
+                                      <a (click)="onSelectedItem(term.Id)">
+                                        <h4>{{ term.wefTermType }}</h4>
+                                      </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="card w-100">
+    <div class="card-body">
+        <div class="row">
+            <div class="container-fluid col-lg-8 col-xl-12">
+                <h3 class="card-title d-inline"><i class="icon-left-arrow back-btn" (click)="onBack()"></i>Terms
+                    Conditions
+                </h3>
+                <div class="card mb-4" style="margin-top: 20px;">
+                    <div class="card-body">
+                        <div class="row flex-row-reverse ">
+
+                            <div class="col-12">
+                                <div class="admin-body">
+                                    <div class="edit">
+                                        
+                                        <span class="edit-now float-right mt-1">Edit</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="form-group">
+                                                <label>w.e.f.Date<span class="required-sign">*</span></label>
+                                                <div class="input-group">
+                                                    <input class="form-control" placeholder="dd-mm-yyyy" name="wefDate"
+                                                        ngbDatepicker #d="ngbDatepicker"
+                                                        [(ngModel)]="objTermsConditions.WefDate" />
+                                                    <button class="btn btn-transparent" (click)="d.toggle()"
+                                                        type="button"><svg width="24" height="24" viewBox="0 0 24 24">
+                                                            <use xlink:href="#month"></use>
+                                                        </svg></button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="form-group">
+                                                <label for="term-type">Term Type <span
+                                                        class="required-sign">*</span></label>
+                                                <div class="form-control ng-select-form-control">
+                                                    <ng-select [(ngModel)]="objTermsConditions.TermsType"
+                                                        name="termtype" [dropdownPosition]="'bottom'">
+                                                        <ng-option *ngFor="let term of TermsTypes"
+                                                            [value]="term">{{term}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-12 mt-1 mb-xl-0">
+                                            <div class="form-group">
+                                                <label for="reject_reason">Terms Content<span
+                                                        class="required-sign">*</span></label>
+                                                <textarea class="form-control mt-4" id="reject_reason"
+                                                    name="reject_reason" rows="14"
+                                                    [(ngModel)]="objTermsConditions.TermsContent"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer ">
+                        <button class="btn btn-primary btn-lg  float-end" (click)="onSave()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

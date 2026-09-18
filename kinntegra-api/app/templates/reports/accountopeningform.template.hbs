@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Kinntegra</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <link rel="icon" href="favicon.ico" type="image/ico" sizes="16x16">
+
+
+
+</head>
+
+<body class="aof">
+    <div class="container" id="div_content" name="div_content">
+
+        <div class="row justify-content-center pt-3">
+
+            <div class="col-lg-8 pb-1">
+                <div class="card">
+                    <form id="frmOrder">
+                        <div class="d-flex justify-content-between header-section px-3 pt-3 align-items-center">
+                            <address class="aof-address">
+                                <h2 class="mb-1 d-block" style="margin:0px">Kinntegra Wealth Private Limited(AMFI Registered Mutual Fund Distributor)</h2>
+                                <strong>Registered Address</strong>: 6302, Island City Center Two, G D Ambekar Marg, Dadar (East), Mumbai 400014<br>
+                                <strong>Contact Details:</strong> +91-9136051689<br>
+                                <strong>Website:</strong> www.kinntegra.co.in | <strong>Email:</strong>
+                                info@kinntegra.co.in<br>
+                                <strong>CIN:</strong> U74999MH2018PTC306145<br>
+                            </address>
+                            <a class="aof-image" href="#">
+                                <img class="img-fluid" src="{{LogoImagePath}}">
+                            </a>
+                        </div>
+
+                        <div style="text-align: center;">
+
+                        </div>
+                        <div style="padding-top:15px;text-align: center;">
+                            <strong>Account Opening Form</strong>
+                        </div>
+                        <div class="card-body p-3">
+                            <table class="aof-table table-sm aof-table-bordered" cellspacing="2">
+                                <tr>
+                                    <td class="aof-highlight">Broker/Agent Code ARN:</td>
+                                    <td colspan="3">{{ARN}}</td>
+                                    <td class="aof-highlight">SUB-BROKER</td>
+                                    <td>{{SubARN}}</td>
+                                    <td class="aof-highlight">EUIN</td>
+                                    <td>{{EUIN}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8" class="aof-head-title" style="color: white;">Unit Folder Information</td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">Name of the First Applicant :</td>
+                                    <td colspan="7">{{ClientAppName1}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">PAN Number :</td>
+                                    <td colspan="2">{{ClientPAN}}</td>
+                                    <td class="aof-highlight">KYC :</td>
+                                    <td></td>
+                                    <td class="aof-highlight">Date Of Birth :</td>
+                                    <td colspan="2">{{ClientDOB}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">Name of Guardian:</td>
+                                    <td colspan="4">{{ClientGuardian}}</td>
+                                    <td class="aof-highlight">PAN:</td>
+                                    <td colspan="2">{{ClientGuardianPAN}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">Contact Address:</td>
+                                    <td colspan="7">{{ClientAdd1}}<br>{{ClientAdd2}}<br>{{ClientAdd3}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">City:</td>
+                                    <td>{{ClientCity}}</td>
+                                    <td class="aof-highlight">Pincode:</td>
+                                    <td>{{ClientPincode}}</td>
+                                    <td class="aof-highlight">State:</td>
+                                    <td>{{ClientState}}</td>
+                                    <td class="aof-highlight">Country:</td>
+                                    <td>{{ClientCountry}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">Tel.(Off):</td>
+                                    <td></td>
+                                    <td class="aof-highlight">Tel.(Res):</td>
+                                    <td colspan="2"></td>
+                                    <td class="aof-highlight">Email:</td>
+                                    <td colspan="2">{{ClientEmail}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">Fax(Off):</td>
+                                    <td></td>
+                                    <td class="aof-highlight">Fax(Res):</td>
+                                    <td colspan="2"></td>
+                                    <td class="aof-highlight">Mobile:</td>
+                                    <td colspan="2">{{ClientMobile}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">Mode of Holding:</td>
+                                    <td colspan="4">{{ClientHolding}}</td>
+                                    <td class="aof-highlight">Occupation:</td>
+                                    <td colspan="2">{{ClientOccupation}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="aof-highlight">Name of the Second Applicant :</td>
+                                    <td colspan="6">{{ClientAppName2}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">PAN Number :</td>
+                                    <td colspan="2">{{ClientPAN2}}</td>
+                                    <td class="aof-highlight">KYC :</td>
+                                    <td></td>
+                                    <td class="aof-highlight">Date Of Birth :</td>
+                                    <td colspan="2">{{ClientDOB2}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="aof-highlight">Name of the Third Applicant :</td>
+                                    <td colspan="6">{{ClientAppName3}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">PAN Number :</td>
+                                    <td colspan="2">{{ClientPAN3}}</td>
+                                    <td class="aof-highlight">KYC :</td>
+                                    <td></td>
+                                    <td class="aof-highlight">Date Of Birth :</td>
+                                    <td colspan="2">{{ClientDOB3}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8" class="aof-head-title" style="color: white;">Other Details of Sole / 1st Applicant</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="aof-highlight">Overseas Address(In case of NRI Investor):
+                                    </td>
+                                    <td colspan="6">{{ClientForeignAdd1}} {{ClientForeignAdd2}} {{ClientForeignAdd3}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">City:</td>
+                                    <td colspan="2">{{ClientForeignCity}}</td>
+                                    <td class="aof-highlight">Pincode:</td>
+                                    <td colspan="2">{{ClientForeignPincode}}</td>
+                                    <td class="aof-highlight">Country:</td>
+                                    <td>{{ClientForeignCountry}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="aof-highlight">Bank Mandate Details</td>
+                                    <td colspan="6"></td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">Name of Bank:</td>
+                                    <td colspan="4">{{BankName}}</td>
+                                    <td class="aof-highlight">Branch:</td>
+                                    <td colspan="2">{{BankBranch}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">A/C No.:</td>
+                                    <td colspan="2">{{ClientAccountNo1}}</td>
+                                    <td class="aof-highlight">A/C Type:</td>
+                                    <td colspan="2">{{ClientAccountType1}}</td>
+                                    <td class="aof-highlight">IFSC Code:</td>
+                                    <td>{{ClientIFSCCode1}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">Bank Address:</td>
+                                    <td colspan="7" style="width:75%;">{{BankAddress}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">City:</td>
+                                    <td>{{BankCity}}</td>
+                                    <td class="aof-highlight">Pincode:</td>
+                                    <td></td>
+                                    <td class="aof-highlight">State:</td>
+                                    <td>{{BankState}}</td>
+                                    <td class="aof-highlight">Country:</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8" class="aof-head-title" style="color: white;">Nomination Details</td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">Nominee Name:</td>
+                                    <td colspan="5">{{ClientNominee}}</td>
+                                    <td class="aof-highlight">Relationship:</td>
+                                    <td>{{ClientNomineeRelation}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="aof-highlight">Guardian Name(If Nominee is Minor):</td>
+                                    <td colspan="6">{{NomineeGuardianName}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">Nominee Address:</td>
+                                    <td colspan="7">{{NomineeAddress}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">City:</td>
+                                    <td>{{NomineeCity}}</td>
+                                    <td class="aof-highlight">Pincode:</td>
+                                    <td colspan="2">{{NomineePincode}}</td>
+                                    <td class="aof-highlight">State:</td>
+                                    <td colspan="2">{{NomineeState}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8">
+                                        <p class="small mb-0 pb-0" style="font-size: 8px; color:black">Declaration and
+                                            Signature</p>
+                                        <p class="small mb-0 pb-0" style="font-size: 8px; color:black">I/We confirm that
+                                            details
+                                            provided by me/us are true and correct. The ARN holder has disclosed to
+                                            me/us all the commission (In the form of trail commission or any other
+                                            mode), payable to him for the different competing Schemes of various Mutual
+                                            Fund From amongst which the scheme is being recommended to me/us.</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="aof-highlight">Date:</td>
+                                    <td colspan="3">{{ApplicationDate}}</td>
+                                    <td class="aof-highlight">Place:</td>
+                                    <td colspan="3">{{ClientCity}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="height: 50px;">
+                                    </td>
+                                    <td colspan="3">
+                                    </td>
+                                    <td colspan="3">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="color:black">1st applicant Signature :</td>
+                                    <td colspan="3" style="color:black">2nd applicant Signature :</td>
+                                    <td colspan="3" style="color:black">3rd applicant Signature :</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

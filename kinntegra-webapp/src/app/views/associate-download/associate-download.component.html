@@ -1,0 +1,267 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"></app-header-right-template>
+        </div>
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        <app-associate-leftbar-template [activeComp]="'download'" [activeSubComp]="''"
+                            [associateId]="associateid" [progressPercentage]="100" [mode]="mode"
+                            [ts]="ts"></app-associate-leftbar-template>
+                    </div>
+
+                    <form class="col-lg-8 col-xl-9 step-forms col-md-8 ps-0">
+                        <!-- @if ($step12_fun == 'show') -->
+                        <section class="trial step12 active" id="bse-detail" data-step="12" autocomplete="off">
+                            <div class="form-inner-section">
+
+                                <div class="form-header">
+                                    <h3 class="card-title d-inline"><i class="icon-left-arrow back-btn"
+                                            (click)="onBack()"></i>Download
+                                        <!-- @if ($step12 == 'completed' && $details == 0) -->
+
+                                        <!-- @endif -->
+                                    </h3>
+                                    <span class="edit-now float-end mt-1" *ngIf="showEdit"
+                                        (click)="onEditClicked()">Edit</span>
+                                </div>
+                                <div class="form-content">
+                                    <div class="row">
+                                        <div class="col-xl-8 col-lg-9">
+                                            <div class="row flex-column">
+                                                <!-- @if(in_array('associate', $data->user->role)) -->
+                                                <!-- <div class="col-xl-6 col-lg-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="bse_download">Download BSE File</label>
+                                                        <a role="button" href="download['path']"
+                                                            download="download['name']">
+                                                            <label for="bse_download" class="btn download-btn w-100">
+                                                                <div class="left-side">
+                                                                    <svg width="40" height="40" viewBox="0 0 38 38">
+                                                                        <use xlink:href="#xls"></use>
+                                                                    </svg>
+                                                                    <span class="value text-uppercase">
+                                                                        download['name']
+                                                                    </span>
+                                                                </div>
+                                                                <svg class="upload-icon" width="30" height="30"
+                                                                    viewBox="0 0 24 24">
+                                                                    <use xlink:href="#download"></use>
+                                                                </svg>
+                                                            </label>
+                                                        </a>
+                                                    </div>
+                                                </div> -->
+                                                <div class="col-xl-6 col-lg-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="bse_download">Download BSE File</label>
+                                                        <a role="button"
+                                                            (click)="!isDownloadDisabled && DownloadBSEfile()"
+                                                            class="download-btn w-100"
+                                                            [class.disabled]="isDownloadDisabled">
+                                                            <div class="left-side">
+                                                                <svg width="40" height="40" viewBox="0 0 38 38">
+                                                                    <use xlink:href="#xls"></use>
+                                                                </svg>
+                                                                <span class="value text-uppercase">{{fileName}}</span>
+                                                            </div>
+                                                            <svg class="upload-icon" width="30" height="30"
+                                                                viewBox="0 0 24 24">
+                                                                <use xlink:href="#download"></use>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <!-- @endif -->
+                                                <div class="col-xl-6 col-lg-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="bse_download">Download Empanelment Form</label>
+                                                        <!-- <a role="button" target="_blank" href="download['path1']"
+                                                            download="download['name1']">
+                                                            <label for="bse_download" class="btn download-btn w-100">
+                                                                <div class="left-side">
+                                                                    <svg width="40" height="40" viewBox="0 0 38 38">
+                                                                        <use xlink:href="#xls"></use>
+                                                                    </svg>
+                                                                    <span class="value text-uppercase">
+                                                                        download['name1']
+                                                                    </span>
+                                                                </div>
+                                                                <svg class="upload-icon" width="30" height="30"
+                                                                    viewBox="0 0 24 24">
+                                                                    <use xlink:href="#download"></use>
+                                                                </svg>
+                                                            </label>
+                                                        </a> -->
+                                                        <a role="button"
+                                                            (click)="!isDownloadDisabled && DownloadEmpanelmentFormfile()"
+                                                            class="download-btn w-100"
+                                                            [class.disabled]="isDownloadDisabled">
+                                                            <div class="left-side">
+                                                                <svg width="40" height="40" viewBox="0 0 38 38">
+                                                                    <use xlink:href="#xls"></use>
+                                                                </svg>
+                                                                <span
+                                                                    class="value text-uppercase">{{formfileName}}</span>
+                                                            </div>
+                                                            <svg class="upload-icon" width="30" height="30"
+                                                                viewBox="0 0 24 24">
+                                                                <use xlink:href="#download"></use>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <h3 class="card-title">Upload</h3>
+                                            <div class="row">
+                                                <!-- @if(in_array('associate', $data->user->role)) -->
+                                                <div class="col-12 bse_upload mt-20">
+                                                    <div class="form-group custom-checkbox">
+                                                        <!-- <input type="checkbox" id="bse_upload" name="bse_upload"
+                                                    value="data->bse_upload }}" @if ($data->bse_upload ==
+                                                1) {{ 'checked' }} @endif class="form-control"> -->
+                                                        <input #chkpermanent type="checkbox" id="bse_upload"
+                                                            name="bse_upload" (change)="onCheck(chkpermanent.checked)"
+                                                            [(ngModel)]="objAssociate.IsBSEFileUploaded"
+                                                            [disabled]="isCheckboxDisabled" class="form-control">
+                                                        <label for="bse_upload">File Uploaded to BSE</label>
+                                                    </div>
+                                                </div>
+                                                <!-- @endif -->
+                                                <div class="col-12 registration_form mt-20 d-none">
+                                                    <div class="form-group custom-checkbox">
+                                                        <!-- <input type="checkbox" id="registration_form"
+                                                    name="registration_form"
+                                                    value="data->registration_form }}" @if
+                                                    ($data->registration_form == 1) {{ 'checked' }} @endif
+                                                class="form-control"> -->
+                                                        <input type="checkbox" id="registration_form"
+                                                            name="registration_form" value="data->registration_form"
+                                                            class="form-control">
+                                                        <label for="registration_form">Signed Associate Form</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-sm-6 registration_upload">
+                                                    <div class="form-group">
+                                                        <label for="registration_upload" class="w-100">Associate Form
+                                                            <span class="required-sign">*</span>
+                                                        </label>
+                                                        <label for="registration_upload"
+                                                            class="btn input-btn w-100 pt-2 pb-1"
+                                                            [ngClass]="{'input-btn-primary': (associateFormFileName != ''), 'input-btn-danger': (associateFormFileName == '')}"
+                                                            [ngbTooltip]="associateFormFileName" tooltipClass="custom-tooltip" placement="bottom">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24">
+                                                                <use xlink:href="#upload" />
+                                                            </svg>
+                                                            <input id="registration_upload" type="file"
+                                                                name="registration_upload"
+                                                                (change)="onAssociateFormFileChanged($event)"
+                                                                [disabled]="!isEdit" />
+                                                            <div class="value-wrap">
+                                                                <span class="default-text"
+                                                                    *ngIf="associateFormFileName == ''">Upload</span>
+                                                                <span class="value"
+                                                                    *ngIf="associateFormFileName != ''">{{associateFormFileName|fileDisplayName}}</span>
+                                                            </div>
+                                                        </label>
+                                                        <label class="w-100 format" *ngIf="associateFormFileName == ''">
+                                                            <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                                PDF</span>
+                                                        </label>
+                                                        <label class="w-100 preview"
+                                                            *ngIf="associateFormFileName != ''">
+                                                            <span class="text-lowercase font-italic"><a
+                                                                    (click)="onAssociateFormPreview()">Preview</a></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-footer">
+                                    <ng-container *ngIf="mode == 'create'">
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'edit'">
+                                        <button *ngIf="!isActive && associateFormFileName != '' && objAssociate.IsBSEFileUploaded" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onSendCredentials()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Send Credentials
+                                                    Email</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Send Credentials
+                                                Email</span>
+                                        </button>
+                                        <button *ngIf="isActive && !isEdit" type="button"
+                                            class="proceed btn btn-primary btn-lg" id="bse_send_email"
+                                            (click)="onFinish()">Finish</button>
+
+                                        <button *ngIf="isActive && isEdit && associateFormFileName != '' && objAssociate.IsBSEFileUploaded" type="button"
+                                            class="btn btn-primary btn-lg proceed" (click)="onSendCredentials()"
+                                            [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Finish</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Finish</span>
+                                        </button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'verify'">
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'externalverify'">
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'viewdetails'">
+                                        <button *ngIf="isActive" type="button" class="proceed btn btn-primary btn-lg"
+                                            id="bse_send_email" (click)="onFinish()">Finish</button>
+                                    </ng-container>
+                                </div>
+
+                            </div>
+                            <!-- @if (isset($data->is_credential_email) && $data->is_credential_email == 1) -->
+                            <!-- <div class="row">
+                                <div class="modal fade" id="RejectModal" data-backdrop="static" data-keyboard="false"
+                                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Rejection Reason</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12 reject_reason">
+                                                        <div class="form-group">
+                                                            <label for="reject_reason">Specify Details</label>
+                                                            <textarea class="form-control" id="reject_reason"
+                                                                name="reject_reason" rows="5"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="proceed btn btn-primary btn-lg"
+                                                    style="min-width: 11rem">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </section>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

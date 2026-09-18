@@ -1,0 +1,182 @@
+
+<div class="table-top-section">
+    <div class="section-header mb-4">
+        <app-header-right-template class="section-header"></app-header-right-template>
+    </div>
+</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-4">
+                <app-admin-master-leftbar-template></app-admin-master-leftbar-template>
+            </div>
+            <div class="col-xl-6 mb-3 mb-xl-0">
+                <nav ngbNav #nav="ngbNav" class="nav-tabs">
+                    <ng-container [ngbNavItem]="1">
+                        <a ngbNavLink>BSE Holiday Lists</a>
+                        <ng-template ngbNavContent>
+                            <div class="col-md-12">
+                                <ngx-datatable class="material" [rows]="objBank" [columnMode]="ColumnMode.force" rowHeight="auto"
+                                    [footerHeight]="50" [headerHeight]="50" [limit]="10" [scrollbarH]="true">
+                                    <ngx-datatable-column name="Date">
+                                        <ng-template ngx-datatable-header-template let-column="column">
+                                            Date
+                                        </ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.Date}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Name">
+                                        <ng-template ngx-datatable-header-template let-column="column">
+                                            Name
+                                        </ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.Name}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="SchemeName">
+                                        <ng-template ngx-datatable-header-template let-column="column">Scheme
+                                            Name</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.SchemeName}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="ISIN">
+                                        <ng-template ngx-datatable-header-template
+                                            let-column="column">ISIN</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.ISIN}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                </ngx-datatable>
+                            </div>
+
+                        </ng-template>
+                    </ng-container>
+                    <ng-container [ngbNavItem]="2">
+                        <a ngbNavLink>Scheme Holiday Upload</a>
+                        <ng-template ngbNavContent>
+                            <div class="col-md-12">
+                                <ngx-datatable class="material" [rows]="objBank" [columnMode]="ColumnMode.force" rowHeight="auto"
+                                    [footerHeight]="50" [headerHeight]="50" [limit]="10" [scrollbarH]="true">
+                                    <ngx-datatable-column name="Date">
+                                        <ng-template ngx-datatable-header-template let-column="column">
+                                            Date
+                                        </ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.Date}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Name">
+                                        <ng-template ngx-datatable-header-template let-column="column">
+                                            Name
+                                        </ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.Name}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="SchemeName">
+                                        <ng-template ngx-datatable-header-template let-column="column">Scheme
+                                            Name</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.SchemeName}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="ISIN">
+                                        <ng-template ngx-datatable-header-template
+                                            let-column="column">ISIN</ng-template>
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                            let-value="value" let-row="row">
+                                            {{row.ISIN}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                </ngx-datatable>
+                            </div>
+
+                        </ng-template>
+                    </ng-container>
+
+                </nav>
+                <div [ngbNavOutlet]="nav" class="col-12 mt-5">
+                </div>
+            </div>
+            <div class="col-xl-4 pl-xl-0">
+                <div class="table-options">
+                    <div class="form-control ng-select-form-control">
+                        <ng-select  [dropdownPosition]="'bottom'">
+                            <ng-option [value]=""disabled selected>Select Year</ng-option>
+                            <ng-option [value]="" selected></ng-option>
+                            <ng-option [value]=""></ng-option>
+                        </ng-select>
+                </div>
+                    <div class="table-nav">
+                        <button class="btn btn-transparent btn-sm" id="previous" disabled>
+                            <i class="icon-left-arrow"></i>
+                        </button>
+                        <button class="btn btn-transparent btn-sm" id="next">
+                            <i class="icon-right-arrow"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="modal fade confirmation-modal" id="delete_holiday_confirm" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body text-center">
+                    <input type="hidden" name="delete_holiday_id" id="delete_holiday_id" value="">
+                    <div class="confirmation-popup">
+                        <div class="status-icon error">
+                            <i class="icon-close"></i>
+                        </div>
+
+                        <p>Are you sure you want to delete?</p>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <div class="col-6 ">
+                            <button type="button" class="btn btn-outline-primary w-100" id="delete_holiday_send">
+                                Yes
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-primary w-100" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade confirmation-modal" id="delete_holiday_message" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="confirmation-popup">
+                        <div class="status-icon error">
+                            <i class="icon-close"></i>
+                        </div>
+                        <p>Holiday deleted successfully</p>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-primary w-100" data-dismiss="modal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->

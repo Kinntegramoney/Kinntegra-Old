@@ -1,0 +1,68 @@
+/*Icon Fonts*/
+$icomoon-font-family: "icon" !default;
+$icomoon-font-path: "assets/fonts" !default;
+
+/*Fonts   */
+$icon-close: "\e905";
+$icon-dots: "\e900";
+$icon-right-arrow: "\e901";
+$icon-down-arrow: "\e902";
+$icon-left-arrow: "\e903";
+$icon-link-arrow: "\e904";
+
+@font-face {
+    font-family: "#{$icomoon-font-family}";
+    src: url("#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?9qio2g") format("truetype"),
+        url("#{$icomoon-font-path}/#{$icomoon-font-family}.woff?9qio2g") format("woff"),
+        url("#{$icomoon-font-path}/#{$icomoon-font-family}.svg?9qio2g##{$icomoon-font-family}") format("svg");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: "#{$icomoon-font-family}" !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-close {
+    &:before {
+        content: $icon-close;
+    }
+}
+.icon-dots {
+    &:before {
+        content: $icon-dots;
+    }
+}
+.icon-right-arrow {
+    &:before {
+        content: $icon-right-arrow;
+    }
+}
+.icon-down-arrow {
+    &:before {
+        content: $icon-down-arrow;
+    }
+}
+.icon-left-arrow {
+    &:before {
+        content: $icon-left-arrow;
+    }
+}
+.icon-link-arrow {
+    &:before {
+        content: $icon-link-arrow;
+    }
+}

@@ -1,0 +1,419 @@
+<div class="main">
+    <div class="container-fluid">
+        <!-- <div class="table-top-section d-flex justify-content-between align-items-center mb-4"> -->
+        <!-- <a class="back-btn" href="#">
+                <i class="icon-left-arrow"></i>
+                Go Back
+            </a> -->
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"></app-header-right-template>
+        </div>
+        <!-- </div> -->
+        <div class="card w-100">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-4 pe-0 ps-0">
+                        <app-client-leftbar-template [activeComp]="'kyc-info'"
+                            [activeSubComp]="memberId+'kyc-communication'" [clientId]="clientId" [leadId]="leadId"
+                            [mode]="mode" [progressPercentage]="33"></app-client-leftbar-template>
+                    </div>
+
+                    <form class="col-lg-8 col-xl-9 step-forms col-md-8 ps-0">
+                        <!-- @foreach (profiles as profile) -->
+                        <!-- -- @if(i == 1)'active'@endif -- -->
+                        <!-- <section class="trial step @if(i == c)'active'@endif" id="communication_pid"
+                            data-step="i" data-pid="pid" autocomplete="off"> -->
+                        <section class="trial.step" id="communication_pid" autocomplete="off">
+                            <div class="form-inner-section">
+                                <div class="form-header">
+                                    <h3 class="card-title d-inline"><i class="icon-left-arrow back-btn"
+                                            (click)="onBackClicked()"></i>
+                                        {{profileName}} - Communication
+                                        <!-- @if (step == 'completed' && details == 0) -->
+                                        <!-- @endif -->
+                                    </h3>
+                                    <span class="edit-now float-end mt-1" *ngIf="showEdit"
+                                        (click)="onEditClicked()">Edit</span>
+                                </div>
+                                <div class="form-sub-header-warning"
+                                    *ngIf="mode=='verify' && modificationLog.length > 0">
+                                    <div *ngFor="let item of modificationLog">
+                                        <div>
+                                            <span class="badge badge-default badge-pill">{{item.ModificationDate | date:
+                                                'dd-MM-yyyy'}}</span>
+                                        </div>
+                                        <div class="content">{{item.ModificationReason}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-content">
+                                    <div class="row">
+                                        <div class="col-sm-4 address_type_pid">
+                                            <div class="form-group">
+                                                <label>Address Type <span class="required-sign">*</span></label>
+                                                <div class="form-control ng-select-form-control">
+                                                    <ng-select [(ngModel)]="objClientLocalAddress.AddressTypeId"
+                                                        name="LocalAddressType" [disabled]="!isEdit" appendTo="body"
+                                                        [dropdownPosition]="'bottom'">
+                                                        <ng-option *ngFor="let addressType of addressTypes"
+                                                            [value]="addressType.Id">{{addressType.Name}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 address1_pid">
+                                            <div class="form-group">
+                                                <label>Address Line 1 <span class="required-sign">*</span></label>
+                                                <input type="text" class="form-control address1"
+                                                    placeholder="Enter Address Line 1" name="LocalAddress1"
+                                                    [(ngModel)]="objClientLocalAddress.Address1" [disabled]="!isEdit">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 address_upload_pid">
+                                            <div class="form-group">
+                                                <label for="address_upload_pid">Upload Proof <span
+                                                        class="required-sign">*</span></label>
+                                                <label for="address_upload_pid" class="btn input-btn w-100"
+                                                    [ngClass]="{'input-btn-primary': (localAddressFileName != ''), 'input-btn-danger': (localAddressFileName == '')}"
+                                                    [ngbTooltip]="localAddressFileName" tooltipClass="custom-tooltip"
+                                                    placement="bottom">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24">
+                                                        <use xlink:href="#upload" />
+                                                    </svg>
+                                                    <input id="address_upload_pid" type="file" class="address_upload"
+                                                        name="address_upload_pid"
+                                                        (change)="onLocalAddressFileChanged($event)"
+                                                        [disabled]="!isEdit" />
+                                                    <div class="value-wrap">
+                                                        <span class="default-text" *ngIf=" localAddressFileName == ''">
+                                                            Upload
+                                                        </span>
+                                                        <span class="value"
+                                                            *ngIf=" localAddressFileName != ''">{{localAddressFileName|fileDisplayName}}</span>
+                                                    </div>
+                                                </label>
+
+                                                <label class="w-100 format" *ngIf="localAddressFileName == ''">
+                                                    <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                        PDF</span>
+                                                </label>
+                                                <label class="w-100 preview" *ngIf="localAddressFileName != ''">
+                                                    <span class="text-lowercase font-italic"><a
+                                                            (click)="onLocalAddressPreview()">Preview</a></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 address2_pid">
+                                            <div class="form-group">
+                                                <label>Address Line 2 <span class="required-sign">*</span></label>
+                                                <input type="text" class="form-control address2"
+                                                    placeholder="Enter Address Line 2" name="LocalAddress2"
+                                                    [(ngModel)]="objClientLocalAddress.Address2" [disabled]="!isEdit">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 address3_pid">
+                                            <div class="form-group">
+                                                <label>Address Line 3</label>
+                                                <input type="text" class="form-control address3"
+                                                    placeholder="Enter Address Line 3" name="LocalAddress3"
+                                                    [(ngModel)]="objClientLocalAddress.Address3" [disabled]="!isEdit">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4 city_pid">
+                                            <div class="form-group">
+                                                <label>City <span class="required-sign">*</span></label>
+                                                <input type="text" class="form-control city"
+                                                    placeholder="Enter City Name" name="LocalCity"
+                                                    [(ngModel)]="objClientLocalAddress.City" [disabled]="!isEdit">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 country_pid">
+                                            <div class="form-group">
+                                                <label>Country <span class="required-sign">*</span></label>
+                                                <div class="form-control ng-select-form-control">
+                                                    <ng-select [(ngModel)]="objClientLocalAddress.CountryId"
+                                                        name="LocalCountry" (change)="onLocalCountryChanged('new')"
+                                                        [disabled]="!isEdit" appendTo="body"
+                                                        [dropdownPosition]="'bottom'">
+                                                        <ng-option *ngFor="let country of countries"
+                                                            [value]="country.Id">{{country.Name}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 state_pid">
+                                            <div class="form-group">
+                                                <label>State <span class="required-sign">*</span></label>
+                                                <div class="form-control ng-select-form-control">
+                                                    <ng-select [(ngModel)]="objClientLocalAddress.StateId"
+                                                        name="LocalState" [disabled]="!isEdit" appendTo="body"
+                                                        [dropdownPosition]="'bottom'">
+                                                        <ng-option *ngFor="let localState of localStates"
+                                                            [value]="localState.Id">{{localState.Name}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 pincode_pid">
+                                            <div class="form-group">
+                                                <label>Pincode <span class="required-sign">*</span></label>
+                                                <input type="text" class="form-control pincode"
+                                                    placeholder="Enter Pincode" name="LocalPinCode"
+                                                    [(ngModel)]="objClientLocalAddress.PinCode" [disabled]="!isEdit">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- @if(in_array(profile->tax_status,['NRI','NRE','NRO','NRI - Minor'])) -->
+                                    <div class="row" *ngIf="isNRI">
+                                        <div class="col-sm-12">
+                                            <h6 class="card-title">
+                                                Foreign Address
+                                            </h6>
+                                        </div>
+
+                                        <div class="col-sm-4 foreign_address_type_pid">
+                                            <div class="form-group">
+                                                <label>Address Type <span class="required-sign">*</span></label>
+                                                <div class="form-control ng-select-form-control">
+                                                    <ng-select [(ngModel)]="objClientForeignAddress.AddressTypeId"
+                                                        name="ForeignAddressType" [disabled]="!isEdit" appendTo="body"
+                                                        [dropdownPosition]="'bottom'">
+                                                        <ng-option *ngFor="let addressType of addressTypes"
+                                                            [value]="addressType.Id">{{addressType.Name}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 foreign_address1_pid">
+                                            <div class="form-group">
+                                                <label>Address Line 1 <span class="required-sign">*</span></label>
+                                                <input type="text" class="form-control foreign_address1"
+                                                    placeholder="Enter Address Line 1" name="ForeignAddress1"
+                                                    [(ngModel)]="objClientForeignAddress.Address1" [disabled]="!isEdit">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 foreign_address_upload_pid">
+                                            <div class="form-group">
+                                                <label for="foreign_address_upload_pid">Upload Proof <span
+                                                        class="required-sign">*</span></label>
+                                                <label for="foreign_address_upload_pid" class="btn input-btn w-100"
+                                                    [ngClass]="{'input-btn-primary': (foreignAddressFileName != ''), 'input-btn-danger': (foreignAddressFileName == '')}"
+                                                    [ngbTooltip]="foreignAddressFileName" tooltipClass="custom-tooltip"
+                                                    placement="bottom">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24">
+                                                        <use xlink:href="#upload" />
+                                                    </svg>
+                                                    <input id="foreign_address_upload_pid" type="file"
+                                                        class="foreign_address_upload" name="foreign_address_upload_pid"
+                                                        (change)="onForeignAddressFileChanged($event)"
+                                                        [disabled]="!isEdit" />
+                                                    <div class="value-wrap">
+                                                        <span class="default-text" *ngIf="foreignAddressFileName == ''">
+                                                            Upload
+                                                        </span>
+                                                        <span class="value"
+                                                            *ngIf="foreignAddressFileName != ''">{{foreignAddressFileName|fileDisplayName}}</span>
+                                                    </div>
+                                                </label>
+
+                                                <label class="w-100 format" *ngIf="foreignAddressFileName == ''">
+                                                    <span class="text-lowercase text-danger">FORMAT- PNG, JPG,
+                                                        PDF</span>
+                                                </label>
+
+                                                <label class="w-100 preview" *ngIf="foreignAddressFileName != ''">
+                                                    <span class="text-lowercase font-italic"><a
+                                                            (click)="onForeignAddressPreview()">Preview</a></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 foreign_address2_pid">
+                                            <div class="form-group">
+                                                <label>Address Line 2 <span class="required-sign">*</span></label>
+                                                <input type="text" class="form-control foreign_address2"
+                                                    placeholder="Enter Address Line 2" name="ForeignAddress2"
+                                                    [(ngModel)]="objClientForeignAddress.Address2" [disabled]="!isEdit">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 foreign_address3_pid">
+                                            <div class="form-group">
+                                                <label>Address Line 3</label>
+                                                <input type="text" class="form-control foreign_address3"
+                                                    placeholder="Enter Address Line 3" name="ForeignAddress3"
+                                                    [(ngModel)]="objClientForeignAddress.Address3" [disabled]="!isEdit">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4 foreign_city_pid">
+                                            <div class="form-group">
+                                                <label>City <span class="required-sign">*</span></label>
+                                                <input type="text" class="form-control foreign_city"
+                                                    placeholder="Enter City Name" name="ForeignCity"
+                                                    [(ngModel)]="objClientForeignAddress.City" [disabled]="!isEdit">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4 foreign_country_pid">
+                                            <div class="form-group">
+                                                <label>Country <span class="required-sign">*</span></label>
+                                                <div class="form-control ng-select-form-control">
+                                                    <ng-select [(ngModel)]="objClientForeignAddress.CountryId"
+                                                        name="ForeignCountry" (change)="onForeignCountryChanged('new')"
+                                                        [disabled]="!isEdit" appendTo="body"
+                                                        [dropdownPosition]="'bottom'">
+                                                        <ng-option *ngFor="let country of countries"
+                                                            [value]="country.Id">{{country.Name}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 foreign_state_pid">
+                                            <div class="form-group">
+                                                <label>State <span class="required-sign">*</span></label>
+                                                <div class="form-control ng-select-form-control">
+                                                    <ng-select [(ngModel)]="objClientForeignAddress.StateId"
+                                                        name="ForeignState" [disabled]="!isEdit" appendTo="body"
+                                                        [dropdownPosition]="'bottom'">
+                                                        <ng-option *ngFor="let foreignState of foreignStates"
+                                                            [value]="foreignState.Id">{{foreignState.Name}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 foreign_pincode_pid">
+                                            <div class="form-group">
+                                                <label>Pincode <span class="required-sign">*</span></label>
+                                                <input type="text" class="form-control foreign_pincode"
+                                                    placeholder="Enter Pincode" name="ForeignPinCode"
+                                                    [(ngModel)]="objClientForeignAddress.PinCode" [disabled]="!isEdit">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!-- @if(isset(profile->relation) && profile->relation == 'primary' &&
+                                        profile->account_type == 1 && profile->tax_status != 'On behalf of minor') -->
+                                        <div class="col-sm-12 is_address_same_all_pid" *ngIf="isSelf">
+                                            <div class="form-group custom-checkbox">
+                                                <input type="checkbox" id="is_address_same_all_pid"
+                                                    name="is_address_same_all_pid" class="is_address_same_all"
+                                                    [(ngModel)]="objClientLocalAddress.IsSameForAll"
+                                                    [disabled]="!isEdit">
+                                                <label for="is_address_same_all_pid">Address same for all
+                                                    members</label>
+                                            </div>
+                                        </div>
+                                        <!-- @endif
+                                        @if((profile->tax_status == 'On behalf of minor' || profile->tax_status ==
+                                        'NRI - Minor') && !empty(profile->client_guardian_id)) -->
+                                        <div class="col-sm-12 is_guardian_address_pid" *ngIf="isMinorProfile">
+                                            <div class="form-group custom-checkbox">
+                                                <!-- <input type="checkbox" id="is_guardian_address_pid"
+                                                    name="is_guardian_address_pid" class="is_guardian_address"
+                                                    value="profile->is_guardian_address"
+                                                    @if(isset(profile->is_guardian_address) &&
+                                                profile->is_address_same_all == '1')  'checked' @endif> -->
+                                                <input #guardianaddress type="checkbox" id="is_guardian_address_pid"
+                                                    name="is_guardian_address_pid" class="is_guardian_address"
+                                                    [(ngModel)]="objClientLocalAddress.UseGuardianAddress"
+                                                    (change)="onUseGuardianAddressChanged(guardianaddress.checked)"
+                                                    [disabled]="!isEdit">
+                                                <label for="is_guardian_address_pid">Use guardian address</label>
+                                            </div>
+                                        </div>
+                                        <!-- @endif -->
+                                    </div>
+                                    <!--Error Message-->
+                                    <!-- @if(isset(profile->vrejectionremarks) && !empty(profile->vrejectionremarks))
+                                    @if(cremark > 0) -->
+                                    <div class="row" *ngIf="isErrors">
+                                        <div class="col-md-12">
+                                            <div class="card small-card option-2 mb-4">
+                                                <div class="card-header">
+                                                    <h6 class="card-title">Rejected Reason</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="transaction-wrapper trade-status">
+                                                        <!-- @foreach (profile->vrejectionremarks as profile_remark)
+                                                        @if(profile_remark->type == 'communication') -->
+                                                        <div class="transaction-steps regected">
+                                                            <div class="trade-title mb-1">
+                                                                <h4 class="mb-0">profile_remark.remarks</h4>
+                                                                <div class="info">
+                                                                    <!-- <span>
+                                                                        Carbon\Carbon::parse(profile_remark.created_at).format('h:i:s
+                                                                        A')</span>
+                                                                    <span>
+                                                                        Carbon\Carbon::parse(profile_remark.created_at).format('l,
+                                                                        jS F Y')</span> -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- @endif
+                                                        @endforeach -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- @endif
+                                    @endif -->
+                                </div>
+                                <div class="form-footer">
+                                    <ng-container *ngIf="mode == 'create'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'edit'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                                            (click)="onNext()">Proceed</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'verify'">
+                                        <button *ngIf="isEdit" type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onProceed()" [disabled]="isBusy">
+                                            <div *ngIf="isBusy">
+                                                <span class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>
+                                                <span>Proceed</span>
+                                            </div>
+                                            <span *ngIf="!isBusy">Proceed</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-lg proceed" *ngIf="!isEdit"
+                                            (click)="onNext()">Proceed</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'externalverify'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onNext()">Next</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="mode == 'viewdetails'">
+                                        <button type="button" class="btn btn-primary btn-lg proceed"
+                                            (click)="onNext()">Proceed</button>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

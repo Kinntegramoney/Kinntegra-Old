@@ -1,0 +1,125 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"></app-header-right-template>
+        </div>
+        <div class="row">
+            <div class="col-xl-8 mb-3 mb-xl-0">
+                <nav ngbNav #nav="ngbNav" class="nav-tabs">
+                    <ng-container ngbNavItem>
+                        <a (click)="activeTab = 1;" ngbNavLink>Folio Transfer</a>
+                        <ng-template ngbNavContent>
+                            <ngx-datatable class="material" [rows]="objFolioTransaferList" [columnMode]="ColumnMode.force"
+                                [rowHeight]="'auto'" [footerHeight]="50" [headerHeight]="50" [limit]="10"
+                                [scrollbarH]="true">
+                                <ngx-datatable-column name="SubBrokerCode" [width]="75" [sortable]="true"
+                                    prop="SubBrokerCode">
+                                    <ng-template ngx-datatable-header-template let-column="column">Code</ng-template>
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">
+                                        <span>{{row.SubBrokerCode}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="FirstHolderName" [width]="300" [sortable]="true"
+                                    prop="FirstHolderName">
+                                    <ng-template ngx-datatable-header-template let-column="column">Unit Holder
+                                        Name</ng-template>
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">
+                                        <ng-template #htmlContent>
+                                            <div [innerHTML]="row.FirstHolderTooltip" style="text-align: left;"></div>
+                                        </ng-template>
+                                        <span [ngbTooltip]="htmlContent" tooltipClass="custom-tooltip" placement="right"
+                                            triggers="hover" container="body">{{row.FirstHolderName}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="FolioLists" [width]="550" [sortable]="false">
+                                    <ng-template ngx-datatable-header-template let-column="column">Folios</ng-template>
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">
+                                        <span *ngIf="row.FolioLists.length == 1">{{row.SelectedFolio.FolioNumber }} ->
+                                            {{row.SelectedFolio.FundDescription}}</span>
+                                        <div class="form-control ng-select-form-control"
+                                            *ngIf="row.FolioLists.length > 1">
+                                            <ng-select name="folio-list-{{rowIndex}}" [(ngModel)]="row.SelectedFolio"
+                                                placeholder="Multiple Folios Available" [virtualScroll]="false" [dropdownPosition]="'bottom'" appendTo="body">
+                                                <ng-option *ngFor="let folioItem of row.FolioLists"
+                                                    [value]="folioItem">{{folioItem.FolioNumber }} ->
+                                                    {{folioItem.FundDescription}}</ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Actions" [width]="280" [sortable]="false">
+                                    <ng-template ngx-datatable-header-template let-column="column">Actions</ng-template>
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">Proceed to:
+                                        <a class="table-link ico5" (click)="onTransfer(row)" *ngIf="!row.IsBusy">
+                                            <span class="badge badge-info badge-pill">Transfer
+                                                <i class="icon-right-arrow"></i>
+                                            </span>
+                                        </a>
+                                        <a class="table-link ico5" *ngIf="row.IsBusy">
+                                            <span class="badge badge-info badge-pill"><span
+                                                    class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>Transfer
+                                                <i class="icon-right-arrow"></i>
+                                            </span>
+                                        </a>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                        </ng-template>
+                    </ng-container>
+                </nav>
+            </div>
+            <div class="col-xl-4 pl-xl-0">
+                <div class="table-options">
+                    <div class="searchinput-wrapper mb-3 mb-sm-0">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="table-search">
+                                    <svg width="24" height="24" viewBox="0 0 24 24">
+                                        <use xlink:href="#search" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control custom-search-input" placeholder="Search"
+                                aria-label="table-search" id="tableSearch" aria-describedby="table-search"
+                                [(ngModel)]="objSearchKeyword" (input)="searchClientRecord()">
+                        </div>
+                    </div>
+
+                    <!-- <div class="input-group mb-3 mb-sm-0">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="month">
+                                <svg width="24" height="24" viewBox="0 0 24 24">
+                                    <use xlink:href="#month" />
+                                </svg>
+                            </span>
+                        </div>
+                        <input type="text" name="dates" class="form-control daterange text-truncate" />
+                    </div> -->
+
+                    <!-- <button class="btn btn-icon" data-toggle="modal" (click)="onFilterClick()"
+                        data-target="#filterModal">
+                        <svg width="40" viewBox="0 0 36 36">
+                            <use xlink:href="#filter" />
+                        </svg>
+                    </button> -->
+                    <!-- <div class="table-nav">
+                        <button class="btn btn-transparent btn-sm" id="previous" disabled>
+                            <i class="icon-left-arrow"></i>
+                        </button>
+                        <button class="btn btn-transparent btn-sm" id="next">
+                            <i class="icon-right-arrow"></i>
+                        </button>
+                    </div>
+                    <a href="#" class="btn btn-primary ml-3 profile_export" download="profile_file">Download</a> -->
+                </div>
+            </div>
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+        </div>
+    </div>
+</div>

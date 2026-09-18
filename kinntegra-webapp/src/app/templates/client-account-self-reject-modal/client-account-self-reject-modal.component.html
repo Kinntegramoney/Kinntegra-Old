@@ -1,0 +1,30 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Define reason to reject</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onClose()">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row form-sections" *ngFor="let accountItem of accounts; index as i">
+            <div class="col-12">
+                <h4 class="form-section-title text-uppercase text-grey">{{ accountItem.AccountPattern }}</h4>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <textarea class="form-control reject_reason" name="order_creation-reason_{{accountItem.Id}}"
+                        rows="4" placeholder="Add Comment" [(ngModel)]="accountItem.RejectionReason"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-lg col-sm-3" (click)="onSubmit()" [disabled]="isBusy">
+            <div *ngIf="isBusy">
+                <span class="spinner-border text-light" style="margin-right: 10px; vertical-align: middle;"
+                    role="status"></span>
+                <span>Submit</span>
+            </div>
+            <span *ngIf="!isBusy">Submit</span>
+        </button>
+    </div>
+</div>

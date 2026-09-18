@@ -1,0 +1,493 @@
+<!-- @extends('layouts.master')
+
+@section('style')
+<style>
+   
+</style>
+@endsection
+
+@section('content') -->
+<div class="table-top-section">
+    <div class="section-header mb-4">
+        <!-- @include('partials.top') -->
+        <app-header-right-template class="section-header"></app-header-right-template>
+    </div>
+</div>
+<div class="card w-100">
+    <div class="card-body">
+        <div class="row">
+            <!-- @include('admin.adminmenu') -->
+            <!-- <div class="col-xl-3 col-lg-4 col-md-4">
+                <app-admin-master-leftbar-template></app-admin-master-leftbar-template>
+            </div> -->
+            <div class="container-fluid col-lg-8 col-xl-12">
+                <h3 class="card-title d-inline"><i class="icon-left-arrow back-btn"
+                    (click)="onBack()"></i>Payment Type
+                    <button class="btn btn-link float-end mt-1" id="add_new_data">Add New</button>
+                </h3>
+                <div class="form-inner-section">
+                    <div class="card-body">
+
+                        <!-- @php
+                    //dd($paymentslabs[0]->PaymentSets);
+                    $slab = $paymentslabs[0];
+                    $slab_id = $slab->id;
+                    $slab_start_amount = $slab->start_amount;
+                    $slab_end_amount = $slab->end_amount;
+                    $slab_is_active = $slab->is_active;
+                    $slab_is_active = ($slab_is_active == 1) ? 'Yes' : 'No';
+                    $slab_as_on_date = $slab->as_on_date;
+                    $slab_as_on_date_og = Carbon\Carbon::createFromFormat('d-m-Y',$slab_as_on_date)->format('Y-m-d');
+                    $sets = $paymentslabs[0]->PaymentSets;
+                @endphp -->
+                        <div class="row flex-row-reverse ">
+
+                            <div class="col-lg-9 border-left col-md-7 ">
+                                <div class="admin-body">
+                                    <!-- <ul class="nav nav-tabs mb-4" id="lead-generation" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <a class="nav-link active" data-toggle="tab" href="#admin-paymentslab"
+                                                role="tab" aria-selected="true">Logs</a>
+                                        </li>
+                                    </ul> -->
+
+                                    <div class="tab-content" id="leadsContent">
+                                        <div class="tab-pane fade show active" id="admin-paymentslab" role="tabpanel">
+                                            <div class="card small-card option-2 option-2 mb-4">
+                                                <div class="card-header">
+                                                    <h5 class="card-title mb-0">Payment Mode</h5>
+                                                    <div class="col-xl-4 pl-xl-0">
+
+                                                        <div class="form-group mb-3 mb-sm-0">
+                                                            <label>Select Date</label>
+
+                                                            <select class="form-control" name="as_on_date"
+                                                                id="as_on_date">
+                                                                <option value="" disabled selected>Select Type</option>
+                                                                <!-- @foreach ($paymentsets as $set)
+                                                            @if($set->as_on_date == $slab_as_on_date_og) -->
+
+                                                                <!-- <option value="{{ Carbon\Carbon::parse($set->as_on_date)->format('d-m-Y') }}" Selected>{{ Carbon\Carbon::parse($set->as_on_date)->format('d-m-Y') }}</option> -->
+                                                                <!-- @else -->
+                                                                <!-- <option value="{{ Carbon\Carbon::parse($set->as_on_date)->format('d-m-Y') }}">{{ Carbon\Carbon::parse($set->as_on_date)->format('d-m-Y') }}</option> -->
+                                                                <!-- @endif -->
+
+                                                                <!-- @endforeach -->
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body pt-4 pb-4">
+                                                    <input type="hidden" name="id" value="">
+                                                    <div class="row">
+                                                        <div class="col-xl-4 col-sm-12 start_amount">
+                                                            <div class="form-group mb-3 mb-sm-0">
+                                                                <label>Start Amount</label>
+                                                                <input type="number" name="start_amount"
+                                                                    class="form-control-plaintext text-capitalize"
+                                                                    value="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-4 col-sm-12 end_amount">
+                                                            <div class="form-group mb-3 mb-sm-0">
+                                                                <label>End Amount</label>
+                                                                <input type="number" name="end_amount"
+                                                                    class="form-control-plaintext text-capitalize"
+                                                                    value="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-4 col-sm-12 is_active">
+                                                            <div class="form-group mb-3 mb-sm-0">
+                                                                <label>Active</label>
+                                                                <input type="text" name="is_active"
+                                                                    class="form-control-plaintext text-capitalize"
+                                                                    value="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card small-card option-2 mb-4" id="paymentslab">
+                                                <div class="card-body pb-4">
+                                                    <div class="table-responsive">
+                                                        <table class="table normal-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Sr No</th>
+                                                                    <th>Payment Name</th>
+                                                                    <th>Recommended</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="data_set">
+                                                                <!-- @foreach ($sets as $set) -->
+                                                                <tr>
+                                                                    <td>
+                                                                        <!-- {{ $set->sr_no }} -->
+                                                                    </td>
+                                                                    <td>
+                                                                        <!-- {{ $set->payment_type_name }} -->
+                                                                    </td>
+                                                                    <td>
+                                                                        <!-- @if($set->recommended == 1)
+                                                                {{ 'Yes' }}
+                                                                @else
+                                                                {{ 'No' }}
+                                                                @endif -->
+                                                                    </td>
+                                                                </tr>
+                                                                <!-- @endforeach -->
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-5">
+                                <h5 class="card-title mb-3">Amount Slab</h5>
+                                <!-- {{-- <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="table-search">
+                                    <svg width="24" height="24" viewBox="0 0 24 24">
+                                        <use xlink:href="#search"></use>
+                                    </svg>
+                                </span>
+                            </div>
+                            <input type="text" name="master_search" id="master_search" class="form-control" placeholder="Search"
+                                aria-label="table-search" aria-describedby="table-search">
+                        </div> --}} -->
+                                <ul class="logs-list mt-4">
+                                    <!-- @php
+                                $slab_count = 0;
+                            @endphp
+                            @foreach ($paymentslabs as $paymentslab)
+                                @if($slab_count == 0) -->
+                                    <input type="hidden" name="paymentslab_id" id="paymentslab_id"
+                                        value=" $paymentslab->id ">
+                                    <!-- @endif -->
+                                    <li *ngFor="let item of PaymentLog">
+                                        <a>
+                                            <h4>{{item.Name}}</h4>
+                                        </a>
+                                    </li>
+                                    <!-- @php
+                                    $slab_count++;
+                                @endphp
+                            @endforeach -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- @endsection
+
+@section('modal') -->
+<div class="modal fade confirmation-modal" id="payment_success" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div> -->
+            <div class="modal-body text-center">
+                <div class="confirmation-popup">
+                    <div class="status-icon success">
+                        <div class="check"></div>
+                    </div>
+
+                    <p>Payment details updated Successfully !!!</p>
+                </div>
+
+                <div class="row justify-content-center">
+
+                    <div class="col-6">
+                        <button type="button" class="btn btn-primary w-100" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- @endsection
+
+@section('script')
+<script>
+
+    $(document).ready(function () {
+
+        $('#toggleMenu').on('click', function () {
+            $(".panel-option").toggleClass('open');
+        });
+        $('#closeMenu').on('click', function () {
+            $(".panel-option").removeClass('open');
+        });
+        $('input[name="as_on_date"]').datepicker({
+            autoclose: true,
+            format: "dd-mm-yyyy",
+            startDate: new Date(),
+        });
+    });
+
+    $(document).on('click', '#set_payment', function(){
+        $("#paymentslab").show();
+    });
+
+    $(document).on('keyup', '#master_search', function (e) {
+        let value = e.target.value;
+        master_search(value);
+    });
+
+    $(document).on('change', '#as_on_date', function (e){
+        let value = e.target.value;
+        let paymentslab = $("#paymentslab_id").val();
+        console.log(value,paymentslab);
+        //return false;
+        var baseurl = window.location.origin+window.location.pathname;
+
+
+        if (!window.location.hash)
+        {
+            let url = window.location.replace(baseurl + "?sid="+paymentslab+"&as_on_date="+value)
+        }
+        //console.log(url);
+    });
+
+    function viewEditFunction($id)
+    {
+        let as_on_date = $("#as_on_date").val();
+
+        $.get("/admin/master/payment?id="+$id+"&as_on_date="+as_on_date, function(output, status){
+
+            //console.log(output[0]['PaymentSets']);
+
+            let data = output[0];
+
+            let id = data['id'];
+
+            let start_amount = data['start_amount'];
+            let end_amount = data['end_amount'];
+            let active = data['is_active'];
+            let payment_sets = data['PaymentSets'];
+            let as_on_date = data['as_on_date'];
+            $("input[name=id]").val(id);
+
+            $("input[name=start_amount]").val(start_amount);
+            $("input[name=end_amount]").val(end_amount);
+            $("select[name=is_active]").val(active).trigger('change');
+            $('form#add-update-data').find("input[type=text], input[type=number], select").attr('readonly',true);
+            $("#set_payment").show();
+            $("input[name=slab_id]").val(id);
+            $("input[name=as_on_date]").val(as_on_date);
+            let count = 1;
+            console.log(payment_sets);
+            let data_set = '';
+            $.each(payment_sets, function(i,o){
+                if(count == o.sr_no)
+                {
+                    data_set += "<tr>";
+                        data_set += "<td>";
+                            data_set += o.sr_no;
+                        data_set += "</td>";
+                        data_set += "<td>";
+                            data_set += o.payment_type_name;
+                        data_set += "</td>";
+                        data_set += "<td>";
+                            if(o.recommended == 1)
+                            data_set += "Yes";
+                            else
+                            data_set += "No";
+                        data_set += "</td>";
+                    data_set += "</tr>";
+                }
+                count++;
+            });
+            $(".data_set").html(data_set);
+
+
+
+        });
+    }
+
+
+    $(document).on('click', '#add_new_data', function (e) {
+        $('form#add-update-data').find("input[type=text], input[type=number]").val("");
+        $('form#add-update-data').find("input[type=text], input[type=number]").attr('readonly',false);
+        $("input[name=id]").val('');
+        $(".status").html('Add');
+        $(".edit-now").hide();
+    });
+
+    $(document).on('click', '.edit-now', function (e) {
+        $('form#add-update-data').find("input[type=text], input[type=number], select").attr('readonly',false);
+    });
+
+
+    $(document).on('click', '#success_alert_close', function (e) {
+        $("#success_alert").hide();
+    });
+
+    $(document).on('click', '#success_alert_sub_close', function (e) {
+        $("#success_alert_sub").hide();
+    });
+
+    // $(document).on('key', 'input[name=type]', function (e) {
+    //     let val = e.target.value;
+    //     $(this).val(val.toUpperCase());
+    // });
+
+
+    function master_search(value)
+    {
+        let data = '';
+        $.get("/admin/master/payment?type="+value, function(output, status){
+            console.log(output);
+            $.each(output, function(i,o){
+                if(o.is_active == 0)
+                data += '<li><a href="javascript:void(0)" class="inactive_now" onclick="return viewEditFunction('+o.id+');"><h4>'+o.start_amount+'-'+o.end_amount+'</h4></a></li>';
+                else
+                data += '<li><a href="javascript:void(0)" onclick="return viewEditFunction('+o.id+');"><h4>'+o.start_amount+'-'+o.end_amount+'</h4></a></li>';
+            });
+            $('.logs-list').html(data);
+        });
+        return true;
+    }
+
+    $( "form#add-update-data" ).submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        var data = new FormData( form[ 0 ] );//form.serialize();
+        var post = form.attr('method');
+        console.log('sas');
+        $('.error').removeClass('error');
+        $('.err').removeClass('err');
+        $('.span_err').remove();
+
+        if($('input[name=type],input[name=code]').prop('readonly')){ return false;}
+        $.ajax({
+            type: post,
+            url: url,
+            data: data,
+            //async: false,
+            beforeSend: function() {
+                //$('#loading').show();
+            },
+            success:function(data) {
+                //$('#loading').show();
+                console.log(data);
+                $("#success_alert .alert-text .message").html(data);
+                $("#success_alert").show();
+                master_search('');
+                $('form#add-update-data').find("input[type=text], input[type=number]").attr('readonly',true);
+            },
+            error: function(xhr, textStatus, thrownError)
+            {
+                var response = jQuery.parseJSON(xhr.responseText);
+
+                if(response.server_errors)
+                {
+                    let error_data = '<ul class="alerts-lists">';
+                    console.log(response.server_errors);
+                    if (response.server_errors.length === undefined || response.server_errors.length === null) {
+                        $.each( response.server_errors, function( k, v ) {
+                            error_data += '<li>'+v+'</li>';
+                        });
+                    }else{
+                        error_data += response.server_errors;
+                    }
+
+                    error_data += '</ul>';
+                    $("#error_modal .card .card-body").html(error_data);
+                    $('#error_modal').modal('show');
+                }
+                if(response.errors)
+                {
+                    $.each( response.errors, function( k, v ) {
+                        $('.'+k).children().not("div.exclude").not("label").not("span").append("<label id='"+k+"_error' class='error span_err'>"+v+"</label>");
+                    });
+                }
+
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+        });
+        return false;
+    });
+
+
+    $( "form#add-update-data-payment" ).submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        var data = new FormData( form[ 0 ] );//form.serialize();
+        var post = form.attr('method');
+        console.log('sas');
+        $('.error').removeClass('error');
+        $('.err').removeClass('err');
+        $('.span_err').remove();
+
+
+        $.ajax({
+            type: post,
+            url: url,
+            data: data,
+            //async: false,
+            beforeSend: function() {
+                //$('#loading').show();
+            },
+            success:function(data) {
+                //$('#loading').show();
+                console.log(data);
+                // $("#success_alert_sub .alert-text .message").html(data);
+                // $("#success_alert_sub").show();
+                $("#payment_success").modal('show');
+                master_search('');
+                $('form#add-update-data').find("input[type=text], input[type=number]").attr('readonly',true);
+            },
+            error: function(xhr, textStatus, thrownError)
+            {
+                var response = jQuery.parseJSON(xhr.responseText);
+
+                if(response.server_errors)
+                {
+                    let error_data = '<ul class="alerts-lists">';
+                    console.log(response.server_errors);
+                    if (response.server_errors.length === undefined || response.server_errors.length === null) {
+                        $.each( response.server_errors, function( k, v ) {
+                            error_data += '<li>'+v+'</li>';
+                        });
+                    }else{
+                        error_data += response.server_errors;
+                    }
+
+                    error_data += '</ul>';
+                    $("#error_modal .card .card-body").html(error_data);
+                    $('#error_modal').modal('show');
+                }
+                if(response.errors)
+                {
+                    $.each( response.errors, function( k, v ) {
+                        $('.'+k).children().not("div.exclude").not("label").not("span").append("<label id='"+k+"_error' class='error span_err'>"+v+"</label>");
+                    });
+                }
+
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+        });
+        return false;
+    });
+</script>
+@endsection -->

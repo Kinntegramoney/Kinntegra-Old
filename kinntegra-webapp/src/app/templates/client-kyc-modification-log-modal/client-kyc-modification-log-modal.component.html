@@ -1,0 +1,89 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modification for Profile</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onClose()">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row form-sections" *ngFor="let profileItem of profiles; index as i">
+            <div class="col-12">
+                <h4 class="form-section-title text-uppercase text-grey ms-3">{{ profileItem.Name }}</h4>
+            </div>
+            <div class="col-12 d-flex flex-wrap ms-3">
+                <div class="form-group custom-checkbox me-3">
+                    <input type="checkbox" id="profile_modify_{{profileItem.ClientKycProfileId}}"
+                        name="is_profile_modify_{{profileItem.ClientKycProfileId}}"
+                        [(ngModel)]="profileItem.IsProfileModified">
+                    <label for="profile_modify_{{profileItem.ClientKycProfileId}}">Profile</label>
+                </div>
+                <div class="form-group custom-checkbox me-3">
+                    <input type="checkbox" id="communication_modify_{{profileItem.ClientKycProfileId}}"
+                        name="is_communication_modify_{{profileItem.ClientKycProfileId}}"
+                        [(ngModel)]="profileItem.IsCommunicationModified">
+                    <label for="communication_modify_{{profileItem.ClientKycProfileId}}">Communication</label>
+                </div>
+                <div class="form-group custom-checkbox me-3">
+                    <input type="checkbox" id="bank_modify_{{profileItem.ClientKycProfileId}}"
+                        name="is_bank_modify_{{profileItem.ClientKycProfileId}}"
+                        [(ngModel)]="profileItem.IsBankModified">
+                    <label for="bank_modify_{{profileItem.ClientKycProfileId}}">Bank</label>
+                </div>
+                <div class="form-group custom-checkbox me-3">
+                    <input type="checkbox" id="mandate_modify_{{profileItem.ClientKycProfileId}}"
+                        name="is_mandate_modify_{{profileItem.ClientKycProfileId}}"
+                        [(ngModel)]="profileItem.IsMandateModified">
+                    <label for="mandate_modify_{{profileItem.ClientKycProfileId}}">Mandate</label>
+                </div>
+            </div>
+            <div class="col-12 d-flex flex-wrap">
+                <div class="col-md-3 profile_modify_{{profileItem.ClientKycProfileId}}">
+                    <div class="form-group mb-3 me-3">
+                        <label>Profile :: Add Modify Reason</label>
+                        <textarea class="form-control reject_reason"
+                            name="modify_profile-reason_{{profileItem.ClientKycProfileId}}" rows="4"
+                            placeholder="Add Comment" [(ngModel)]="profileItem.ProfileComments"
+                            [disabled]="!profileItem.IsProfileModified"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-3 communication_modify_{{profileItem.ClientKycProfileId}}">
+                    <div class="form-group mb-3 me-3">
+                        <label>Communication :: Add Modify Reason</label>
+                        <textarea class="form-control reject_reason"
+                            name="modify_communication-reason_{{profileItem.ClientKycProfileId}}" rows="4"
+                            placeholder="Add Comment" [(ngModel)]="profileItem.CommunicationComments"
+                            [disabled]="!profileItem.IsCommunicationModified"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-3 bank_modify_{{profileItem.ClientKycProfileId}}">
+                    <div class="form-group mb-3 me-3">
+                        <label>Bank :: Add Modify Reason</label>
+                        <textarea class="form-control reject_reason"
+                            name="modify_bank-reason_{{profileItem.ClientKycProfileId}}" rows="4"
+                            placeholder="Add Comment" [(ngModel)]="profileItem.BankComments"
+                            [disabled]="!profileItem.IsBankModified"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-3 mandate_modify_{{profileItem.ClientKycProfileId}}">
+                    <div class="form-group mb-3">
+                        <label>Mandate :: Add Modify Reason</label>
+                        <textarea class="form-control reject_reason"
+                            name="modify_mandate-reason_{{profileItem.ClientKycProfileId}}" rows="4"
+                            placeholder="Add Comment" [(ngModel)]="profileItem.MandateComments"
+                            [disabled]="!profileItem.IsMandateModified"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-primary col-sm-3" (click)="onSubmit()">Submit</button> -->
+        <button type="button" class="btn btn-primary btn-lg col-sm-3" (click)="onSubmit()" [disabled]="isBusy">
+            <div *ngIf="isBusy">
+                <span class="spinner-border text-light" style="margin-right: 10px; vertical-align: middle;"
+                    role="status"></span>
+                <span>Submit</span>
+            </div>
+            <span *ngIf="!isBusy">Submit</span>
+        </button>
+    </div>
+</div>

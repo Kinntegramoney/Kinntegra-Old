@@ -1,0 +1,397 @@
+<div class="main" *ngIf="sellPortfolios.length > 0">
+    <div class="container-fluid">
+        <div class="table-top-section d-flex justify-content-between align-items-center mb-4 mt-4">
+            <div class="back-btn" style="cursor: auto">
+                {{clientName}} - Trade Details
+                <span class="badge badge-primary badge-pill ms-2"
+                    *ngIf="clientTransactionDetails.TradeStatus != 'Cancelled'">{{clientTransactionDetails.TradeStatus}}</span>
+                <span class="badge badge-danger badge-pill ms-2"
+                    *ngIf="clientTransactionDetails.TradeStatus == 'Cancelled'">{{clientTransactionDetails.TradeStatus}}</span>
+            </div>
+        </div>
+        <div class="mb-4">
+            <nav ngbNav #nav="ngbNav" class="nav-tabs" [(activeId)]="activeTab">
+                <ng-container [ngbNavItem]="i" *ngFor="let portfolioItem of sellPortfolios; index as i">
+                    <a ngbNavLink
+                        (click)="onTabChanged(portfolioItem.TransactionPortfolioTypeCode)">{{portfolioItem.TransactionPortfolioTypeName}}
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="card small-card option-2 option-2 mb-4">
+                                    <div class="card-header">
+                                        <h6 class="card-title">Portfolio Details</h6>
+                                        <!-- <span class="edit-now float-end mt-1"
+                                        *ngIf="!isEditWealthPortfolio"
+                                        (click)="onWealthPortfolioEdit()">Edit</span>
+                                    <span class="edit-now float-end mt-1"
+                                        *ngIf="isEditWealthPortfolio"
+                                        (click)="onWealthPortfolioSave()">Save</span> -->
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-5 col-sm-6">
+                                                <div class="form-group mb-3 mb-sm-0">
+                                                    <label>Withdrawal Amount</label>
+                                                    <span name="wealthAmount" class="form-control-plaintext font-bold">₹
+                                                        {{portfolioItem.PortfolioSellAmount
+                                                        | indianCurrencyNumber}}</span> <!-- <span name="wealthAmount"
+                                                    class="form-control-plaintext font-bold"
+                                                    *ngIf="!isEditWealthPortfolio">₹
+                                                    {{objBuyLumpsumWealthPortfolio.PortfolioAmount
+                                                    | indianCurrencyNumber}}</span> -->
+                                                    <!-- <input type="number" class="form-control"
+                                                    id="amount" name="amount"
+                                                    placeholder="Enter Amount" value=""
+                                                    [(ngModel)]="objBuyLumpsumWealthPortfolio.PortfolioAmount"
+                                                    *ngIf="isEditWealthPortfolio"> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-5 col-sm-6">
+                                                <div class="form-group mb-3 mb-sm-0">
+                                                    <label>Market Value</label>
+                                                    <span name="wealthAmount" class="form-control-plaintext font-bold">₹
+                                                        {{portfolioItem.PortfolioMarketValue
+                                                        | indianCurrencyNumber}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card small-card option-2 mb-4">
+                                    <div class="card-header">
+                                        <h6 class="card-title">Client Remarks</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xl-12 col-sm-12">
+                                                <div class="form-group mb-3 mb-sm-0 p-1">
+                                                    <textarea class="form-control" name="wealth_client_comment" rows="1"
+                                                        placeholder="Add Comment if any"
+                                                        [(ngModel)]="portfolioItem.ClientRemark"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <nav ngbNav #navAccount="ngbNav" class="nav-tabs">
+                                    <ng-container [ngbNavItem]="j"
+                                        *ngFor="let accountItem of portfolioItem.ClientAccounts; index as j">
+                                        <a ngbNavLink *ngIf="accountItem.UCC!=''"
+                                            (click)="onAccountTabChanged()">{{accountItem.UCC}}</a>
+                                        <a ngbNavLink *ngIf="accountItem.UCC==''" (click)="onAccountTabChanged()">No
+                                            UCC</a>
+                                        <ng-template ngbNavContent>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="card small-card option-2 mb-4">
+                                                        <div class="card-body">
+                                                            <div class="table-responsive">
+                                                                <ngx-datatable class="material" #allocationDataTable
+                                                                    [rows]="accountItem.Allocation"
+                                                                    [columnMode]="ColumnMode.force" rowHeight="auto"
+                                                                    [headerHeight]="50" [footerHeight]="50"
+                                                                    [scrollbarH]="true">
+                                                                    <ngx-datatable-column name="Folio" [width]="10"
+                                                                        [sortable]="false" prop="FolioNumber">
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            <ng-template #htmlWealthContent>
+                                                                                <div innerHTML="Redemption Bank Details</br>Bank Name: {{row.BankName}}</br>IFSC: {{row.BankIFSC}}</br>Account Number: {{row.BankAccountNumber}} ({{row.BankAccountType}})"
+                                                                                    style="text-align: left;">
+                                                                                </div>
+                                                                            </ng-template>
+                                                                            <span [ngbTooltip]="htmlWealthContent"
+                                                                                tooltipClass="custom-tooltip"
+                                                                                placement="right" triggers="hover"
+                                                                                container="body">{{row.FolioNumber}}</span>
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="Scheme" [width]="250"
+                                                                        [sortable]="false" prop="SchemeName">
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{row.SchemeName}}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="Available Units"
+                                                                        [width]="10" [sortable]="false"
+                                                                        prop="AvailableUnits">
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{row.AvailableUnits | number:'1.3-3'}}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="Current Value"
+                                                                        [width]="10" [sortable]="false"
+                                                                        prop="CurrentAmount">
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{row.CurrentAmount
+                                                                            |
+                                                                            indianCurrencyNumber}}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="Sell Units" [width]="10"
+                                                                        [sortable]="false" prop="SellUnits">
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            {{row.SellUnits | number:'1.3-3'}}
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="Sell Amount"
+                                                                        [width]="10" [sortable]="false"
+                                                                        prop="SellAmount">
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            <ng-template #htmlSellAmountContent>
+                                                                                <div innerHTML="Please note that sell amount is derived on the NAV as of {{row.FormattedNavDate}}"
+                                                                                    style="text-align: left;">
+                                                                                </div>
+                                                                            </ng-template>
+                                                                            <span
+                                                                                *ngIf="row.IsNavDateDiffer == false">{{row.SellAmount
+                                                                                |
+                                                                                indianCurrencyNumber}}</span>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="row.IsNavDateDiffer == true"
+                                                                                [ngbTooltip]="htmlSellAmountContent"
+                                                                                tooltipClass="custom-tooltip"
+                                                                                placement="left" triggers="hover"
+                                                                                container="body">{{row.SellAmount
+                                                                                |
+                                                                                indianCurrencyNumber}}</span>
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
+                                                                    <ngx-datatable-footer>
+                                                                        <ng-template ngx-datatable-footer-template
+                                                                            let-rowCount="rowCount"
+                                                                            let-pageSize="pageSize"
+                                                                            let-selectedCount="selectedCount"
+                                                                            let-curPage="curPage" let-offset="offset">
+                                                                            <div class="row" style="padding: 5px 10px">
+                                                                                <div *ngFor="let w of allocationColumnSizes; index as colIdx"
+                                                                                    class="datatable-footer-cell"
+                                                                                    [style.width.px]="w">
+                                                                                    <span *ngIf="colIdx==0">Total</span>
+                                                                                    <span *ngIf="colIdx==1"></span>
+                                                                                    <span *ngIf="colIdx==2"></span>
+                                                                                    <span *ngIf="colIdx==3"></span>
+                                                                                    <span *ngIf="colIdx==4"></span>
+                                                                                    <span *ngIf="colIdx==5">₹
+                                                                                        {{accountItem.TotalSellAmount|indianCurrencyNumber}}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </ng-template>
+                                                                    </ngx-datatable-footer>
+                                                                </ngx-datatable>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ng-container>
+                                </nav>
+                                <div [ngbNavOutlet]="navAccount" class="mt-2"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card small-card option-2 mb-4">
+                                    <div class="card-header">
+                                        <h6 class="card-title">Rational For Trade</h6>
+                                    </div>
+                                    <div class="card-body card-text">
+                                        <p>{{portfolioItem.RationalForTrade}}</p>
+                                    </div>
+                                </div>
+                                <div class="card small-card option-2 mb-4">
+                                    <div class="card-header">
+                                        <h6 class="card-title">Associate Comment</h6>
+                                    </div>
+                                    <div class="card-body card-text">
+                                        <!-- <p>$portfolio->description</p> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card small-card option-2 mb-4">
+                                    <div class="card-header">
+                                        <h6 class="card-title">Trade Status</h6>
+                                    </div>
+                                    <div class="card-body card-text1">
+                                        <div class="transaction-wrapper trade-status">
+                                            <div class="transaction-steps"
+                                                *ngFor="let tradeStatusItem of portfolioItem.TradeStatusLog">
+                                                <div class="trade-title mb-2">
+                                                    <h4 class="mb-0">{{tradeStatusItem.LogMessage}}</h4>
+                                                    <div class="info">
+                                                        <span>{{
+                                                            tradeStatusItem.LogDate |
+                                                            date:"hh:mm a | EEEE, d MMMM y": "IST"
+                                                            }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="button" (click)="onSaveClick(portfolioItem)"
+                                    class="btn btn-primary btn-lg float-right">
+                                    Save and Next
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+                <ng-container [ngbNavItem]="sellPortfolios.length" *ngIf="sellPortfolios.length > 0">
+                    <a ngbNavLink>Authetication</a>
+                    <ng-template ngbNavContent>
+                        <div class="mt-4">
+                            <div class="card small-card mb-4" *ngFor="let portfolioItem of sellPortfolios; index as i">
+                                <div class="card-header">
+                                    <h6 class="card-title">Portfolio {{i+1}}: <span
+                                            class="text-capitalize">{{portfolioItem.TransactionPortfolioTypeName}}</span>
+                                    </h6>
+                                    <div>
+                                        <a class="btn btn-link" (click)="onPortfolioViewClicked(portfolioItem, i)"><svg
+                                                width="30" height="30" viewBox="0 0 24 24">
+                                                <use xlink:href="#allocation"></use>
+                                            </svg>View</a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group mb-3 mb-sm-0">
+                                                <label>Withdrawal Amount</label>
+                                                <input type="text" readonly class="form-control-plaintext font-bold"
+                                                    value="₹ {{portfolioItem.PortfolioSellAmount|indianCurrencyNumber}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="!isPasswordSet">
+                                <div class="col-md-12">
+                                    <div class="card small-card option-2 mb-4">
+                                        <div class="card-header">
+                                            <h6 class="card-title">Reset Password</h6>
+                                            <div>
+                                                <a class="btn btn-link" (click)="onSavePasswordClicked()">Save</a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="transaction-wrapper trade-status">
+                                                <div class="addTab row">
+                                                    <div class="col-sm-3 set_password">
+                                                        <div class="form-group">
+                                                            <label for="set_password">Password</label>
+                                                            <input type="text" class="form-control" name="set_password"
+                                                                id="set_password" placeholder="Password"
+                                                                [(ngModel)]="NewPassword">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 set_password">
+                                                        <div class="form-group">
+                                                            <label for="confirm_set_password">Confirm Password</label>
+                                                            <input type="text" class="form-control"
+                                                                name="confirm_set_password" id="confirm_set_password"
+                                                                placeholder="Password" [(ngModel)]="ConfirmNewPassword">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 set_pin">
+                                                        <div class="form-group">
+                                                            <label for="set_pin">Pin</label>
+                                                            <input type="text" class="form-control" name="set_pin"
+                                                                id="set_pin" placeholder="Pin" [(ngModel)]="NewPin"
+                                                                [appInputRestriction]="inputType">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 set_pin">
+                                                        <div class="form-group">
+                                                            <label for="confirm_set_pin">Confirm Pin</label>
+                                                            <input type="text" class="form-control"
+                                                                name="confirm_set_pin" id="confirm_set_pin"
+                                                                placeholder="Pin" [(ngModel)]="ConfirmNewPin"
+                                                                [appInputRestriction]="inputType">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="isPasswordSet">
+                                <div class="col-md-12">
+                                    <div class="card small-card option-2 mb-4">
+                                        <div class="card-header">
+                                            <h6 class="card-title">Authenticate Transaction</h6>
+                                            <div>
+                                                <a class="btn btn-link" (click)="onForgotPasswordClicked()">Reset
+                                                    Password</a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="transaction-wrapper trade-status">
+                                                <div class="addTab row">
+                                                    <div class="col-sm-6 set_password">
+                                                        <div class="form-group">
+                                                            <label for="set_password">Password</label>
+                                                            <input type="text" class="form-control" name="set_password"
+                                                                id="set_password" placeholder="Password"
+                                                                [(ngModel)]="AuthenticationPassword">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 set_pin">
+                                                        <div class="form-group">
+                                                            <label for="set_pin">Pin</label>
+                                                            <input type="text" class="form-control" name="set_pin"
+                                                                id="set_pin" placeholder="Pin"
+                                                                [(ngModel)]="AuthenticationPin"
+                                                                [appInputRestriction]="inputType">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-primary btn-lg float-right accept_btn"
+                                        (click)="onAcceptClick()"
+                                        [disabled]="(AuthenticationPassword == '' || AuthenticationPin == '')">
+                                        Accept
+                                    </button>
+                                    <button type="button" class="btn btn-danger float-right btn-lg me-3 reject_btn"
+                                        (click)="onRejectClick()"
+                                        [disabled]="(AuthenticationPassword == '' || AuthenticationPin == '')">Reject</button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+            </nav>
+            <div [ngbNavOutlet]="nav"></div>
+        </div>
+    </div>
+</div>

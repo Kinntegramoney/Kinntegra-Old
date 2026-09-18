@@ -1,0 +1,132 @@
+<div class="main">
+    <div class="container-fluid">
+        <div class="section-header mb-4">
+            <app-header-right-template class="section-header"></app-header-right-template>
+        </div>
+        <div class="row">
+            <div class="col-xl-8 mb-3 mb-xl-0">
+                <nav ngbNav #nav="ngbNav" class="nav-tabs">
+                    <ng-container ngbNavItem>
+                        <a (click)="activeTab = 1;" ngbNavLink>Multi Broker</a>
+                        <ng-template ngbNavContent>
+                            <ngx-datatable class="material" [rows]="multiBrokerData" [columnMode]="ColumnMode.force"
+                                [rowHeight]="'auto'" [footerHeight]="50" [headerHeight]="50" [limit]="10"
+                                [scrollbarH]="false">
+                                <ngx-datatable-column name="Folio Number" [width]="75" [sortable]="true"
+                                    prop="FolioNumber">
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">
+                                        <span>{{row.FolioNumber}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="New Folio Number" [width]="75" [sortable]="true"
+                                    prop="NewFolioNumber">
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">
+                                        <span>{{row.NewFolioNumber}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Product Code" [width]="75" [sortable]="true"
+                                    prop="ProductCode">
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">
+                                        <span>{{row.ProductCode}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Daily Unit" [width]="75" [sortable]="true" prop="DailyUnit">
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">
+                                        <span>{{row.DailyUnit}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Transaction Units" [width]="75" [sortable]="true"
+                                    prop="TransactionUnits">
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">
+                                        <span>{{row.TransactionUnits}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Difference" [width]="75" [sortable]="true"
+                                    prop="DifferenceUnits">
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">
+                                        <span>{{row.DifferenceUnits}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                        </ng-template>
+                    </ng-container>
+                    <ng-container ngbNavItem>
+                        <a (click)="activeTab = 2;" ngbNavLink>Mismatch Units</a>
+                        <ng-template ngbNavContent>
+                            <ngx-datatable class="material" [rows]="mismatchUnitsData" [columnMode]="ColumnMode.force"
+                                [rowHeight]="'auto'" [footerHeight]="50" [headerHeight]="50" [limit]="10"
+                                [scrollbarH]="false">
+                                <ngx-datatable-column name="Folio Number" [width]="75" [sortable]="true"
+                                    prop="FolioNumber">
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">
+                                        <span>{{row.FolioNumber}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="New Folio Number" [width]="75" [sortable]="true"
+                                    prop="NewFolioNumber">
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">
+                                        <span>{{row.NewFolioNumber}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Product Code" [width]="75" [sortable]="true"
+                                    prop="ProductCode">
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">
+                                        <span>{{row.ProductCode}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Daily Unit" [width]="75" [sortable]="true" prop="DailyUnit">
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">
+                                        <span>{{row.DailyUnit}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Transaction Units" [width]="75" [sortable]="true"
+                                    prop="TransactionUnits">
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">
+                                        <span>{{row.TransactionUnits}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Difference" [width]="75" [sortable]="true"
+                                    prop="DifferenceUnits">
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">
+                                        <span>{{row.DifferenceUnits}}</span>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Actions" [width]="90" [sortable]="false">
+                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                                        let-row="row">Proceed to:
+                                        <a class="table-link ico5" (click)="onMarkMultiBroker(row)" *ngIf="!row.IsBusy">
+                                            <span class="badge badge-info badge-pill">Mark As Multi Broker
+                                                <i class="icon-right-arrow"></i>
+                                            </span>
+                                        </a>
+                                        <a class="table-link ico5" *ngIf="row.IsBusy">
+                                            <span class="badge badge-info badge-pill"><span
+                                                    class="spinner-border text-light"
+                                                    style="margin-right: 10px; vertical-align: middle;"
+                                                    role="status"></span>Mark As Multi Broker
+                                                <i class="icon-right-arrow"></i>
+                                            </span>
+                                        </a>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                        </ng-template>
+                    </ng-container>
+                </nav>
+            </div>
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+        </div>
+    </div>
+</div>
