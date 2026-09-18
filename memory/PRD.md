@@ -267,3 +267,13 @@ Login lands on 'leads' (not dashboard), so no auto-landing on unbuilt pages.
 Routes still exist in app.routes.ts (dashboard/client) -> direct URL still works; NOT blocked (can add
 a redirect guard later if wanted). Rebuilt prod (main-4JVV46XX.js) + deployed main+index.html to
 kinntegrawebapp wwwroot. Verified live HTTP 200. Title/favicon/IST fixes all carried through.
+
+## 2026-09-18 (later) — Corrected: login->leads (already worked); reverted dashboard/client redirect
+User clarified: wanted LOGIN to land on lead management (it already does: login.component.ts PIN success
+-> router.navigate(['leads'])), and did NOT want /dashboard & /client redirected to leads.
+The redirect edit (app.routes.ts) was NEVER deployed to live (only build4 in dist, discarded).
+Reverted source: dashboard/client routes back to their components. Live bundle = main-4JVV46XX.js
+(menu items hidden, NO redirects, login->leads) — verified live has navigate(["leads"]) and no redirectTo.
+Net live state: Dashboard & Client hidden from sidebar; login lands on Leads; URLs still resolve to
+their (unbuilt) components if typed directly (user did NOT want them redirected).
+Transaction URL param e.g. /transaction/414E2B5048745659672B513D = encrypted AssociateId (crypto engine), not a raw id.
