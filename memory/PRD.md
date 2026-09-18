@@ -71,6 +71,21 @@ backend (uvicorn) and frontend (yarn start) are READONLY.
   live-app enhancements, which are now done.)
 - GitHub handover: user triggers via "Save to Github" button (self-serve).
 
+## Session 3 (2026-06) — React + FastAPI rewrite KICKOFF COMPLETE & VERIFIED
+- New React app served at /next (react-router basename '/next'); Angular stays live at root.
+- New FastAPI endpoints under /api/v2/* read the SAME live Azure SQL via pymssql:
+  - /api/v2/auth/login, /api/v2/auth/verify-pin (2-step, reuses crypto + HS256 JWT),
+    /api/v2/me, /api/v2/dashboard/{clientcount,clientchart,tradelogstatus}.
+  - Legacy crypto (crypto-js TripleDES/ECB/MD5) ported to Python in /app/backend/kinn_crypto.py
+    and verified byte-for-byte against Node.
+  - server.py: /api/v2 native routes first, catch-all proxy to Node (:8080) last.
+- React app: /app/frontend/src (Login.jsx 2-step, Dashboard.jsx with recharts), Kinntegra
+  branding (teal #365b58, real logo.svg), built to /app/frontend/build, served under /next.
+- Testing agent iteration_3.json: 7/7 (100%). Live data confirmed (Total 1,817 clients).
+- Minor cosmetic backlog: client-onboarding chart X-axis label clipping; donut center total label.
+- User feedback: wants the TRANSACTION module + ACCOUNT OPENING module (and dependent modules)
+  prioritized next (context: "kinntegra india" - needs clarification).
+
 ## Next action items
 - Unblock Azure SQL firewall for the current egress IP (needs Azure access that passes MFA,
   or someone with the authenticator to add the rule / reset MFA to add a phone number).

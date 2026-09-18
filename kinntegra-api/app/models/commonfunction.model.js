@@ -362,6 +362,11 @@ CommonFunction.SendRequest = async (options, body) => {
                 Buffer.byteLength(body);
         }
 
+        // Timeout is configurable via REQUEST_TIMEOUT_MS so it can be tuned on
+        // live (BSE StarMF SOAP endpoints can be slow) without a code change.
+        const timeoutMs = parseInt(process.env.REQUEST_TIMEOUT_MS, 10)
+            || options.timeout || 30000;
+
         const req = https.request(options, (res) => {
 
             let response = "";
@@ -379,8 +384,9 @@ CommonFunction.SendRequest = async (options, body) => {
 
         });
 
-        req.setTimeout(30000, () => {
-            req.destroy(new Error("Request timeout"));
+        req.setTimeout(timeoutMs, () => {
+            const target = (options.host || "") + (options.path || "");
+            req.destroy(new Error("Request timeout after " + timeoutMs + "ms for " + target));
         });
 
         req.on("error", reject);

@@ -1,4 +1,14 @@
 require("dotenv").config();
+
+// Safety net: never let a stray async error (e.g. an external "Request timeout"
+// from a slow BSE StarMF call) crash the whole live process. Log and stay up.
+process.on("unhandledRejection", (reason) => {
+    console.error("[unhandledRejection]", reason && reason.message ? reason.message : reason);
+});
+process.on("uncaughtException", (err) => {
+    console.error("[uncaughtException]", err && err.message ? err.message : err);
+});
+
 const express = require("express");
 const cors = require("cors");
 const nodeMailer = require("nodemailer");
