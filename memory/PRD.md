@@ -259,3 +259,11 @@ Users may need hard refresh (Ctrl+F5).
 - index.html favicon links: svg (assets/images/logo.svg) + favicon.ico?v=2 + apple-touch-icon favicon-256.png.
 - Deployed via Kudu VFS PUT to kinntegrawebapp wwwroot: favicon.ico(204), assets/images/favicon-256.png(201), index.html(204).
 - Verified live: title=Kinntegra Wealth, favicon.ico size 9489, logo.svg 200. Users need hard refresh (favicons cache hard).
+
+## 2026-09-18 (later) — Hid Dashboard & Client from live nav (not yet built)
+File: src/app/layouts/app-layout/app-layout.component.html — commented out the <li> nav blocks for
+href="dashboard" and href="client" (file is CRLF; used python regex to wrap in <!-- -->).
+Login lands on 'leads' (not dashboard), so no auto-landing on unbuilt pages.
+Routes still exist in app.routes.ts (dashboard/client) -> direct URL still works; NOT blocked (can add
+a redirect guard later if wanted). Rebuilt prod (main-4JVV46XX.js) + deployed main+index.html to
+kinntegrawebapp wwwroot. Verified live HTTP 200. Title/favicon/IST fixes all carried through.
