@@ -199,3 +199,23 @@ CONCLUSION: BSE's edge/GSLB/WAF (www.gslb.bsestarmf.in) selectively DROPS our Az
 (a block/blacklist/geo-or-ASN rule), started ~2 days ago. This is a BLOCK, not a missing whitelist -
 consistent with BSE saying "whitelisting is fine". ACTION: BSE must remove the port-443 block on our
 IP / Azure range. Updated /app/deploy/BSE_WHITELIST_EMAIL.md with this precise proof (remove-block ask).
+
+## 2026-09-18 (later) — NAT Gateway workaround for BSE 443 block: DEPLOYED to live API
+Proved BSE:443 is NOT whitelist-gated (a random pod IP + a fresh Azure NAT IP both connect). BSE
+is BLOCKING our old shared App Service outbound IP 20.219.168.55 specifically. Same issue recurred
+months ago; likely "fixed" then by an outbound-IP rotation (redeploy/scale) dodging the block.
+WORKAROUND (live): created dedicated static egress IP via NAT Gateway.
+  Resources (RG DefaultResourceGroup-null, Central India):
+    - VNet kinn-vnet 10.20.0.0/16, subnet appsvc-subnet 10.20.1.0/24 (delegated Microsoft.Web/serverFarms, NAT-associated)
+    - Public IP kinn-bse-natip = 20.219.13.245 (Standard, static)
+    - NAT Gateway kinn-natgw
+  Validated safely on STOPPED app kinntegrawebsite first (egress=20.219.13.245, BSE:443 OK 30ms).
+  SQL firewall: added explicit rule kinn-natgw-ip=20.219.13.245 (plus existing AllowAllWindowsAzureIps 0.0.0.0).
+  Cutover: VNet-integrated kinntegraapi into appsvc-subnet + vnetRouteAllEnabled=true (app restarted).
+  VERIFIED on LIVE kinntegraapi: egress=20.219.13.245, BSE:443 OK 28ms, SQL:1433 OK 8ms,
+  root=200, /api/appuser/getuserlist=200 with real data (DB queries work through NAT). test app re-stopped.
+COST: NAT GW ~US$32/mo + Standard PIP ~US$3.6/mo + data processing ~$0.045/GB.
+ROLLBACK: az webapp vnet-integration remove -g <RG> -n kinntegraapi (reverts to old outbound IPs).
+STILL SEND BSE EMAIL: ask BSE to remove the block on old IPs AND confirm they won't block the new
+NAT IP (if BSE blocked whole Azure ASN, this NAT IP could get blocked too - but it connects now).
+NEXT: user to place ONE small live transaction via normal UI; monitor live logs for BSE order result.
