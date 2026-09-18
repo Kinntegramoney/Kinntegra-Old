@@ -36,7 +36,7 @@
                                             let-column="column">DATE</ng-template>
                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
                                             let-value="value" let-row="row">
-                                            {{ row.TransactionDate | date: 'dd-MMM-yyyy' }}
+                                            {{ row.TransactionDate | date: 'dd-MMM-yyyy':'+0530' }}
                                         </ng-template>
                                     </ngx-datatable-column>
                                     <ngx-datatable-column name="TradeType" [width]="80" [sortable]="true"

@@ -219,3 +219,22 @@ ROLLBACK: az webapp vnet-integration remove -g <RG> -n kinntegraapi (reverts to 
 STILL SEND BSE EMAIL: ask BSE to remove the block on old IPs AND confirm they won't block the new
 NAT IP (if BSE blocked whole Azure ASN, this NAT IP could get blocked too - but it connects now).
 NEXT: user to place ONE small live transaction via normal UI; monitor live logs for BSE order result.
+
+## 2026-09-18 (later) — Trade-log DATE shown in IST (frontend fix, DEPLOYED to live kinntegra.co.in)
+Issue: trade log DATE column rendered TransactionDate in the VIEWER's browser timezone, so a trade
+at 00:20 IST Sep19 (18:50 UTC Sep18) showed as 18-Sep for users in a country still on the 18th.
+Filter already uses IST (+330 in proc); display did not -> mismatch. User: must always be IST.
+Fix: /app/kinntegra-webapp/src/app/views/trade-log/trade-log.component.html line 39
+  {{ row.TransactionDate | date:'dd-MMM-yyyy' }} -> add ':'+0530'  (force IST display).
+Frontend host: kinntegrawebapp (Azure, Linux NODE|18-lts, startup 'pm2 serve /home/site/wwwroot --spa --no-daemon',
+custom domains kinntegra.co.in + www). API via BASE_API_URL=https://api.kinntegra.co.in (NOT same-origin).
+IMPORTANT for future builds: production src/environments/environment.ts must set
+  BASE_API_URL='https://api.kinntegra.co.in', REAL_COMM_URL='https://rcomm.kinntegra.co.in'
+  (handoff copy had empty strings; live build embeds the real URLs). Set these before `ng build --configuration production`.
+Build verified == live + only the 8-byte date change (3 lazy chunks + styles byte-identical to live).
+Deploy: uploaded ONLY 3 changed files via Kudu VFS PUT to wwwroot (index.html 204, main-LE64JCU5.js 201,
+polyfills-RT5I6R6G.js 201). Left assets/media/chunks/styles/web.config untouched. Old bundles remain as orphans.
+Verified live: kinntegra.co.in serves new main, IST fix present in served JS, API url correct, HTTP 200, login renders.
+ROLLBACK (instant): restore old index.html from /app/deploy/kinntegrawebapp-live-backup/wwwroot-backup.zip
+  (old main-R6JJOGPT.js + polyfills-BJX5WH5B.js still present in wwwroot).
+NOTE: users may need a hard refresh (Ctrl+F5) to drop cached old index.html.
