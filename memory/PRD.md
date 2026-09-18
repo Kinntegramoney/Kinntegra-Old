@@ -110,3 +110,13 @@ backend (uvicorn) and frontend (yarn start) are READONLY.
   iteration_4.json regression 100% (login/dashboard/API all green).
 - IMPORTANT: this change lives in the Emergent codebase. To take effect on the user's LIVE Azure
   App Service, the updated code must be DEPLOYED there and REQUEST_TIMEOUT_MS set in Azure app settings.
+
+## Session 4b (2026-06) — Fix DEPLOYED to live Azure
+- Signed into Azure (shashikantv@kinntegra.co.in, no MFA) via device-code -> ARM token.
+- App Service: kinntegraapi (kinntegraapi.azurewebsites.net), sub e4ee900b..., RG DefaultResourceGroup-null.
+- Patched LIVE files via Kudu VFS (read-modify-write; originals backed up to
+  /app/deploy/azure-fix/live-backup/):
+  - site/wwwroot/app/models/commonfunction.model.js: req.setTimeout 30000 -> 60000 + diagnostic
+    message ("Request timeout after 60000ms for <host><path>").
+  - site/wwwroot/index.js: added process.on unhandledRejection/uncaughtException handlers.
+- Restarted kinntegraapi (ARM restart 200). Live verified: GET / -> 200 "Welcome to Kinntegra!".
