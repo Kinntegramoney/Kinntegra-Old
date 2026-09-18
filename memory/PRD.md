@@ -147,3 +147,24 @@ Plan: ASP-DefaultResourceGroupnull-8391 (hosts 4 apps).
 DEFERRED (do carefully): SQL S2->S1 or vCore Serverless; index tuning for the 100% DTU
 spikes (the real page-speed fix); optionally delete Stopped app kinntegrawebsite (no
 compute saving since plan shared). Reversible: bump plan back to P2v3 if peaks grow.
+
+## 2026-09-18 — SQL index tuning APPLIED (read-only analysis -> lean indexes)
+Analyzed live Azure SQL (kinntegra) via DMVs. Root cause of 100% DTU spikes: hot tables
+missing indexes, forcing full scans. Biggest: ClientTransactionSellTaxFreeAllocation
+(579k rows/540MB) had only PK on Id; queries/deletes filter by ClientTransactionId -> full
+540MB scan (138k logical reads each).
+Applied 8 LEAN additive indexes ONLINE=ON (no downtime, fully reversible via DROP INDEX):
+  IX_CTSTFA_ClientTransactionId  (ClientTransactionSellTaxFreeAllocation: ClientTransactionId,SellPriority) PAGE-compressed
+  IX_FTPR_RedemptionId           (FeedTransactionsPurchaseRedemption: RedemptionId INCLUDE Profit)
+  IX_ClientAccount_UCC           (ClientAccount: UCC)
+  IX_ClientTransaction_TradeStatus (ClientTransaction: TradeStatus INCLUDE TransactionDate)
+  IX_CTP_ClientTransactionId     (ClientTransactionPayment: ClientTransactionId)
+  IX_CAM_ClientAccountId         (ClientAccountMandate: ClientAccountId)
+  IX_CTCSIP_SIPReg_TradeStatus   (ClientTransactionCancelSIP: SIPRegistrationId,TradeStatus)
+  IX_CTSTP_ClientTransactionId   (ClientTransactionSTPSwitchAllocation: ClientTransactionId)
+Deliberately did NOT create the giant "INCLUDE every column" versions Azure recommends (storage bloat).
+Verified: IX_CTSTFA_ClientTransactionId now served by seeks (usage stats), scan eliminated.
+Scripts: /app/backend/_sql_perf_scan.py, _sql_apply_indexes.py, _sql_verify.py (read env AZURE_SQL_*).
+DEFERRED - SQL right-sizing: OBSERVE DTU for 1-2 days first; then S2->S1 (~US$45/mo saved).
+DO NOT use vCore Serverless auto-pause: app has constant traffic (NAV insert 14133 execs) so it
+won't pause and may cost more. S1 downgrade is the right move once spikes confirmed gone.
