@@ -15,6 +15,7 @@ const path = require("path");
 const { Server } = require("socket.io");
 
 const DIST = "/app/kinntegra-webapp/dist/kinntegrawebapp/browser";
+const REACT_BUILD = "/app/frontend/build";
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
 const NODE_API_HOST = "127.0.0.1";
@@ -71,6 +72,27 @@ function proxyToNode(req, res) {
   req.pipe(upstream);
 }
 
+function serveSpa(res, baseDir, relPath) {
+  let urlPath = decodeURIComponent(relPath);
+  if (urlPath === "" || urlPath === "/") urlPath = "/index.html";
+  const safePath = path.normalize(path.join(baseDir, urlPath));
+  if (!safePath.startsWith(baseDir)) {
+    res.writeHead(403, { "Content-Type": "text/plain" });
+    return res.end("Forbidden");
+  }
+  fs.stat(safePath, (err, stat) => {
+    if (!err && stat.isFile()) return serveFile(res, safePath);
+    const index = path.join(baseDir, "index.html");
+    fs.stat(index, (e2) => {
+      if (e2) {
+        res.writeHead(404, { "Content-Type": "text/plain" });
+        return res.end("Not found (build missing)");
+      }
+      serveFile(res, index);
+    });
+  });
+}
+
 function requestHandler(req, res) {
   try {
     const urlPath0 = req.url.split("?")[0];
@@ -80,25 +102,13 @@ function requestHandler(req, res) {
       return proxyToNode(req, res);
     }
 
-    // 2. Serve Angular build (with SPA fallback).
-    let urlPath = decodeURIComponent(urlPath0);
-    if (urlPath === "/") urlPath = "/index.html";
-    const safePath = path.normalize(path.join(DIST, urlPath));
-    if (!safePath.startsWith(DIST)) {
-      res.writeHead(403, { "Content-Type": "text/plain" });
-      return res.end("Forbidden");
+    // 2. New React rewrite served under /next (Angular stays at root).
+    if (urlPath0 === "/next" || urlPath0.startsWith("/next/")) {
+      return serveSpa(res, REACT_BUILD, urlPath0.slice("/next".length) || "/");
     }
-    fs.stat(safePath, (err, stat) => {
-      if (!err && stat.isFile()) return serveFile(res, safePath);
-      const index = path.join(DIST, "index.html");
-      fs.stat(index, (e2) => {
-        if (e2) {
-          res.writeHead(404, { "Content-Type": "text/plain" });
-          return res.end("Not found (build missing)");
-        }
-        serveFile(res, index);
-      });
-    });
+
+    // 3. Serve Angular build (with SPA fallback).
+    serveSpa(res, DIST, urlPath0);
   } catch (e) {
     res.writeHead(500, { "Content-Type": "text/plain" });
     res.end("Server error");
