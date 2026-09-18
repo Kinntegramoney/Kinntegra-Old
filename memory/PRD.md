@@ -277,3 +277,16 @@ Reverted source: dashboard/client routes back to their components. Live bundle =
 Net live state: Dashboard & Client hidden from sidebar; login lands on Leads; URLs still resolve to
 their (unbuilt) components if typed directly (user did NOT want them redirected).
 Transaction URL param e.g. /transaction/414E2B5048745659672B513D = encrypted AssociateId (crypto engine), not a raw id.
+
+## 2026-09-18 (later) — Transactions menu now uses CLEAN URL /transaction (live)
+Menu href was hardcoded transaction/414E2B5048745659672B513D (a GLOBAL constant, same for all users;
+used as clientTransactionId -> GetClientTransactionById; associate already read from session
+AppGlobalService.CurrentAssociate). Changed to behave like leads/tradelog (clean URL):
+ - app-layout.component.html: <a href="transaction"> (removed encrypted param)
+ - app.routes.ts: added { path: 'transaction', component: TransactionComponent, canActivate:[AuthGuard] }
+   alongside existing transaction/:transactionid
+ - transaction.component.ts line 107: clientTransactionId = paramMap.get('transactionid') || '414E2B5048745659672B513D'
+   (defaults to the SAME constant when no param -> identical backend behavior)
+Rebuilt prod main-SRZMXFS2.js, deployed main+index.html to kinntegrawebapp wwwroot. Live HTTP 200,
+login page renders. NOTE: could not log in to visually verify the transactions page itself; change is
+behavior-preserving (same default value, associate from session). Sub-routes transaction/:transactionid still intact.

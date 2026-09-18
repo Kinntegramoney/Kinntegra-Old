@@ -296,6 +296,7 @@ export const routes: Routes = [
       { path: 'viewschemelog', component: SetSchemeLogComponent, canActivate: [AuthGuard] },
       { path: 'expected-return', component: ExpectedReturnViewComponent, canActivate: [AuthGuard] },
       { path: 'terms-conditions', component: TermsConditionsComponent, canActivate: [AuthGuard] },
+      { path: 'transaction', component: TransactionComponent, canActivate: [AuthGuard] },
       { path: 'transaction/:transactionid', component: TransactionComponent, canActivate: [AuthGuard] },
       { path: 'transaction/buy/wealth/:transactionid/:clienttransactionportfoliotypeid', component: TransactionBuyWealthPortfolioComponent, canActivate: [AuthGuard] },
       { path: 'transaction/buy/tax/:transactionid/:clienttransactionportfoliotypeid', component: TransactionBuyTaxPortfolioComponent, canActivate: [AuthGuard] },

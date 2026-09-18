@@ -104,7 +104,7 @@ export class TransactionComponent {
   ) { }
 
   ngOnInit() {
-    this.clientTransactionId = this.activatedroute.snapshot.paramMap.get('transactionid');
+    this.clientTransactionId = this.activatedroute.snapshot.paramMap.get('transactionid') || '414E2B5048745659672B513D';
 
     this.sellCriterias = [
       { Code: 'A', Name: 'Amount' },
