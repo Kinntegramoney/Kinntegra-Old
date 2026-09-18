@@ -1,0 +1,16 @@
+{
+  "summary": "Regression-only run to verify the backend hardening (REQUEST_TIMEOUT_MS configurable + global unhandledRejection/uncaughtException handlers in kinntegra-api) did not break the running app. All three requested regression checks passed: (1) Backend health: GET /api/appuser/getuserlist -> HTTP 200 with populated Data list; GET /api/v2/health -> {status:ok}. (2) Legacy Angular login (SUPERADMIN/Password@123/PIN 123456 via name=user-id, name=password, name=user-pin) successfully lands on /leads with real Azure SQL data (16 leads visible, e.g. Horateo Antonio Viegas E Fernandes, Suchita Ananta Gaitonde, ...). (3) New React /next/signin login via data-testid selectors lands on /next/dashboard showing live client counts 1,602 Individual / 115 NRI / 24 Corporate / 76 Minor (Total 1,817) plus Client Onboarding and Trade Log Status charts. No BSE order flows were triggered (per instructions). No console errors surfaced during either login flow.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "test_credentials": "SUPERADMIN / Password@123 / PIN 123456 (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "None - live Azure SQL production data.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Timeout hardening (REQUEST_TIMEOUT_MS in kinntegra-api/.env, diagnostic timeout message in commonfunction.model.js SendRequest, process-level unhandledRejection/uncaughtException in index.js) is deployed and does not regress login/dashboard/API. The underlying BSE StarMF external timeout cannot be reproduced deterministically here and BSE order flows must not be triggered (write real data). Legacy Angular uses name= attributes; new React app at /next uses data-testid.",
+  "rca of the issue": "Original prod error 'Request timeout at commonfunction.model.js:383' was an outbound HTTPS call to BSE StarMF exceeding the previously hardcoded 30s socket timeout in CommonFunction.SendRequest. Mitigation applied by main agent: (a) timeout is now driven by REQUEST_TIMEOUT_MS env var (set to 60000ms), (b) timeout error now names host/path for observability, (c) global process handlers added so a stray timeout rejection cannot crash Node. No retry added (correct - order placement is non-idempotent). Regression verified; deeper BSE-path testing intentionally skipped."
+}

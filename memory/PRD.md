@@ -96,3 +96,17 @@ backend (uvicorn) and frontend (yarn start) are READONLY.
 
 ## NOT verified yet
 - Login and any DB-backed flow (blocked on Azure SQL firewall).
+
+## Session 4 (2026-06) — Live "Request timeout" hardening (bug fix)
+- Reported live error: "Error: Request timeout at commonfunction.model.js:383" = outbound
+  BSE StarMF HTTPS call exceeding the hardcoded 30s socket timeout in CommonFunction.SendRequest.
+- Fix (backend, no business-logic change):
+  - SendRequest timeout now driven by REQUEST_TIMEOUT_MS (kinntegra-api/.env = 60000; was 30000);
+    timeout error now names host/path for observability.
+  - Global process.on('unhandledRejection'|'uncaughtException') handlers in index.js so a stray
+    external timeout can never crash the Node process.
+  - NO retry added (order placement is non-idempotent - a retry could double-place a real order).
+- Verified: deterministic local hanging-HTTPS test (clean reject + env override) AND testing agent
+  iteration_4.json regression 100% (login/dashboard/API all green).
+- IMPORTANT: this change lives in the Emergent codebase. To take effect on the user's LIVE Azure
+  App Service, the updated code must be DEPLOYED there and REQUEST_TIMEOUT_MS set in Azure app settings.
