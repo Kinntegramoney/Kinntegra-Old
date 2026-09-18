@@ -1,0 +1,25 @@
+{
+  "summary": "Frontend-only smoke of Kinntegra lift-and-shift (Angular -> FastAPI proxy -> Node -> Azure SQL). All 5 requested scenarios PASSED: preview URL loads /signin with Kinntegra branding, invalid login shows 'Invalid email or password' modal, valid SUPERADMIN/Password@123 reveals PIN step, PIN 123456 navigates to /leads, and /leads renders real DB data (16 total leads, sidebar with Dashboard/Transactions/Trade Logs/Client/Lead Management/Admin, Super Admin user badge with 1634 notifications count). End-to-end Angular -> proxy -> Node -> Azure SQL chain verified in the browser.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "/signin", "issues": ["Label reads 'PAN NO' for the User ID field though the field accepts SUPERADMIN (non-PAN). Cosmetic/UX label mismatch inherited from legacy code, not a blocker."]}
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Legacy Angular app has no data-testid attributes on interactive elements; if future automated regression is expected, adding data-testid on user-id/password/user-pin inputs and SIGN IN buttons would harden tests. Not required for lift-and-shift.",
+    "FastAPI proxy in /app/backend/server.py forwards everything to Node on 127.0.0.1:8080 - confirmed working; no changes made."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped per request)", "frontend": "100% (5/5 scenarios)"},
+  "test_credentials": "SUPERADMIN / Password@123 / PIN 123456 (from /app/memory/test_credentials.md) - VALID against live Azure SQL",
+  "seed_data_creation": "None (live DB with real data used as-is)",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Login flow is stable. Preview URL: https://emergent-handover-3.preview.emergentagent.com. Use input[name='user-id'], input[name='password'], then wait ~4-5s, input[name='user-pin'] appears, click visible button:has-text('SIGN IN'). Landing = /leads with real data. After a failed login an ngb-modal-window overlays the form and MUST be dismissed (click 'OK') before another attempt - this intercepts pointer events on the SIGN IN button, so tests must always start on a fresh page or close the modal.",
+  "rca of the issue": "N/A - no bugs found for the requested flows."
+}

@@ -38,17 +38,24 @@ backend (uvicorn) and frontend (yarn start) are READONLY.
 - **/app/kinntegra-realcomm** — socket.io service on :3001 via supervisor
   program `kinntegra-realcomm`. (Browser socket wiring deferred.)
 
-## Status (2026-06 / session 1)
-- DONE: Full lift-and-shift wired end-to-end. Angular login page ("Login to Kinntegra")
-  renders on the preview URL. Node API + FastAPI proxy verified
-  (`/` -> "Welcome to Kinntegra!", `/api/appuser/authenticateuser` reachable).
-- BLOCKER: **Azure SQL firewall** blocks this environment's outbound IP. API auto-retries
-  the DB connection every 15s and will connect the moment the IP is whitelisted.
-  - Preview egress IP observed: `34.16.56.64`, then `34.170.12.145` (changes across pod
-    restarts; Google Cloud 34.x range).
-  - Azure admin account (`admin@kinntegraazur.onmicrosoft.com` / `Laksh@0208`) is valid
-    but now enforces **MFA via Microsoft Authenticator app** (no SMS fallback offered),
-    which the user does not have -> cannot add the firewall rule programmatically.
+## Status (2026-06 / session 1) — COMPLETE & VERIFIED
+- DONE: Full lift-and-shift wired end-to-end and VERIFIED by testing agent (5/5, 100%).
+  - Angular login (`/signin`) renders on the preview URL.
+  - End-to-end login verified: SUPERADMIN / Password@123 / PIN 123456 -> lands on `/leads`
+    with REAL production data (leads list, sidebar, Super Admin badge, notifications).
+  - Invalid credentials correctly rejected.
+  - Chain verified: browser -> ingress -> FastAPI proxy (:8001) -> Node API (:8080) -> Azure SQL.
+- DB CONNECTED: Azure SQL `kinntegra`, 208 tables, 2098 users. Firewall rule for the
+  preview egress IP `34.170.12.145` was added (via the shashikantv@kinntegra.co.in Azure
+  portal account, which has portal access without authenticator MFA).
+  - NOTE: `admin@kinntegraazur.onmicrosoft.com` is locked behind Microsoft Authenticator MFA.
+  - CAVEAT: the preview egress IP can change on environment restart (observed 34.16.56.64 ->
+    34.170.12.145). If the DB starts rejecting again, re-add the new IP to the Azure SQL
+    firewall. At deployment the production egress IP will also need whitelisting.
+
+## Deferred (not yet wired)
+- Realcomm socket.io realtime in the browser (service runs on :3001; proxy path wiring pending).
+- Node-served static asset routes (/images, /doc/report, /download/doc) via the proxy.
 
 ## Next action items
 - Unblock Azure SQL firewall for the current egress IP (needs Azure access that passes MFA,
