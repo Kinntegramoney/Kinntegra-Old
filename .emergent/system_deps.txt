@@ -1,5 +1,5 @@
 apt-transport-https=2.6.1
-azure-cli=2.90.0-1~bookworm
+azure-cli=2.45.0-1
 gnupg=2.2.40-1.1+deb12u2
 libcairo2-dev=1.16.0-7
 libgif-dev=5.2.1-2.5+deb12u1

@@ -302,3 +302,17 @@ Fixed ALL transaction navigation to clean /transaction:
 Live bundle main-BTKCXEUW.js: 0 occurrences of transaction/414E2B (verified). Deployed, HTTP 200.
 No forced cache headers + no CDN detected -> if user still sees old param URL it's BROWSER cache of
 index.html; hard refresh / incognito loads new hashed bundle. Backup: /app/deploy/kinntegrawebapp-live-backup/.
+
+## 2026-09-21 — One-time CAMS WBR9 + WBR2 feed run on LIVE (done, reverted)
+User requested one-time processing of two ad-hoc CAMS feeds (daily scheduler uses fixed refs
+185561564R9 / 180356975R2; these were one-off report Request Ids).
+Mechanism: appscheduler endpoints -> feed.controller readCamsWbrXEmail searches INBOX (imap.gmail.com,
+feeds@kinntegra.co.in) for UNSEEN email w/ hardcoded exact subject, extracts DownloadURL, unzips w/ Punit@0516, imports.
+Steps done on live kinntegraapi (via Kudu VFS + az restart):
+ 1. Backed up feed.controller.js -> /app/deploy/azure-fix/feed-backup/feed.controller.js.orig
+ 2. Temporarily set subjects: WBR9 Request Id:225014898R9 (line 560), WBR2 Request Id:225015011R2 (line 5193). Restart.
+ 3. POST /api/appscheduler/camswbr9 -> Status true, 207s, email 225014898R9 marked \Seen (imported).
+ 4. POST /api/appscheduler/camswbr2 -> Status true, 114s, email 225015011R2 marked \Seen (imported).
+ 5. Verified via uploaded checkmail.js (imapflow) both emails total=1 unseen=0.
+ 6. REVERTED feed.controller.js to daily refs, deleted checkmail.js, restarted, health 200, verified only daily refs present.
+Note: first WBR9 trigger returned in 7.5s (no-op, likely pre-warm/transient); 2nd run did full 11-step import.
