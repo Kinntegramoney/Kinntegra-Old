@@ -175,6 +175,16 @@
                                                                                 indianCurrencyNumber}}</span>
                                                                         </ng-template>
                                                                     </ngx-datatable-column>
+                                                                    <ngx-datatable-column name="Sell By" [width]="10"
+                                                                        [sortable]="false">
+                                                                        <ng-template ngx-datatable-cell-template
+                                                                            let-rowIndex="rowIndex" let-value="value"
+                                                                            let-row="row">
+                                                                            <span class="badge" data-testid="sell-by-label" style="color:#fff;"
+                                                                                [style.background-color]="getSellByLabel(portfolioItem, row) == 'Units' ? '#0d9488' : '#64748b'">
+                                                                                {{getSellByLabel(portfolioItem, row)}}</span>
+                                                                        </ng-template>
+                                                                    </ngx-datatable-column>
                                                                     <ngx-datatable-footer>
                                                                         <ng-template ngx-datatable-footer-template
                                                                             let-rowCount="rowCount"
@@ -197,6 +207,10 @@
                                                                         </ng-template>
                                                                     </ngx-datatable-footer>
                                                                 </ngx-datatable>
+                                                                <div class="mt-2" data-testid="sell-by-remark" style="font-size:12px;color:#64748b;">
+                                                                    <span style="display:inline-block;padding:1px 6px;border-radius:4px;background:#0d9488;color:#fff;margin-right:6px;">By Units</span>
+                                                                    Schemes marked <b>By Units</b> are placed by units (entire holding or tax fund) so a change in NAV before execution will not cause an "insufficient balance" rejection.
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>

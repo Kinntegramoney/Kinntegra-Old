@@ -5340,7 +5340,7 @@ exports.SaveClientSellTransactionApproval = async (req, res) => {
                         Amount: Math.round(orderItem.FundAmount),
                         Units: Number(orderItem.FundUnits.toFixed(3)),
                         SellAll: orderItem.SellAll,
-                        CalculationType: ((transactionData.ClientTransactionPortfolios[i].TransactionPortfolioTypeCode == 'T' && orderItem.SellAll != true) || (Number(orderItem.AvailableUnits.toFixed(3)) == Number(orderItem.FundUnits.toFixed(3)))) ? 'U' : orderItem.CalculationType,
+                        CalculationType: (transactionData.ClientTransactionPortfolios[i].TransactionPortfolioTypeCode == 'T' && orderItem.SellAll != true) ? 'U' : orderItem.CalculationType,
                         MobileNumber: transactionData.ClientAccount.AccountHolders[0].ProfileDetails.MobileNumber,
                         Email: transactionData.ClientAccount.AccountHolders[0].ProfileDetails.Email,
                     };
@@ -5473,7 +5473,7 @@ exports.SaveClientSellTransactionApproval = async (req, res) => {
                         Amount: Math.round(orderItem.FundAmount),
                         Units: Number(orderItem.FundUnits.toFixed(3)),
                         SellAll: orderItem.SellAll,
-                        CalculationType: ((transactionData.ClientTransactionPortfolios[i].TransactionPortfolioTypeCode == 'T' && orderItem.SellAll != true) || (Number(orderItem.AvailableUnits.toFixed(3)) == Number(orderItem.FundUnits.toFixed(3)))) ? 'U' : orderItem.CalculationType,
+                        CalculationType: (transactionData.ClientTransactionPortfolios[i].TransactionPortfolioTypeCode == 'T' && orderItem.SellAll != true) ? 'U' : orderItem.CalculationType,
                         MobileNumber: transactionData.ClientAccount.AccountHolders[0].ProfileDetails.MobileNumber,
                         Email: transactionData.ClientAccount.AccountHolders[0].ProfileDetails.Email,
                     };
@@ -18637,7 +18637,7 @@ async function addFlexiSWPSell(req, res, account, allocations, transactionTypeId
                             Amount: Math.round(orderItem.FundAmount),
                             Units: Number(orderItem.FundUnits.toFixed(3)),
                             SellAll: orderItem.SellAll,
-                            CalculationType: ((clientTransactionData.ClientTransactionPortfolios[i].TransactionPortfolioTypeCode == 'T' && orderItem.SellAll != true) || (Number(orderItem.AvailableUnits.toFixed(3)) == Number(orderItem.FundUnits.toFixed(3)))) ? 'U' : orderItem.CalculationType,
+                            CalculationType: (clientTransactionData.ClientTransactionPortfolios[i].TransactionPortfolioTypeCode == 'T' && orderItem.SellAll != true) ? 'U' : orderItem.CalculationType,
                             MobileNumber: clientTransactionData.ClientAccount.AccountHolders[0].ProfileDetails.MobileNumber,
                             Email: clientTransactionData.ClientAccount.AccountHolders[0].ProfileDetails.Email,
                         };
@@ -18760,7 +18760,7 @@ async function addFlexiSWPSell(req, res, account, allocations, transactionTypeId
                             Amount: Math.round(orderItem.FundAmount),
                             Units: Number(orderItem.FundUnits.toFixed(3)),
                             SellAll: orderItem.SellAll,
-                            CalculationType: ((clientTransactionData.ClientTransactionPortfolios[i].TransactionPortfolioTypeCode == 'T' && orderItem.SellAll != true) || (Number(orderItem.AvailableUnits.toFixed(3)) == Number(orderItem.FundUnits.toFixed(3)))) ? 'U' : orderItem.CalculationType,
+                            CalculationType: (clientTransactionData.ClientTransactionPortfolios[i].TransactionPortfolioTypeCode == 'T' && orderItem.SellAll != true) ? 'U' : orderItem.CalculationType,
                             MobileNumber: clientTransactionData.ClientAccount.AccountHolders[0].ProfileDetails.MobileNumber,
                             Email: clientTransactionData.ClientAccount.AccountHolders[0].ProfileDetails.Email,
                         };

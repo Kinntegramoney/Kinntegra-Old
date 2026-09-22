@@ -317,6 +317,13 @@ export class ConfirmOrderSellComponent implements OnInit, OnChanges {
     }
   }
 
+  getSellByLabel(portfolioItem: any, row: any): string {
+    if (portfolioItem.TransactionPortfolioTypeCode == 'T' || row.CalculationType == 'U' || row.AvailableUnits == row.SellUnits) {
+      return 'Units';
+    }
+    return 'Amount';
+  }
+
   getUserData() {
     var inputData = {
       ClientId: this.clientId,

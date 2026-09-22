@@ -392,3 +392,23 @@ pending-approval transaction + superadmin login on live real data) — user veri
 DB connection note: kinntegra-api/app/configs/db.config.js has live Azure SQL creds (used for the
 ALTER PROC). mssql available in kinntegra-api/node_modules.
 
+
+## 2026-06 — Full-holding sell -> by UNITS + advisor remark (LIVE, done)
+User rule: Recommended sells stay BY AMOUNT for partials, BUT when AvailableUnits == SoldUnits
+(entire holding of a scheme) sell BY UNITS (NAV/price can vary between entry and execution; a
+fixed-amount full sell can be rejected as insufficient balance). Applies to ALL funds. Show a
+remark on frontend.
+Backend (transaction.controller.js, 4 sell blocks 5343/5476/18640/18763): extended the CalculationType
+ternary to also force 'U' when Number(orderItem.AvailableUnits.toFixed(3)) == Number(orderItem.FundUnits.toFixed(3)).
+Note: PushSellTransaction gives SellAll precedence, so Custom "All" rows (SellAll=true) still use
+AllRedeem=Y (equally NAV-safe); Recommended full-holding rows (SellAll=false) now go Qty=units.
+Recommended non-full partials (Available != Sold, non-tax) remain by amount as before.
+Frontend remark: confirm-order-sell (advisor pre-submit review) now has a "Sell By" column
+(getSellByLabel: Units if portfolio 'T' OR CalculationType=='U' OR AvailableUnits==SellUnits; else
+Amount) + a note "Schemes marked By Units ... won't cause insufficient-balance rejection"
+(data-testid sell-by-label / sell-by-remark). Superadmin approval screen already had the column
+(same label logic). Uses GetClientTransactionAllocationSell which now returns CalculationType.
+Deploy: website main-XWKTPFLB.js; controller via Kudu (diff = only the 4 rule lines). API 200.
+Backup: transaction.controller.js.pre-fullholding.
+Live Azure SQL creds for ad-hoc SP work: kinntegra-api/app/configs/db.config.js.
+
