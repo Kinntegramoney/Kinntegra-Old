@@ -351,3 +351,21 @@ Deploy: FE zip->kinntegrawebapp (main-TREMFVZE.js live). BE 2 files via Kudu VFS
 kinntegraapi + az restart; diffed live-vs-local first (only intended edits differed). Live verified.
 Backups: /app/deploy/azure-fix/live-backup/{bseservice.model.js,transaction.controller.js}.pre-sellunits.
 NOT tested with a real BSE order (financial risk) — user validates with one tiny Partial+Custom sell.
+
+## 2026-06 — Tax fund partial sell -> by UNITS (LIVE, backend-only, done; user validates)
+Requirement (TAX funds only): when selling a tax/ELSS fund where sellable (exit-free, >3yr) units
+!= total available units (e.g. 15 of 20), order must go by UNITS not by amount. System already
+computes the exit-free sellable units correctly; problem was amount-based redemption could be
+rejected as "Insufficient balance" if NAV drops (market value < requested amount). Units are NAV-safe.
+Tax portfolio code = 'T' (Wealth='W', ShortTerm='ST'; from exportdata getHoldingSchemes('T',...)).
+Portfolio object carries TransactionPortfolioTypeCode (getClientTransactionInfo line ~14785).
+Fix (backend-only, builds on the CalculationType='U'->by-units mechanism from the Partial+Custom
+change): in all 4 sell orderData blocks (5343/5476 transactionData; 18639/18762 clientTransactionData)
+the CalculationType line now = (ClientTransactionPortfolios[i].TransactionPortfolioTypeCode=='T'
+&& orderItem.SellAll != true) ? 'U' : orderItem.CalculationType. So Tax partial -> 'U' -> Qty=units,
+OrderVal=0; Tax full-redeem -> SellAll -> AllRedeem=Y; Wealth/other & non-tax flows unchanged.
+No frontend/DB change. Deployed transaction.controller.js via Kudu VFS PUT + az restart (diffed
+live-vs-local: only the 4 lines changed). Live verified (4 rule lines), API 200.
+Backup: /app/deploy/azure-fix/live-backup/transaction.controller.js.pre-taxunits.
+NOT tested with a real BSE order — user validates with one small tax-fund partial sell.
+
