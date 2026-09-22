@@ -412,3 +412,18 @@ Deploy: website main-XWKTPFLB.js; controller via Kudu (diff = only the 4 rule li
 Backup: transaction.controller.js.pre-fullholding.
 Live Azure SQL creds for ad-hoc SP work: kinntegra-api/app/configs/db.config.js.
 
+
+## 2026-06 — Trade Details: "Trade Type" (Custom/Recommended) under Portfolio Details (LIVE, FE-only)
+Trade Log -> row 3-dots -> "View Details" opens TradeDetailsModalComponent (fullscreen modal;
+trade-log.component.ts onViewTrade line ~316 opens modal, NOT the /trade-details route).
+Added a "Trade Type" field in each Portfolio Details block showing portfolioItem.SellFrom=='C'
+? 'Custom' : 'Recommended'. Gated by *ngIf="portfolioItem.SellFrom" so it only renders for sells
+(SellFrom is '' for buys). data-testid trade-type-block / trade-type-value.
+Implementation: appended a col-xl-4 Trade Type column after the shared "Transaction Type" column.
+That Transaction Type block appears 12x; 10 identical + 2 SIP/SWP variants. Inserted into the 10,
+then REMOVED from the 4 Switch (SW/IS) sections which have NO portfolioItem loop (Amount commented
+out) -> caused NG9 'portfolioItem does not exist' build error. Net: 6 blocks (sell+buy sections;
+buys hide via *ngIf). SellFrom comes from GetClientTransactionDetails (no backend change).
+Deploy: website main-KP2FOPHA.js live; verified bundle contains "Trade Type"/trade-type-value.
+File: src/app/templates/trade-details-modal/trade-details-modal.component.html (CRLF).
+
