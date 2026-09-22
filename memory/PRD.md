@@ -369,3 +369,26 @@ live-vs-local: only the 4 lines changed). Live verified (4 rule lines), API 200.
 Backup: /app/deploy/azure-fix/live-backup/transaction.controller.js.pre-taxunits.
 NOT tested with a real BSE order — user validates with one small tax-fund partial sell.
 
+
+## 2026-06 — Superadmin sell approval: per-scheme "Sell By" Units/Amount column (LIVE, done)
+Requirement: on superadmin custom-sell approval screen (/transaction/admin-sell-verify/:id) show
+per scheme whether it will be sold by units or by amount (previously indistinguishable).
+Rule (mirrors backend BSE order outcome): label = 'Units' if portfolio Tax('T') OR CalculationType=='U'
+OR AvailableUnits==SellUnits (full redeem); else 'Amount'.
+Problem: admin screen uses GetClientTransactionAllocationSell endpoint whose SP + controller mapping
+did NOT return CalculationType. Fixes:
+ 1. DB (LIVE): ALTER PROC dbo.GetClientTransactionAllocationSell — added a.CalculationType to the
+    SELECT (additive; existing consumers map by field name so unaffected). Applied via mssql from
+    kinntegra-api db.config (server kinntegra.database.windows.net). Backup of original CREATE text:
+    /app/deploy/azure-fix/live-backup/GetClientTransactionAllocationSell.sql.pre-calctype.
+ 2. BE transaction.controller.js ~9181: added `CalculationType: sellDataItem.CalculationType` to the
+    allocationAll.push mapping. Deployed via Kudu VFS (diffed live-vs-local = only this line).
+    Backup: transaction.controller.js.pre-sellbylabel.
+ 3. FE transaction-admin-verify-sell: added getSellByLabel(portfolioItem,row) method + a "Sell By"
+    ngx-datatable-column (LAST column, so footer total stays at colIdx==5). Badge teal=Units / slate=
+    Amount, data-testid="sell-by-label". CRLF file -> edited via python.
+Deploy: website main-SDYQUZU2.js live; API 200. Not screenshot-verified (needs real prod
+pending-approval transaction + superadmin login on live real data) — user verifies visually.
+DB connection note: kinntegra-api/app/configs/db.config.js has live Azure SQL creds (used for the
+ALTER PROC). mssql available in kinntegra-api/node_modules.
+

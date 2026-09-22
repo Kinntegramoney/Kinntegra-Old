@@ -9178,8 +9178,7 @@ exports.GetClientTransactionAllocationSell = async (req, res) => {
                 BankAccountType: sellDataItem.BankAccountType,
                 BankAccountNumber: sellDataItem.BankAccountNumber,
                 CurrentNAV: sellDataItem.CurrentNAV,
-                CurrentNAVDate: sellDataItem.CurrentNAVDate,
-                CalculationType: sellDataItem.CalculationType
+                CurrentNAVDate: sellDataItem.CurrentNAVDate
             });
         }
 

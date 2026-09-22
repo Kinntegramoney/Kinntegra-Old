@@ -274,6 +274,21 @@
                                                                                                         indianCurrencyNumber}}</span>
                                                                                                 </ng-template>
                                                                                             </ngx-datatable-column>
+                                                                                            <ngx-datatable-column
+                                                                                                name="Sell By"
+                                                                                                [width]="10"
+                                                                                                [sortable]="false">
+                                                                                                <ng-template
+                                                                                                    ngx-datatable-cell-template
+                                                                                                    let-rowIndex="rowIndex"
+                                                                                                    let-value="value"
+                                                                                                    let-row="row">
+                                                                                                    <span class="badge" data-testid="sell-by-label"
+                                                                                                        style="color:#fff;"
+                                                                                                        [style.background-color]="getSellByLabel(portfolioItem, row) == 'Units' ? '#0d9488' : '#64748b'">
+                                                                                                        {{getSellByLabel(portfolioItem, row)}}</span>
+                                                                                                </ng-template>
+                                                                                            </ngx-datatable-column>
                                                                                             <ngx-datatable-footer>
                                                                                                 <ng-template
                                                                                                     ngx-datatable-footer-template

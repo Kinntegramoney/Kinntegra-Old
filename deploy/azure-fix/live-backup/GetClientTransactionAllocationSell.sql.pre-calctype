@@ -1,0 +1,17 @@
+CREATE procedure [dbo].[GetClientTransactionAllocationSell]
+	@ClientTransactionId bigint
+as
+	select a.ClientTransactionPortfolioId,BSESchemeId,a.ISIN,SchemeName,a.FolioNumber,ProductCode,
+		UCC,FirstHolderPan,SecondHolderPan,ThirdHolderPan,GuardianPan,FirstHolderName,SecondHolderName,ThirdHolderName,GuardianName,
+		Nominee1Name,Nominee2Name,Nominee3Name,AvailableUnits,AvailableAmount,FundUnits,FundAmount,
+		BankIFSC,BankName,BankAccountType,BankAccountNumber,a.CurrentNAV,a.CurrentNAVDate
+	from ClientTransactionAllocation a inner join BSEScheme b on a.BSESchemeId = b.Id
+		inner join (
+		select distinct ClientTransactionPortfolioId,UCC,FirstHolderName,SecondHolderName,ThirdHolderName,GuardianName,
+			FirstHolderPan,SecondHolderPan,ThirdHolderPan,GuardianPan,Nominee1Name,Nominee2Name,Nominee3Name,
+			BankIFSC,BankName,BankAccountType,BankAccountNumber,FolioNumber,ProductCode
+		from ClientTransactionSellAllocation
+		where ClientTransactionPortfolioId in (select Id from ClientTransactionPortfolio where ClientTransactionId = @ClientTransactionId)
+	) as ft on a.FolioNumber = ft.FolioNumber and b.ChannelPartnerCode = ft.ProductCode and a.ClientTransactionPortfolioId = ft.ClientTransactionPortfolioId
+	where a.ClientTransactionPortfolioId in (select Id from ClientTransactionPortfolio where ClientTransactionId = @ClientTransactionId)
+	order by UCC,SchemeName

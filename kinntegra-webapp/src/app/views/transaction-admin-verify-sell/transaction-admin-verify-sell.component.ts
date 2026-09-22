@@ -271,6 +271,13 @@ export class TransactionAdminVerifySellComponent implements OnInit, OnChanges {
     }
   }
 
+  getSellByLabel(portfolioItem: any, row: any): string {
+    if (portfolioItem.TransactionPortfolioTypeCode == 'T' || row.CalculationType == 'U' || row.AvailableUnits == row.SellUnits) {
+      return 'Units';
+    }
+    return 'Amount';
+  }
+
   onAddMessage(portfolioItem: any) {
     if (portfolioItem.CurrentMessage.trim() != "") {
       var inputData = {
