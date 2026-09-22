@@ -865,7 +865,7 @@
                                                         </span>
                                                     </div>
                                                 </div> -->
-                                                <div class="col-xl-4 col-sm-4">
+                                                <div class="col-xl-4 col-sm-4" *ngIf="false" data-testid="mode-of-payment-block">
                                                     <div class="form-group mb-3 mb-sm-0">
                                                         <label>Mode Of Payment</label>
                                                         <span>
@@ -944,6 +944,11 @@
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
                                                             let-value="value" let-row="row">
                                                             {{row.FundAmount | indianCurrencyNumber}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="Sell By" [width]="10" [sortable]="false" prop="CalculationType">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                            <span class="badge badge-pill" style="color:#fff" [style.background-color]="getSellByLabel(portfolioItem, row) == 'Units' ? '#0d9488' : '#64748b'" data-testid="sell-by-badge">{{getSellByLabel(portfolioItem, row)}}</span>
                                                         </ng-template>
                                                     </ngx-datatable-column>
                                                     <ngx-datatable-column name="Trade Status" [width]="10"
@@ -1126,7 +1131,7 @@
                                                         </span>
                                                     </div>
                                                 </div> -->
-                                                <div class="col-xl-4 col-sm-4">
+                                                <div class="col-xl-4 col-sm-4" *ngIf="false" data-testid="mode-of-payment-block">
                                                     <div class="form-group mb-3 mb-sm-0">
                                                         <label>Mode Of Payment</label>
                                                         <span>
@@ -1205,6 +1210,11 @@
                                                         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
                                                             let-value="value" let-row="row">
                                                             {{row.FundAmount | indianCurrencyNumber}}
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="Sell By" [width]="10" [sortable]="false" prop="CalculationType">
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                                            <span class="badge badge-pill" style="color:#fff" [style.background-color]="getSellByLabel(portfolioItem, row) == 'Units' ? '#0d9488' : '#64748b'" data-testid="sell-by-badge">{{getSellByLabel(portfolioItem, row)}}</span>
                                                         </ng-template>
                                                     </ngx-datatable-column>
                                                     <ngx-datatable-column name="Trade Status" [width]="10"

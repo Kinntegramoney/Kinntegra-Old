@@ -498,6 +498,13 @@ export class TradeDetailsModalComponent implements OnInit, OnChanges {
     return (t == 'C') ? 'Custom' : 'Recommended';
   }
 
+  getSellByLabel(portfolioItem: any, row: any): string {
+    if (portfolioItem.TransactionPortfolioTypeCode == 'T' || row.SellAll == true || row.CalculationType == 'U' || row.AvailableUnits == row.FundUnits) {
+      return 'Units';
+    }
+    return 'Amount';
+  }
+
   onModifyTrade(clientTransactionPortfolioTypeId: any) {
     if (this.clientTransactionDetails.TransactionPlanCode == 'SW') {
       if (this.clientTransactionDetails.TransactionPlanCode == 'IS') {

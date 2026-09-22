@@ -464,3 +464,24 @@ Changed all 6 Trade Type blocks in trade-details-modal.component.html: gate *ngI
 and value {{getTradeType(portfolioItem)}} (was portfolioItem.SellFrom-only). Sections covered:
 Buy(B), 4x Sell(S), SIP(C/SIP). Deploy: website main-RBEZ7BXG.js live; bundle verified.
 
+
+## 2026-06 — Sell Trade Details: hide Mode Of Payment + per-scheme "Sell By" (frontend, DEPLOYED to live)
+File: kinntegra-webapp/src/app/templates/trade-details-modal/trade-details-modal.component.{ts,html}
+(this component renders the Trade Log -> 3dots -> View Details page).
+- Added getSellByLabel(portfolioItem,row): returns 'Units' if TransactionPortfolioTypeCode=='T'
+  || row.SellAll==true || row.CalculationType=='U' || row.AvailableUnits==row.FundUnits, else 'Amount'.
+  (mirrors existing confirm-order-sell / transaction-admin-verify-sell logic; uses FundUnits since the
+  trade-details allocation model exposes FundUnits not SellUnits.)
+- HTML edits in the two standard sell sections S/NA (line ~868) and S/FSWP (line ~1129):
+  * Mode Of Payment col hidden via *ngIf="false" (data-testid="mode-of-payment-block").
+  * New "Sell By" ngx-datatable-column (data-testid="sell-by-badge") between Amount and Trade Status,
+    teal badge (#0d9488) for Units, slate (#64748b) for Amount.
+- Backend: NO change needed — GetClientTransactionDetails/getClientTransactionInfo already returns
+  CalculationType, SellAll, AvailableUnits, FundUnits per allocation (transaction.controller.js ~14643).
+- Note: file is CRLF; edits done via line-number Python (search_replace fails on CRLF multiline).
+- Build OK (yarn build, exit 0). Deploy: Kudu VFS PUT new main-BYSHDH6B.js (201) + index.html (204) to
+  kinntegrawebapp wwwroot (polyfills-BJX5WH5B.js & styles-R4GI7GGR.css unchanged, already live).
+  Live https://kinntegra.co.in now serves main-BYSHDH6B.js (200); bundle contains getSellByLabel/"Sell By".
+- ROLLBACK (instant): restore /app/deploy/kinntegrawebapp-live-backup/index.html.pre-sellby to wwwroot
+  (old main-RBEZ7BXG.js still present in wwwroot, 200).
+- PENDING user visual check: open a real sell trade's View Details (auth required; agent cannot log in).
