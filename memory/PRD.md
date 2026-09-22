@@ -316,3 +316,38 @@ Steps done on live kinntegraapi (via Kudu VFS + az restart):
  5. Verified via uploaded checkmail.js (imapflow) both emails total=1 unseen=0.
  6. REVERTED feed.controller.js to daily refs, deleted checkmail.js, restarted, health 200, verified only daily refs present.
 Note: first WBR9 trigger returned in 7.5s (no-op, likely pre-warm/transient); 2nd run did full 11-step import.
+
+
+## 2026-06 — $localize datepicker fix (LIVE, done)
+Bug: DOB datepicker month/year nav broken; console `ReferenceError: $localize is not defined`.
+Root cause: prod build polyfills only had `zone.js`; `@angular/localize/init` missing (a prior
+rebuild dropped it — July backup bundle DID have it). ng-bootstrap datepicker nav uses $localize.
+Fix: `npm i @angular/localize@17.2.1 --legacy-peer-deps`; added `@angular/localize/init` to
+angular.json build.polyfills (CRLF file, edited via python). Did NOT add to tsconfig types
+(typeRoots restricted -> TS2688; runtime polyfill alone is enough). Rebuilt, zip-deployed browser
+dist to kinntegrawebapp (az webapp deploy --type zip --clean). Verified live polyfills define
+globalThis.$localize on kinntegra.co.in + azurewebsites.
+
+## 2026-06 — Sell Partial+Custom: per-scheme units-vs-amount (LIVE, done; user to validate w/ real order)
+Requirement (ONLY for Custom allocation + Partial sell type): per scheme, typing in Units box ->
+redeem by UNITS; typing in Amount box -> redeem by AMOUNT; ticking scheme/select-all -> redeem
+that scheme by units (AllRedeem). Previously: only SellAll->units, everything else->amount.
+Codes: SellFrom 'C'=Custom / 'R'=Recommended; CustomSellType 'A'=All 'P'=Partial 'E'=ExitFree
+'T'=TaxFree 'L'=ExitFreeLongTerm.
+Design (NO DB schema change): carry per-row intent in the otherwise-empty `CalculationType`
+allocation field ('U'/'A'); only set for Custom+Partial non-selectAll rows; FundAmount+FundUnits
+still stored for display/totals. CalculationType is safe: only buy-side `== 'P'` checks exist; no
+sell/redemption consumer reads it ('TF' for tax-free sells is informational only).
+Files:
+ - FE transaction-allocation-sell.component.ts: set row.SellBy in onAllocationSellUnitsChanged('U')/
+   SellAmountChanged('A')/SelectChanged/SelectAllChanged; onProceed 'L' block sets
+   CalculationType = (SellFrom=='C' && CustomSellType=='P' && !IsSelected) ? (SellBy=='U'?'U':'A') : ''.
+ - BE transaction.controller.js: added `CalculationType: orderItem.CalculationType,` to the 4 sell
+   orderData blocks (5343/5476/18639/18762). getClientTransactionInfo already returns CalculationType.
+ - BE bseservice.model.js PushSellTransaction (~2815): OrderVal = SellAll?0:(CalcType=='U'?0:Amount);
+   Qty = SellAll?0:(CalcType=='U'?Units:0); AllRedeem = SellAll?Y:N. Backward-compatible (all other
+   flows have CalcType ''/'TF' -> by amount as before).
+Deploy: FE zip->kinntegrawebapp (main-TREMFVZE.js live). BE 2 files via Kudu VFS PUT (If-Match:*) to
+kinntegraapi + az restart; diffed live-vs-local first (only intended edits differed). Live verified.
+Backups: /app/deploy/azure-fix/live-backup/{bseservice.model.js,transaction.controller.js}.pre-sellunits.
+NOT tested with a real BSE order (financial risk) — user validates with one tiny Partial+Custom sell.

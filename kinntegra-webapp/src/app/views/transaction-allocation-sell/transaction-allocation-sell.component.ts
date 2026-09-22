@@ -517,10 +517,12 @@ export class TransactionAllocationSellComponent implements OnInit, OnChanges {
       if (accountItem.IsSelectedAll == true) {
         allocation.SellUnits = allocation.AvailableUnits;
         allocation.SellAmount = allocation.CurrentAmount;
+        allocation.SellBy = 'U';
       }
       else {
         allocation.SellUnits = 0;
         allocation.SellAmount = 0;
+        allocation.SellBy = '';
       }
     }
 
@@ -531,10 +533,12 @@ export class TransactionAllocationSellComponent implements OnInit, OnChanges {
     if (row.IsSelected == true) {
       row.SellUnits = row.AvailableUnits;
       row.SellAmount = row.CurrentAmount;
+      row.SellBy = 'U';
     }
     else {
       row.SellUnits = 0;
       row.SellAmount = 0;
+      row.SellBy = '';
     }
 
     this.calculateAllocationTotal(accountItem, portfolioItem);
@@ -567,11 +571,13 @@ export class TransactionAllocationSellComponent implements OnInit, OnChanges {
   }
 
   onAllocationSellUnitsChanged(row: any, accountItem: any, portfolioItem: any) {
+    row.SellBy = 'U';
     row.SellAmount = Math.round((row.CurrentAmount * row.SellUnits) / row.AvailableUnits);
     this.calculateAllocationTotal(accountItem, portfolioItem);
   }
 
   onAllocationSellAmountChanged(row: any, accountItem: any, portfolioItem: any) {
+    row.SellBy = 'A';
     row.SellUnits = Number(((row.SellAmount * row.AvailableUnits) / row.CurrentAmount).toFixed(4));
     this.calculateAllocationTotal(accountItem, portfolioItem);
   }
@@ -756,6 +762,10 @@ export class TransactionAllocationSellComponent implements OnInit, OnChanges {
             var item = clientAccountItem.Allocation[j];
 
             if (item.SellAmount > 0 || item.SellUnits > 0) {
+              var allocationCalcType = '';
+              if (activePortfolio.SellFrom == 'C' && activePortfolio.CustomSellType == 'P' && item.IsSelected != true) {
+                allocationCalcType = (item.SellBy == 'U') ? 'U' : 'A';
+              }
               let allocationItem = {
                 BSESchemeId: item.BSESchemeId,
                 ISIN: item.ISIN,
@@ -778,7 +788,7 @@ export class TransactionAllocationSellComponent implements OnInit, OnChanges {
                 SIPFrequency: '',
                 SIPDay: 0,
                 IsMinimumInvestmentValid: false,
-                CalculationType: '',
+                CalculationType: allocationCalcType,
                 Month: 0,
                 AdjustDays: 0,
                 MarketAmount: 0,

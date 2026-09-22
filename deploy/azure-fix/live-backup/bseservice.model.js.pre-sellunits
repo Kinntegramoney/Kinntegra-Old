@@ -2812,8 +2812,8 @@ BSEService.PushSellTransaction = async (data) => {
                     <bses:BuySell>R</bses:BuySell>
                     <bses:BuySellType>${(data.FolioNumber == '' || data.FolioNumber == 'New Folio') ? 'FRESH' : 'ADDITIONAL'}</bses:BuySellType>
                     <bses:DPTxn>${(schemeDetails.RedemptionTransactionMode == 'DP') ? 'P' : schemeDetails.RedemptionTransactionMode}</bses:DPTxn>
-                    <bses:OrderVal>${(data.SellAll == true) ? 0 : ((data.CalculationType == 'U') ? 0 : data.Amount)}</bses:OrderVal>
-                    <bses:Qty>${(data.SellAll == true) ? 0 : ((data.CalculationType == 'U') ? data.Units : 0)}</bses:Qty>
+                    <bses:OrderVal>${(data.SellAll == false) ? data.Amount : 0}</bses:OrderVal>
+                    <bses:Qty>0</bses:Qty>
                     <bses:AllRedeem>${(data.SellAll == true) ? 'Y' : 'N'}</bses:AllRedeem>
                     <bses:FolioNo>${(data.FolioNumber == '' || data.FolioNumber == 'New Folio') ? '' : data.FolioNumber}</bses:FolioNo>
                     <bses:Remarks/>
