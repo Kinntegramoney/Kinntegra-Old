@@ -948,10 +948,6 @@ exports.ProcessAmfiIndiaNav = async (req, res) => {
     try {
         var result = await feedController.ProcessAmfiIndiaNav(req, res);
 
-        // Sync NAV for discontinued ISINs from their live twin (see NavIsinAlias table)
-        try { await req.app.locals.db.request().execute("SyncNavIsinAlias"); }
-        catch (syncErr) { console.log('SyncNavIsinAlias error:', syncErr.message); }
-
         var logData = {
             ProcessDate: luxon.DateTime.now().setZone('Asia/Kolkata').toFormat('yyyy-MM-dd'),
             ProcessName: 'ProcessAmfiIndiaNav',

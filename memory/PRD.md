@@ -427,3 +427,29 @@ buys hide via *ngIf). SellFrom comes from GetClientTransactionDetails (no backen
 Deploy: website main-KP2FOPHA.js live; verified bundle contains "Trade Type"/trade-type-value.
 File: src/app/templates/trade-details-modal/trade-details-modal.component.html (CRLF).
 
+
+## 2026-06 — Stale NAV for discontinued ISIN (Kotak ELSS IDCW Reinvestment) — data fix + daily sync (LIVE)
+Symptom: sell allocation for VIVEK G JOSHI HUF showed a fund red with "sell amount derived on NAV
+as of 25-03-2026" and total < requested. RCA: client holds KOTAK ELSS TAX SAVER FUND - IDCW
+REINVESTMENT, ISIN INF174K01377. AMC stopped publishing NAV for that ISIN on 25-03-2026; the IDCW
+option now publishes under twin ISIN INF174K01385 (fresh). App SP GetNetAssetValueByDateISIN returns
+last NAV <= today, so it fell back to 25-03 (40.136 vs live 43.512, ~8% low) -> red flag + undervalued
+-> recommended engine sold all its units and total fell short. Verified 377 & 385 had IDENTICAL NAVs
+every date pre-25-03 (same fund IDCW option). NAV table = dbo.NetAssetValue (ISIN+NAVDate; cols:
+Id,NAVDate,SchemeCode,SchemeName,RTASchemeCode,DivReInvestFlag,ISIN,NAV,RTACode,Created,Modified).
+NAV daily import: feed.controller ProcessAmfiIndiaNav (AMFI India excel) via appscheduler.ProcessAmfiIndiaNav.
+Holdings source: FeedDailyHolding (ISIN,Units,AssetDate).
+Fix (all LIVE):
+ 1. Backfill: inserted 119 rows for INF174K01377 from INF174K01385 for 26-03..21-09-2026. 377 now
+    current (43.512 @ 21-09).
+ 2. Daily sync: created dbo.NavIsinAlias(StaleISIN,LiveISIN,Active,Note) + proc dbo.SyncNavIsinAlias
+    (copies missing recent NAV live->stale, idempotent, NOT EXISTS guard, last-45-days window).
+    Seeded ('INF174K01377','INF174K01385'). Hooked into appscheduler.controller.ProcessAmfiIndiaNav
+    (try/catch, runs after each daily NAV import). Deployed via Kudu VFS + restart.
+    Backup: appscheduler.controller.js.pre-navsync. To fix future discontinued ISINs: INSERT a row into
+    NavIsinAlias then EXEC SyncNavIsinAlias.
+ 3. Scan: 28 held ISINs (FeedDailyHolding latest AssetDate) — INF174K01377 was the ONLY stale one;
+    all fresh now. (Note: FeedDailyHolding may be CAMS-only; KFintech/Karvy holdings in FeedKarvy307
+    not scanned — revisit if a stale KFintech ISIN surfaces.)
+Note for order execution: unaffected — that fund sells by units (full holding + tax), BSE uses real NAV.
+
