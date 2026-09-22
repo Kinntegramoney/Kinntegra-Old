@@ -492,6 +492,12 @@ export class TradeDetailsModalComponent implements OnInit, OnChanges {
     this.router.navigate(['tradelog']);
   }
 
+  getTradeType(portfolioItem: any): string {
+    const t = portfolioItem.SellFrom || portfolioItem.LumpsumAllocationType || portfolioItem.SIPAllocationType || '';
+    if (!t) { return ''; }
+    return (t == 'C') ? 'Custom' : 'Recommended';
+  }
+
   onModifyTrade(clientTransactionPortfolioTypeId: any) {
     if (this.clientTransactionDetails.TransactionPlanCode == 'SW') {
       if (this.clientTransactionDetails.TransactionPlanCode == 'IS') {

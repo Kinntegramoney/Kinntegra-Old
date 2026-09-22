@@ -453,3 +453,14 @@ Fix (all LIVE):
     not scanned — revisit if a stale KFintech ISIN surfaces.)
 Note for order execution: unaffected — that fund sells by units (full holding + tax), BSE uses real NAV.
 
+
+## 2026-06 — Trade Type extended to ALL trade types (buy/SIP too) (LIVE, FE-only)
+Follow-up to the earlier sell-only Trade Type. Now shows Custom/Recommended for every trade type.
+Allocation-type fields on ClientTransactionPortfolio (values 'C'/'R'/''): SellFrom (sells),
+LumpsumAllocationType (buy lumpsum), SIPAllocationType (SIP). Verified distinct values in DB.
+Added getTradeType(portfolioItem) in trade-details-modal.component.ts:
+  const t = SellFrom || LumpsumAllocationType || SIPAllocationType || ''; return t? (t=='C'?'Custom':'Recommended') : '';
+Changed all 6 Trade Type blocks in trade-details-modal.component.html: gate *ngIf="getTradeType(portfolioItem)"
+and value {{getTradeType(portfolioItem)}} (was portfolioItem.SellFrom-only). Sections covered:
+Buy(B), 4x Sell(S), SIP(C/SIP). Deploy: website main-RBEZ7BXG.js live; bundle verified.
+
