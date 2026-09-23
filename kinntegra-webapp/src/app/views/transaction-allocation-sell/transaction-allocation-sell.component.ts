@@ -296,7 +296,7 @@ export class TransactionAllocationSellComponent implements OnInit, OnChanges {
 
                 const IsNavDateDiffer = (currentNavDate < currentDate);
 
-                const SellByDisplay = (transactionPortfolioItem.TransactionPortfolioTypeCode == 'T' || a.CalculationType == 'U' || a.AvailableUnits == a.SellUnits) ? 'Units' : 'Amount';
+                const SellByDisplay = (a.CalculationType == 'U' || Math.abs((a.SellUnits || 0) - (a.ExitFreeUnits || 0)) < 0.001) ? 'Units' : 'Amount';
 
                 return { ...a, IsSelected, FormattedNavDate, IsNavDateDiffer, SellByDisplay };
               });
@@ -312,7 +312,7 @@ export class TransactionAllocationSellComponent implements OnInit, OnChanges {
 
                 const IsNavDateDiffer = (currentNavDate < currentDate);
 
-                const SellByDisplay = (transactionPortfolioItem.TransactionPortfolioTypeCode == 'T' || a.CalculationType == 'U' || a.AvailableUnits == a.SellUnits) ? 'Units' : 'Amount';
+                const SellByDisplay = (a.CalculationType == 'U' || Math.abs((a.SellUnits || 0) - (a.ExitFreeUnits || 0)) < 0.001) ? 'Units' : 'Amount';
 
                 return { ...a, IsSelected, FormattedNavDate, IsNavDateDiffer, SellByDisplay };
               });

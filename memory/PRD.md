@@ -638,3 +638,14 @@ PLANNED (NOT yet done - see /app/memory/sell_valuation_reconciliation_plan.md; u
   (align to market value; also verify unit source FeedTransactions.BalanceUnits vs FeedDailyHolding).
 - (B) GetClientTransactionSellAllocation: SellPriority strictly oldest-first (YearsCompleted desc) across all
   eligible buckets so recommended drains >3yr, then 2-3yr, 1-2yr, <1yr. Apply to all fund types.
+
+## 2026-06 — Sell By column logic fix (FE, DEPLOYED main-S5DMQXHU.js)
+Bug: SellByDisplay used (TransactionPortfolioTypeCode=='T' || CalculationType=='U' || AvailableUnits==SellUnits)
+=> every Tax row showed "Units". Correct rule per user: full exit-free redemption (SellUnits==ExitFreeUnits)
+=> Units; partial of exit-free (SellUnits<ExitFreeUnits) => Amount. Fixed to:
+  (a.CalculationType=='U' || Math.abs(a.SellUnits - a.ExitFreeUnits) < 0.001) ? 'Units' : 'Amount'
+(both recommended + custom maps). Kotak ELSS Growth (952.114 of 1026.530 exit-free) now shows Amount.
+CAVEAT/FOLLOW-UP: backend order-execution (transaction.controller.js tax paths + bseservice) still force
+tax partial -> units from earlier work. Display now = SellUnits vs ExitFreeUnits. If actual order must also be
+amount for partial-of-exit-free tax sells, the backend sell paths need the same alignment (not done - would
+change live redemption logic). ROLLBACK: index.html.pre-sellbyfix (prior main-S5DMQXHU predecessor).
