@@ -685,3 +685,37 @@ DEPLOY: 3 files via Kudu VFS PUT to kinntegraapi (feed.controller.js, appschedul
 Azure login: device-code (shashikantv@kinntegra.co.in, tenant c8374d79-20db-47aa-84ed-d2a5e9cf5e26, sub e4ee900b).
 Azure SQL temp firewall rule for pod IP 34.16.56.64 active on server 'kinntegra'.
 PENDING user visual check (auth screens, agent can't log in): Sell By column + shortfall error on sell allocation (bundle main-S5DMQXHU.js).
+
+## 2026-06 session 2 — dup-trade guard (DONE/live), Ambar perf (blocked, not deployed), card labels (pending)
+- DUP-TRADE GUARD (Row 12) DONE & DEPLOYED: transaction-sell-portfolio.component (Step-2 Proceed). Added isBusy flag;
+  onProceed() returns early if isBusy, sets isBusy=true after validate, resets on error/status-false; both Proceed buttons
+  now [disabled]="showProceed || isBusy" + Bootstrap spinner-border (matches Step-1). Prevents double-click duplicate trades.
+  Built Angular prod -> main-3HYIJPSV.js, deployed to Azure kinntegrawebapp wwwroot (files live directly in wwwroot, NOT
+  wwwroot/browser). Only main-*.js changed (styles/polyfills/chunk unchanged). Live verified: kinntegra.co.in serves
+  main-3HYIJPSV.js, login page renders. Kudu creds via az (device-code login shashikantv@kinntegra.co.in).
+- AMBAR PERF (Row 17) NOT SOLVED / NOTHING DEPLOYED: bottleneck = GetClientTransactionSellAllocation, O(N^2) row-by-row
+  SellPriority loop over N=5,345 lots (mostly non-account UCC='' holdings) -> Azure LOG_RATE_GOVERNOR throttle, 8+ min.
+  Tried (on copies only, live SP UNTOUCHED): (1) indexed #temp -> still throttled; (2) folio-scoped re-rank (byte-identical
+  incl SerialNumber on Vivek) -> still ~5min for Ambar's big folios (O(f^2)); (3) aggressive O(N) rewrite ranking once via
+  stable AgeRank + min-subquery (SerialNumber confirmed unused by any SP/app) -> byte-identical on Vivek (ex run-dependent
+  Id) BUT for Ambar returned 0 rows @263s (correctness anomaly under extreme N + still O(N^2) correlated reads). DID NOT
+  DEPLOY (won't ship unverified sell-order logic). Copies dropped. Safer options to pursue: (a) app-level: don't recompute
+  allocation on every page load, read persisted ClientTransactionSellAllocation, recompute only when amount/criteria change;
+  (b) scale Azure SQL tier (log-rate is the wall); (c) proper set-based rewrite in a maintenance window w/ broad validation.
+- CARD LABELS (Row 15/16) PENDING: Step-1 portfolio cards (transaction.component) — add "Exit Free" (Wealth/ShortTerm/
+  Commodities) and "Lock Free" (Tax) rupee amount below Short Term Value. Needs backend to return exit-free amount per
+  portfolio (GetTransactionClientAccountsHolding / market-value endpoint) + FE card markup. User confirmed: total exit-free
+  rupee amount per card.
+
+
+## 2026-09-23 — Step-1 card labels: Exit Free / Lock Free (LIVE)
+- Added per-portfolio exit-free rupee amount to Step-1 sell portfolio cards, below Short Term Value.
+  - Wealth / Short Term / Commodities cards: label **Exit Free(₹)** = sum(ExitFreeCurrentAmount) (exit-load-free).
+  - Tax card: label **Lock Free(₹)** = sum(CurrentAmount where IsLockIn=0) (lock-in-free / actually sellable).
+- SP changes (LIVE, backward-compatible — added columns only):
+  - GetFeedTransactionLogShortTermAmount + GetFeedTransactionLogShortTermAmountNonAccount now also return ExitFreeAmount and LockFreeAmount.
+- API (LIVE): transaction.controller.js getPortfolioTypeSellHolding(+NonAccount) return ExitFreeAmount/LockFreeAmount; transactionportfoliotype.controller.js GetTransactionPortfolioTypeSellList accumulates ExitFreeValue/LockFreeValue per portfolio dataItem.
+- FE (LIVE bundle main-B5QB4WMV.js): transaction.component.html card shows Lock Free for Code=='T' (portfolio.LockFreeValue) else Exit Free (portfolio.ExitFreeValue).
+- Verified: Vivek Tax -> CurrentAmount 11,80,362; ExitFreeAmount 11,80,362; LockFreeAmount 10,08,649 (matches earlier reconciliation: >3yr 10,08,649 sellable + 2-3yr 1,71,713 locked). API health 200, endpoint 403 (auth-gated, no server error), app loads clean.
+- Deploy note: pod controllers diffed clean vs live before upload (only intended additions).
+- PENDING: authenticated end-to-end visual confirmation of card values; Ambar sell-allocation SP performance still unresolved (no safe rewrite deployed).

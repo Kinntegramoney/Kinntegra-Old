@@ -28,6 +28,7 @@ import { CustomNgbDateParserFormatter } from '../CustomNgbDateParserFormatter';
 })
 export class TransactionSellPortfolioComponent {
   showProceed: boolean = true;
+  isBusy: boolean = false;
   clientAccountId: any;
   clientTransactionId: any;
   clientTransactionPortfolioTypeId: any;
@@ -348,12 +349,18 @@ export class TransactionSellPortfolioComponent {
   }
 
   onProceed() {
+    if (this.isBusy) {
+      return;
+    }
+
     if (!this.validate()) {
       // this.isBusy = false;
       const modalRef = this.modalService.open(AlertDialogComponent);
       modalRef.componentInstance.data = this.appErrors;
       return;
     }
+
+    this.isBusy = true;
 
     var startDate = null;
 
@@ -493,7 +500,7 @@ export class TransactionSellPortfolioComponent {
           }
         }
         else {
-          // this.isBusy = false;
+          this.isBusy = false;
           this.appErrors = [];
           this.appErrors.push({ Title: result.Message });
           const modalRef = this.modalService.open(AlertDialogComponent);
@@ -501,7 +508,7 @@ export class TransactionSellPortfolioComponent {
         }
       },
       (err) => {
-        // this.isBusy = false;
+        this.isBusy = false;
         this.appErrors = [];
         this.appErrors.push({ Title: "Error while processing request." });
         const modalRef = this.modalService.open(AlertDialogComponent);

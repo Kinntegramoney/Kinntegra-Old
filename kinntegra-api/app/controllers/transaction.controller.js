@@ -17652,7 +17652,9 @@ async function getPortfolioTypeSellHolding(req, holdingDate, portfolioTypeCode, 
     var data = {
         CurrentAmount: 0,
         LongTermAmount: 0,
-        ShortTermAmount: 0
+        ShortTermAmount: 0,
+        ExitFreeAmount: 0,
+        LockFreeAmount: 0
     };
 
     const readRequest = req.app.locals.db.request();
@@ -17664,14 +17666,16 @@ async function getPortfolioTypeSellHolding(req, holdingDate, portfolioTypeCode, 
         data = readResult.recordset[0];
     }
 
-    return { CurrentAmount: data.CurrentAmount, LongTermAmount: data.LongTermAmount, ShortTermAmount: data.ShortTermAmount };
+    return { CurrentAmount: data.CurrentAmount, LongTermAmount: data.LongTermAmount, ShortTermAmount: data.ShortTermAmount, ExitFreeAmount: data.ExitFreeAmount, LockFreeAmount: data.LockFreeAmount };
 };
 
 async function getPortfolioTypeSellHoldingNonAccount(req, holdingDate, portfolioTypeCode, FirstHolderName, SecondHolderName, ThirdHolderName, FirstNomineeName, SecondNomineeName, ThirdNomineeName, GuardianName) {
     var data = {
         CurrentAmount: 0,
         LongTermAmount: 0,
-        ShortTermAmount: 0
+        ShortTermAmount: 0,
+        ExitFreeAmount: 0,
+        LockFreeAmount: 0
     };
 
     const readRequest = req.app.locals.db.request();
@@ -17689,7 +17693,7 @@ async function getPortfolioTypeSellHoldingNonAccount(req, holdingDate, portfolio
         data = readResult.recordset[0];
     }
 
-    return { CurrentAmount: data.CurrentAmount, LongTermAmount: data.LongTermAmount, ShortTermAmount: data.ShortTermAmount };
+    return { CurrentAmount: data.CurrentAmount, LongTermAmount: data.LongTermAmount, ShortTermAmount: data.ShortTermAmount, ExitFreeAmount: data.ExitFreeAmount, LockFreeAmount: data.LockFreeAmount };
 };
 
 async function addFlexiSWPSchedule(req, res, transactionData, ucc) {

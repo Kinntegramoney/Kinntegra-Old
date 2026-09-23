@@ -104,6 +104,8 @@ exports.GetTransactionPortfolioTypeSellList = async (req, res) => {
                 var longTermValue = 0;
                 var shortTermValue = 0;
                 var sipAmount = 0;
+                var exitFreeValue = 0;
+                var lockFreeValue = 0;
 
                 if (dataList[i].Code != 'A' && dataList[i].Code != 'O') {
                     var systemClientAccounts = ClientAccountsData.filter(x => x.UCC != '');
@@ -116,6 +118,8 @@ exports.GetTransactionPortfolioTypeSellList = async (req, res) => {
                         var portfolioSellData = await transactionController.GetPortfolioTypeSellHolding(req, currentDate.toFormat('yyyy-MM-dd'), dataList[i].Code, ClientAccountId);
                         longTermValue += portfolioSellData.LongTermAmount;
                         shortTermValue += portfolioSellData.ShortTermAmount;
+                        exitFreeValue += portfolioSellData.ExitFreeAmount;
+                        lockFreeValue += portfolioSellData.LockFreeAmount;
 
                         var sipPortfolioData = await transactionController.GetSIPPortfolioTypeHolding(req, cryptoEngine.ParamEncrypt(dataList[i].Id, true), ClientAccountId);
 
@@ -136,6 +140,8 @@ exports.GetTransactionPortfolioTypeSellList = async (req, res) => {
                         marketValue += portfolioSellData.CurrentAmount;
                         longTermValue += portfolioSellData.LongTermAmount;
                         shortTermValue += portfolioSellData.ShortTermAmount;
+                        exitFreeValue += portfolioSellData.ExitFreeAmount;
+                        lockFreeValue += portfolioSellData.LockFreeAmount;
                     }
                 }
 
@@ -147,6 +153,8 @@ exports.GetTransactionPortfolioTypeSellList = async (req, res) => {
                     MarketValue: marketValue,
                     LongTermValue: longTermValue,
                     ShortTermValue: shortTermValue,
+                    ExitFreeValue: exitFreeValue,
+                    LockFreeValue: lockFreeValue,
                     SIPAmount: sipAmount,
                     Created: dataList[i].Created,
                     Modified: dataList[i].Modified

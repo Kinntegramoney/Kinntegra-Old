@@ -169,7 +169,13 @@
                             </div>
                             <div class="form-footer">
                                 <button class="btn btn-primary btn-lg ml-4" data-toggle="modal" data-target="#cancelsip"
-                                    (click)="onProceed()" [disabled]="showProceed">Proceed</button>
+                                    (click)="onProceed()" [disabled]="showProceed || isBusy">
+                                    <div *ngIf="isBusy">
+                                        <span class="spinner-border text-light" style="margin-right: 10px; vertical-align: middle;" role="status"></span>
+                                        <span>Proceed</span>
+                                    </div>
+                                    <span *ngIf="!isBusy">Proceed</span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -320,7 +326,13 @@
                             </div>
                             <div class="form-footer">
                                 <button class="btn btn-primary btn-lg ml-4" data-toggle="modal" data-target="#cancelsip"
-                                    (click)="onProceed()" [disabled]="showProceed">Proceed</button>
+                                    (click)="onProceed()" [disabled]="showProceed || isBusy">
+                                    <div *ngIf="isBusy">
+                                        <span class="spinner-border text-light" style="margin-right: 10px; vertical-align: middle;" role="status"></span>
+                                        <span>Proceed</span>
+                                    </div>
+                                    <span *ngIf="!isBusy">Proceed</span>
+                                </button>
                             </div>
                         </div>
                     </div>

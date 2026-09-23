@@ -333,6 +333,11 @@
                                                             <span class="value">{{portfolio.ShortTermValue |
                                                                 indianCurrencyNumber}}</span>
                                                         </li>
+                                                        <li>
+                                                            <label>{{ portfolio.Code == 'T' ? 'Lock Free(₹)' : 'Exit Free(₹)' }}</label>
+                                                            <span class="value">{{ (portfolio.Code == 'T' ? portfolio.LockFreeValue : portfolio.ExitFreeValue) |
+                                                                indianCurrencyNumber}}</span>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </label>
