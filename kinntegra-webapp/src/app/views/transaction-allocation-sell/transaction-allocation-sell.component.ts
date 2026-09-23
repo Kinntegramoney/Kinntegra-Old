@@ -502,6 +502,13 @@ export class TransactionAllocationSellComponent implements OnInit, OnChanges {
     this.generateAllocationDataTableFooter();
   }
 
+  getSellByLabel(portfolioItem: any, row: any): string {
+    if (portfolioItem.TransactionPortfolioTypeCode == 'T' || row.CalculationType == 'U' || row.AvailableUnits == row.SellUnits) {
+      return 'Units';
+    }
+    return 'Amount';
+  }
+
   onSellFromChanged(e: any) { }
 
   onActivate(event: any) {

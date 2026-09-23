@@ -591,3 +591,32 @@ boxes). Restyled all 5 blocks to the app's standard chat markup: <div class="mem
 CSS from _common.scss (.member-chat: h5 0.8rem uppercase light-text, .content tinted bubble) — same as
 transaction-allocation-sip associate view. Deploy: main-NPWLWU5K.js (201)+index.html(204) to kinntegrawebapp;
 live serves new main. ROLLBACK: index.html.pre-sipfont (prior main-NPWLWU5K predecessor main-LAU7IFE3.js in wwwroot).
+
+## 2026-06 — Sell allocation: "Sell By" column + NAV-date (21 vs 22 Sep) explanation
+CHANGE #1 (Sell By column, FE only, DEPLOYED):
+  transaction-allocation-sell.component.{ts,html}. Added getSellByLabel(portfolioItem,row) (mirrors
+  confirm-order-sell: Units if TransactionPortfolioTypeCode=='T' || row.CalculationType=='U' ||
+  row.AvailableUnits==row.SellUnits, else Amount). Added a "Sell By" ngx-datatable-column (teal Units / slate
+  Amount badge, data-testid=sell-by-badge) after "Sell Amount" in the 3 lump-sum sell tables (Recommended,
+  Custom A/E/T/L, Custom P) — the ones with portfolioItem in scope. NOT added to SWP/ASWP tables (withdrawal
+  plans; portfolioItem not in scope + concept N/A). NOTE: this component's .ts is LF while .html is CRLF —
+  detect newline per file when editing.
+  Deploy: main-CJWPSSGM.js (201)+index.html(204) to kinntegrawebapp; live has "Sell By"+getSellByLabel.
+  ROLLBACK: index.html.pre-sellbycol (prior main-LAU7IFE3? -> actually prior main-CJWPSSGM predecessor).
+
+ISSUE #2 (tooltip NAV date shows 21-Sep not 22-Sep) — ROOT CAUSE + FIX:
+  The red value + "NAV as of <date>" tooltip is driven by FE IsNavDateDiffer = (row.CurrentNAVDate < today)
+  and FormattedNavDate = row.CurrentNAVDate. row.CurrentNAVDate = FeedTransactions.CurrentNAVDate (stored on
+  each holding), refreshed only by the nightly UpdateFeedTransactionExitLoad. NetAssetValue already had 22-Sep
+  for all ISINs (server IST today = 23-Sep), but the whole book's FeedTransactions was still 21-Sep because the
+  revaluation hadn't run since the 22-Sep NAV import (1-cycle lag; not client-specific, not the earlier backfill).
+  FIX: ran the scoped revaluation (transform of UpdateFeedTransactionExitLoad, scoped to ft.ProductCode in
+  ('G224','K144','K154','PPTSFG'), UCC<>'') -> VIVEKHUF lots now 22-Sep (Bandhan 30.656, Kotak Growth 116.225,
+  Kotak IDCW 43.497, Parag 28.8079). NAVs dipped slightly vs 21-Sep; 10,10,000 still reachable (mkt val ~11.8L).
+  NOTE: value may STILL render red because 22-Sep < today(23-Sep) — that's expected intraday (today's NAV not
+  published yet); it's display/estimate only, BSE uses the real allotment-date NAV. Whole book self-heals to
+  22-Sep on tonight's nightly revaluation.
+
+INFRA NOTE: pod outbound IP changed to 34.16.56.64 and was blocked by Azure SQL firewall. Added temp firewall
+  rule 'emergent-pod-temp' (34.16.56.64) on server 'kinntegra' (RG DefaultResourceGroup-null) to run the DB
+  work. Consider removing when DB tasks complete (pending: stale-NAV full scan).
