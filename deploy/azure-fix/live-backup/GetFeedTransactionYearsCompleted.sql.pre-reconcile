@@ -1,0 +1,47 @@
+CREATE procedure [dbo].[GetFeedTransactionYearsCompleted]
+	@TransactionPortfolioTypeId bigint,
+	@ClientTransactionId bigint
+as
+	select sum(CurrentAmount) as CurrentAmount,YearsCompleted,SellType
+	from
+	(
+		select CurrentAmount,YearsCompleted,tm.SellType
+		from FeedTransactions ft inner join FeedTransactionUccFolioView ftu on ft.NewFolioNumber = ftu.NewFolioNumber and ft.ProductCode = ftu.ProductCode
+			inner join (
+				select distinct ChannelPartnerCode,ISIN
+				from BSEScheme
+			) s on ft.ProductCode = s.ChannelPartnerCode
+			inner join BSESchemeAmfi ba on s.ISIN = ba.ISIN
+			inner join TransactionMaster tm on ba.SchemeCategory = tm.SchemeCategory
+		where UCC in (
+				select ca.UCC 
+				from ClientTransactionAccount cta inner join ClientAccount ca on cta.ClientAccountId = ca.Id
+				where cta.ClientTransactionId = @ClientTransactionId
+			)
+			and PurchaseRedemptionType = 'P'
+			and BalanceUnits > 0
+			and tm.Portfolio = (select Name from TransactionPortfolioType where Id = @TransactionPortfolioTypeId)
+		union all
+		select CurrentAmount,YearsCompleted,tm.SellType
+		from FeedTransactions ft inner join FeedTransactionUccFolioView ftu on ft.NewFolioNumber = ftu.NewFolioNumber and ft.ProductCode = ftu.ProductCode
+			inner join (
+				select distinct ChannelPartnerCode,ISIN
+				from BSEScheme
+			) s on ft.ProductCode = s.ChannelPartnerCode
+			inner join BSESchemeAmfi ba on s.ISIN = ba.ISIN
+			inner join TransactionMaster tm on ba.SchemeCategory = tm.SchemeCategory
+			inner join ClientTransactionNonAccount ctna on ftu.FirstHolderName = ctna.FirstHolderName 
+				and ftu.SecondHolderName = ctna.SecondHolderName 
+				and ftu.ThirdHolderName = ctna.ThirdHolderName
+				and ftu.GuardianName = ctna.GuardianName
+				and ftu.Nominee1Name = ctna.FirstNomineeName
+				and ftu.Nominee2Name = ctna.SecondNomineeName
+				and ftu.Nominee3Name = ctna.ThirdNomineeName
+				and ctna.ClientTransactionId = @ClientTransactionId
+		where UCC = ''
+			and PurchaseRedemptionType = 'P'
+			and BalanceUnits > 0
+			and tm.Portfolio = (select Name from TransactionPortfolioType where Id = @TransactionPortfolioTypeId)
+	) as h
+	group by YearsCompleted,SellType
+	order by YearsCompleted desc

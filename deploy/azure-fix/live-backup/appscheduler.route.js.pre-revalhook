@@ -20,7 +20,6 @@ module.exports = app => {
     router.post("/orderstatus", appScheduler.ProcessOrderStatus);
     router.post("/camswbr2a", appScheduler.ProcessCamsWbr2A);
     router.post("/feedtransaction", appScheduler.ProcessFeedTransaction);
-    router.post("/revaluefeedtransaction", appScheduler.RevalueFeedTransaction);
     router.post("/swpregistration", appScheduler.ProcessSWPRegistration);
     router.post("/flexiswp", appScheduler.ProcessFlexiSWP);
     router.post("/tradestatus", appScheduler.ProcessTradeStatus);

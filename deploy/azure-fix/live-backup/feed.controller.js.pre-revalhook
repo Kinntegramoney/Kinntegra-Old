@@ -6332,12 +6332,6 @@ async function updateFeedTransactionExitLoad() {
     }
 };
 
-// Revalue holdings only (CurrentNAV/CurrentAmount/CurrentNAVDate/ExitFree/ExitLoad/IsLockIn/YearsCompleted).
-// Display/valuation only - does NOT place, retry or alter any order.
-exports.UpdateFeedTransactionExitLoadOnly = async () => {
-    await updateFeedTransactionExitLoad();
-};
-
 async function updateFeedTransactionXIRR() {
     let pool = await appPool.connect();
 

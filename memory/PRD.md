@@ -649,3 +649,39 @@ CAVEAT/FOLLOW-UP: backend order-execution (transaction.controller.js tax paths +
 tax partial -> units from earlier work. Display now = SellUnits vs ExitFreeUnits. If actual order must also be
 amount for partial-of-exit-free tax sells, the backend sell paths need the same alignment (not done - would
 change live redemption logic). ROLLBACK: index.html.pre-sellbyfix (prior main-S5DMQXHU predecessor).
+
+## 2026-06 (Sep-23 data) — Sell reconciliation (A), oldest-first (B), nightly reval lag — ALL DONE (live)
+ROOT CAUSE (A): age-bucket SP dbo.GetFeedTransactionYearsCompleted joined BSEScheme via `select distinct
+ChannelPartnerCode,ISIN` (ALL isins per product) while market value SP dbo.GetFeedTransactionLogShortTermAmount
+uses single-ISIN RowNumber=1 (+ -L0/-L1) join. Both read the SAME stored FeedTransactions.CurrentAmount, so
+products with 2 ISINs (Kotak K154 -> INF174K01377+INF174K01385) were DOUBLE-COUNTED in buckets only.
+=> live-NAV switch was NOT the fix (the sell screen's market value uses stored CurrentAmount, not live NAV).
+FIX (A) applied via ALTER on Azure SQL (DB object => affects pod API + prod kinntegraapi): both distinct-ISIN
+subqueries in GetFeedTransactionYearsCompleted replaced with the market-value SP's single-ISIN RowNumber=1 join.
+VERIFIED live: Vivek (VIVEKHUF) Tax buckets = >3yr 10,08,649 + 2-3yr 1,71,713 = 11,80,362 = market value (exact).
+Bulk: 2414 (ucc,portfolio) groups, 63 previously over-counted, ALL reconcile now. ExitFree SP already correct.
+Backup: /app/deploy/azure-fix/live-backup/GetFeedTransactionYearsCompleted.sql.pre-reconcile (rollback = re-CREATE it).
+
+(B) NO CHANGE NEEDED: GetClientTransactionSellAllocation already assigns SellPriority strictly YearsCompleted DESC;
+controller GetSellPortfolioAllocation drains in that order. Verified by executing SP (rolled-back tran) on live
+In-Complete sell txns incl multi-year (132866,132862) -> zero year-order violations; locked ELSS excluded. So
+recommended already drains oldest-first >3yr->2-3->1-2-><1.
+
+NIGHTLY VALUATION LAG - diagnosed + all 3 remediations shipped:
+- Diagnosis: ProcessFeedTransaction (reval=UpdateFeedTransactionExitLoad, 346k cursor, tran-wrapped) runs daily
+  (05:54) BEFORE the day's full ProcessAmfiIndiaNav import completes (06:35, per NetAssetValue.Created) => book
+  stamped 1 day behind live NAV (shows 21-Sep vs NAV 22-Sep). Red flag = CurrentNAVDate<today.
+- #1 One-time reval NOW (done): added POST /api/appscheduler/revaluefeedtransaction -> feedController.
+  UpdateFeedTransactionExitLoadOnly() (display valuation only, NO order execution). Triggered on prod; logged
+  RevalueFeedTransaction success 09:14. Book: 3,538 -> 331,523 lots now at 22-Sep; only 294 left at 21-Sep
+  (products with no 22-Sep NAV). (11,300 at 25-Mar = discontinued ISINs w/o alias; 3,711 null = unresolvable NAV -> backlog.)
+- #2 App hook (deployed live): appscheduler.ProcessAmfiIndiaNav now, after SyncNavIsinAlias, runs the reval
+  GUARDED (only when max(NetAssetValue.NAVDate) > max(FeedTransactions.CurrentNAVDate)) so valuations auto-catch-up
+  right after each NAV import; idempotent, skips when already current. New export feed.controller.UpdateFeedTransactionExitLoadOnly.
+- #3 Azure scheduler reorder (user action): ensure the external scheduler runs POST /appscheduler/feedtransaction
+  (or /revaluefeedtransaction) AFTER the final daily /appscheduler/amfiindianav. With #2 in place this is now optional.
+DEPLOY: 3 files via Kudu VFS PUT to kinntegraapi (feed.controller.js, appscheduler.controller.js, appscheduler.route.js)
++ az webapp stop/start. Diffed live-vs-edited = only intended additions. Backups: *.pre-revalhook in live-backup/.
+Azure login: device-code (shashikantv@kinntegra.co.in, tenant c8374d79-20db-47aa-84ed-d2a5e9cf5e26, sub e4ee900b).
+Azure SQL temp firewall rule for pod IP 34.16.56.64 active on server 'kinntegra'.
+PENDING user visual check (auth screens, agent can't log in): Sell By column + shortfall error on sell allocation (bundle main-S5DMQXHU.js).

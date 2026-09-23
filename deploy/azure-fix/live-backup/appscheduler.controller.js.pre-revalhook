@@ -952,19 +952,6 @@ exports.ProcessAmfiIndiaNav = async (req, res) => {
         try { await req.app.locals.db.request().execute("SyncNavIsinAlias"); }
         catch (syncErr) { console.log('SyncNavIsinAlias error:', syncErr.message); }
 
-        // Revalue holdings AFTER fresh NAV import so stored valuations do not lag live NAV.
-        // Guarded: only runs when NetAssetValue has advanced past the book's stamped date (idempotent, no orders).
-        try {
-            var navChk = await req.app.locals.db.request().query("select (select max(NAVDate) from NetAssetValue) as NavMax, (select max(CurrentNAVDate) from FeedTransactions where BalanceUnits > 0 and PurchaseRedemptionType = 'P') as BookMax");
-            var navMax = navChk.recordset[0].NavMax;
-            var bookMax = navChk.recordset[0].BookMax;
-            if (navMax != null && (bookMax == null || new Date(navMax) > new Date(bookMax))) {
-                await feedController.UpdateFeedTransactionExitLoadOnly();
-                console.log('Post-NAV revaluation completed (book advanced to latest NAV)');
-            }
-        }
-        catch (revalErr) { console.log('Post-NAV reval error:', revalErr.message); }
-
         var logData = {
             ProcessDate: luxon.DateTime.now().setZone('Asia/Kolkata').toFormat('yyyy-MM-dd'),
             ProcessName: 'ProcessAmfiIndiaNav',
@@ -990,36 +977,6 @@ exports.ProcessAmfiIndiaNav = async (req, res) => {
         await saveAppSchedulerLog(logData);
 
         res.status(500).send('Error while running schedule: ProcessAmfiIndiaNav');
-    }
-};
-
-exports.RevalueFeedTransaction = async (req, res) => {
-    try {
-        await feedController.UpdateFeedTransactionExitLoadOnly();
-
-        var logData = {
-            ProcessDate: luxon.DateTime.now().setZone('Asia/Kolkata').toFormat('yyyy-MM-dd'),
-            ProcessName: 'RevalueFeedTransaction',
-            ProcessMessage: 'Schedule run successfully: RevalueFeedTransaction',
-            ErrorDescription: ''
-        }
-        await saveAppSchedulerLog(logData);
-
-        res.status(200).send({ Status: true, Message: "Schedule run successfully: RevalueFeedTransaction", Data: null });
-    }
-    catch (err) {
-        console.log(err);
-        console.log('Error while running schedule: RevalueFeedTransaction');
-
-        var logData = {
-            ProcessDate: luxon.DateTime.now().setZone('Asia/Kolkata').toFormat('yyyy-MM-dd'),
-            ProcessName: 'RevalueFeedTransaction',
-            ProcessMessage: 'Error while running schedule: RevalueFeedTransaction',
-            ErrorDescription: err
-        }
-        await saveAppSchedulerLog(logData);
-
-        res.status(500).send('Error while running schedule: RevalueFeedTransaction');
     }
 };
 
