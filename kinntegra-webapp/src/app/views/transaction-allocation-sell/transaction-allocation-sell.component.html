@@ -325,7 +325,7 @@
                                                                                                     let-rowIndex="rowIndex"
                                                                                                     let-value="value"
                                                                                                     let-row="row">
-                                                                                                    <span class="badge badge-pill" style="color:#fff" [style.background-color]="getSellByLabel(portfolioItem, row) == 'Units' ? '#0d9488' : '#64748b'" data-testid="sell-by-badge">{{getSellByLabel(portfolioItem, row)}}</span>
+                                                                                                    <span class="badge badge-pill" style="color:#fff" [style.background-color]="row.SellByDisplay == 'Units' ? '#0d9488' : '#64748b'" data-testid="sell-by-badge">{{row.SellByDisplay}}</span>
                                                                                                 </ng-template>
                                                                                             </ngx-datatable-column>
                                                                                             <ngx-datatable-footer>
@@ -564,7 +564,7 @@
                                                                                                     let-rowIndex="rowIndex"
                                                                                                     let-value="value"
                                                                                                     let-row="row">
-                                                                                                    <span class="badge badge-pill" style="color:#fff" [style.background-color]="getSellByLabel(portfolioItem, row) == 'Units' ? '#0d9488' : '#64748b'" data-testid="sell-by-badge">{{getSellByLabel(portfolioItem, row)}}</span>
+                                                                                                    <span class="badge badge-pill" style="color:#fff" [style.background-color]="row.SellByDisplay == 'Units' ? '#0d9488' : '#64748b'" data-testid="sell-by-badge">{{row.SellByDisplay}}</span>
                                                                                                 </ng-template>
                                                                                             </ngx-datatable-column>
                                                                                             <ngx-datatable-footer>
@@ -797,7 +797,7 @@
                                                                                                     let-rowIndex="rowIndex"
                                                                                                     let-value="value"
                                                                                                     let-row="row">
-                                                                                                    <span class="badge badge-pill" style="color:#fff" [style.background-color]="getSellByLabel(portfolioItem, row) == 'Units' ? '#0d9488' : '#64748b'" data-testid="sell-by-badge">{{getSellByLabel(portfolioItem, row)}}</span>
+                                                                                                    <span class="badge badge-pill" style="color:#fff" [style.background-color]="row.SellByDisplay == 'Units' ? '#0d9488' : '#64748b'" data-testid="sell-by-badge">{{row.SellByDisplay}}</span>
                                                                                                 </ng-template>
                                                                                             </ngx-datatable-column>
                                                                                             <ngx-datatable-column

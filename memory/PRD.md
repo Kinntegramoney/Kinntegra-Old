@@ -620,3 +620,21 @@ ISSUE #2 (tooltip NAV date shows 21-Sep not 22-Sep) — ROOT CAUSE + FIX:
 INFRA NOTE: pod outbound IP changed to 34.16.56.64 and was blocked by Azure SQL firewall. Added temp firewall
   rule 'emergent-pod-temp' (34.16.56.64) on server 'kinntegra' (RG DefaultResourceGroup-null) to run the DB
   work. Consider removing when DB tasks complete (pending: stale-NAV full scan).
+
+## 2026-06 — Sell "Sell By" fix + shortfall error (DEPLOYED) ; bucket reconciliation + >3yr-first (PLANNED)
+DEPLOYED (main-F5UCTNWI.js):
+- transaction-allocation-sell "Sell By" column now binds row.SellByDisplay (computed at load from
+  TransactionPortfolioTypeCode=='T' || CalculationType=='U' || AvailableUnits==SellUnits). Earlier it called
+  getSellByLabel(portfolioItem,row) inside the ngx-datatable cell template where portfolioItem was out of
+  scope -> rendered blank. Fixed by precomputing per row (recommended + custom maps ~line 299/315).
+- validate() now blocks Proceed for recommended lumpsum sell when requested (RequestedSellAmount) exceeds
+  achievable (sum of ClientAccounts[].TotalSellAmount) by >Rs10; error states max sellable (exit-free & lock-free)
+  and to reduce to that -> this is the "how much can you sell" recommendation.
+ROOT CAUSE of VIVEKHUF "10,10,000 -> only ~10,08,xxx": SP GetClientTransactionSellAllocation excludes lock-in
+  (WHERE IsLockIn=0, lines ~118/154). VIVEKHUF has Rs1,71,713 in ELSS 3yr lock-in (Kotak Growth 917d Rs88,561 +
+  Parag 917d Rs83,152) -> max sellable ~Rs10,08,649. Engine silently capped; now it errors.
+PLANNED (NOT yet done - see /app/memory/sell_valuation_reconciliation_plan.md; user approved copy+verify+deploy):
+- (A) Make age-bucket SP GetFeedTransactionYearsCompleted value LIVE from NetAssetValue as of transaction date
+  (align to market value; also verify unit source FeedTransactions.BalanceUnits vs FeedDailyHolding).
+- (B) GetClientTransactionSellAllocation: SellPriority strictly oldest-first (YearsCompleted desc) across all
+  eligible buckets so recommended drains >3yr, then 2-3yr, 1-2yr, <1yr. Apply to all fund types.

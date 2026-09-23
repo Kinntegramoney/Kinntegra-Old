@@ -296,7 +296,9 @@ export class TransactionAllocationSellComponent implements OnInit, OnChanges {
 
                 const IsNavDateDiffer = (currentNavDate < currentDate);
 
-                return { ...a, IsSelected, FormattedNavDate, IsNavDateDiffer };
+                const SellByDisplay = (transactionPortfolioItem.TransactionPortfolioTypeCode == 'T' || a.CalculationType == 'U' || a.AvailableUnits == a.SellUnits) ? 'Units' : 'Amount';
+
+                return { ...a, IsSelected, FormattedNavDate, IsNavDateDiffer, SellByDisplay };
               });
             }
             else {
@@ -310,7 +312,9 @@ export class TransactionAllocationSellComponent implements OnInit, OnChanges {
 
                 const IsNavDateDiffer = (currentNavDate < currentDate);
 
-                return { ...a, IsSelected, FormattedNavDate, IsNavDateDiffer };
+                const SellByDisplay = (transactionPortfolioItem.TransactionPortfolioTypeCode == 'T' || a.CalculationType == 'U' || a.AvailableUnits == a.SellUnits) ? 'Units' : 'Amount';
+
+                return { ...a, IsSelected, FormattedNavDate, IsNavDateDiffer, SellByDisplay };
               });
 
               console.log(item.Allocation);
@@ -327,6 +331,7 @@ export class TransactionAllocationSellComponent implements OnInit, OnChanges {
             TransactionPortfolioTypeCode: sellPortfolioItem.Portfolio.TransactionPortfolioTypeCode,
             TransactionPortfolioTypeName: sellPortfolioItem.Portfolio.TransactionPortfolioTypeName,
             PortfolioSellAmount: transactionPortfolioItem.Amount,
+            RequestedSellAmount: transactionPortfolioItem.Amount,
             PortfolioMarketValue: sellPortfolioItem.Portfolio.CurrentAmount,
             SellFrom: transactionPortfolioItem.SellFrom,
             CustomSellType: transactionPortfolioItem.CustomSellType,
@@ -455,6 +460,7 @@ export class TransactionAllocationSellComponent implements OnInit, OnChanges {
             TransactionPortfolioTypeCode: sellPortfolioItem.Portfolio.TransactionPortfolioTypeCode,
             TransactionPortfolioTypeName: sellPortfolioItem.Portfolio.TransactionPortfolioTypeName,
             PortfolioSellAmount: transactionPortfolioItem.Amount,
+            RequestedSellAmount: transactionPortfolioItem.Amount,
             PortfolioMarketValue: sellPortfolioItem.Portfolio.CurrentAmount,
             SellFrom: transactionPortfolioItem.SellFrom,
             CustomSellType: transactionPortfolioItem.CustomSellType,
@@ -682,6 +688,26 @@ export class TransactionAllocationSellComponent implements OnInit, OnChanges {
 
         if (activePortfolio.RationalForTrade == '') {
           this.appErrors.push({ Title: 'Reason for sell cannot be blank for portfolio ' + activePortfolio.TransactionPortfolioTypeName + '.' });
+        }
+
+        if (activePortfolio.SellFrom == 'R') {
+          var achievedSellAmount = 0;
+          for (let ai = 0; ai < activePortfolio.ClientAccounts.length; ai++) {
+            achievedSellAmount += Number(activePortfolio.ClientAccounts[ai].TotalSellAmount || 0);
+          }
+          var requestedSellAmount = Number(activePortfolio.RequestedSellAmount || 0);
+          var sellShortfall = Math.round(requestedSellAmount - achievedSellAmount);
+
+          if (sellShortfall > 10) {
+            this.appErrors.push({
+              Title: 'The requested withdrawal of ₹' + Math.round(requestedSellAmount).toLocaleString('en-IN') +
+                ' for ' + activePortfolio.TransactionPortfolioTypeName +
+                ' cannot be fully redeemed. Only ₹' + Math.round(achievedSellAmount).toLocaleString('en-IN') +
+                ' is available from exit-free units. The remaining ₹' + sellShortfall.toLocaleString('en-IN') +
+                ' could not be allocated because those units are still within the ELSS 3-year lock-in period (units held less than 3 years cannot be redeemed) or are not yet exit-free. Please reduce the withdrawal amount to ₹' +
+                Math.round(achievedSellAmount).toLocaleString('en-IN') + ' or less.'
+            });
+          }
         }
       }
     }
