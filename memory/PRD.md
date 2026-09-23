@@ -485,3 +485,48 @@ File: kinntegra-webapp/src/app/templates/trade-details-modal/trade-details-modal
 - ROLLBACK (instant): restore /app/deploy/kinntegrawebapp-live-backup/index.html.pre-sellby to wwwroot
   (old main-RBEZ7BXG.js still present in wwwroot, 200).
 - PENDING user visual check: open a real sell trade's View Details (auth required; agent cannot log in).
+
+## 2026-06 — ROOT CAUSE: recommended-sell "still stale" = FeedTransactions.CurrentNAV, NOT NetAssetValue
+The recommended-sell allocation page (transaction-allocation-sell) reads per-scheme CURRENT VALUE from
+stored column FeedTransactions.CurrentNAV/CurrentAmount (via SP GetClientTransactionSellAllocation ->
+FeedTransactions), NOT from NetAssetValue directly. So the earlier NetAssetValue backfill for INF174K01377
+did NOT fix this screen.
+- FeedTransactions.CurrentNAV is refreshed by nightly proc dbo.UpdateFeedTransactionExitLoad (cursor over
+  all purchase lots, BalanceUnits>0, UCC<>''; NonAccount variant handles UCC=''). It resolves ISIN via
+  (select top 1 ISIN from BSEScheme where ChannelPartnerCode=@ProductCode) then latest NAV<=today from
+  NetAssetValue; CurrentAmount = BalanceUnits*CurrentNAV.
+- Kotak ELSS IDCW schemes share ProductCode 'K154' (BSEScheme maps K154 -> INF174K01377 [K154TS-DR,
+  IDCW Reinvest] AND INF174K01385 [KO154-DP, IDCW Payout]); top-1 resolves K154 -> INF174K01377.
+- The nightly job last ran 21-Sep (BEFORE the 22-Sep NetAssetValue backfill), so all 31 K154 lots stayed
+  frozen at CurrentNAV=40.136 / 25-Mar-2026. FeedTransactions global CurrentNAVDate distribution: ~332k lots
+  fresh (18/21-Sep), 11,323 lots stuck at 25-Mar (K154 = 31 of them + other discontinued products), 13,360 null.
+FIX APPLIED (live prod DB, display/valuation only, order execution untouched):
+  Ran the EXACT UpdateFeedTransactionExitLoad logic as an anonymous batch SCOPED to ProductCode='K154'
+  (transformed OBJECT_DEFINITION -> stripped CREATE header -> injected "and ft.ProductCode='K154'" into the
+  cursor WHERE; zero transcription risk; identical to nightly job). Updated 31 K154 lots.
+  VIVEKHUF lot (Id 93425, folio 1675167, 3869.541 units): 40.136 -> 43.512, CurrentAmount 155307.90 ->
+  168371.47, dated 21-Sep-2026. Also fixed 4 other real-UCC K154 holders (KBS0000348/0001231/0001470/KWPL000065).
+  All K154 lots have ExitLoadUnits=0 (clean exit-free), so no exit-load recompute complications.
+VERIFY: reopen the Vivek G Joshi HUF sell allocation -> Kotak IDCW Reinvestment shows ~1,68,371 (not red).
+NOTE: draft's stored WITHDRAWAL AMOUNT was 9,97,397 (frozen); to sell full 10,10,000 the user re-enters the
+  amount (engine now has enough exit-free value). Recommended sells recompute FeedTransactions on each load.
+STILL PENDING (approved earlier): full stale-NAV scan across ALL discontinued ISINs w/ live twin (only
+  INF174K01377 backfilled + aliased so far); UCC='' NonAccount K154 lots + other stale products will auto-fix
+  in tonight's nightly UpdateFeedTransactionExitLoad now that INF174K01377 NetAssetValue is backfilled, but
+  other discontinued ISINs need their own alias/backfill.
+
+## 2026-06 — Client reset-password success UX (frontend, DEPLOYED to live)
+File: kinntegra-webapp/src/app/views/reset-password/reset-password.component.{ts,html} (route reset-password/:id)
+- Previously: on ResetPasswordCredentials success it redirected to /signin immediately (no visible message).
+- Now: sets resetSuccess=true -> hides the form, shows "Your Password and Pin Reset Successfully." (green),
+  a manual "Go to Login" button (data-testid=go-to-login-button), and a live "Redirecting to login in N
+  seconds..." countdown (data-testid=reset-redirect-countdown) that auto-navigates to /signin after 15s.
+  goToLogin() clears the interval; startRedirectCountdown() uses setInterval(1000).
+- Purely UX/navigation change; no password hashing / JWT / reset-token logic touched.
+- CRLF file -> edited via Python. Build OK (exit 0). Deploy: Kudu VFS PUT main-CT3RIJBQ.js (201) + index.html
+  (204) to kinntegrawebapp wwwroot (polyfills-BJX5WH5B.js & styles-R4GI7GGR.css unchanged). Live serves new
+  main (200); bundle contains the success message + countdown. Page renders (screenshot OK).
+- ROLLBACK: restore /app/deploy/kinntegrawebapp-live-backup/index.html.pre-resetpin (prior main-BYSHDH6B.js
+  still in wwwroot). Pre-Sell-By backup also kept: index.html.pre-sellby.
+- Note: success panel only appears after a real successful reset (needs valid reset token) - not reproducible
+  from an arbitrary reset-password/:id URL.
