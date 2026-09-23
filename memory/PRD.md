@@ -530,3 +530,25 @@ File: kinntegra-webapp/src/app/views/reset-password/reset-password.component.{ts
   still in wwwroot). Pre-Sell-By backup also kept: index.html.pre-sellby.
 - Note: success panel only appears after a real successful reset (needs valid reset token) - not reproducible
   from an arbitrary reset-password/:id URL.
+
+## 2026-06 — Buy SIP: Trade Type on View Details + admin comments on client SIP approval (frontend, DEPLOYED live)
+CHANGE 1 (Trade Type on SIP View Details):
+  File: templates/trade-details-modal/trade-details-modal.component.html, Buy-SIP section
+  (*ngIf B && subtransactiontype=='SIP', ~line 300). Inserted the standard Trade Type block
+  (*ngIf="getTradeType(portfolioItem)" -> Recommended/Custom) between Transaction Type and Mode Of Payment.
+  getTradeType already handles SIP via portfolioItem.SIPAllocationType ('C'->Custom else Recommended);
+  backend getClientTransactionInfo already returns SIPAllocationType on each portfolio (line ~14752). No backend change.
+CHANGE 2 (client can't see admin/associate comment on SIP approval):
+  File: views/confirm-order-buy-sip/confirm-order-buy-sip.component.html. All 5 "Associate Comment" card
+  bodies were EMPTY (only an HTML placeholder comment). Replaced each with a read-only messages list:
+  *ngFor over OBJ.Messages showing UserName + RecordDateTime (IST) + Comment, plus a "No Comments" fallback.
+  OBJs per tab: objBuySipWealthPortfolio / objBuySipTaxPortfolio / objBuySipShortTermPortfolio /
+  objBuySipCommoditiesPortfolio / objBuySipOtherPortfolio (each already populated in the .ts with
+  ClientTransactionPortfolios[i].Messages.filter(SubTransactionType=='SIP')). No template-ref vars used
+  (avoided #noComments collisions). data-testid: sip-associate-comments / sip-associate-comment.
+DEPLOY: build OK (exit 0). Kudu VFS PUT main-6AOOE5PN.js (201) + index.html (204) to kinntegrawebapp wwwroot
+  (polyfills-BJX5WH5B.js & styles-R4GI7GGR.css unchanged). Live serves new main (200); bundle contains
+  getTradeType + sip-associate-comment. ROLLBACK: restore index.html.pre-sipcomments (prior main-CT3RIJBQ.js
+  still in wwwroot). Backups kept: index.html.pre-sellby, .pre-resetpin, .pre-sipcomments.
+PENDING user visual check: open a pending Buy-SIP trade -> View Details (Trade Type shows) and the client
+  SIP approval page (admin comment now visible). Both need auth; agent cannot log in.

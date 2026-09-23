@@ -339,7 +339,13 @@
                                         <h6 class="card-title">Associate Comment</h6>
                                     </div>
                                     <div class="card-body card-text">
-                                        <!-- <p>$portfolio->description</p> -->
+                                        <div *ngIf="objBuySipWealthPortfolio.Messages && objBuySipWealthPortfolio.Messages.length > 0" style="max-height: 200px; overflow: auto;" data-testid="sip-associate-comments">
+                                            <div *ngFor="let messageItem of objBuySipWealthPortfolio.Messages" class="mb-3" data-testid="sip-associate-comment">
+                                                <h5 class="mb-0">{{ messageItem.UserName }} <span class="time text-muted" style="font-weight: normal;">{{ messageItem.RecordDateTime | date:"dd-MM-yyyy hh:mm a":"IST" }}</span></h5>
+                                                <div class="content">{{ messageItem.Comment }}</div>
+                                            </div>
+                                        </div>
+                                        <p class="text-muted mb-0" *ngIf="!objBuySipWealthPortfolio.Messages || objBuySipWealthPortfolio.Messages.length === 0">No Comments</p>
                                     </div>
                                 </div>
                             </div>
@@ -696,7 +702,13 @@
                                         <h6 class="card-title">Associate Comment</h6>
                                     </div>
                                     <div class="card-body card-text">
-                                        <!-- <p>$portfolio->description</p> -->
+                                        <div *ngIf="objBuySipTaxPortfolio.Messages && objBuySipTaxPortfolio.Messages.length > 0" style="max-height: 200px; overflow: auto;" data-testid="sip-associate-comments">
+                                            <div *ngFor="let messageItem of objBuySipTaxPortfolio.Messages" class="mb-3" data-testid="sip-associate-comment">
+                                                <h5 class="mb-0">{{ messageItem.UserName }} <span class="time text-muted" style="font-weight: normal;">{{ messageItem.RecordDateTime | date:"dd-MM-yyyy hh:mm a":"IST" }}</span></h5>
+                                                <div class="content">{{ messageItem.Comment }}</div>
+                                            </div>
+                                        </div>
+                                        <p class="text-muted mb-0" *ngIf="!objBuySipTaxPortfolio.Messages || objBuySipTaxPortfolio.Messages.length === 0">No Comments</p>
                                     </div>
                                 </div>
                             </div>
@@ -1053,7 +1065,13 @@
                                         <h6 class="card-title">Associate Comment</h6>
                                     </div>
                                     <div class="card-body card-text">
-                                        <!-- <p>$portfolio->description</p> -->
+                                        <div *ngIf="objBuySipShortTermPortfolio.Messages && objBuySipShortTermPortfolio.Messages.length > 0" style="max-height: 200px; overflow: auto;" data-testid="sip-associate-comments">
+                                            <div *ngFor="let messageItem of objBuySipShortTermPortfolio.Messages" class="mb-3" data-testid="sip-associate-comment">
+                                                <h5 class="mb-0">{{ messageItem.UserName }} <span class="time text-muted" style="font-weight: normal;">{{ messageItem.RecordDateTime | date:"dd-MM-yyyy hh:mm a":"IST" }}</span></h5>
+                                                <div class="content">{{ messageItem.Comment }}</div>
+                                            </div>
+                                        </div>
+                                        <p class="text-muted mb-0" *ngIf="!objBuySipShortTermPortfolio.Messages || objBuySipShortTermPortfolio.Messages.length === 0">No Comments</p>
                                     </div>
                                 </div>
                             </div>
@@ -1410,7 +1428,13 @@
                                         <h6 class="card-title">Associate Comment</h6>
                                     </div>
                                     <div class="card-body card-text">
-                                        <!-- <p>$portfolio->description</p> -->
+                                        <div *ngIf="objBuySipCommoditiesPortfolio.Messages && objBuySipCommoditiesPortfolio.Messages.length > 0" style="max-height: 200px; overflow: auto;" data-testid="sip-associate-comments">
+                                            <div *ngFor="let messageItem of objBuySipCommoditiesPortfolio.Messages" class="mb-3" data-testid="sip-associate-comment">
+                                                <h5 class="mb-0">{{ messageItem.UserName }} <span class="time text-muted" style="font-weight: normal;">{{ messageItem.RecordDateTime | date:"dd-MM-yyyy hh:mm a":"IST" }}</span></h5>
+                                                <div class="content">{{ messageItem.Comment }}</div>
+                                            </div>
+                                        </div>
+                                        <p class="text-muted mb-0" *ngIf="!objBuySipCommoditiesPortfolio.Messages || objBuySipCommoditiesPortfolio.Messages.length === 0">No Comments</p>
                                     </div>
                                 </div>
                             </div>
@@ -1637,7 +1661,13 @@
                                         <h6 class="card-title">Associate Comment</h6>
                                     </div>
                                     <div class="card-body card-text">
-                                        <!-- <p>$portfolio->description</p> -->
+                                        <div *ngIf="objBuySipOtherPortfolio.Messages && objBuySipOtherPortfolio.Messages.length > 0" style="max-height: 200px; overflow: auto;" data-testid="sip-associate-comments">
+                                            <div *ngFor="let messageItem of objBuySipOtherPortfolio.Messages" class="mb-3" data-testid="sip-associate-comment">
+                                                <h5 class="mb-0">{{ messageItem.UserName }} <span class="time text-muted" style="font-weight: normal;">{{ messageItem.RecordDateTime | date:"dd-MM-yyyy hh:mm a":"IST" }}</span></h5>
+                                                <div class="content">{{ messageItem.Comment }}</div>
+                                            </div>
+                                        </div>
+                                        <p class="text-muted mb-0" *ngIf="!objBuySipOtherPortfolio.Messages || objBuySipOtherPortfolio.Messages.length === 0">No Comments</p>
                                     </div>
                                 </div>
                             </div>
