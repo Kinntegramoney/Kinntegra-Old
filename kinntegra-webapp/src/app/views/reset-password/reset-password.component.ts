@@ -23,8 +23,6 @@ export class ResetPasswordComponent {
   appErrors!: Apperrormessage[];
   resetId: any;
   resetSuccess: boolean = false;
-  redirectSeconds: number = 15;
-  private redirectTimer: any = null;
 
   constructor(
     private appUserService: AppuserService,
@@ -92,7 +90,6 @@ export class ResetPasswordComponent {
       (result) => {
         if (result.Status == true) {
           this.resetSuccess = true;
-          this.startRedirectCountdown();
         }
         else {
           this.appErrors = [];
@@ -108,24 +105,6 @@ export class ResetPasswordComponent {
         modalRef.componentInstance.data = this.appErrors;
       }
     );
-  }
-
-  startRedirectCountdown() {
-    this.redirectSeconds = 15;
-    if (this.redirectTimer) { clearInterval(this.redirectTimer); }
-    this.redirectTimer = setInterval(() => {
-      this.redirectSeconds = this.redirectSeconds - 1;
-      if (this.redirectSeconds <= 0) {
-        this.goToLogin();
-      }
-    }, 1000);
-  }
-
-  goToLogin() {
-    if (this.redirectTimer) { clearInterval(this.redirectTimer); this.redirectTimer = null; }
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['/signin']);
   }
 
 }

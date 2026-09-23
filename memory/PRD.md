@@ -552,3 +552,13 @@ DEPLOY: build OK (exit 0). Kudu VFS PUT main-6AOOE5PN.js (201) + index.html (204
   still in wwwroot). Backups kept: index.html.pre-sellby, .pre-resetpin, .pre-sipcomments.
 PENDING user visual check: open a pending Buy-SIP trade -> View Details (Trade Type shows) and the client
   SIP approval page (admin comment now visible). Both need auth; agent cannot log in.
+
+## 2026-06 — Reset-password success simplified (frontend, DEPLOYED live) [supersedes prior reset UX entry]
+Per user: removed the "Go to Login" button AND the 15s auto-redirect/countdown. On successful password+PIN
+reset the page now hides the form and shows ONLY the success message "Your Password and Pin Reset
+Successfully." (data-testid=reset-success-message). Removed redirectSeconds/redirectTimer fields,
+startRedirectCountdown() and goToLogin() methods; success handler just sets resetSuccess=true.
+Files: views/reset-password/reset-password.component.{ts,html}.
+DEPLOY: build OK. Kudu VFS PUT main-4QWNBLQA.js (201) + index.html (204) to kinntegrawebapp. Live serves new
+main (200); bundle has success msg, no "Go to Login", no countdown. ROLLBACK: index.html.pre-resetsimplify
+(prior main-CT3RIJBQ.js still in wwwroot).
