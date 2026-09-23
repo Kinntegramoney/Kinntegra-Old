@@ -583,3 +583,11 @@ ROLLBACK: FE restore index.html.pre-exitfree (prior main-4QWNBLQA.js still in ww
 (local pre-edit copy also at .pre-exitfree).
 PENDING user visual check: open a sell allocation (e.g. Vivek G Joshi HUF) -> new Exit Free Units column
 populated. (Agent cannot log in to verify the authenticated page.)
+
+## 2026-06 — SIP client-approval comment styling fix (frontend, DEPLOYED live)
+The associate/admin comments I added on confirm-order-buy-sip used a raw <h5> (too large, misaligned vs other
+boxes). Restyled all 5 blocks to the app's standard chat markup: <div class="member-chat"><div class="chat-info">
+<div class="profile-info"><h5>UserName</h5><span class="time">date</span></div><div class="content">Comment</div>.
+CSS from _common.scss (.member-chat: h5 0.8rem uppercase light-text, .content tinted bubble) — same as
+transaction-allocation-sip associate view. Deploy: main-NPWLWU5K.js (201)+index.html(204) to kinntegrawebapp;
+live serves new main. ROLLBACK: index.html.pre-sipfont (prior main-NPWLWU5K predecessor main-LAU7IFE3.js in wwwroot).
