@@ -562,3 +562,24 @@ Files: views/reset-password/reset-password.component.{ts,html}.
 DEPLOY: build OK. Kudu VFS PUT main-4QWNBLQA.js (201) + index.html (204) to kinntegrawebapp. Live serves new
 main (200); bundle has success msg, no "Go to Login", no countdown. ROLLBACK: index.html.pre-resetsimplify
 (prior main-CT3RIJBQ.js still in wwwroot).
+
+## 2026-06 — Sell allocation page: add "Exit Free Units" column (FE + BE, DEPLOYED live)
+Page: transaction-allocation-sell (recommended + custom sell). Added an "Exit Free Units" column showing
+per-scheme exit-free units, placed right after "Available Units" in all 6 sell tables.
+FRONTEND: views/transaction-allocation-sell/transaction-allocation-sell.component.html — inserted a copy of
+each "Available Units" ngx-datatable-column, renamed to "Exit Free Units", prop="ExitFreeUnits",
+{{row.ExitFreeUnits | number:'1.3-3'}}. (6 columns.) Frontend already spreads ...a so the new field flows.
+BACKEND: app/controllers/transaction.controller.js, GetSellPortfolioAllocation (lines ~7305-8600). Added
+ExitFreeUnits to all 10 allocation push objects (ExitFreeUnits: Number((sellDataItem.ExitFreeUnits||0).toFixed(3)))
+and to all 10 existingAllocation accumulation branches (+=). sellDataItem.ExitFreeUnits comes from SP
+GetClientTransactionSellAllocation (@SellAllocationTable.ExitFreeUnits). node syntax check OK. (The 2 accum
+sites at ~18289/18378 belong to a different function and were left untouched.)
+DEPLOY: BE via Kudu VFS PUT to kinntegraapi site/wwwroot/app/controllers/transaction.controller.js (204) +
+az webapp restart kinntegraapi (API health 200). FE build OK -> Kudu VFS PUT main-LAU7IFE3.js (201) +
+index.html (204) to kinntegrawebapp (polyfills/styles unchanged); live serves new main (200), bundle has
+"Exit Free Units" + ExitFreeUnits.
+ROLLBACK: FE restore index.html.pre-exitfree (prior main-4QWNBLQA.js still in wwwroot). BE restore
+/app/deploy/azure-fix/live-backup/transaction.controller.js.live-pre-exitfree via Kudu PUT + restart
+(local pre-edit copy also at .pre-exitfree).
+PENDING user visual check: open a sell allocation (e.g. Vivek G Joshi HUF) -> new Exit Free Units column
+populated. (Agent cannot log in to verify the authenticated page.)

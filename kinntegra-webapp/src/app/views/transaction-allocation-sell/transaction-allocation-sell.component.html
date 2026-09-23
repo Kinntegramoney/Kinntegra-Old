@@ -241,6 +241,20 @@
                                                                                                 </ng-template>
                                                                                             </ngx-datatable-column>
                                                                                             <ngx-datatable-column
+                                                                                                name="Exit Free Units"
+                                                                                                [width]="10"
+                                                                                                [sortable]="false"
+                                                                                                prop="ExitFreeUnits">
+                                                                                                <ng-template
+                                                                                                    ngx-datatable-cell-template
+                                                                                                    let-rowIndex="rowIndex"
+                                                                                                    let-value="value"
+                                                                                                    let-row="row">
+                                                                                                    {{row.ExitFreeUnits
+                                                                                                    | number:'1.3-3'}}
+                                                                                                </ng-template>
+                                                                                            </ngx-datatable-column>
+                                                                                            <ngx-datatable-column
                                                                                                 name="Current Value"
                                                                                                 [width]="10"
                                                                                                 [sortable]="false"
@@ -453,6 +467,20 @@
                                                                                                 </ng-template>
                                                                                             </ngx-datatable-column>
                                                                                             <ngx-datatable-column
+                                                                                                name="Exit Free Units"
+                                                                                                [width]="10"
+                                                                                                [sortable]="false"
+                                                                                                prop="ExitFreeUnits">
+                                                                                                <ng-template
+                                                                                                    ngx-datatable-cell-template
+                                                                                                    let-rowIndex="rowIndex"
+                                                                                                    let-value="value"
+                                                                                                    let-row="row">
+                                                                                                    {{row.ExitFreeUnits
+                                                                                                    | number:'1.3-3'}}
+                                                                                                </ng-template>
+                                                                                            </ngx-datatable-column>
+                                                                                            <ngx-datatable-column
                                                                                                 name="Current Value"
                                                                                                 [width]="10"
                                                                                                 [sortable]="false"
@@ -661,6 +689,20 @@
                                                                                                     let-value="value"
                                                                                                     let-row="row">
                                                                                                     {{row.AvailableUnits
+                                                                                                    | number:'1.3-3'}}
+                                                                                                </ng-template>
+                                                                                            </ngx-datatable-column>
+                                                                                            <ngx-datatable-column
+                                                                                                name="Exit Free Units"
+                                                                                                [width]="10"
+                                                                                                [sortable]="false"
+                                                                                                prop="ExitFreeUnits">
+                                                                                                <ng-template
+                                                                                                    ngx-datatable-cell-template
+                                                                                                    let-rowIndex="rowIndex"
+                                                                                                    let-value="value"
+                                                                                                    let-row="row">
+                                                                                                    {{row.ExitFreeUnits
                                                                                                     | number:'1.3-3'}}
                                                                                                 </ng-template>
                                                                                             </ngx-datatable-column>
@@ -1434,6 +1476,15 @@
                                                                                 {{row.AvailableUnits | number:'1.3-3'}}
                                                                             </ng-template>
                                                                         </ngx-datatable-column>
+                                                                        <ngx-datatable-column name="Exit Free Units"
+                                                                            [width]="10" [sortable]="false"
+                                                                            prop="ExitFreeUnits">
+                                                                            <ng-template ngx-datatable-cell-template
+                                                                                let-rowIndex="rowIndex"
+                                                                                let-value="value" let-row="row">
+                                                                                {{row.ExitFreeUnits | number:'1.3-3'}}
+                                                                            </ng-template>
+                                                                        </ngx-datatable-column>
                                                                         <ngx-datatable-column name="Current Value"
                                                                             [width]="10" [sortable]="false"
                                                                             prop="AvailableAmount">
@@ -1696,6 +1747,15 @@
                                                                                 let-rowIndex="rowIndex"
                                                                                 let-value="value" let-row="row">
                                                                                 {{row.AvailableUnits | number:'1.3-3'}}
+                                                                            </ng-template>
+                                                                        </ngx-datatable-column>
+                                                                        <ngx-datatable-column name="Exit Free Units"
+                                                                            [width]="10" [sortable]="false"
+                                                                            prop="ExitFreeUnits">
+                                                                            <ng-template ngx-datatable-cell-template
+                                                                                let-rowIndex="rowIndex"
+                                                                                let-value="value" let-row="row">
+                                                                                {{row.ExitFreeUnits | number:'1.3-3'}}
                                                                             </ng-template>
                                                                         </ngx-datatable-column>
                                                                         <ngx-datatable-column name="Current Value"
@@ -2036,6 +2096,15 @@
                                                                                 let-rowIndex="rowIndex"
                                                                                 let-value="value" let-row="row">
                                                                                 {{row.AvailableUnits | number:'1.3-3'}}
+                                                                            </ng-template>
+                                                                        </ngx-datatable-column>
+                                                                        <ngx-datatable-column name="Exit Free Units"
+                                                                            [width]="10" [sortable]="false"
+                                                                            prop="ExitFreeUnits">
+                                                                            <ng-template ngx-datatable-cell-template
+                                                                                let-rowIndex="rowIndex"
+                                                                                let-value="value" let-row="row">
+                                                                                {{row.ExitFreeUnits | number:'1.3-3'}}
                                                                             </ng-template>
                                                                         </ngx-datatable-column>
                                                                         <ngx-datatable-column name="Current Value"
